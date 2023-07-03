@@ -46,7 +46,7 @@ require('lazy').setup({
         'szw/vim-maximizer',
         cmd = "MaximizerToggle",
         keys = {
-            { '<leader>mx', '<cmd>MaximizeToggle<CR>' }
+            { '<leader>mx', '<cmd>MaximizerToggle<CR>' }
         }
     },
     {
@@ -92,24 +92,8 @@ require('lazy').setup({
         end
     },
     {
-        'williamboman/mason.nvim',
-        build = ':MasonUpdate',
-        config = function(_, opts)
-            require('mason').setup(opts)
-        end
-    },
-    {
-        'williamboman/mason-lspconfig.nvim',
-        dependencies = { 'williamboman/mason.nvim' },
-        opts = require('plugins-config.misc').lsps,
-        config = function(_, opts)
-            require('mason-lspconfig').setup(opts)
-        end
-    },
-    {
         'neovim/nvim-lspconfig',
         lazy = false,
-        dependencies = { 'williamboman/mason.nvim', 'williamboman/mason-lspconfig.nvim' },
         config = function()
             require('lspconfig').clangd.setup {}
             require('lspconfig').nil_ls.setup {}
