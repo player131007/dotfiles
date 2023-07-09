@@ -9,7 +9,8 @@ local options = {
     },
 
     sources = cmp.config.sources {
-        { name = 'luasnip' }
+        { name = 'luasnip' },
+        { name = 'nvim_lsp' }
     },
 
     mapping = cmp.mapping.preset.insert {

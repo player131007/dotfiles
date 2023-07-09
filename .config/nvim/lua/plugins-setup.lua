@@ -24,7 +24,8 @@ require('lazy').setup({
         dependencies = {
             'L3MON4D3/LuaSnip',
             {
-                'saadparwaiz1/cmp_luasnip'
+                'saadparwaiz1/cmp_luasnip',
+                'hrsh7th/cmp-nvim-lsp'
             }
         }
     },
@@ -80,6 +81,7 @@ require('lazy').setup({
                 build = 'make'
             }
         },
+        cmd = 'Telescope',
         keys = {
             { '<leader>ff', '<cmd>Telescope find_files<CR>' },
             { '<leader>fs', '<cmd>Telescope live_grep<CR>' },
@@ -95,8 +97,12 @@ require('lazy').setup({
         'neovim/nvim-lspconfig',
         lazy = false,
         config = function()
-            require('lspconfig').clangd.setup {}
-            require('lspconfig').nil_ls.setup {}
+            local lspconfig = require 'lspconfig'
+            local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
+            lspconfig.clangd.setup {
+                capabilities = capabilities
+            }
         end
     }
 })
