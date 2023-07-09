@@ -5,4 +5,5 @@ if status is-interactive
     end
     abbr --add ls exa -F --icons --header
     abbr --add ll exa -F --icons --header -l
+    abbr --add la exa -F --icons --header -la
 end
