@@ -14,7 +14,15 @@ vim.opt.rtp:prepend(lazypath)
 require('lazy').setup({
     {
         'L3MON4D3/LuaSnip',
-        version = '*'
+        version = '*',
+        config = function(_, opts)
+            require('luasnip').config.set_config {
+                update_events = 'TextChanged,TextChangedI'
+            }
+            require('luasnip.loaders.from_lua').lazy_load {
+                paths = '~/.config/nvim/lua/snippets/'
+            }
+        end
     },
     {
         'hrsh7th/nvim-cmp',
