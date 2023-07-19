@@ -26,6 +26,7 @@ require('lazy').setup({
     },
     {
         'hrsh7th/nvim-cmp',
+        event = 'InsertEnter',
         opts = function()
             return require 'plugins-config.cmp'
         end,
