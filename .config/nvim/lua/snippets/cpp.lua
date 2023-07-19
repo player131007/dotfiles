@@ -71,7 +71,9 @@ return {
 
                 if(fopen("[].inp","r")) {
                     freopen("[].inp","r",stdin);
+                    #ifndef LOCAL
                     freopen("[].out","w",stdout);
+                    #endif
                 }
 
                 []
