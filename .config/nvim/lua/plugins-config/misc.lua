@@ -17,4 +17,16 @@ M.lualine = {
     }
 }
 
+M.jaq = {
+    cmds = {
+        external = {
+            cpp = "clang++ -I/d/dead -std=c++14 -DLOCAL -w -fsanitize=address,undefined -fno-sanitize-recover=all % && ./a.out"
+        }
+    },
+    behavior = {
+        autosave = true,
+        startinsert = false
+    }
+}
+
 return M
