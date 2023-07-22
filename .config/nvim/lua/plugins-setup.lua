@@ -116,6 +116,7 @@ require('lazy').setup({
             local lspconfig = require 'lspconfig'
             local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
+            lspconfig.nil_ls.setup {}
             lspconfig.clangd.setup {
                 capabilities = capabilities,
                 cmd = {
