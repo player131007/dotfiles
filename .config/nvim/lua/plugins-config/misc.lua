@@ -20,7 +20,7 @@ M.lualine = {
 M.jaq = {
     cmds = {
         external = {
-            cpp = "clang++ -I/d/dead -std=c++14 -DLOCAL -w -fsanitize=address,undefined -fno-sanitize-recover=all % && ./a.out"
+            cpp = "clang++ -I/d/dead -std=c++14 -DLOCAL -w -g -D_GLIBCXX_DEBUG -fsanitize=address,undefined -fno-sanitize-recover=all % && ./a.out"
         }
     },
     behavior = {
