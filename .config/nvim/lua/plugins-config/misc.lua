@@ -29,4 +29,12 @@ M.jaq = {
     }
 }
 
+M.carbon_now = {
+    options = {
+        theme = "one-dark",
+        font_family = "Fira Code",
+        font_size = "14px"
+    },
+}
+
 return M

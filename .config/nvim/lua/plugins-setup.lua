@@ -132,5 +132,10 @@ require('lazy').setup({
         keys = {
             { '<F9>', '<cmd>Jaq<CR>'}
         }
+    },
+    {
+        'ellisonleao/carbon-now.nvim',
+        cmd = 'CarbonNow',
+        opts = require('plugins-config.misc').carbon_now
     }
 })
