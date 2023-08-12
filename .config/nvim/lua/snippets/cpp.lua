@@ -52,7 +52,7 @@ return {
                 return os << '(' << p.first << ", " << p.second << ')';
             }
 
-            #define dbc(a,v) "[["#a": " << v << "]] "
+            #define dbc(a,v) "[["#a": " << (v) << "]] "
             #define dbg(a) dbc(a,a)
             #define dbr(a,b,e) dbc(a, detail::r(next(begin(a),b),next(begin(a),e+1)))
             #ifdef LOCAL
