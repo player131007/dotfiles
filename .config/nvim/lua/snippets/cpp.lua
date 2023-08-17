@@ -34,6 +34,8 @@ return {
 
             template<typename T1, typename T2>
             ostream& operator<<(ostream &os, const pair<T1, T2> &p);
+            template<typename Cont, typename = typename enable_if<!is_same<Cont,string>{}>::type>
+            auto operator<<(ostream &os, const Cont &c) -> decltype(c.begin(), c.end(), declval<ostream&>());
 
             template<typename It>
             ostream& operator<<(ostream &os, detail::rge<It> r) {
@@ -42,7 +44,7 @@ return {
                 return os << '}';
             }
 
-            template<typename Cont, typename = typename enable_if<!is_same<Cont,string>{}>::type>
+            template<typename Cont, typename>
             auto operator<<(ostream &os, const Cont &c) -> decltype(c.begin(), c.end(), declval<ostream&>()) {
                 return os << detail::r(c.begin(), c.end());
             }
