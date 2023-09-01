@@ -4,8 +4,12 @@
 !.gtkrc-2.0
 !.themes/
 !.icons/
+
 !.mozilla
+.mozilla/*
 !.mozilla/firefox
+.mozilla/firefox/*
 !.mozilla/firefox/profile
+.mozilla/firefox/profile/*
 !.mozilla/firefox/profile/chrome/*
 !.mozilla/firefox/profile/user.js
