@@ -11,5 +11,5 @@
 .mozilla/firefox/*
 !.mozilla/firefox/profile
 .mozilla/firefox/profile/*
-!.mozilla/firefox/profile/chrome/*
+!.mozilla/firefox/profile/chrome
 !.mozilla/firefox/profile/user.js
