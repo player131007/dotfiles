@@ -64,6 +64,8 @@ return {
             #endif
 
             #define ll long long
+            #define fi first
+            #define se second
 
             []
 
