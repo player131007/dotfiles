@@ -39,6 +39,7 @@ return {
 
             template<typename It>
             ostream& operator<<(ostream &os, detail::rge<It> r) {
+                if(r.b==r.e) return os << "{}";
                 os << '{' << *r.b;
                 for(++r.b; r.b!=r.e; ++r.b) os << ", " << *r.b;
                 return os << '}';
