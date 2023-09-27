@@ -38,10 +38,9 @@
     };
 
     fonts.packages = with pkgs; [
-        meslo-lgs-nf
     	cantarell-fonts
         inter
-        (nerdfonts.override { fonts = ["NerdFontsSymbolsOnly"]; })
+        (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" "Meslo"]; })
     ];
 
     security = {
