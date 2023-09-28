@@ -40,7 +40,7 @@
     fonts.packages = with pkgs; [
     	cantarell-fonts
         inter
-        (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" "Meslo"]; })
+        (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" "Meslo" ]; })
     ];
 
     security = {
