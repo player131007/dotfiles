@@ -65,18 +65,14 @@ require('lazy').setup({
     },
     {
         'szw/vim-maximizer',
-        cmd = "MaximizerToggle",
         keys = {
             { '<leader>mx', '<cmd>MaximizerToggle<CR>' }
         }
     },
     {
-        'tpope/vim-surround',
-        keys = { 'cs', 'cst', 'ds', 'ys', 'yss' }
-    },
-    {
-        'tpope/vim-commentary',
-        keys = { 'gc', 'gcc' }
+        'numToStr/Comment.nvim',
+        opts = {},
+        lazy = false
     },
     {
         'nvim-treesitter/nvim-treesitter',
