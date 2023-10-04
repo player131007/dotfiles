@@ -1,14 +1,10 @@
 local M = {}
 
-M.lsps = {
-    ensure_installed = {
-        'clangd',
-        'nil_ls'
-    }
-}
-
 M.rose_pine = {
-    disable_italics = true
+    disable_italics = true,
+    highlight_groups = {
+        Whitespace = { fg = 'highlight_med' }
+    }
 }
 
 M.lualine = {

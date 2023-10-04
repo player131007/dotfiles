@@ -16,12 +16,8 @@ require('lazy').setup({
         'L3MON4D3/LuaSnip',
         version = '*',
         config = function(_, opts)
-            require('luasnip').config.set_config {
-                update_events = 'TextChanged,TextChangedI'
-            }
-            require('luasnip.loaders.from_lua').lazy_load {
-                paths = '~/.config/nvim/lua/snippets/'
-            }
+            require('luasnip').config.set_config { update_events = 'TextChanged,TextChangedI' }
+            require('luasnip.loaders.from_lua').lazy_load { paths = '~/.config/nvim/lua/snippets/' }
         end
     },
     {
@@ -55,12 +51,13 @@ require('lazy').setup({
         opts = require('plugins-config.misc').rose_pine,
         config = function(_, opts)
             require('rose-pine').setup(opts)
-            vim.cmd('colorscheme rose-pine')
+            vim.cmd.colorscheme('rose-pine')
         end
     },
     {
         'nvim-lualine/lualine.nvim',
         dependencies = { 'rose-pine' },
+        event = 'ColorScheme',
         opts = require('plugins-config.misc').lualine
     },
     {
@@ -132,9 +129,7 @@ require('lazy').setup({
     {
         'is0n/jaq-nvim',
         opts = require('plugins-config.misc').jaq,
-        keys = {
-            { '<F9>', '<cmd>Jaq<CR>'}
-        }
+        keys = { { '<F9>', '<cmd>Jaq<CR>'} }
     },
     {
         'ellisonleao/carbon-now.nvim',
