@@ -27,3 +27,10 @@ opt.splitbelow = true
 opt.iskeyword:append("-")
 
 opt.completeopt = 'menu,menuone,noselect'
+
+opt.list = true
+opt.listchars = {
+    trail = '·',
+    multispace = '‣···',
+    tab = '‣ '
+}
