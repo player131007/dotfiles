@@ -1,4 +1,4 @@
-{ pkgs, inputs, host, ... }:
+{ pkgs, config, inputs, host, ... }:
 
 {
     imports = [
@@ -35,6 +35,13 @@
         isNormalUser = true;
         extraGroups = [ "wheel" "networkmanager" "audio" "input" ];
         hashedPasswordFile = "/persist/password/player131007";
+    };
+    programs.starship.settings = builtins.fromTOML (builtins.readFile (/. + "${config.users.users.player131007.home}/.config/starship.toml"));
+
+
+    console = {
+        packages = [ pkgs.powerline-fonts ];
+        font = "ter-powerline-v14b";
     };
 
     fonts.packages = with pkgs; [
@@ -82,6 +89,7 @@
         settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet -t -r -g \"hi\" -c Hyprland --asterisks --user-menu";
     };
 
+    programs.starship.enable = true;
     programs.neovim.enable = true;
     programs.neovim.defaultEditor = true;
     programs.fish.enable = true;
@@ -105,6 +113,7 @@
         grim
         slurp
 
+        starship
         wl-clipboard
         foot
         gitMinimal

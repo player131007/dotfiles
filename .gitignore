@@ -1,5 +1,6 @@
 /*
 !.gitignore
+!.bashrc
 !.config/
 !.gtkrc-2.0
 !.themes/

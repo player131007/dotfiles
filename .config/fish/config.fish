@@ -6,4 +6,6 @@ if status is-interactive
     abbr --add ls eza -F --icons --header
     abbr --add ll eza -F --icons --header -l
     abbr --add la eza -F --icons --header -la
+
+    starship init fish | source
 end

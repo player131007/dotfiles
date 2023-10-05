@@ -1,0 +1,42 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+command_timeout = 2000
+
+format = """
+$username[](fg:#3a3652 bg:#635d8c)$hostname[](#63548c)
+[󱞩 ](bold)$directory[](#3d3859) 
+"""
+
+right_format = """
+[](#3c3b47)$status([](fg:#f5a638 bg:#3c3b47)$cmd_duration)
+"""
+
+[status]
+disabled = false
+pipestatus = true
+format = "[ $symbol](bold fg:#00dd00 bg:#3c3b47)[$maybe_int](red bg:#3c3b47)[$common_meaning(SIG$signal_name) ](bold red bg:#3c3b47)"
+symbol = ''
+success_symbol = '󰄬'
+
+[cmd_duration]
+min_time = 1000
+format = "[ 󱦟]($style bold)[ $duration ]($style)"
+style = 'bg:#f5a638 fg:black'
+
+[directory]
+format = '[ $path ]($style)([$read_only ]($style))'
+# fish_style_pwd_dir_length = 1
+truncation_length = 4
+truncation_symbol = '⋅⋅⋅/'
+style = 'bg:#3d3859'
+
+[username]
+show_always = true
+format = '[ $user ]($style bg:#3a3652)'
+style_user = 'white'
+style_root = 'bright-red'
+
+[hostname]
+ssh_only = false
+trim_at = ''
+format = "[ ($ssh_symbol )$hostname ](fg:#f5c6c4 bg:#635d8c)"
