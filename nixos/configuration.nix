@@ -47,7 +47,7 @@
     fonts.packages = with pkgs; [
     	cantarell-fonts
         inter
-        (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" "Meslo"]; })
+        (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" "Meslo" ]; })
     ];
 
     security = {
@@ -64,7 +64,6 @@
         extraPackages = with pkgs; [
             intel-media-driver
             intel-vaapi-driver
-            mesa
         ];
     };
 
