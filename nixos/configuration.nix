@@ -109,6 +109,7 @@
         swaybg
         grim
         slurp
+        drawing
 
         starship
         wl-clipboard
