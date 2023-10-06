@@ -77,15 +77,13 @@
 
     i18n.inputMethod = {
         enabled = "fcitx5";
-        fcitx5.addons = with pkgs; [
-            fcitx5-unikey
-    	];
+        fcitx5.addons = with pkgs; [ fcitx5-unikey ];
     };
 
     services.greetd = {
         enable = true;
         vt = 2;
-        settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet -t -r -g \"hi\" -c Hyprland --asterisks --user-menu";
+        settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet -t -c Hyprland --asterisks --user-menu";
     };
 
     programs.starship.enable = true;
