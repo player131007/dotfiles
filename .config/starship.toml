@@ -4,7 +4,7 @@ command_timeout = 5000
 
 format = """
 $username[](fg:#3a3652 bg:#635d8c)$hostname[](#655987)(\b[ ](fg:#655987 bg:#533e8c)[$nix_shell](bg:#533e8c)[](#533e8c))
-[󱞩 ](bold)$directory[](#3d3859)(\b[ ](fg:#3d3859 bg:#2d3473)$git_branch[ ](bg:#2d3473)$git_status[ ](bg:#2d3473)[](#2d3473)) 
+[󱞩 ](bold)$directory[](#3d3859)(\b[ ](fg:#3d3859 bg:#2d3473)$git_branch[ ](bg:#2d3473)($git_status[ ](bg:#2d3473))[](#2d3473)) 
 """
 
 right_format = """
