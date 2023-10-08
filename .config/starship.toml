@@ -1,6 +1,6 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
-command_timeout = 2000
+command_timeout = 5000
 
 format = """
 $username[](fg:#3a3652 bg:#635d8c)$hostname[](#655987)(\b[ ](fg:#655987 bg:#533e8c)[$nix_shell](bg:#533e8c)[](#533e8c))
