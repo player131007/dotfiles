@@ -1,24 +1,35 @@
 { pkgs, config, inputs, host, ... }:
 
 {
+    # you might want to change these
     imports = [
         ./partitioning.nix
     ];
+    users.users.player131007 = {
+        isNormalUser = true;
+        extraGroups = [ "wheel" "networkmanager" "audio" "input" ];
+        hashedPasswordFile = "/persist/password/player131007";
+    };
+    programs.starship.settings = builtins.fromTOML (builtins.readFile (/. + "${config.users.users.player131007.home}/.config/starship.toml"));
 
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
-    nixpkgs.config.allowUnfree = true;
-    nixpkgs.overlays = [
-        (final: prev: {
-            _7zz = prev._7zz.override {
-                enableUnfree = true;
-            };
-        })
-    ];
+    nixpkgs.config = {
+        allowUnfree = true;
+        packageOverrides = prev: {
+            _7zz = prev._7zz.override { enableUnfree = true; };
+        };
+    };
 
-    boot.loader.systemd-boot.enable = true;
-    boot.loader.systemd-boot.configurationLimit = 5;
-    boot.loader.efi.canTouchEfiVariables = true;
-    boot.loader.efi.efiSysMountPoint = "/efi";
+    boot.loader = {
+        systemd-boot = {
+            enable = true;
+            configurationLimit = 5;
+        };
+        efi = {
+            canTouchEfiVariables = true;
+            efiSysMountPoint = "/efi";
+        };
+    };
 
     networking.hostName = host;
     networking.networkmanager.enable = true;
@@ -30,14 +41,6 @@
     ];
 
     time.timeZone = "Asia/Ho_Chi_Minh";
-
-    users.users.player131007 = {
-        isNormalUser = true;
-        extraGroups = [ "wheel" "networkmanager" "audio" "input" ];
-        hashedPasswordFile = "/persist/password/player131007";
-    };
-    programs.starship.settings = builtins.fromTOML (builtins.readFile (/. + "${config.users.users.player131007.home}/.config/starship.toml"));
-
 
     console = {
         packages = [ pkgs.powerline-fonts ];
@@ -56,6 +59,8 @@
             enable = true;
             extraRules = [{ groups = ["wheel"]; persist = true; }];
         };
+        rtkit.enable = true;
+        pam.services.swaylock = {};
     };
 
     hardware.bluetooth.enable = true;
@@ -67,31 +72,34 @@
         ];
     };
 
-    security.rtkit.enable = true;
-    services.pipewire = {
-        enable = true;
-        pulse.enable = true;
-        alsa.enable = true;
+    services = {
+        auto-cpufreq.enable = true;
+        pipewire = {
+            enable = true;
+            pulse.enable = true;
+            alsa.enable = true;
+        };
+        greetd = {
+            enable = true;
+            vt = 2;
+            settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet -t -c Hyprland --asterisks --user-menu";
+        };
     };
-    services.auto-cpufreq.enable = true;
 
     i18n.inputMethod = {
         enabled = "fcitx5";
         fcitx5.addons = with pkgs; [ fcitx5-unikey ];
     };
 
-    services.greetd = {
-        enable = true;
-        vt = 2;
-        settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet -t -c Hyprland --asterisks --user-menu";
+    programs = {
+        starship.enable = true;
+        neovim = {
+            enable = true;
+            defaultEditor = true;
+        };
+        fish.enable = true;
+        hyprland.enable = true;
     };
-
-    programs.starship.enable = true;
-    programs.neovim.enable = true;
-    programs.neovim.defaultEditor = true;
-    programs.fish.enable = true;
-    programs.hyprland.enable = true;
-    security.pam.services.swaylock = {};
     environment.systemPackages = with pkgs; [
         # development stuffs
         gitMinimal
@@ -109,7 +117,6 @@
         swaybg
         grim
         slurp
-        drawing
 
         starship
         wl-clipboard
@@ -122,7 +129,6 @@
         pciutils
         fishPlugins.puffer
         _7zz
-        libva-utils
         wl-screenrec
     ];
 
