@@ -1,7 +1,11 @@
 { pkgs, config, inputs, host, ... }:
 
+let
+    # you might want to change this
+    starship_config = builtins.fromTOML (builtins.readFile (/. + "${config.users.users.player131007.home}/.config/starship.toml"));
+in
 {
-    # you might want to change these
+    # you might also want to change these
     imports = [
         ./partitioning.nix
     ];
@@ -10,7 +14,6 @@
         extraGroups = [ "wheel" "networkmanager" "audio" "input" ];
         hashedPasswordFile = "/persist/password/player131007";
     };
-    programs.starship.settings = builtins.fromTOML (builtins.readFile (/. + "${config.users.users.player131007.home}/.config/starship.toml"));
 
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
     nixpkgs.config = {
@@ -92,7 +95,10 @@
     };
 
     programs = {
-        starship.enable = true;
+        starship = {
+            enable = true;
+            settings = starship_config;
+        };
         neovim = {
             enable = true;
             defaultEditor = true;
