@@ -15,6 +15,12 @@ in
         hashedPasswordFile = "/persist/password/player131007";
     };
 
+    nix.registry.nixpkgs.to = {
+        type = "github";
+        owner = "NixOS";
+        repo = "nixpkgs";
+        ref = "nixos-unstable";
+    };
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
     nixpkgs.config = {
         allowUnfree = true;
