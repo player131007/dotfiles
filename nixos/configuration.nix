@@ -72,7 +72,10 @@ in
         pam.services.swaylock = {};
     };
 
-    hardware.bluetooth.enable = true;
+    hardware.bluetooth = {
+        enable = true;
+        powerOnBoot = false;
+    };
     hardware.opengl = {
         enable = true;
         extraPackages = with pkgs; [
