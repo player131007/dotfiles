@@ -85,6 +85,13 @@ in
     };
 
     services = {
+        upower = {
+            enable = true;
+            percentageLow = 20;
+            percentageCritical = 10;
+            percentageAction = 0;
+            criticalPowerAction = "PowerOff";
+        };
         auto-cpufreq.enable = true;
         pipewire = {
             enable = true;
