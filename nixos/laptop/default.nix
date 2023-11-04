@@ -11,6 +11,8 @@
     boot.kernelPackages = pkgs.linuxPackages_zen;
     boot.extraModulePackages = [ config.boot.kernelPackages.broadcom_sta ];
 
+    powerManagement.cpuFreqGovernor = "conservative";
+
     fileSystems."/d" = {
         device = "/dev/sda4";
         options = [ "uid=player131007" ];

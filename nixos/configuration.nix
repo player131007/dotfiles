@@ -92,7 +92,6 @@ in
             percentageAction = 0;
             criticalPowerAction = "PowerOff";
         };
-        auto-cpufreq.enable = true;
         pipewire = {
             enable = true;
             pulse.enable = true;
