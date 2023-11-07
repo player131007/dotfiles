@@ -147,7 +147,6 @@ in
         eza
         xdg-utils
         btop
-        pciutils
         fishPlugins.puffer
         _7zz
         wl-screenrec
