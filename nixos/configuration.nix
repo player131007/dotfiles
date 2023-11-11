@@ -72,18 +72,6 @@ in
         pam.services.swaylock = {};
     };
 
-    hardware.bluetooth = {
-        enable = true;
-        powerOnBoot = false;
-    };
-    hardware.opengl = {
-        enable = true;
-        extraPackages = with pkgs; [
-            intel-media-driver
-            intel-vaapi-driver
-        ];
-    };
-
     services = {
         upower = {
             enable = true;
