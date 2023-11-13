@@ -126,6 +126,7 @@ in
         swaybg
         grim
         slurp
+        brightnessctl
 
         starship
         wl-clipboard
