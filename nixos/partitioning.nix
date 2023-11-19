@@ -37,18 +37,10 @@
             options = [ "compress=zstd:5" "noatime" "subvol=home" ];
         };
 
-    fileSystems."/swap" =
-        { label = "nixos";
-            fsType = "btrfs";
-            options = [ "noatime" "subvol=swap" ];
-        };
-
     fileSystems."/efi" =
         { label = "ESP";
             fsType = "vfat";
         };
-
-    swapDevices = [{ device = "/swap/swapfile"; }];
 
     environment.persistence."/persist" = {
         directories = [
