@@ -6,9 +6,13 @@
             url = "github:Aylur/ags";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        home-manager = {
+            url = "github:nix-community/home-manager";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
     };
 
-    outputs = inputs@{self, nixpkgs, impermanence, ...}: 
+    outputs = inputs@{self, home-manager, nixpkgs, impermanence, ...}: 
     let
         hosts = [ "laptop" ];
     in
@@ -17,6 +21,7 @@
             specialArgs = { inherit inputs host; };
             modules = [
                 impermanence.nixosModule
+                home-manager.nixosModule
                 ./configuration.nix
                 (./. + "/${host}")
             ];  

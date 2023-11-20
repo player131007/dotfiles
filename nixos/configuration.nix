@@ -2,7 +2,7 @@
 
 let
     # you might want to change this
-    starship_config = builtins.fromTOML (builtins.readFile (/. + "${config.users.users.player131007.home}/.config/starship.toml"));
+    starship_config = builtins.fromTOML (builtins.readFile ./laptop/home/.config/starship.toml);
 in
 {
     # you might also want to change these
