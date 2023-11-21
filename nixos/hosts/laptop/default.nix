@@ -1,19 +1,9 @@
-{ pkgs, config, inputs, host, ... }:
-
-let
-    # you might want to change this
-    starship_config = builtins.fromTOML (builtins.readFile ./laptop/home/.config/starship.toml);
-in
+{ pkgs, inputs, host, ... }:
 {
-    # you might also want to change these
     imports = [
-        ./partitioning.nix
+        ./hardware-configuration.nix
+        ./users.nix
     ];
-    users.users.player131007 = {
-        isNormalUser = true;
-        extraGroups = [ "wheel" "networkmanager" "audio" "input" ];
-        hashedPasswordFile = "/persist/password/player131007";
-    };
 
     nix.registry.nixpkgs.to = {
         type = "github";
@@ -28,6 +18,7 @@ in
             _7zz = prev._7zz.override { enableUnfree = true; };
         };
     };
+
 
     boot.loader = {
         systemd-boot = {
@@ -69,7 +60,6 @@ in
             extraRules = [{ groups = ["wheel"]; persist = true; }];
         };
         rtkit.enable = true;
-        pam.services.swaylock = {};
     };
 
     services = {
@@ -97,10 +87,11 @@ in
         fcitx5.addons = with pkgs; [ fcitx5-unikey ];
     };
 
+    modules.eza.enable = true;
+    modules.swaylock.enable = true;
     programs = {
         starship = {
             enable = true;
-            settings = starship_config;
         };
         neovim = {
             enable = true;
@@ -119,9 +110,9 @@ in
         nil
         clang-tools_16 # clangd
 
+        inputs.home-manager.packages.${pkgs.system}.home-manager
         inputs.ags.packages.${pkgs.system}.default
         firefox
-        swaylock
         dunst
         swaybg
         grim
@@ -133,7 +124,6 @@ in
         foot
         gitMinimal
         ripgrep
-        eza
         xdg-utils
         btop
         fishPlugins.puffer

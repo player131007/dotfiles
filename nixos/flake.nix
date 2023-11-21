@@ -12,19 +12,17 @@
         };
     };
 
-    outputs = inputs@{self, home-manager, nixpkgs, impermanence, ...}: 
-    let
-        hosts = [ "laptop" ];
-    in
+    outputs = inputs@{ nixpkgs, ... }:
     {
-        nixosConfigurations = nixpkgs.lib.genAttrs hosts (host: nixpkgs.lib.nixosSystem {
-            specialArgs = { inherit inputs host; };
+        nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
+            specialArgs = {
+                inherit inputs;
+                host = "laptop";
+            };
             modules = [
-                impermanence.nixosModule
-                home-manager.nixosModule
-                ./configuration.nix
-                (./. + "/${host}")
-            ];  
-        });
+                ./modules/nixos
+                ./hosts/laptop
+            ];
+        };
     };
 }
