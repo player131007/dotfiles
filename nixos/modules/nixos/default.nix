@@ -1,7 +1,7 @@
 {
     imports = [
-        ./eza.nix
-        ./swaylock.nix
-        ./nvidia.nix
+        ./eza
+        ./nvidia
+        ./swaylock
     ];
 }
