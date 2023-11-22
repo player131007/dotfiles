@@ -3,5 +3,6 @@
         ./eza
         ./nvidia
         ./swaylock
+        ./starship
     ];
 }

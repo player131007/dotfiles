@@ -89,10 +89,8 @@
 
     modules.eza.enable = true;
     modules.swaylock.enable = true;
+    modules.starship.enable = true;
     programs = {
-        starship = {
-            enable = true;
-        };
         neovim = {
             enable = true;
             defaultEditor = true;
@@ -110,7 +108,6 @@
         nil
         clang-tools_16 # clangd
 
-        inputs.home-manager.packages.${pkgs.system}.home-manager
         inputs.ags.packages.${pkgs.system}.default
         firefox
         dunst
@@ -119,7 +116,6 @@
         slurp
         brightnessctl
 
-        starship
         wl-clipboard
         foot
         gitMinimal
