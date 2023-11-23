@@ -1,3 +1,7 @@
 /*
 !.gitignore
-!nixos/
+!flake.lock
+!flake.nix
+!users
+!hosts
+!modules
