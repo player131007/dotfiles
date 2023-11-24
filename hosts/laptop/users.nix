@@ -2,11 +2,11 @@
 {
     imports = [
         inputs.home-manager.nixosModule
+        ../../users/player131007
     ];
 
     home-manager.useGlobalPkgs = true;
 
-    home-manager.users.player131007 = import ../../users/player131007 inputs;
     users.users.player131007 = {
         isNormalUser = true;
         extraGroups = [ "wheel" "networkmanager" "audio" "input" ];
