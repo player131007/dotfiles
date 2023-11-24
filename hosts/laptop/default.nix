@@ -109,7 +109,6 @@
         clang-tools_16 # clangd
 
         inputs.ags.packages.${pkgs.system}.default
-        firefox
         dunst
         swaybg
         grim

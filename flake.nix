@@ -10,6 +10,11 @@
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
         };
+        schizofox = {
+            url = "github:schizofox/schizofox";
+            inputs.nixpkgs.follows = "nixpkgs";
+            inputs.home-manager.follows = "home-manager";
+        };
     };
 
     outputs = inputs@{ nixpkgs, ... }:
