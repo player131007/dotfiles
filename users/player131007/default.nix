@@ -1,20 +1,20 @@
 { lib, pkgs, inputs, ... }:
 with builtins;
-let
-    configFileNames =  attrNames (readDir ./.config);
-in
 {
     imports = [
         inputs.home-manager.nixosModule
-        ../../modules/hm
     ];
 
     home-manager.users.player131007 = {
         imports = [
             inputs.schizofox.homeManagerModule
+            ../../modules/hm
         ];
 
-        xdg.configFile = lib.genAttrs configFileNames (name: { source = ./.config + "/${name}"; });
+        xdg.configFile = 
+        let
+             configFileNames =  attrNames (readDir ./.config);
+        in lib.genAttrs configFileNames (name: { source = ./.config + "/${name}"; });
 
         gtk.enable = true;
         gtk.theme = {
@@ -24,6 +24,10 @@ in
         gtk.iconTheme = {
             package = pkgs.rose-pine-icon-theme;
             name = "rose-pine";
+        };
+        gtk.font = {
+            name = "Inter";
+            size = 11;
         };
         gtk.gtk4.extraCss = readFile "${pkgs.rose-pine-gtk-theme}/share/themes/rose-pine/gtk-4.0/gtk.css";
 
@@ -37,11 +41,6 @@ in
             pkgs.inter
         ];
         fonts.fontconfig.enable = true;
-
-        gtk.font = {
-            name = "Inter";
-            size = 11;
-        };
 
         programs.schizofox = {
             enable = true;
