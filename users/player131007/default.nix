@@ -47,8 +47,18 @@ in
             background = "1f142e";
             foreground = "e0def4";
             font = "Inter";
-            simplefox.enable = true;
             darkreader.enable = true;
+            simplefox.enable = false;
+            extraCss =
+            let
+                cascade = pkgs.fetchFromGitHub {
+                    owner = "player131007";
+                    repo = "cascade";
+                    rev = "9ce31d0e7cbd140f341c796df930b6b5578e73ba";
+                    hash = "sha256-KBfd5/BsizAsJyesP39/OJoZjBPdTEnTMjljHU2wwo0=";
+                };
+                files = filter (name: lib.hasSuffix ".css" name) (attrNames (readDir cascade));
+            in lib.concatStrings (map (name: "@import '${cascade}/${name}';\n") files);
         };
 
         search = {
