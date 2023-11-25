@@ -6,6 +6,7 @@
     ];
 
     home-manager.useGlobalPkgs = true;
+    home-manager.extraSpecialArgs = { inherit inputs; };
 
     users.users.player131007 = {
         isNormalUser = true;

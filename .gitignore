@@ -4,4 +4,4 @@
 !flake.nix
 !users
 !hosts
-!modules
+!apps

@@ -25,7 +25,6 @@
                 host = "laptop";
             };
             modules = [
-                ./modules/nixos
                 ./hosts/laptop
             ];
         };
