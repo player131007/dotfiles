@@ -20,7 +20,7 @@
     ];
 
     fileSystems."/d" = {
-        device = "/dev/nvme0n1p3";
+        device = "/dev/disk/by-uuid/1A02-471A";
         options = [ "uid=player131007" ];
     };
 
