@@ -13,7 +13,7 @@ with builtins;
         xdg.configFile = 
         let
              configFileNames =  attrNames (readDir ./.config);
-        in lib.genAttrs configFileNames (name: { source = ./.config + "/${name}"; });
+        in lib.genAttrs configFileNames (name: { source = ./.config + "/${name}"; recursive = true; });
 
         gtk.enable = true;
         gtk.theme = {
