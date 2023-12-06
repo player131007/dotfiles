@@ -21,8 +21,18 @@
         end
     '';
 
+    programs.git = {
+        enable = true;
+        package = pkgs.gitMinimal;
+        userName = "Lương Việt Hoàng";
+        userEmail = "tcm4095@gmail.com";
+        extraConfig = {
+            core.autocrlf = "input";
+            credential.helper = "store";
+        };
+    };
+
     home.packages = with pkgs; [
-        gitMinimal
         clang_16
         llvmPackages_16.libllvm
 
