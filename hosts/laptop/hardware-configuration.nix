@@ -1,10 +1,10 @@
-{ config, lib, pkgs, modulesPath, ... }:
+{ config, lib, pkgs, modulesPath, inputs, ... }:
 
 {
     imports =
     [
         (modulesPath + "/installer/scan/not-detected.nix")
-        ./persist.nix
+        inputs.impermanence.nixosModule
     ];
 
     nixpkgs.hostPlatform = "x86_64-linux";
@@ -101,4 +101,16 @@
         label = "ESP";
         fsType = "vfat";
     };
+
+    environment.persistence."/persist" = {
+        directories = [
+            "/etc/NetworkManager/system-connections"
+        ];
+        files = [
+            "/etc/adjtime"
+            "/etc/machine-id"
+            "/etc/resolv.conf"
+        ];
+    };
+
 }
