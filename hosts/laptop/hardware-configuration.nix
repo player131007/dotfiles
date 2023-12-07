@@ -82,11 +82,6 @@
             options = [ "compress=zstd:5" "noatime" "subvol=log" ];
             neededForBoot = true;
         };
-        "/boot" = {
-            label = "nixos";
-            fsType = "btrfs";
-            options = [ "compress=zstd:5" "noatime" "subvol=boot" ];
-        };
         "/home" = {
             label = "nixos";
             fsType = "btrfs";
