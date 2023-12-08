@@ -25,6 +25,7 @@ with builtins;
             name = "rose-pine";
         };
         gtk.font = {
+            package = pkgs.inter;
             name = "Inter";
             size = 11;
         };
