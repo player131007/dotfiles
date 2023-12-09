@@ -39,6 +39,7 @@
         slurp
         brightnessctl
 
+        calc
         wl-clipboard
         foot
         ripgrep
