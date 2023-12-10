@@ -5,10 +5,8 @@ with builtins;
         inputs.schizofox.homeManagerModule
     ];
 
-    home.packages = [
-        pkgs.inter
-    ];
     fonts.fontconfig.enable = true;
+    home.packages = [ pkgs.inter ];
 
     programs.schizofox = {
         enable = true;
