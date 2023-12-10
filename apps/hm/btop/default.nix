@@ -1,5 +1,5 @@
-{ pkgs, ... }: {
-    home.packages = [ pkgs.btop ];
+{
+    programs.btop.enable = true;
     programs.btop.settings = {
         theme_background = false;
         truecolor = true;
