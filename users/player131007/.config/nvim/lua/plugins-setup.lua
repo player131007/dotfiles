@@ -129,6 +129,7 @@ require('lazy').setup({
     {
         'is0n/jaq-nvim',
         opts = require('plugins-config.misc').jaq,
+        cmd = "Jaq",
         keys = { { '<F9>', '<cmd>Jaq<CR>'} }
     },
     {
