@@ -20,7 +20,6 @@
         };
     };
 
-
     boot.loader = {
         systemd-boot = {
             enable = true;
@@ -47,12 +46,6 @@
         packages = [ pkgs.powerline-fonts ];
         font = "ter-powerline-v14b";
     };
-
-    fonts.packages = with pkgs; [
-    	cantarell-fonts
-        inter
-        (nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" "Meslo" ]; })
-    ];
 
     security = {
         sudo.enable = false;

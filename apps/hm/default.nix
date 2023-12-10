@@ -3,5 +3,6 @@
         ./schizofox
         ./fish
         ./btop
+        ./foot
     ];
 }
