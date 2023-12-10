@@ -1,7 +1,7 @@
-{ inputs, ... }:
 {
     imports = [
         ./schizofox
         ./fish
+        ./btop
     ];
 }
