@@ -15,6 +15,16 @@
             inputs.nixpkgs.follows = "nixpkgs";
             inputs.home-manager.follows = "home-manager";
         };
+
+        base16.url = "github:SenchoPens/base16.nix";
+        base16-schemes = {
+            url = "github:tinted-theming/base16-schemes";
+            flake = false;
+        };
+        base16-foot = {
+            url = "github:tinted-theming/base16-foot";
+            flake = false;
+        };
     };
 
     outputs = inputs@{ nixpkgs, ... }:

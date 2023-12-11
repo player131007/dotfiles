@@ -7,8 +7,11 @@ with builtins;
 
     home-manager.users.player131007 = {
         imports = [
+            inputs.base16.homeManagerModule
             ./apps.nix
         ];
+
+        scheme = "${inputs.base16-schemes}/rose-pine.yaml";
 
         xdg.configFile = 
         let

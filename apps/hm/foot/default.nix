@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, inputs, ... }: {
     fonts.fontconfig.enable = true;
     home.packages = with pkgs; [
         (nerdfonts.override { fonts = [ "Meslo" ]; })
@@ -7,6 +7,7 @@
     programs.foot.enable = true;
     programs.foot.settings = {
         main = {
+            include = config.scheme inputs.base16-foot;
             font = "MesloLGS Nerd Font Mono:size=11";
             shell = "fish";
             pad = "5x5 center";
