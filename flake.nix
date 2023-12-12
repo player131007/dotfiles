@@ -21,6 +21,7 @@
             url = "github:tinted-theming/base16-schemes";
             flake = false;
         };
+
         base16-foot = {
             url = "github:tinted-theming/base16-foot";
             flake = false;

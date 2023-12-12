@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
     programs.fish = {
         enable = true;
         plugins = [
@@ -14,7 +14,11 @@
         ];
         interactiveShellInit = ''
             set -g fish_greeting
-            fish_config theme choose "Rosé Pine"
+            source ${config.scheme {
+                template = ./fish.mustache;
+                extension = ".fish";
+            }}
+            base16-${config.scheme.scheme-slug}
         '';
     };
 }
