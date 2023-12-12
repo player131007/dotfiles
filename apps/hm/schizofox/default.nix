@@ -1,4 +1,4 @@
-{ inputs, pkgs, lib, ... }:
+{ inputs, pkgs, lib, config, ... }:
 with builtins;
 {
     imports = [
@@ -12,9 +12,8 @@ with builtins;
         enable = true;
 
         theme = {
-            background-darker = "191724";
-            background = "1f142e";
-            foreground = "e0def4";
+            background = config.scheme.base00;
+            foreground = config.scheme.base05;
             font = "Inter";
             darkreader.enable = true;
             extraCss =
@@ -22,11 +21,16 @@ with builtins;
                 cascade = pkgs.fetchFromGitHub {
                     owner = "player131007";
                     repo = "cascade";
-                    rev = "8d0b8b08782c1933f08ae19e11c94472b03a96f7";
-                    hash = "sha256-Kvu9IwtalpWuo0ekhi/Wl/01NxHZlfPYK6BLj0e4ZUQ=";
+                    rev = "3e6675b3dced7888f1439f4557197f398beef3c7";
+                    hash = "sha256-FNac/LTxHb63UQgDqZBkHGtR2cRuNhmtKc5kpW592/o=";
                 };
                 files = filter (name: lib.hasSuffix ".css" name) (attrNames (readDir cascade));
-            in lib.concatStrings (map (name: "@import '${cascade}/${name}';\n") files);
+            in
+            (lib.concatStrings (map (name: "@import '${cascade}/${name}';\n") files))
+            + "@import '${config.scheme {
+                template = builtins.readFile "${cascade}/cascade-colours.mustache";
+                extension = ".css";
+            }}';";
         };
 
         search = {
