@@ -33,8 +33,7 @@ deleted = ''
 style = 'bold red bg:pl5'
 
 [nix_shell]
-format = '❄️'
-style = "bg:pl3"
+format = '[❄️](bg:pl3)'
 
 [status]
 disabled = false
