@@ -4,5 +4,6 @@
         ./fish
         ./btop
         ./foot
+        ./gtk
     ];
 }
