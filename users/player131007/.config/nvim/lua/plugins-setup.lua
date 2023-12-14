@@ -15,10 +15,7 @@ require('lazy').setup({
     {
         'L3MON4D3/LuaSnip',
         version = '*',
-        config = function(_, opts)
-            require('luasnip').config.set_config { update_events = 'TextChanged,TextChangedI' }
-            require('luasnip.loaders.from_lua').lazy_load { paths = '~/.config/nvim/lua/snippets/' }
-        end
+        config = require('plugins-config.misc').luasnip
     },
     {
         "windwp/nvim-autopairs",
@@ -28,19 +25,9 @@ require('lazy').setup({
     {
         'hrsh7th/nvim-cmp',
         event = 'InsertEnter',
-        opts = function()
-            return require 'plugins-config.cmp'
-        end,
-        config = function(_, opts)
-            require('cmp').setup(opts)
-            local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-            local cmp = require('cmp')
-            cmp.event:on(
-                'confirm_done',
-                cmp_autopairs.on_confirm_done()
-            )
-        end,
+        config = require 'plugins-config.cmp',
         dependencies = {
+            'windwp/nvim-autopairs',
             'hrsh7th/cmp-nvim-lsp',
             'hrsh7th/cmp-nvim-lsp-signature-help'
         }
@@ -48,17 +35,13 @@ require('lazy').setup({
     {
         'rose-pine/neovim',
         name = 'rose-pine',
-        opts = require('plugins-config.misc').rose_pine,
-        config = function(_, opts)
-            require('rose-pine').setup(opts)
-            vim.cmd.colorscheme('rose-pine')
-        end
+        config = require('plugins-config.misc').rose_pine
     },
     {
         'nvim-lualine/lualine.nvim',
         dependencies = { 'rose-pine' },
         event = 'ColorScheme',
-        opts = require('plugins-config.misc').lualine
+        config = require('plugins-config.misc').lualine
     },
     {
         'szw/vim-maximizer',
@@ -74,24 +57,7 @@ require('lazy').setup({
     {
         'nvim-treesitter/nvim-treesitter',
         build = ":TSUpdate",
-        config = function()
-            require('nvim-treesitter').setup()
-            local parser_config = require("nvim-treesitter.parsers").get_parser_configs()
-            parser_config.hypr = {
-                install_info = {
-                    url = "https://github.com/luckasRanarison/tree-sitter-hypr",
-                    files = { "src/parser.c" },
-                    branch = "master",
-                },
-                filetype = "hypr",
-            }
-            require('nvim-treesitter.configs').setup {
-                ensure_installed = { 'cpp', 'lua', 'nix', 'hypr', 'javascript' },
-                highlight = {
-                    enable = true
-                }
-            }
-        end
+        config = require('plugins-config.treesitter')
     },
     {
         'luckasRanarison/tree-sitter-hypr',
@@ -99,40 +65,21 @@ require('lazy').setup({
     },
     {
         url = "https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-        config = function()
-            require('lsp_lines').setup {}
-            vim.diagnostic.config { virtual_text = false }
-        end
+        config = require('plugins-config.misc').lsp_lines
     },
     {
         'neovim/nvim-lspconfig',
-        config = function()
-            local lspconfig = require 'lspconfig'
-            local capabilities = require('cmp_nvim_lsp').default_capabilities()
-
-            lspconfig.nil_ls.setup {}
-            lspconfig.clangd.setup {
-                capabilities = capabilities,
-                cmd = {
-                    "clangd",
-                    "-j",
-                    "4",
-                    "--malloc-trim",
-                    "--pch-storage=memory",
-                    "--header-insertion=never"
-                }
-            }
-        end
+        config = require('plugins-config.lspconfig')
     },
     {
         'is0n/jaq-nvim',
-        opts = require('plugins-config.misc').jaq,
+        config = require('plugins-config.misc').jaq,
         cmd = "Jaq",
         keys = { { '<F9>', '<cmd>Jaq<CR>'} }
     },
     {
         'ellisonleao/carbon-now.nvim',
         cmd = 'CarbonNow',
-        opts = require('plugins-config.misc').carbon_now
+        config = require('plugins-config.misc').carbon_now
     },
 })
