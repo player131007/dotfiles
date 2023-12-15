@@ -5,5 +5,6 @@
         ./btop
         ./foot
         ./gtk
+        ./nvim
     ];
 }

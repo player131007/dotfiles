@@ -19,7 +19,7 @@ return {
     lualine = function()
         require('lualine').setup {
             options = {
-                theme = 'rose-pine'
+                theme = 'base16'
             }
         }
     end,

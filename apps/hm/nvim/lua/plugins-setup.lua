@@ -13,6 +13,10 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
     {
+        'RRethy/nvim-base16',
+        config = require('plugins-config.base16')
+    },
+    {
         'L3MON4D3/LuaSnip',
         version = '*',
         config = require('plugins-config.misc').luasnip
@@ -33,14 +37,7 @@ require('lazy').setup({
         }
     },
     {
-        'rose-pine/neovim',
-        name = 'rose-pine',
-        config = require('plugins-config.misc').rose_pine
-    },
-    {
         'nvim-lualine/lualine.nvim',
-        dependencies = { 'rose-pine' },
-        event = 'ColorScheme',
         config = require('plugins-config.misc').lualine
     },
     {
