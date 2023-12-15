@@ -37,6 +37,11 @@ return {
             behavior = {
                 autosave = true,
                 startinsert = false
+            },
+            ui = {
+                float = {
+                    border = "rounded"
+                }
             }
         }
     end,
