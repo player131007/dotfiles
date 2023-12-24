@@ -15,9 +15,6 @@
     boot.kernelModules = [ "kvm-amd" ];
     boot.kernelParams = [ "nvidia_drm.modeset=1" "nvidia_drm.fbdev=1" ];
     boot.kernelPackages = pkgs.linuxPackages_zen;
-    boot.extraModulePackages = with config.boot.kernelPackages; [
-        lenovo-legion-module
-    ];
 
     fileSystems."/d" = {
         device = "/dev/disk/by-uuid/1A02-471A";
