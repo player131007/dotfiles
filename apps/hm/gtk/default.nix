@@ -20,4 +20,5 @@
         gtk3.extraCss = finalCss;
         gtk4.extraCss = finalCss;
     };
+    dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
 }
