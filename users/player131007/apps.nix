@@ -47,5 +47,7 @@
         btop
         _7zz
         wl-screenrec
+
+        keepassxc
     ];
 }
