@@ -14,7 +14,6 @@
         bash.enable = true;
     };
 
-
     programs.git = {
         enable = true;
         package = pkgs.gitMinimal;
@@ -22,7 +21,6 @@
         userEmail = "tcm4095@gmail.com";
         extraConfig = {
             core.autocrlf = "input";
-            credential.helper = "store";
         };
     };
 
