@@ -11,7 +11,7 @@ with builtins;
             ./apps.nix
         ];
 
-        scheme = "${inputs.base16-schemes}/rose-pine.yaml";
+        scheme = "${inputs.base16-schemes}/base16/rose-pine.yaml";
 
         xdg.configFile = 
         let

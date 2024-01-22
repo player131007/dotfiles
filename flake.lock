@@ -57,16 +57,16 @@
     "base16-schemes": {
       "flake": false,
       "locked": {
-        "lastModified": 1702718998,
-        "narHash": "sha256-VTczZi1C4WSzejpTFbneMonAdarRLtDnFehVxWs6ad0=",
+        "lastModified": 1705270693,
+        "narHash": "sha256-9LmwYbtTxNFiP+osqRUbOXghJXpYvyvAwBwW80JMO7s=",
         "owner": "tinted-theming",
-        "repo": "base16-schemes",
-        "rev": "2b6f2d0677216ddda50c9cabd6ee70fae4665f81",
+        "repo": "schemes",
+        "rev": "395074124283df993571f2abb9c713f413b76e6e",
         "type": "github"
       },
       "original": {
         "owner": "tinted-theming",
-        "repo": "base16-schemes",
+        "repo": "schemes",
         "type": "github"
       }
     },
