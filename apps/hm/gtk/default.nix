@@ -19,6 +19,16 @@
         };
         gtk3.extraCss = finalCss;
         gtk4.extraCss = finalCss;
+
+        gtk3.extraConfig = {
+            gtk-application-prefer-dark-theme = true;
+        };
+        gtk4.extraConfig = {
+            gtk-application-prefer-dark-theme = true;
+        };
     };
-    dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
+
+    dconf.settings."org/gnome/desktop/interface" = {
+        color-scheme = "prefer-dark";
+    };
 }
