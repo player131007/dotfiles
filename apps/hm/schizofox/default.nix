@@ -12,6 +12,7 @@ with builtins;
         enable = true;
 
         settings = {
+            "privacy.resistFingerprinting" = false;
             "content.notify.interval" = 100000;
             "layout.css.grid-template-masonry-value.enabled" = true;
             "dom.enable_web_task_scheduling" = true;
