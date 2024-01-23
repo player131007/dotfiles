@@ -81,5 +81,12 @@
         fcitx5.addons = with pkgs; [ fcitx5-unikey ];
     };
 
+    xdg.portal = {
+        enable = true;
+        extraPortals = with pkgs; [
+            xdg-desktop-portal-gtk
+        ];
+    };
+
     system.stateVersion = "23.05";
 }
