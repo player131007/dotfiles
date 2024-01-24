@@ -1,5 +1,4 @@
-{ inputs, ... }:
-{
+{ inputs, ... }: {
     imports = with inputs; [
         home-manager.nixosModule
         (self + "/users/player131007")

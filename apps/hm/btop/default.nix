@@ -1,5 +1,4 @@
-{ config, ... }:
-{
+{ config, ... }: {
     programs.btop.enable = true;
 
     xdg.configFile."btop/themes/colors.theme".source = config.scheme {

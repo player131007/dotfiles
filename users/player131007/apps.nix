@@ -1,6 +1,7 @@
 { pkgs, inputs, ... }:
 {
     imports = [
+        (self + "/apps/hm")
         inputs.ags.homeManagerModules.default
     ];
 

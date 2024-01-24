@@ -1,5 +1,4 @@
-{pkgs, ... }:
-{
+{pkgs, ... }: {
     environment.systemPackages = [ pkgs.starship ];
     programs.bash.interactiveShellInit = ''
         export STARSHIP_CONFIG=${./starship.toml}

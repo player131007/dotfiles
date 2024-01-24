@@ -28,8 +28,7 @@
         };
     };
 
-    outputs = inputs@{ nixpkgs, ... }:
-    {
+    outputs = inputs@{ nixpkgs, ... }: {
         nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
             specialArgs = {
                 inherit inputs;

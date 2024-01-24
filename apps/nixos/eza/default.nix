@@ -1,5 +1,4 @@
-{ pkgs, ... }:
-{
+{ pkgs, ... }: {
     environment.systemPackages = [ pkgs.eza ];
     programs.bash.interactiveShellInit = ''
         if [[ "$TERM" == "linux" ]]; then

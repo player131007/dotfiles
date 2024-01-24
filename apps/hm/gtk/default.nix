@@ -1,5 +1,4 @@
-{ config, pkgs, ... }:
-{
+{ config, pkgs, ... }: {
     gtk =
     let
         finalCss = builtins.readFile (config.scheme {

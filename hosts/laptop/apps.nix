@@ -1,5 +1,4 @@
-{ pkgs, inputs, ... }:
-{
+{ pkgs, inputs, ... }: {
     imports = with inputs; [
         (self + "/apps/nixos")
     ];

@@ -1,6 +1,4 @@
-{ lib, pkgs, inputs, ... }:
-with builtins;
-{
+{ lib, pkgs, inputs, ... }: {
     imports = [
         inputs.home-manager.nixosModule
     ];
@@ -14,6 +12,7 @@ with builtins;
         scheme = "${inputs.base16-schemes}/base16/rose-pine.yaml";
 
         xdg.configFile = 
+        with builtins;
         let
              configFileNames =  attrNames (readDir ./.config);
         in lib.genAttrs configFileNames (name: { source = ./.config + "/${name}"; recursive = true; });
