@@ -1,8 +1,8 @@
 { inputs, ... }:
 {
-    imports = [
-        inputs.home-manager.nixosModule
-        ../../users/player131007
+    imports = with inputs; [
+        home-manager.nixosModule
+        (self + "/users/player131007")
     ];
 
     home-manager.useGlobalPkgs = true;

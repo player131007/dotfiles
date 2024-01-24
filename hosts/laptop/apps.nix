@@ -1,7 +1,7 @@
 { pkgs, inputs, ... }:
 {
-    imports = [
-        ../../apps/nixos
+    imports = with inputs; [
+        (self + "/apps/nixos")
     ];
 
     programs.fish.enable = true;
