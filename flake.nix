@@ -10,10 +10,9 @@
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        schizofox = {
-            url = "github:schizofox/schizofox";
+        nixvim = {
+            url = "github:nix-community/nixvim";
             inputs.nixpkgs.follows = "nixpkgs";
-            inputs.home-manager.follows = "home-manager";
         };
 
         base16.url = "github:SenchoPens/base16.nix";

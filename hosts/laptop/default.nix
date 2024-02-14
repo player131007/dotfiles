@@ -3,7 +3,7 @@
     imports = [
         ./hardware-configuration.nix
         ./users.nix
-        ./apps.nix
+        ./apps
     ];
 
     nix.registry.nixpkgs.to = {
@@ -74,11 +74,6 @@
             vt = 2;
             settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet -t -c Hyprland --asterisks --user-menu";
         };
-    };
-
-    i18n.inputMethod = {
-        enabled = "fcitx5";
-        fcitx5.addons = with pkgs; [ fcitx5-unikey ];
     };
 
     xdg.portal = {

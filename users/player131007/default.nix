@@ -1,4 +1,4 @@
-{ lib, pkgs, inputs, ... }: {
+{ pkgs, inputs, ... }: {
     imports = [
         inputs.home-manager.nixosModule
     ];
@@ -6,16 +6,10 @@
     home-manager.users.player131007 = {
         imports = [
             inputs.base16.homeManagerModule
-            ./apps.nix
+            ./apps
         ];
 
         scheme = "${inputs.base16-schemes}/base16/rose-pine.yaml";
-
-        xdg.configFile = 
-        with builtins;
-        let
-             configFileNames =  attrNames (readDir ./.config);
-        in lib.genAttrs configFileNames (name: { source = ./.config + "/${name}"; recursive = true; });
 
         home.pointerCursor = {
             package = pkgs.bibata-cursors;

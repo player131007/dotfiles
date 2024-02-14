@@ -1,0 +1,51 @@
+{ pkgs, inputs, ... }: {
+    imports = [
+        ./btop
+        ./firefox
+        ./fish
+        ./foot
+        ./gtk
+        ./nvim
+        ./hyprland
+        ./fcitx5
+        inputs.ags.homeManagerModules.default
+    ];
+
+    programs = {
+        ags.enable = true;
+        bash.enable = true;
+    };
+
+    programs.git = {
+        enable = true;
+        package = pkgs.gitMinimal;
+        userName = "Lương Việt Hoàng";
+        userEmail = "tcm4095@gmail.com";
+        extraConfig = {
+            core.autocrlf = "input";
+        };
+    };
+
+    home.packages = with pkgs; [
+        clang_16
+        llvmPackages_16.libllvm
+
+        dunst
+        swaybg
+        grim
+        slurp
+        brightnessctl
+
+        calc
+        wl-clipboard
+        foot
+        ripgrep
+        xdg-utils
+        btop
+        _7zz
+        wl-screenrec
+
+        keepassxc
+    ];
+}
+

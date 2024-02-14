@@ -1,7 +1,0 @@
-{
-    imports = [
-        ./eza
-        ./swaylock
-        ./starship
-    ];
-}
