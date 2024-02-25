@@ -1,4 +1,4 @@
-{ pkgs, host, ... }:
+{ pkgs, inputs, ... }:
 {
     imports = [
         ./hardware-configuration.nix
@@ -6,12 +6,10 @@
         ./apps
     ];
 
-    nix.registry.nixpkgs.to = {
-        type = "github";
-        owner = "NixOS";
-        repo = "nixpkgs";
-        ref = "nixos-unstable";
-    };
+    nix.registry.nixpkgs.flake = inputs.nixpkgs;
+    nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
+    nix.channel.enable = false;
+
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
     nixpkgs.config = {
         allowUnfree = true;
@@ -31,7 +29,7 @@
         };
     };
 
-    networking.hostName = host;
+    networking.hostName = "laptop";
     networking.networkmanager.enable = true;
     networking.networkmanager.insertNameservers = [
         "1.1.1.1"

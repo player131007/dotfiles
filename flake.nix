@@ -31,7 +31,6 @@
         nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
             specialArgs = {
                 inherit inputs;
-                host = "laptop";
             };
             modules = [
                 ./hosts/laptop
