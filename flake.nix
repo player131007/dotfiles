@@ -27,14 +27,16 @@
         };
     };
 
-    outputs = inputs@{ nixpkgs, ... }: {
+    outputs = inputs@{ nixpkgs, home-manager, ... }: {
         nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
-            specialArgs = {
-                inherit inputs;
-            };
-            modules = [
-                ./hosts/laptop
-            ];
+            specialArgs = { inherit inputs; };
+            modules = [ ./hosts/laptop ];
+        };
+
+        homeConfigurations.player131007 = home-manager.lib.homeManagerConfiguration {
+            pkgs = import nixpkgs { system = "x86_64-linux"; };
+            extraSpecialArgs = { inherit inputs; };
+            modules = [ ./users/player131007 ];
         };
     };
 }

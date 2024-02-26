@@ -2,9 +2,14 @@
 {
     imports = [
         ./hardware-configuration.nix
-        ./users.nix
         ./apps
     ];
+
+    users.users.player131007 = {
+        isNormalUser = true;
+        extraGroups = [ "wheel" "networkmanager" "audio" "input" ];
+        hashedPasswordFile = "/persist/password/player131007";
+    };
 
     nix.registry.nixpkgs.flake = inputs.nixpkgs;
     nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
@@ -16,7 +21,9 @@
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
     nixpkgs.config = {
         allowUnfree = true;
+        cudaSupport = true;
         packageOverrides = prev: {
+            gitMinimal = prev.gitMinimal.override { withManual = true; };
             _7zz = prev._7zz.override { enableUnfree = true; };
         };
     };

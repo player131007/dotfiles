@@ -14,6 +14,7 @@
     programs = {
         ags.enable = true;
         bash.enable = true;
+        home-manager.enable = true;
     };
 
     programs.git = {
