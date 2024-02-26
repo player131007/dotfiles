@@ -14,6 +14,7 @@
 
     fileSystems."/d" = {
         device = "/dev/disk/by-uuid/1A02-471A";
+        fsType = "exfat";
         options = [ "uid=player131007" ];
     };
 
