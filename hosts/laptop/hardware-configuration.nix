@@ -10,7 +10,6 @@
     boot.initrd.kernelModules = [ "amdgpu" ];
 
     boot.kernelModules = [ "kvm-amd" ];
-    boot.kernelParams = [ "nvidia_drm.modeset=1" "nvidia_drm.fbdev=1" ];
     boot.kernelPackages = pkgs.linuxPackages_zen;
 
     fileSystems."/d" = {
@@ -36,13 +35,13 @@
     };
 
     services.xserver.videoDrivers = [ "nvidia" ];
-
     hardware.nvidia = {
         modesetting.enable = true;
         powerManagement.enable = true;
         powerManagement.finegrained = true;
-        nvidiaSettings = true;
-        
+        open = true;
+        package = config.boot.kernelPackages.nvidiaPackages.beta;
+
         prime = {
             offload = {
                 enable = true;
