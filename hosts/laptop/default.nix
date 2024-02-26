@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }:
+{ pkgs, inputs, config, ... }:
 {
     imports = [
         ./hardware-configuration.nix
@@ -9,6 +9,9 @@
     nix.registry.nixpkgs.flake = inputs.nixpkgs;
     nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
     nix.channel.enable = false;
+
+    # here because `nix.channel.enable = false` would set this to nothing
+    nix.settings.nix-path = config.nix.nixPath;
 
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
     nixpkgs.config = {
