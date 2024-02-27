@@ -84,6 +84,7 @@
         "/efi" = {
             label = "ESP";
             fsType = "vfat";
+            options = [ "umask=0077" ];
         };
     };
 
