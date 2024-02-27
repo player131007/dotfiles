@@ -14,5 +14,6 @@
     programs.ssh.startAgent = true;
     environment.systemPackages = with pkgs; [
         gitMinimal
+        home-manager
     ];
 }
