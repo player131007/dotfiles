@@ -13,7 +13,7 @@
     boot.kernelPackages = pkgs.linuxPackages_zen;
 
     fileSystems."/d" = {
-        device = "/dev/disk/by-uuid/1A02-471A";
+        device = "/dev/disk/by-uuid/584B-F342";
         fsType = "exfat";
         options = [ "uid=player131007" ];
     };
