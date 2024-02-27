@@ -1,7 +1,8 @@
-{ pkgs, inputs, config, ... }:
+{ pkgs, ... }:
 {
     imports = [
         ./hardware-configuration.nix
+        ./minimal.nix
         ./apps
     ];
 
@@ -11,22 +12,8 @@
         hashedPasswordFile = "/persist/password/player131007";
     };
 
-    nix.registry.nixpkgs.flake = inputs.nixpkgs;
-    nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
     nix.channel.enable = false;
-
-    # here because `nix.channel.enable = false` would set this to nothing
-    nix.settings.nix-path = config.nix.nixPath;
-
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
-    nixpkgs.config = {
-        allowUnfree = true;
-        cudaSupport = true;
-        packageOverrides = prev: {
-            gitMinimal = prev.gitMinimal.override { withManual = true; };
-            _7zz = prev._7zz.override { enableUnfree = true; };
-        };
-    };
+    nixpkgs.config.cudaSupport = true;
 
     boot.loader = {
         systemd-boot = {

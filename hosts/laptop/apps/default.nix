@@ -1,4 +1,3 @@
-{ pkgs, ... }:
 {
     imports = [
         ./eza
@@ -12,8 +11,4 @@
     programs.fish.enable = true;
     programs.hyprland.enable = true;
     programs.ssh.startAgent = true;
-    environment.systemPackages = with pkgs; [
-        gitMinimal
-        home-manager
-    ];
 }

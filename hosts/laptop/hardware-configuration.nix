@@ -4,13 +4,10 @@
         inputs.impermanence.nixosModule
     ];
 
-    nixpkgs.hostPlatform = "x86_64-linux";
-
     boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" "sdhci_pci" ];
     boot.initrd.kernelModules = [ "amdgpu" ];
 
     boot.kernelModules = [ "kvm-amd" ];
-    boot.kernelPackages = pkgs.linuxPackages_zen;
 
     fileSystems."/d" = {
         device = "/dev/disk/by-uuid/584B-F342";
