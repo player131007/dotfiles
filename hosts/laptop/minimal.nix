@@ -17,7 +17,6 @@
 
     boot.kernelPackages = lib.mkForce pkgs.linuxPackages_zen;
 
-    hardware.cpu.amd.updateMicrocode = true;
     hardware.firmware = with pkgs; [
         linux-firmware
     ];
