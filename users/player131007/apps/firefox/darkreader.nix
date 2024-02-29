@@ -5,7 +5,7 @@
     text ? "e8e6e3",
     isDarkTheme ? true,
 }: let
-    version = "4.9.77";
+    version = "4.9.78";
 in buildNpmPackage {
     pname = "darkreader";
     inherit version;
@@ -14,10 +14,10 @@ in buildNpmPackage {
         owner = "darkreader";
         repo = "darkreader";
         rev = "v${version}";
-        hash = "sha256-h3BdRahJNVlgxh8qAjiE1Exc+TvKDmw4DxSzHUZLIqA=";
+        hash = "sha256-jU82aajKmZ9rLGEClMRzi89XMKNsUBgyXJxVtYWnGVc=";
     };
 
-    npmDepsHash = "sha256-hfkgZmou8G5P37CkfSeIk6+vCU9v+ApaRY5gaNPFLEI=";
+    npmDepsHash = "sha256-BnQU3CbLZY9UdH2MJ0hJL86Z+tdeeFT/m/7WhcDWY7g=";
 
     prePatch = let
         mode = if isDarkTheme then "1" else "0";
