@@ -2,7 +2,7 @@
 {
     imports = [
         ./hardware-configuration.nix
-        ./minimal.nix
+        ./common.nix
         ./apps
     ];
 

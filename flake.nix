@@ -35,12 +35,7 @@
 
         nixosImages.laptop = (nixpkgs.lib.nixosSystem {
             specialArgs = { inherit inputs; };
-            modules = [
-                ({ modulesPath, ... }: {
-                    imports = [ (modulesPath + "/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix") ];
-                })
-                ./hosts/laptop/minimal.nix
-            ];
+            modules = [ ./hosts/laptop/iso.nix ];
         }).config.system.build.isoImage;
 
         homeConfigurations.player131007 = home-manager.lib.homeManagerConfiguration {
