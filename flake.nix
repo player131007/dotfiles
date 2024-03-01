@@ -13,6 +13,7 @@
         nixvim = {
             url = "github:nix-community/nixvim";
             inputs.nixpkgs.follows = "nixpkgs";
+            inputs.home-manager.follows = "home-manager";
         };
 
         base16.url = "github:SenchoPens/base16.nix";
