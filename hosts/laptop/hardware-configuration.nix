@@ -7,7 +7,7 @@
     boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" "sdhci_pci" ];
     boot.initrd.kernelModules = [ "amdgpu" ];
 
-    boot.kernelModules = [ "kvm-amd" ];
+    boot.kernelModules = [ "kvm-amd" "nvidia-uvm" ];
 
     fileSystems."/d" = {
         device = "/dev/disk/by-uuid/584B-F342";
