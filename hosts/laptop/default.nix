@@ -37,6 +37,13 @@
 
     time.timeZone = "Asia/Ho_Chi_Minh";
 
+    system.activationScripts = {
+        run-nix-index.text = ''
+            echo -e '\033[31;1m!!!\033[0m' remember to run nix-index if u updated nixpkgs
+            sleep 0.5
+        '';
+    };
+
     console = {
         packages = [ pkgs.powerline-fonts ];
         font = "ter-powerline-v14b";
