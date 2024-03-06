@@ -8,10 +8,6 @@
         enable = true;
         luaLoader.enable = true;
 
-        extraConfigLuaPre = ''
-            local luasnip_ok, luasnip = pcall(require, "luasnip")
-        '';
-
         clipboard.providers.wl-copy.enable = true;
         colorschemes.base16 = {
             enable = true;
@@ -107,41 +103,51 @@
                 padding = true;
             };
 
-            nvim-cmp =
-            let
-                luasnipEnabled = config.programs.nixvim.plugins.luasnip.enable;
-            in {
+            luasnip = {
                 enable = true;
-                snippet.expand = lib.mkIf luasnipEnabled "luasnip";
+                extraConfig = {
+                    update_events = [ "TextChanged" "TextChangedI" ];
+                };
+                fromLua = [
+                    { paths = "${./snippets}"; }
+                ];
+            };
+
+            nvim-cmp = {
+                enable = true;
+                snippet.expand = "luasnip";
                 mappingPresets = [ "insert" ];
                 sources = [
+                    { name = "luasnip"; }
                     { name = "nvim_lsp"; }
                     { name = "nvim_lsp_signature_help"; }
                 ];
                 mapping = {
                     "<C-b>" = "cmp.mapping.scroll_docs(-4)";
                     "<C-f>" = "cmp.mapping.scroll_docs(4)";
-                    "<C-e>" = "cmp.mapping.abort";
+                    "<C-e>" = "cmp.mapping.abort()";
                     "<Tab>" = {
                         modes = [ "i" "s" ];
                         action = ''
-                            cmp.mapping(function(fallback)
+                            function(fallback)
+                                local luasnip = require "luasnip"
                                 if cmp.visible() then cmp.select_next_item()
-                                elseif luasnip_ok and luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
+                                elseif luasnip.expand_or_jumpable() then luasnip.expand_or_jump()
                                 else fallback()
                                 end
-                            end)
+                            end
                         '';
                     };
                     "<S-Tab>" = {
                         modes = [ "i" "s" ];
                         action = ''
-                            cmp.mapping(function(fallback)
+                            function(fallback)
+                                local luasnip = require "luasnip"
                                 if cmp.visible() then cmp.select_prev_item()
-                                elseif luasnip_ok and luasnip.jumpable(-1) then luasnip.jump(-1)
+                                elseif luasnip.jumpable(-1) then luasnip.jump(-1)
                                 else fallback()
                                 end
-                            end)
+                            end
                         '';
                     };
                     "<CR>" = ''
