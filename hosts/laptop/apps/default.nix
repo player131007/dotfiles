@@ -1,6 +1,7 @@
 {
     imports = [
         ./eza
+        ./hyprlock
         ./starship
     ];
 
