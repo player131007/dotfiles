@@ -28,9 +28,6 @@
     };
 
     home.packages = with pkgs; [
-        clang_16
-        llvmPackages_16.libllvm
-
         dunst
         swaybg
         grim
