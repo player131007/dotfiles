@@ -41,8 +41,6 @@ pref("media.cache_resume_threshold", 3600);
 pref("image.mem.decode_bytes_at_a_time", 32768);
 
 /** NETWORK ***/
-pref("network.buffer.cache.size", 262144);
-pref("network.buffer.cache.count", 128);
 pref("network.http.max-connections", 1800);
 pref("network.http.max-persistent-connections-per-server", 10);
 pref("network.http.max-urgent-start-excessive-connections-per-host", 5);
