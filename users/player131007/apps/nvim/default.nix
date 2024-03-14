@@ -52,6 +52,10 @@
             "<C-j>" = "<C-w>j";
             "<C-k>" = "<C-w>k";
             "<C-l>" = "<C-w>l";
+            "<leader>xd" = { __raw = "function() require(\"trouble\").toggle(\"document_diagnostics\") end"; };
+            "<leader>gr" = { __raw = "function() require(\"trouble\").toggle(\"lsp_references\") end"; };
+            "<leader>gd" = { __raw = "function() require(\"trouble\").toggle(\"lsp_definitions\") end"; };
+            "<leader>td" = { __raw = "function() require(\"trouble\").toggle(\"lsp_type_definitions\") end"; };
         };
 
         plugins = {
@@ -61,14 +65,9 @@
                     diagnostic = {
                         "[d" = "goto_prev";
                         "]d" = "goto_next";
-                        "<leader>q" = "setloclist";
                     };
                     lspBuf = {
-                        "<leader>gd" = "declaration";
-                        "<leader>gD" = "definition";
-                        "<leader>gi" = "implementation";
-                        "<leader>gr" = "references";
-                        "<leader>tD" = "type_definition";
+                        "<leader>gD" = "declaration";
                         "K" = "hover";
                         "<F2>" = "rename";
                         "<leader>ca" = "code_action";
@@ -163,6 +162,7 @@
                     '';
                 };
             };
+            trouble.enable = true;
         };
     };
 }
