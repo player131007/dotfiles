@@ -50,10 +50,12 @@
     };
 
     security = {
-        sudo.enable = false;
-        doas = {
+        sudo = {
             enable = true;
-            extraRules = [{ groups = ["wheel"]; persist = true; }];
+            execWheelOnly = true;
+            extraConfig = ''
+                Defaults lecture=never
+            '';
         };
         rtkit.enable = true;
     };
