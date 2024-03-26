@@ -7,7 +7,7 @@
     boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" "sdhci_pci" ];
     boot.initrd.kernelModules = [ "amdgpu" ];
 
-    boot.kernelModules = [ "kvm-amd" "nvidia-uvm" ];
+    boot.kernelModules = [ "kvm-amd" ];
 
     fileSystems."/d" = {
         device = "/dev/disk/by-uuid/584B-F342";
@@ -37,8 +37,6 @@
         modesetting.enable = true;
         powerManagement.enable = true;
         powerManagement.finegrained = true;
-        open = true;
-        package = config.boot.kernelPackages.nvidiaPackages.beta;
 
         prime = {
             offload = {
