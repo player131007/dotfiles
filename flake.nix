@@ -2,10 +2,6 @@
     inputs = {
         nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
         impermanence.url = "github:nix-community/impermanence";
-        ags = {
-            url = "github:Aylur/ags";
-            inputs.nixpkgs.follows = "nixpkgs";
-        };
         home-manager = {
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";

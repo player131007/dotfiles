@@ -1,4 +1,4 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, ... }: {
     imports = [
         ./btop
         ./firefox
@@ -8,11 +8,9 @@
         ./nvim
         ./hyprland
         ./fcitx5
-        inputs.ags.homeManagerModules.default
     ];
 
     programs = {
-        ags.enable = true;
         bash.enable = true;
         home-manager.enable = true;
     };
