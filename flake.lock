@@ -269,6 +269,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-staging-next": {
+      "locked": {
+        "lastModified": 1711843327,
+        "narHash": "sha256-2fPNKpB96rdvhKbqKklIrZ3V2qQsJHikF7BLV0gE7P4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "ba060bffac5ada1bd2be64b6061c6e69ac3bc9aa",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "staging-next",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "nixvim": {
       "inputs": {
         "devshell": "devshell",
@@ -333,6 +349,7 @@
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-staging-next": "nixpkgs-staging-next",
         "nixvim": "nixvim"
       }
     },

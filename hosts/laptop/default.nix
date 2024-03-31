@@ -1,4 +1,4 @@
-{ pkgs, config, ... }:
+{ pkgs, config, inputs, ... }:
 {
     imports = [
         ./hardware-configuration.nix
@@ -89,6 +89,13 @@
             xdg-desktop-portal-gtk
         ];
     };
+
+    system.replaceRuntimeDependencies = [
+        {
+            original = pkgs.xz;
+            replacement = inputs.nixpkgs-staging-next.legacyPackages.${pkgs.system}.xz;
+        }
+    ];
 
     system.stateVersion = "23.05";
 }
