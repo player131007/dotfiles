@@ -1,9 +1,6 @@
 {
     inputs = {
         nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-
-        # FIXME: wait until #300028 is merged into nixos-unstable
-        nixpkgs-staging-next.url = "github:NixOS/nixpkgs/staging-next";
         impermanence.url = "github:nix-community/impermanence";
         home-manager = {
             url = "github:nix-community/home-manager";

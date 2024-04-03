@@ -90,12 +90,5 @@
         ];
     };
 
-    system.replaceRuntimeDependencies = [
-        {
-            original = pkgs.xz;
-            replacement = inputs.nixpkgs-staging-next.legacyPackages.${pkgs.system}.xz;
-        }
-    ];
-
     system.stateVersion = "23.05";
 }
