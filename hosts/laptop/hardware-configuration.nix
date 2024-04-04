@@ -75,12 +75,25 @@
             fsType = "btrfs";
             options = [ "compress=zstd:5" "noatime" "subvol=home" ];
         };
+        "/tmp" = {
+            label = "nixos";
+            fsType = "btrfs";
+            options = [ "compress=zstd:5" "noatime" "subvol=tmp" ];
+        };
         "/efi" = {
             label = "ESP";
             fsType = "vfat";
             options = [ "umask=0077" ];
         };
     };
+
+    boot.initrd.postDeviceCommands = ''
+        mount /dev/disk/by-label/nixos /mnt --mkdir
+        btrfs subvol delete /mnt/tmp
+        btrfs subvol create /mnt/tmp
+        umount /mnt
+        rmdir /mnt
+    '';
 
     environment.persistence."/persist" = {
         directories = [
