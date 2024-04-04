@@ -19,10 +19,6 @@
 
     boot.kernelPackages = pkgs.linuxPackages_zen;
 
-    hardware.firmware = with pkgs; [
-        linux-firmware
-    ];
-
     environment.systemPackages = with pkgs; [
         gitMinimal
         home-manager
