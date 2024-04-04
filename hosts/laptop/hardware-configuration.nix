@@ -1,7 +1,6 @@
-{ config, lib, pkgs, modulesPath, inputs, ... }: {
+{ config, lib, pkgs, modulesPath, ... }: {
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix")
-        inputs.impermanence.nixosModule
     ];
 
     boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" "sdhci_pci" ];

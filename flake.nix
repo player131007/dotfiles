@@ -13,32 +13,27 @@
         };
 
         base16.url = "github:SenchoPens/base16.nix";
-        base16-schemes = {
-            url = "github:tinted-theming/schemes";
-            flake = false;
-        };
-
-        base16-foot = {
-            url = "github:tinted-theming/base16-foot";
-            flake = false;
-        };
     };
 
-    outputs = inputs@{ nixpkgs, home-manager, ... }: {
+    outputs = { nixpkgs, home-manager, impermanence, base16, nixvim }: {
         nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
-            specialArgs = { inherit inputs; };
-            modules = [ ./hosts/laptop ];
+            modules = [
+                impermanence.nixosModule
+                ./hosts/laptop
+            ];
         };
 
         nixosImages.laptop = (nixpkgs.lib.nixosSystem {
-            specialArgs = { inherit inputs; };
             modules = [ ./hosts/laptop/iso.nix ];
         }).config.system.build.isoImage;
 
         homeConfigurations.player131007 = home-manager.lib.homeManagerConfiguration {
             pkgs = import nixpkgs { system = "x86_64-linux"; };
-            extraSpecialArgs = { inherit inputs; };
-            modules = [ ./users/player131007 ];
+            modules = [
+                base16.homeManagerModule
+                nixvim.homeManagerModules.nixvim
+                ./users/player131007
+            ];
         };
     };
 }

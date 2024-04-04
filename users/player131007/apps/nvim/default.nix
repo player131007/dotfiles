@@ -1,8 +1,4 @@
-{ config, inputs, lib, ... }: {
-    imports = [
-        inputs.nixvim.homeManagerModules.nixvim
-    ];
-
+{ config, lib, ... }: {
     home.sessionVariables = { EDITOR = "nvim"; };
     programs.nixvim = {
         enable = true;

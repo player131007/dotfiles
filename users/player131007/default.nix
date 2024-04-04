@@ -1,6 +1,5 @@
-{ pkgs, inputs, ... }: {
+{ pkgs, ... }: {
     imports = [
-        inputs.base16.homeManagerModule
         ./apps
     ];
 
@@ -18,7 +17,7 @@
         };
     };
 
-    scheme = "${inputs.base16-schemes}/base16/rose-pine.yaml";
+    scheme = ./rose-pine.yaml;
 
     home.pointerCursor = {
         package = pkgs.bibata-cursors;
