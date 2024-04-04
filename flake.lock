@@ -18,38 +18,6 @@
         "type": "github"
       }
     },
-    "base16-foot": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1711847622,
-        "narHash": "sha256-YdgoyAJuGaPUO4bb3a5fGhrxZBD1sJivXVBHlU0012k=",
-        "owner": "tinted-theming",
-        "repo": "base16-foot",
-        "rev": "a11b4702ac5b77e161e170f197d1f57c845b4bec",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tinted-theming",
-        "repo": "base16-foot",
-        "type": "github"
-      }
-    },
-    "base16-schemes": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1711968179,
-        "narHash": "sha256-GVWlbE7bTkViMUO19elwkDn/yEnU4aqdbfo0++qz934=",
-        "owner": "tinted-theming",
-        "repo": "schemes",
-        "rev": "029612d89298647338b2bfb8867d0f5c5c6140f1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "tinted-theming",
-        "repo": "schemes",
-        "type": "github"
-      }
-    },
     "devshell": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -328,8 +296,6 @@
     "root": {
       "inputs": {
         "base16": "base16",
-        "base16-foot": "base16-foot",
-        "base16-schemes": "base16-schemes",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nixpkgs": "nixpkgs",

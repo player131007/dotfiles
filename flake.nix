@@ -15,7 +15,7 @@
         base16.url = "github:SenchoPens/base16.nix";
     };
 
-    outputs = { nixpkgs, home-manager, impermanence, base16, nixvim }: {
+    outputs = { self, nixpkgs, home-manager, impermanence, base16, nixvim }: {
         nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
             modules = [
                 impermanence.nixosModule
