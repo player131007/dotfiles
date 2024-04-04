@@ -2,6 +2,7 @@
 { pkgs, ... }: {
     nixpkgs.flake.setFlakeRegistry = true;
     nixpkgs.flake.setNixPath = true;
+    nix.channel.enable = false;
 
     nixpkgs.hostPlatform = "x86_64-linux";
 

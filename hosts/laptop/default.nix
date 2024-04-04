@@ -12,7 +12,6 @@
         hashedPasswordFile = "/persist/password/player131007";
     };
 
-    nix.channel.enable = false;
     nixpkgs.config.cudaSupport = true;
 
     boot.loader = {
