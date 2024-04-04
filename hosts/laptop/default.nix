@@ -2,7 +2,6 @@
 {
     imports = [
         ./hardware-configuration.nix
-        ./common.nix
         ./apps
     ];
 
@@ -12,7 +11,18 @@
         hashedPasswordFile = "/persist/password/player131007";
     };
 
-    nixpkgs.config.cudaSupport = true;
+    nix.channel.enable = false;
+    nix.settings.nix-path = config.nix.nixPath;
+
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
+    nixpkgs.config = {
+        allowUnfree = true;
+        cudaSupport = true;
+        packageOverrides = prev: {
+            gitMinimal = prev.gitMinimal.override { withManual = true; };
+            _7zz = prev._7zz.override { enableUnfree = true; };
+        };
+    };
 
     boot.loader = {
         systemd-boot = {
