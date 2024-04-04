@@ -90,7 +90,7 @@
     boot.initrd.postDeviceCommands = ''
         mkdir /mnt
         mount /dev/disk/by-label/nixos /mnt
-        btrfs subvol delete /mnt/tmp
+        btrfs subvol delete /mnt/tmp --commit-after
         btrfs subvol create /mnt/tmp
         umount /mnt
         rmdir /mnt
