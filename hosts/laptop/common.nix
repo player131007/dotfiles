@@ -1,8 +1,10 @@
 # common stuff between the two
-{ pkgs, ... }: {
-    nixpkgs.flake.setFlakeRegistry = true;
-    nixpkgs.flake.setNixPath = true;
+{ pkgs, config, ... }: {
+    # the nixpkgs flake is pinned by default
     nix.channel.enable = false;
+
+    # disabling channels unsets nix-path in nix.conf, we have to set it here
+    nix.settings.nix-path = config.nix.nixPath;
 
     nixpkgs.hostPlatform = "x86_64-linux";
 
