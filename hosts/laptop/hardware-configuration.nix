@@ -88,7 +88,8 @@
     };
 
     boot.initrd.postDeviceCommands = ''
-        mount /dev/disk/by-label/nixos /mnt --mkdir
+        mkdir /mnt
+        mount /dev/disk/by-label/nixos /mnt
         btrfs subvol delete /mnt/tmp
         btrfs subvol create /mnt/tmp
         umount /mnt
