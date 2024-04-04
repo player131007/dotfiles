@@ -25,7 +25,9 @@
 
     networking.useDHCP = lib.mkDefault true;
 
-    hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+    hardware.enableRedistributableFirmware = false;
+    hardware.wirelessRegulatoryDatabase = true;
+    hardware.cpu.amd.updateMicrocode = true;
     hardware.firmware = with pkgs; [
         linux-firmware
     ];
