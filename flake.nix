@@ -25,7 +25,7 @@
 
         nixosImage = (nixpkgs.lib.nixosSystem {
             modules = [ ./hosts/iso.nix ];
-        }).config.system.toplevel.isoImage;
+        }).config.system.build.isoImage;
 
         homeConfigurations.player131007 = home-manager.lib.homeManagerConfiguration {
             pkgs = import nixpkgs { system = "x86_64-linux"; };

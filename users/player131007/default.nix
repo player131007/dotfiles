@@ -12,7 +12,10 @@
         allowUnfree = true;
         cudaSupport = true;
         packageOverrides = prev: {
-            gitMinimal = prev.gitMinimal.override { withManual = true; };
+            gitMinimal = prev.gitMinimal.override {
+                withManual = true;
+                doInstallCheck = false;
+            };
             _7zz = prev._7zz.override { enableUnfree = true; };
         };
     };
