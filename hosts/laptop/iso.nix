@@ -1,6 +1,6 @@
 { modulesPath, ... }: {
     imports = [
-        (modulesPath + "/installer/cd-dvd/installation-cd-minimal-new-kernel-no-zfs.nix")
+        (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
         ./common.nix
     ];
 }

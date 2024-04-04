@@ -1,8 +1,7 @@
-# things to put on an iso image
-{ inputs, config, pkgs, lib, ... }: {
-    nix.registry.nixpkgs.flake = inputs.nixpkgs;
-    nix.nixPath = [ "nixpkgs=flake:nixpkgs" ];
-    nix.settings.nix-path = config.nix.nixPath;
+# common stuff between the two
+{ pkgs, ... }: {
+    nixpkgs.flake.setFlakeRegistry = true;
+    nixpkgs.flake.setNixPath = true;
 
     nixpkgs.hostPlatform = "x86_64-linux";
 
@@ -15,7 +14,7 @@
         };
     };
 
-    boot.kernelPackages = lib.mkForce pkgs.linuxPackages_zen;
+    boot.kernelPackages = pkgs.linuxPackages_zen;
 
     hardware.firmware = with pkgs; [
         linux-firmware
