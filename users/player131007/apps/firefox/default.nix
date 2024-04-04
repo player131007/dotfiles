@@ -63,7 +63,7 @@
                         }
                         {
                             Name = "Home Manager options";
-                            URLTemplate = "https://mipmip.github.io/home-manager-option-search/?query={searchTerms}";
+                            URLTemplate = "https://home-manager-options.extranix.com/?release=master&query={searchTerms}";
                             Alias = "!hm";
                         }
                     ];
