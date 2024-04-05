@@ -6,6 +6,7 @@
     nixpkgs.hostPlatform = "x86_64-linux";
 
     # the nixpkgs flake is pinned by default
+    system.installer.channel.enable = false;
     nix.channel.enable = false;
 
     # disabling channels unsets nix-path in nix.conf, we have to set it here
