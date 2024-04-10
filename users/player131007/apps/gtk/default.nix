@@ -15,6 +15,11 @@ in {
             name = "Inter";
         };
 
+        iconTheme = {
+            package = pkgs.gnome.adwaita-icon-theme;
+            name = "Adwaita";
+        };
+
         theme = {
             package = pkgs.adw-gtk3;
             name = "adw-gtk3";

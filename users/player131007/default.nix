@@ -26,6 +26,7 @@
         package = pkgs.bibata-cursors;
         name = "Bibata-Modern-Classic";
         size = 24;
+        gtk.enable = true;
     };
 
     home.stateVersion = "23.05";
