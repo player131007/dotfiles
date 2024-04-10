@@ -1,11 +1,10 @@
-{ pkgs, ... }: {
+{ pkgs, nvim-flake, config, lib, ... }: {
     imports = [
         ./btop
         ./firefox
         ./fish
         ./foot
         ./gtk
-        ./nvim
         ./hyprland
         ./fcitx5
     ];
@@ -25,6 +24,7 @@
         };
     };
 
+    home.sessionVariables = { EDITOR = "nvim"; };
     home.packages = with pkgs; [
         dunst
         swaybg
@@ -42,6 +42,9 @@
         wl-screenrec
 
         keepassxc
+        (nvim-flake.packages.${pkgs.system}.default.override {
+            colorscheme = lib.filterAttrs (name: _: builtins.elem name (map (x: "base0${x}") (lib.stringToCharacters "0123456789ABCDEF"))) config.scheme;
+        })
     ];
 }
 

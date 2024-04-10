@@ -6,16 +6,15 @@
             url = "github:nix-community/home-manager";
             inputs.nixpkgs.follows = "nixpkgs";
         };
-        nixvim = {
-            url = "github:nix-community/nixvim";
+        nvim-flake = {
+            url = "github:player131007/nvim-flake";
             inputs.nixpkgs.follows = "nixpkgs";
-            inputs.home-manager.follows = "home-manager";
         };
 
         base16.url = "github:SenchoPens/base16.nix";
     };
 
-    outputs = { self, nixpkgs, home-manager, impermanence, base16, nixvim }: {
+    outputs = { self, nixpkgs, home-manager, impermanence, base16, nvim-flake }: {
         nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
             modules = [
                 impermanence.nixosModule
@@ -29,9 +28,9 @@
 
         homeConfigurations.player131007 = home-manager.lib.homeManagerConfiguration {
             pkgs = import nixpkgs { system = "x86_64-linux"; };
+            extraSpecialArgs = { inherit nvim-flake; };
             modules = [
                 base16.homeManagerModule
-                nixvim.homeManagerModules.nixvim
                 ./users/player131007
             ];
         };
