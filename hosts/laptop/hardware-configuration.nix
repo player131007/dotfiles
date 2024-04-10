@@ -115,12 +115,11 @@
 
     environment.persistence."/persist" = {
         directories = [
-            "/etc/NetworkManager/system-connections"
+            "/var/lib/iwd"
         ];
         files = [
             "/etc/adjtime"
             "/etc/machine-id"
-            "/etc/resolv.conf"
         ];
     };
 
