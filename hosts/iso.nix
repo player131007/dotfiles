@@ -12,6 +12,28 @@
     # disabling channels unsets nix-path in nix.conf, we have to set it here
     nix.settings.nix-path = config.nix.nixPath;
 
+    networking.wireless.enable = false;
+    networking.wireless.iwd = {
+        enable = true;
+        settings = {
+            General.EnableNetworkConfiguration = true;
+            Scan.DisablePeriodicScan = true;
+        };
+    };
+    networking.dhcpcd.enable = false;
+    networking.nameservers = [
+        "1.1.1.1#cloudflare-dns.com"
+        "2606:4700:4700::1111#cloudflare-dns.com"
+    ];
+    services.resolved = {
+        enable = true;
+        fallbackDns = [
+            "9.9.9.9#dns.quad9.net"
+            "8.8.8.8#dns.google"
+            "2620:fe::9#dns.quad9.net"
+            "2001:4860:4860::8888#dns.google"
+        ];
+    };
 
     nix.settings.experimental-features = [ "nix-command" "flakes" ];
     nixpkgs.config = {
