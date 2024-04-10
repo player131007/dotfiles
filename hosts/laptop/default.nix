@@ -99,6 +99,9 @@
         extraPortals = with pkgs; [
             xdg-desktop-portal-gtk
         ];
+        config.common = {
+            default = [ "hyprland" "gtk" ];
+        };
     };
 
     boot.loader = {
