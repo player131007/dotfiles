@@ -13,14 +13,29 @@
     nix.settings.nix-path = config.nix.nixPath;
 
     networking.wireless.enable = false;
-    networking.wireless.iwd = {
+    networking.useDHCP = false;
+    networking.dhcpcd.enable = false;
+
+    systemd.network.wait-online.enable = false;
+    systemd.network = {
         enable = true;
-        settings = {
-            General.EnableNetworkConfiguration = true;
-            Scan.DisablePeriodicScan = true;
+        networks = {
+            wired = {
+                matchConfig.Type = "ether";
+                DHCP = "yes";
+                dhcpV4Config.RouteMetric = 100;
+                ipv6AcceptRAConfig.RouteMetric = 100;
+            };
+            wireless = {
+                matchConfig.Type = "wlan";
+                DHCP = "yes";
+                dhcpV4Config.RouteMetric = 600;
+                ipv6AcceptRAConfig.RouteMetric = 600;
+            };
         };
     };
-    networking.dhcpcd.enable = false;
+
+    networking.wireless.iwd.enable = true;
     networking.nameservers = [
         "1.1.1.1#cloudflare-dns.com"
         "2606:4700:4700::1111#cloudflare-dns.com"
