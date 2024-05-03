@@ -26,7 +26,7 @@
             modules = [ ./hosts/iso.nix ];
         }).config.system.build.isoImage;
 
-        homeConfigurations.player131007 = home-manager.lib.homeManagerConfiguration {
+        homeConfigurations."player131007@laptop" = home-manager.lib.homeManagerConfiguration {
             pkgs = import nixpkgs { system = "x86_64-linux"; };
             extraSpecialArgs = { inherit nvim-flake; };
             modules = [

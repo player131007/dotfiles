@@ -8,7 +8,7 @@
                 "expr": "(builtins.getFlake (builtins.toString ./.)).nixosConfigurations.laptop.options"
             },
             "home-manager": {
-                "expr": "(builtins.getFlake (builtins.toString ./.)).homeConfigurations.player131007.options"
+                "expr": "(builtins.getFlake (builtins.toString ./.)).homeConfigurations.\"player131007@laptop\".options"
             }
         }
     }
