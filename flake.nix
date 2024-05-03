@@ -23,11 +23,12 @@
         };
 
         nixosImage = (nixpkgs.lib.nixosSystem {
+            pkgs = self.nixosConfigurations.laptop.pkgs;
             modules = [ ./hosts/iso.nix ];
         }).config.system.build.isoImage;
 
         homeConfigurations."player131007@laptop" = home-manager.lib.homeManagerConfiguration {
-            pkgs = import nixpkgs { system = "x86_64-linux"; };
+            pkgs = self.nixosConfigurations.laptop.pkgs;
             extraSpecialArgs = { inherit nvim-flake; };
             modules = [
                 base16.homeManagerModule

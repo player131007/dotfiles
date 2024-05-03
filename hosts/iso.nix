@@ -3,6 +3,7 @@
         (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
     ];
 
+    nix.settings.experimental-features = [ "nix-command" "flakes" ];
     nixpkgs.hostPlatform = "x86_64-linux";
 
     # the nixpkgs flake is pinned by default
@@ -48,18 +49,6 @@
             "2620:fe::9#dns.quad9.net"
             "2001:4860:4860::8888#dns.google"
         ];
-    };
-
-    nix.settings.experimental-features = [ "nix-command" "flakes" ];
-    nixpkgs.config = {
-        allowUnfree = true;
-        packageOverrides = prev: {
-            gitMinimal = prev.gitMinimal.override {
-                withManual = true;
-                doInstallCheck = false;
-            };
-            _7zz = prev._7zz.override { enableUnfree = true; };
-        };
     };
 
     boot.kernelPackages = pkgs.linuxPackages_zen;
