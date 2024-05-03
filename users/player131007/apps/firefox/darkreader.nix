@@ -3,7 +3,7 @@
     buildNpmPackage,
     background ? "18131b",
     text ? "e8e6e3",
-    isDarkTheme ? true,
+    isDarkTheme ? true
 }: let
     version = "4.9.84";
 in buildNpmPackage {
