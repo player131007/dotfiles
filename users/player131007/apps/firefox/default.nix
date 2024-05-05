@@ -76,13 +76,12 @@
                     };
                     "addon@darkreader.org" =
                     let
-                        darkreader = with config.scheme; pkgs.callPackage ./darkreader.nix {
+                        darkreader = pkgs.callPackage ./darkreader.nix (with config.scheme; {
                             background = base01;
                             text = base05;
                             isDarkTheme = variant != "light";
-                        };
-                    in
-                    {
+                        });
+                    in {
                         installation_mode = "normal_installed";
                         install_url = "file://${darkreader}/release/darkreader-firefox.xpi";
                     };
