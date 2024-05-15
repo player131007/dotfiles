@@ -27,6 +27,8 @@
         };
     };
 
+    virtualisation.podman.enable = true;
+
     networking.useDHCP = false;
     networking.dhcpcd.enable = false;
     systemd.network.wait-online.enable = false;
