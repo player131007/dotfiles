@@ -26,7 +26,6 @@
         };
 
         package = pkgs.wrapFirefox pkgs.firefox-esr-unwrapped {
-            nativeMessagingHosts = [ pkgs.keepassxc ];
             extraPrefs = lib.pipe [
                 ./prefs/betterfox.js
                 ./prefs/smooth_scrolling.js
@@ -94,6 +93,10 @@
                 };
 
                 ExtensionSettings = {
+                    "keepassxc-browser@keepassxc.org" = {
+                        installation_mode = "normal_installed";
+                        install_url = "https://addons.mozilla.org/firefox/downloads/latest/keepassxc-browser/latest.xpi";
+                    };
                     "uBlock0@raymondhill.net" = {
                         installation_mode = "normal_installed";
                         install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
