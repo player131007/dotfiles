@@ -5,6 +5,7 @@
             monitor = ", preferred, auto, 1.25";
             exec-once = [
                 "${pkgs.swaybg}/bin/swaybg -i ${../../wallpaper.png}"
+                "[workspace special silent] keepassxc"
             ];
 
             env = [
@@ -69,8 +70,9 @@
             };
 
             bind = [
+                "SUPER, S, togglespecialworkspace,"
                 "SUPER, M, exit,"
-                "SUPER, C, killactive "
+                "SUPER, C, killactive"
                 "SUPER, V, togglefloating,"
                 "SUPER, P, pseudo,"
                 "SUPER, J, togglesplit,"
