@@ -73,29 +73,29 @@
         "/persist" = {
             label = "nixos";
             fsType = "btrfs";
-            options = [ "compress=zstd:5" "noatime" "subvol=persist" ];
+            options = [ "compress=zstd" "noatime" "subvol=persist" ];
             neededForBoot = true;
         };
         "/nix" = {
             label = "nixos";
             fsType = "btrfs";
-            options = [ "compress=zstd:5" "noatime" "subvol=nix" ];
+            options = [ "compress=zstd" "noatime" "subvol=nix" ];
         };
         "/var/log" = {
             label = "nixos";
             fsType = "btrfs";
-            options = [ "compress=zstd:5" "noatime" "subvol=log" ];
+            options = [ "compress=zstd" "noatime" "subvol=log" ];
             neededForBoot = true;
         };
         "/home" = {
             label = "nixos";
             fsType = "btrfs";
-            options = [ "compress=zstd:5" "noatime" "subvol=home" ];
+            options = [ "compress=zstd" "noatime" "subvol=home" ];
         };
         "/tmp" = {
             label = "nixos";
             fsType = "btrfs";
-            options = [ "compress=zstd:5" "noatime" "subvol=tmp" ];
+            options = [ "compress=zstd" "noatime" "subvol=tmp" ];
         };
         "/efi" = {
             label = "ESP";
