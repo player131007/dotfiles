@@ -27,7 +27,7 @@
         };
     };
 
-    virtualisation.lxc.enable = true;
+    virtualisation.podman.enable = true;
 
     networking.useDHCP = false;
     networking.dhcpcd.enable = false;
