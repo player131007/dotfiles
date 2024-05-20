@@ -116,6 +116,7 @@
     environment.persistence."/persist" = {
         directories = [
             "/var/lib/iwd"
+            { directory = "/var/cache/tuigreet"; user = "greeter"; group = "greeter"; }
         ];
         files = [
             "/etc/adjtime"
