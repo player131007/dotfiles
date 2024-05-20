@@ -103,10 +103,7 @@
         greetd = {
             enable = true;
             vt = 2;
-            settings.default_session.command =
-            let
-                sessions = config.services.displayManager.sessionData.desktops;
-            in "${pkgs.greetd.tuigreet}/bin/tuigreet -t -s ${sessions}/share/xsessions:${sessions}/share/wayland-sessions --asterisks --user-menu";
+            settings.default_session.command = "${pkgs.greetd.tuigreet}/bin/tuigreet -t -d -r --remember-user-session --asterisks --user-menu";
         };
     };
 
