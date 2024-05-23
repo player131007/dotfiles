@@ -11,7 +11,8 @@
             truecolor = true;
             theme_background = false;
             update_ms = 1000;
-            disks_filter = "exclude=/persist /var/log /etc/NetworkManager/system-connections";
+            disks_filter = "/nix / /efi /d";
+            swap_disk = false;
         };
     };
 }
