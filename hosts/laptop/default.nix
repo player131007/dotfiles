@@ -7,7 +7,7 @@
 
     users.users.player131007 = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "networkmanager" "audio" "input" ];
+        extraGroups = [ "wheel" "audio" "input" ];
         hashedPasswordFile = "/persist/password/player131007";
     };
 
