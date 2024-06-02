@@ -1,14 +1,16 @@
 { pkgs, ... }: {
-    programs.command-not-found.enable = false;
-    programs.nix-index.enable = true;
-    programs.starship = {
-        enable = true;
-        settings = fromTOML (builtins.readFile ./starship.toml);
-    };
-    programs.fish.enable = true;
-    programs.hyprland.enable = true;
-    programs.ssh.startAgent = true;
+    programs = {
+        command-not-found.enable = false;
+        nix-index.enable = true;
+        starship = {
+            enable = true;
+            settings = fromTOML (builtins.readFile ./starship.toml);
+        };
+        fish.enable = true;
+        ssh.startAgent = true;
 
+        hyprland.enable = true;
+    };
     environment.systemPackages = with pkgs; [
         gitMinimal
         home-manager

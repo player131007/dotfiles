@@ -29,11 +29,31 @@
 
     virtualisation.podman.enable = true;
 
-    networking.useDHCP = false;
-    networking.dhcpcd.enable = false;
-    systemd.network.wait-online.enable = false;
+    networking = {
+        hostName = "laptop";
+
+        useNetworkd = true;
+        dhcpcd.enable = false;
+        wireless.iwd.enable = true;
+        nameservers = [
+            "1.1.1.1#cloudflare-dns.com"
+            "2606:4700:4700::1111#cloudflare-dns.com"
+        ];
+    };
+
+    services.resolved = {
+        enable = true;
+        fallbackDns = [
+            "9.9.9.9#dns.quad9.net"
+            "2620:fe::9#dns.quad9.net"
+            "8.8.8.8#dns.google"
+            "2001:4860:4860::8888#dns.google"
+        ];
+    };
+
     systemd.network = {
         enable = true;
+        wait-online.enable = false;
         networks = {
             wired = {
                 matchConfig.Type = "ether";
@@ -48,21 +68,6 @@
                 ipv6AcceptRAConfig.RouteMetric = 600;
             };
         };
-    };
-
-    networking.wireless.iwd.enable = true;
-    networking.nameservers = [
-        "1.1.1.1#cloudflare-dns.com"
-        "2606:4700:4700::1111#cloudflare-dns.com"
-    ];
-    services.resolved = {
-        enable = true;
-        fallbackDns = [
-            "9.9.9.9#dns.quad9.net"
-            "8.8.8.8#dns.google"
-            "2620:fe::9#dns.quad9.net"
-            "2001:4860:4860::8888#dns.google"
-        ];
     };
 
     system.activationScripts = {
@@ -88,18 +93,7 @@
     };
 
     services = {
-        upower = {
-            enable = true;
-            percentageLow = 20;
-            percentageCritical = 10;
-            percentageAction = 0;
-            criticalPowerAction = "PowerOff";
-        };
-        pipewire = {
-            enable = true;
-            pulse.enable = true;
-            alsa.enable = true;
-        };
+        pipewire.enable = true;
         greetd = {
             enable = true;
             vt = 2;
@@ -117,19 +111,39 @@
         };
     };
 
-    boot.loader = {
-        systemd-boot = {
-            enable = true;
-            configurationLimit = 5;
+    zramSwap.enable = true;
+
+    boot = {
+        loader = {
+            systemd-boot.enable = true;
+            efi = {
+                canTouchEfiVariables = true;
+                efiSysMountPoint = "/efi";
+            };
         };
-        efi = {
-            canTouchEfiVariables = true;
-            efiSysMountPoint = "/efi";
+        kernel.sysctl = {
+            # https://wiki.archlinux.org/title/Zram#Optimizing_swap_on_zram
+            "vm.swappiness" = 180;
+            "vm.watermark_boost_factor" = 0;
+            "vm.watermark_scale_factor" = 125;
+            "vm.page-cluster" = 0;
         };
     };
 
-    networking.hostName = "laptop";
     time.timeZone = "Asia/Ho_Chi_Minh";
+
+    environment.persistence."/persist" = {
+        directories = [
+            "/var/lib/iwd"
+            { directory = "/var/cache/tuigreet"; user = "greeter"; group = "greeter"; }
+        ];
+        files = [
+            "/etc/adjtime"
+            "/etc/machine-id"
+        ];
+    };
+
+    boot.kernelPackages = pkgs.linuxPackages_zen;
 
     system.stateVersion = "23.05";
 }

@@ -10,39 +10,21 @@
 
     boot.kernelModules = [ "kvm-amd" ];
 
-    boot.kernelPackages = pkgs.linuxPackages_zen;
+    hardware = {
+        cpu.amd.updateMicrocode = true;
 
-    fileSystems."/d" = {
-        device = "/dev/disk/by-uuid/584B-F342";
-        fsType = "exfat";
-        options = [ "uid=player131007" ];
-    };
+        enableRedistributableFirmware = false;
+        wirelessRegulatoryDatabase = true;
+        firmware = with pkgs; [
+            linux-firmware
+        ];
 
-    # https://wiki.archlinux.org/title/Zram#Optimizing_swap_on_zram
-    boot.kernel.sysctl = {
-        "vm.swappiness" = 180;
-        "vm.watermark_boost_factor" = 0;
-        "vm.watermark_scale_factor" = 125;
-        "vm.page-cluster" = 0;
-    };
-    zramSwap.enable = true;
+        bluetooth = {
+            enable = true;
+            powerOnBoot = false;
+        };
 
-    hardware.cpu.amd.updateMicrocode = true;
-
-    hardware.enableRedistributableFirmware = false;
-    hardware.wirelessRegulatoryDatabase = true;
-    hardware.firmware = with pkgs; [
-        linux-firmware
-    ];
-
-    hardware.bluetooth = {
-        enable = true;
-        powerOnBoot = false;
-    };
-
-    hardware.opengl = {
-        enable = true;
-        driSupport = true;
+        opengl.enable = true;
     };
 
     services.xserver.videoDrivers = [ "nvidia" ];
@@ -100,6 +82,11 @@
             fsType = "vfat";
             options = [ "umask=0077" ];
         };
+        "/d" = {
+            device = "/dev/disk/by-uuid/584B-F342";
+            fsType = "exfat";
+            options = [ "uid=player131007" ];
+        };
     };
 
     boot.initrd.postDeviceCommands = ''
@@ -110,16 +97,4 @@
         umount /mnt
         rmdir /mnt
     '';
-
-    environment.persistence."/persist" = {
-        directories = [
-            "/var/lib/iwd"
-            { directory = "/var/cache/tuigreet"; user = "greeter"; group = "greeter"; }
-        ];
-        files = [
-            "/etc/adjtime"
-            "/etc/machine-id"
-        ];
-    };
-
 }
