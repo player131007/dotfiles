@@ -1,4 +1,4 @@
-{ lib, pkgs, modulesPath, ... }: {
+{ pkgs, modulesPath, ... }: {
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix")
     ];
@@ -26,8 +26,6 @@
         "vm.page-cluster" = 0;
     };
     zramSwap.enable = true;
-
-    networking.useDHCP = lib.mkDefault true;
 
     hardware.cpu.amd.updateMicrocode = true;
 
