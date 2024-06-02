@@ -91,7 +91,10 @@
     };
 
     services = {
-        pipewire.enable = true;
+        pipewire = {
+            enable = true;
+            alsa.enable = true;
+        };
         greetd = {
             enable = true;
             vt = 2;
