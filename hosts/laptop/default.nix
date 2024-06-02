@@ -27,8 +27,6 @@
         };
     };
 
-    virtualisation.podman.enable = true;
-
     networking = {
         hostName = "laptop";
 
