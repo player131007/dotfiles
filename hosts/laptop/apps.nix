@@ -10,16 +10,15 @@
         ssh.startAgent = true;
 
         hyprland.enable = true;
+        hyprlock.enable = true;
     };
+
     environment.systemPackages = with pkgs; [
         gitMinimal
         home-manager
 
         eza
-        hyprlock
     ];
-
-    security.pam.services.hyprlock = {};
 
     environment.shellAliases = {
         ls = "eza --icons -F";
