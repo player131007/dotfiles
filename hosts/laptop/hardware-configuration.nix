@@ -8,6 +8,7 @@
     boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" "sdhci_pci" ];
     boot.initrd.kernelModules = [ "amdgpu" ];
 
+    boot.kernelParams = [ "iommu=pt" ];
     boot.kernelModules = [ "kvm-amd" ];
 
     hardware = {
