@@ -11,6 +11,7 @@
 
         hyprland.enable = true;
         hyprlock.enable = true;
+        virt-manager.enable = true;
     };
 
     environment.systemPackages = with pkgs; [
@@ -18,6 +19,7 @@
         home-manager
 
         eza
+        virtiofsd
     ];
 
     environment.shellAliases = {

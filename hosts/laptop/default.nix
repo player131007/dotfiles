@@ -7,7 +7,7 @@
 
     users.users.player131007 = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "audio" "input" ];
+        extraGroups = [ "wheel" "audio" "input" "libvirtd" ];
         hashedPasswordFile = "/persist/password/player131007";
     };
 
@@ -54,7 +54,10 @@
         wait-online.enable = false;
         networks = {
             wired = {
-                matchConfig.Type = "ether";
+                matchConfig = {
+                    Type = "ether";
+                    Kind = "!*";
+                };
                 DHCP = "yes";
                 dhcpV4Config.RouteMetric = 100;
                 ipv6AcceptRAConfig.RouteMetric = 100;
@@ -112,6 +115,11 @@
         };
     };
 
+    virtualisation.libvirtd = {
+        enable = true;
+        qemu.package = pkgs.qemu_kvm;
+    };
+
     zramSwap.enable = true;
 
     boot = {
@@ -136,6 +144,7 @@
     environment.persistence."/persist" = {
         directories = [
             "/var/lib/iwd"
+            "/var/lib/libvirt"
             { directory = "/var/cache/tuigreet"; user = "greeter"; group = "greeter"; }
         ];
         files = [
