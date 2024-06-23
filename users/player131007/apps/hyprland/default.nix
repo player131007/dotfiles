@@ -19,7 +19,7 @@
                 gaps_in = 5;
                 gaps_out = 15;
 
-                border_size = 3;
+                border_size = 2;
 
                 "col.active_border" = "0xf0${base0B}";
                 "col.inactive_border" = "0xee${base01}";
