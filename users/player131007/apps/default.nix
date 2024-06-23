@@ -42,6 +42,7 @@
         wl-screenrec
 
         keepassxc
+        looking-glass-client
         (nvim-flake.packages.${pkgs.system}.default.override {
             colorscheme = lib.filterAttrs (name: _: builtins.elem name (map (x: "base0${x}") (lib.stringToCharacters "0123456789ABCDEF"))) config.scheme;
         })

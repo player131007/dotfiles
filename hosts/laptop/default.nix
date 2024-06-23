@@ -49,6 +49,10 @@
         ];
     };
 
+    systemd.tmpfiles.rules = [
+        "f /dev/shm/looking-glass 0660 player131007 kvm -"
+    ];
+
     systemd.network = {
         enable = true;
         wait-online.enable = false;
