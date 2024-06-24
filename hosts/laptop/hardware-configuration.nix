@@ -25,7 +25,7 @@
             powerOnBoot = false;
         };
 
-        opengl.enable = true;
+        graphics.enable = true;
     };
 
     services.xserver.videoDrivers = [ "nvidia" ];
