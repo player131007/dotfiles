@@ -88,6 +88,10 @@
             fsType = "exfat";
             options = [ "uid=player131007" ];
         };
+        "/windows" = {
+            label = "windows";
+            fsType = "exfat";
+        };
     };
 
     boot.initrd.postDeviceCommands = ''
