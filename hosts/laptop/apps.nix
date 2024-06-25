@@ -24,7 +24,7 @@
 
     environment.shellAliases = {
         ls = "eza --icons -F";
-        ll = "eza --icons -lhF";
-        l = "eza --icons -lhaF";
+        ll = "eza --icons -F -lhb";
+        l = "eza --icons -F -lhba";
     };
 }
