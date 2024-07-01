@@ -3,26 +3,15 @@
         enable = true;
         profiles.profile = {
             isDefault = true;
-            userChrome = (with config.scheme.withHashtag; ''
+            userChrome =
+            let
+                baseXX = lib.filterAttrs (k: _: lib.hasPrefix "base" k && builtins.stringLength k == 6);
+            in ''
                 :root {
-                  --base00: ${base00};
-                  --base01: ${base01};
-                  --base02: ${base02};
-                  --base03: ${base03};
-                  --base04: ${base04};
-                  --base05: ${base05};
-                  --base06: ${base06};
-                  --base07: ${base07};
-                  --base08: ${base08};
-                  --base09: ${base09};
-                  --base0A: ${base0A};
-                  --base0B: ${base0B};
-                  --base0C: ${base0C};
-                  --base0D: ${base0D};
-                  --base0E: ${base0E};
-                  --base0F: ${base0F};
+                    ${lib.concatLines (lib.mapAttrsToList (k: v: "--${k}: ${v};") (baseXX config.scheme.withHashtag))}
                 }
-            '') + builtins.readFile ./userChrome.css;
+                ${builtins.readFile ./userChrome.css}
+            '';
         };
 
         package = pkgs.wrapFirefox pkgs.firefox-esr-unwrapped {
