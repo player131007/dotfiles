@@ -5,7 +5,6 @@
             monitor = ", preferred, auto, 1.25";
             exec-once = [
                 "${pkgs.swaybg}/bin/swaybg -i ${../../wallpaper.png}"
-                "[workspace special silent] keepassxc"
             ];
 
             env = [

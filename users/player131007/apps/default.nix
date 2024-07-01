@@ -47,5 +47,23 @@
             colorscheme = lib.filterAttrs (name: _: builtins.elem name (map (x: "base0${x}") (lib.stringToCharacters "0123456789ABCDEF"))) config.scheme;
         })
     ];
+
+    systemd.user.services = {
+        keepassxc = {
+            Unit = {
+                Description = "KeepassXC";
+                Documentation = [ "man:keepassxc(1)" ];
+                After = [ "ssh-agent.service" ];
+            };
+            Install = {
+                WantedBy = [ "graphical-session.target" ];
+            };
+            Service = {
+                Type = "exec";
+                ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
+                Environment = [ "QT_QPA_PLATFORM=wayland;xcb" "SSH_AUTH_SOCK=%t/ssh-agent" ];
+            };
+        };
+    };
 }
 
