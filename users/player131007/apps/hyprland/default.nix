@@ -45,6 +45,10 @@
                 };
             };
 
+            misc = {
+                disable_hyprland_logo = true;
+            };
+
             input = {
                 follow_mouse = 2;
                 repeat_delay = 400;
