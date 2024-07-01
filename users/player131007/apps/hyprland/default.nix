@@ -70,7 +70,6 @@
             };
 
             bind = [
-                "SUPER, S, togglespecialworkspace,"
                 "SUPER, M, exit,"
                 "SUPER, C, killactive"
                 "SUPER, V, togglefloating,"
@@ -85,6 +84,7 @@
                 "SUPER, left, movefocus, l"
                 "SUPER, right, movefocus, r"
 
+                "SUPER, s, togglespecialworkspace"
                 "SUPER, 1, workspace, 1"
                 "SUPER, 2, workspace, 2"
                 "SUPER, 3, workspace, 3"
@@ -95,6 +95,8 @@
                 "SUPER, 8, workspace, 8"
                 "SUPER, 9, workspace, 9"
                 "SUPER, 0, workspace, 10"
+
+                "SUPER SHIFT, s, movetoworkspace, special"
                 "SUPER SHIFT, 1, movetoworkspace, 1"
                 "SUPER SHIFT, 2, movetoworkspace, 2"
                 "SUPER SHIFT, 3, movetoworkspace, 3"
