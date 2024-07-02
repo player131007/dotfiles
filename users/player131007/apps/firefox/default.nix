@@ -81,6 +81,17 @@
                     ];
                 };
 
+                ManagedBookmarks = [
+                    {
+                        url = "https://nixos.org/manual/nixpkgs/unstable/";
+                        name = "Nixpkgs manual";
+                    }
+                    {
+                        url = "https://nix.dev/manual/nix/rolling/language/builtins";
+                        name = "Nix built-in functions";
+                    }
+                ];
+
                 ExtensionSettings = {
                     "keepassxc-browser@keepassxc.org" = {
                         installation_mode = "normal_installed";
