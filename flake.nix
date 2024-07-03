@@ -18,6 +18,7 @@
         nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
             modules = [
                 impermanence.nixosModule
+                base16.nixosModule
                 ./hosts/laptop
             ];
         };

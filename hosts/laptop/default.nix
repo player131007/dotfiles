@@ -5,6 +5,8 @@
         ./apps.nix
     ];
 
+    scheme = ../../rose-pine.yaml;
+
     users.users.player131007 = {
         isNormalUser = true;
         extraGroups = [ "wheel" "audio" "input" "libvirtd" ];
