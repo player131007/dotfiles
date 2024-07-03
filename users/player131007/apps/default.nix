@@ -1,4 +1,4 @@
-{ pkgs, nvim-flake, config, lib, ... }: {
+{ pkgs, ... }: {
     imports = [
         ./btop
         ./firefox
@@ -24,7 +24,6 @@
         };
     };
 
-    home.sessionVariables = { EDITOR = "nvim"; };
     home.packages = with pkgs; [
         dunst
         swaybg
@@ -43,12 +42,6 @@
 
         keepassxc
         looking-glass-client
-        (nvim-flake.packages.${pkgs.system}.default.override {
-            colorscheme =
-            let
-                baseXX = lib.filterAttrs (k: _: lib.hasPrefix "base" k && builtins.stringLength k == 6);
-            in baseXX config.scheme.withHashtag;
-        })
     ];
 
     systemd.user.services = {

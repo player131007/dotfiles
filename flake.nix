@@ -16,6 +16,7 @@
 
     outputs = { self, nixpkgs, home-manager, impermanence, base16, nvim-flake }: {
         nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
+            specialArgs = { inherit nvim-flake; };
             modules = [
                 impermanence.nixosModule
                 base16.nixosModule
@@ -30,7 +31,6 @@
 
         homeConfigurations."player131007@laptop" = home-manager.lib.homeManagerConfiguration {
             pkgs = self.nixosConfigurations.laptop.pkgs;
-            extraSpecialArgs = { inherit nvim-flake; };
             modules = [
                 base16.homeManagerModule
                 ./users/player131007
