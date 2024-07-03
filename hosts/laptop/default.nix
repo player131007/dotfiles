@@ -122,39 +122,6 @@
     virtualisation.libvirtd = {
         enable = true;
         qemu.package = pkgs.qemu_kvm;
-        hooks.qemu = {
-            gpu-hotswap = pkgs.writeShellScript "gpu-hotswap" ''
-                set -u
-                die() {
-                    echo "$1" >&2
-                    exit 1
-                }
-
-                bind() {
-                    local dev="$1"
-                    local drv_path="$2"
-                    echo -n "$dev" > "$drv_path/bind" || die "Failed to bind $dev to $drv_path"
-                }
-
-                unbind() {
-                    local dev="$1"
-                    local drv_path="$2"
-                    echo -n "$dev" > "$drv_path/unbind" || die "Failed to unbind $dev from $drv_path"
-                }
-
-                if [ "$2" == "prepare" ]; then
-                    unbind "0000:01:00.0" /sys/bus/pci/drivers/nvidia
-                    unbind "0000:01:00.1" /sys/bus/pci/drivers/snd_hda_intel
-                    bind "0000:01:00.0" /sys/bus/pci/drivers/vfio-pci
-                    bind "0000:01:00.1" /sys/bus/pci/drivers/vfio-pci
-                elif [ "$2" == "release" ]; then
-                    unbind "0000:01:00.0" /sys/bus/pci/drivers/vfio-pci
-                    unbind "0000:01:00.1" /sys/bus/pci/drivers/vfio-pci
-                    bind "0000:01:00.0" /sys/bus/pci/drivers/nvidia
-                    bind "0000:01:00.1" /sys/bus/pci/drivers/snd_hda_intel
-                fi
-            '';
-        };
     };
 
     zramSwap.enable = true;
