@@ -148,6 +148,7 @@
     time.timeZone = "Asia/Ho_Chi_Minh";
 
     environment.persistence."/persist" = {
+        hideMounts = true;
         directories = [
             "/var/lib/iwd"
             "/var/lib/libvirt"
