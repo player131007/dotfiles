@@ -83,10 +83,7 @@
         '';
     };
 
-    console = {
-        packages = [ pkgs.powerline-fonts ];
-        font = "ter-powerline-v14b";
-    };
+    console.font = "${pkgs.terminus_font}/share/consolefonts/ter-v16b.psf.gz";
 
     security = {
         sudo = {
