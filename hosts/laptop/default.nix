@@ -29,6 +29,8 @@
         };
     };
 
+    services.fwupd.enable = true;
+
     networking = {
         hostName = "laptop";
 
