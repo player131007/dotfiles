@@ -50,6 +50,7 @@
     services.resolved = {
         enable = true;
         dnssec = "true";
+        fallbackDns = [];
     };
 
     systemd.tmpfiles.rules = [
