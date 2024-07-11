@@ -94,12 +94,25 @@
         };
     };
 
-    boot.initrd.postDeviceCommands = ''
-        mkdir /mnt
-        mount /dev/disk/by-label/nixos /mnt
-        btrfs subvol delete /mnt/tmp --commit-after
-        btrfs subvol create /mnt/tmp
-        umount /mnt
-        rmdir /mnt
-    '';
+    systemd.services = {
+        reset-tmp = {
+            description = "Reset /tmp";
+
+            wantedBy = [ "tmp.mount" ];
+            before = [ "tmp.mount" ];
+            after = [ "blockdev@dev-disk-by\\x2dlabel-nixos.target" ];
+
+            unitConfig.DefaultDependencies = "no";
+            serviceConfig.Type = "oneshot";
+            path = with pkgs; [ util-linux btrfs-progs ];
+            script = ''
+                mkdir -p /mnt
+                mount /dev/disk/by-label/nixos /mnt
+                btrfs subvolume delete /mnt/tmp --commit-after
+                btrfs subvolume create /mnt/tmp
+                umount /mnt
+                rmdir /mnt
+            '';
+        };
+    };
 }
