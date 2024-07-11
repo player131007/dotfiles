@@ -11,13 +11,19 @@
             inputs.nixpkgs.follows = "nixpkgs";
         };
 
+        lix-module = {
+            url = "https://git.lix.systems/lix-project/nixos-module/archive/2.90.0.tar.gz";
+            inputs.nixpkgs.follows = "nixpkgs";
+        };
+
         base16.url = "github:SenchoPens/base16.nix";
     };
 
-    outputs = { self, nixpkgs, home-manager, impermanence, base16, nvim-flake }: {
+    outputs = { self, nixpkgs, home-manager, impermanence, base16, nvim-flake, lix-module }: {
         nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
             specialArgs = { inherit nvim-flake; };
             modules = [
+                lix-module.nixosModules.default
                 impermanence.nixosModule
                 base16.nixosModule
                 ./hosts/laptop
