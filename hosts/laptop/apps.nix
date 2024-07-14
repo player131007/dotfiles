@@ -1,17 +1,22 @@
 { pkgs, nvim-flake, config, ... }: {
+    imports = [
+        ./oh-my-posh.nix
+    ];
+
     programs = {
         command-not-found.enable = false;
         nix-index.enable = true;
-        starship = {
-            enable = true;
-            settings = fromTOML (builtins.readFile ./starship.toml);
-        };
         fish.enable = true;
         ssh.startAgent = true;
 
         hyprland.enable = true;
         hyprlock.enable = true;
         virt-manager.enable = true;
+    };
+
+    stuffs.oh-my-posh = {
+        enable = true;
+        configFile = ./pure.omp.toml;
     };
 
     environment.variables.EDITOR = "nvim";

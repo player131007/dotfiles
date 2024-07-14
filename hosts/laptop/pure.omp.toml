@@ -1,0 +1,86 @@
+#:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+version = 2
+console_title_template = '{{ .UserName }}@{{ .HostName }} {{ .Shell }} in {{ .PWD }}'
+final_space = true
+auto_upgrade = false
+shell_integration = true
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+  [[blocks.segments]]
+    type = 'session'
+    style = 'plain'
+    foreground_templates = [ '{{ if .Root -}} red {{- else -}} blue {{- end }}' ]
+    templates = [
+      '{{ if .Root }}<b>{{ end }} {{- .UserName -}} {{ if .Root }}</b>{{ end }}',
+      '{{ if .SSHSession -}} <white>@</><green>{{ .HostName }}</> {{- end }}',
+    ]
+    template = "{{ .Templates }} "
+
+  [[blocks.segments]]
+    type = 'path'
+    style = 'plain'
+    foreground = 'lightCyan'
+    template = "{{ .Path }}{{ if not .Writable }} <yellow>\uE672</>{{ end }} "
+
+    [blocks.segments.properties]
+      style = 'agnoster_short'
+      max_depth = 2
+
+  [[blocks.segments]]
+    type = 'git'
+    style = 'plain'
+    foreground = 'darkGray'
+    template = '<b>{{ .HEAD }}{{ if or .Working.Changed .Staging.Changed }}<yellow>*</>{{ end }}</b> {{ .BranchStatus }}'
+
+    [blocks.segments.properties]
+      fetch_status = true
+      fetch_bare_info = true
+      branch_icon = ''
+      branch_identical_icon = ''
+      branch_gone_icon = ''
+      branch_ahead_icon = "<cyan><b>\uF176</b></>"
+      branch_behind_icon = "<cyan><b>\uF175</b></>"
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'right'
+
+  [[blocks.segments]]
+    type = 'executiontime'
+    style = 'plain'
+    foreground = "yellow"
+    template = "\U000F13AB {{ .FormattedMs }} "
+
+    [blocks.segments.properties]
+      style = 'austin'
+
+  [[blocks.segments]]
+    type = 'status'
+    style = 'plain'
+
+    [blocks.segments.properties]
+      status_template = '{{ if .Code }}<red>{{ else }}<green>{{ end }}{{ reason .Code }}</>'
+      status_separator = ' | '
+
+[[blocks]]
+  type = 'prompt'
+  alignment = 'left'
+  newline = true
+
+    [[blocks.segments]]
+      type = 'text'
+      style = 'plain'
+      foreground_templates = [
+        '{{ if .Code }}red{{end}}',
+        'lightYellow',
+      ]
+      template = "\u276F"
+
+[transient_prompt]
+  foreground = 'lightYellow'
+  template = "{{ if .Root }}<yellow>\uF0E7</> {{end}}\u276F "
