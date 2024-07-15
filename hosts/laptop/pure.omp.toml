@@ -35,7 +35,12 @@ shell_integration = true
     type = 'git'
     style = 'plain'
     foreground = 'darkGray'
-    template = '<b>{{ .HEAD }}{{ if or .Working.Changed .Staging.Changed }}<yellow>*</>{{ end }}</b> {{ .BranchStatus }}'
+    templates = [
+      '<b>{{ .HEAD }}</b>',
+      '{{ if or .Working.Changed .Staging.Changed -}} <b><yellow>*</></b> {{- end }}',
+      "{{ if .StashCount }} <b>\u2261</b>{{ end }}",
+      '{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}',
+    ]
 
     [blocks.segments.properties]
       fetch_status = true
