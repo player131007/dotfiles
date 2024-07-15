@@ -123,6 +123,10 @@
         upower = {
             enable = true;
         };
+        syncthing = {
+            enable = true;
+            openDefaultPorts = true;
+        };
     };
 
     xdg.portal = {
@@ -167,6 +171,7 @@
             "/var/lib/iwd"
             "/var/lib/libvirt"
             { directory = "/var/cache/tuigreet"; user = "greeter"; group = "greeter"; }
+            ( with config.services.syncthing; { directory = dataDir; inherit user group; } )
         ];
         files = [
             "/etc/adjtime"

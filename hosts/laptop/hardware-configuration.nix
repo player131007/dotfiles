@@ -1,4 +1,4 @@
-{ pkgs, modulesPath, ... }: {
+{ pkgs, modulesPath, config, ... }: {
     imports = [
         (modulesPath + "/installer/scan/not-detected.nix")
     ];
@@ -86,7 +86,7 @@
         "/d" = {
             device = "/dev/disk/by-uuid/584B-F342";
             fsType = "exfat";
-            options = [ "uid=player131007" ];
+            options = [ "uid=player131007" "gid=${config.services.syncthing.group}" "umask=002" ];
         };
         "/windows" = {
             label = "windows";
