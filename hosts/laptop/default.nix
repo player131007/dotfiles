@@ -7,6 +7,7 @@
 
     scheme = ../../rose-pine.yaml;
 
+    users.mutableUsers = false;
     users.users.player131007 = {
         isNormalUser = true;
         extraGroups = [ "wheel" "audio" "input" "libvirtd" ];
