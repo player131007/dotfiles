@@ -108,7 +108,9 @@
             script = ''
                 mkdir -p /mnt
                 mount /dev/disk/by-label/nixos /mnt
-                btrfs subvolume delete /mnt/tmp --commit-after
+                if [ -e /mnt/tmp ]; then
+                    btrfs subvolume delete /mnt/tmp --commit-after
+                fi
                 btrfs subvolume create /mnt/tmp
                 umount /mnt
                 rmdir /mnt
