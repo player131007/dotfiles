@@ -16,7 +16,7 @@
 
     programs.git = {
         enable = true;
-        package = pkgs.gitMinimal;
+        package = pkgs.git;
         userName = "Lương Việt Hoàng";
         userEmail = "tcm4095@gmail.com";
         extraConfig = {

@@ -21,7 +21,7 @@
 
     environment.variables.EDITOR = "nvim";
     environment.systemPackages = with pkgs; [
-        gitMinimal
+        git
         home-manager
 
         eza
