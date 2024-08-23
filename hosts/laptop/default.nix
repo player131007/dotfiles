@@ -167,6 +167,7 @@
         directories = [
             "/var/lib/iwd"
             "/var/lib/libvirt"
+            "/var/lib/nixos"
             { directory = "/var/cache/tuigreet"; user = "greeter"; group = "greeter"; }
             ( with config.services.syncthing; { directory = dataDir; inherit user group; } )
         ];
