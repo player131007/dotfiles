@@ -81,7 +81,7 @@
             fsType = "btrfs";
             options = [ "compress=zstd" "noatime" "subvol=tmp" ];
         };
-        "/efi" = {
+        "/boot" = {
             label = "ESP";
             fsType = "vfat";
             options = [ "umask=0077" ];

@@ -146,10 +146,7 @@
     boot = {
         loader = {
             systemd-boot.enable = true;
-            efi = {
-                canTouchEfiVariables = true;
-                efiSysMountPoint = "/efi";
-            };
+            efi.canTouchEfiVariables = true;
         };
         kernel.sysctl = {
             # https://wiki.archlinux.org/title/Zram#Optimizing_swap_on_zram

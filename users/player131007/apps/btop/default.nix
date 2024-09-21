@@ -11,7 +11,7 @@
             truecolor = true;
             theme_background = false;
             update_ms = 1000;
-            disks_filter = "/nix / /efi /d";
+            disks_filter = "/nix / /boot /d";
             swap_disk = false;
         };
     };
