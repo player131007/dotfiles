@@ -57,35 +57,6 @@
     systemd.network = {
         enable = true;
         wait-online.enable = false;
-        networks = {
-            "80-wired" = {
-                matchConfig = {
-                    Type = "ether";
-                    Kind = "!*";
-                };
-                DHCP = "yes";
-                dhcpV4Config = {
-                    RouteMetric = 100;
-                    UseDNS = false;
-                };
-                dhcpV6Config = {
-                    RouteMetric = 100;
-                    UseDNS = false;
-                };
-            };
-            "80-wireless" = {
-                matchConfig.Type = "wlan";
-                DHCP = "yes";
-                dhcpV4Config = {
-                    RouteMetric = 600;
-                    UseDNS = false;
-                };
-                dhcpV6Config = {
-                    RouteMetric = 600;
-                    UseDNS = false;
-                };
-            };
-        };
     };
 
     system.activationScripts = {
