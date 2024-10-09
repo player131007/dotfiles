@@ -21,12 +21,6 @@
         nameservers = [
             "1.1.1.1#cloudflare-dns.com"
             "2606:4700:4700::1111#cloudflare-dns.com"
-        ];
-    };
-
-    services.resolved = {
-        enable = true;
-        fallbackDns = [
             "9.9.9.9#dns.quad9.net"
             "8.8.8.8#dns.google"
             "2620:fe::9#dns.quad9.net"
@@ -34,27 +28,19 @@
         ];
     };
 
+    services.resolved = {
+        enable = true;
+        fallbackDns = [];
+    };
+
     systemd.network = {
         enable = true;
         wait-online.enable = false;
-        networks = {
-            wired = {
-                matchConfig.Type = "ether";
-                DHCP = "yes";
-                dhcpV4Config.RouteMetric = 100;
-                ipv6AcceptRAConfig.RouteMetric = 100;
-            };
-            wireless = {
-                matchConfig.Type = "wlan";
-                DHCP = "yes";
-                dhcpV4Config.RouteMetric = 600;
-                ipv6AcceptRAConfig.RouteMetric = 600;
-            };
-        };
     };
 
     boot.kernelPackages = pkgs.linuxPackages_zen;
 
+    boot.initrd.systemd.enable = true;
     # no zfs
     boot.supportedFilesystems.zfs = lib.mkForce false;
 
