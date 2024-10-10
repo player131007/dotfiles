@@ -39,4 +39,15 @@
         ll = "eza --icons -F -lhb";
         l = "eza --icons -F -lhba";
     };
+
+    programs.fish.interactiveShellInit = ''
+        function man2 -w man
+            nvim +"Man $argv | only"
+        end
+    '';
+    programs.bash.interactiveShellInit = ''
+        man2() {
+            nvim +"Man $@ | only"
+        }
+    '';
 }
