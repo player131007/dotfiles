@@ -16,7 +16,7 @@
                 pad = "5x5 center";
             };
             cursor.blink = "yes";
-            colors.alpha = 0.6;
+            colors.alpha = 0.7;
         };
     };
 
