@@ -14,7 +14,7 @@ shell_integration = true
   [[blocks.segments]]
     type = 'session'
     style = 'plain'
-    foreground_templates = [ '{{ if .Root -}} red {{- else -}} blue {{- end }}' ]
+    foreground_templates = [ '{{ if .Root -}} red {{- else -}} magenta {{- end }}' ]
     templates = [
       '{{ if .Root }}<b>{{ end }} {{- .UserName -}} {{ if .Root }}</b>{{ end }}',
       '{{ if .SSHSession -}} <white>@</><green>{{ .HostName }}</> {{- end }}',
