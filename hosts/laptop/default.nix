@@ -26,8 +26,6 @@
         };
     };
 
-    services.fwupd.enable = true;
-
     networking = {
         hostName = "laptop";
 
@@ -53,6 +51,9 @@
     systemd.tmpfiles.rules = [
         "f /dev/shm/looking-glass 0660 player131007 kvm -"
     ];
+
+    # it keeps trying to save /etc/machine-id
+    systemd.services.systemd-machine-id-commit.enable = false;
 
     systemd.network = {
         enable = true;
@@ -95,6 +96,7 @@
             enable = true;
             openDefaultPorts = true;
         };
+        fwupd.enable = true;
     };
 
     xdg.portal = {
