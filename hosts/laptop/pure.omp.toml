@@ -34,7 +34,7 @@ shell_integration = true
   [[blocks.segments]]
     type = 'git'
     style = 'plain'
-    foreground = 'darkGray'
+    foreground = 'cyan'
     templates = [
       '<b>{{ .HEAD }}</b>',
       '{{ if or .Working.Changed .Staging.Changed -}} <b><yellow>*</></b> {{- end }}',
