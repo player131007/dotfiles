@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, ... }: {
     imports = [
         ./btop
         ./firefox
@@ -56,7 +56,7 @@
             };
             Service = {
                 Type = "exec";
-                ExecStart = "${pkgs.keepassxc}/bin/keepassxc";
+                ExecStart = lib.getExe pkgs.keepassxc;
                 Environment = [ "QT_QPA_PLATFORM=wayland;xcb" "SSH_AUTH_SOCK=%t/ssh-agent" ];
             };
         };

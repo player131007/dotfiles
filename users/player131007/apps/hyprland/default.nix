@@ -1,10 +1,10 @@
-{ config, pkgs, ... }: {
+{ config, pkgs, lib, ... }: {
     wayland.windowManager.hyprland = {
         enable = true;
         settings = {
             monitor = ", preferred, auto, 1.25";
             exec-once = [
-                "${pkgs.swaybg}/bin/swaybg -i ${../../wallpaper.png}"
+                "${lib.getExe pkgs.swaybg} -i ${../../wallpaper.png}"
             ];
 
             env = [

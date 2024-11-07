@@ -19,17 +19,18 @@ in {
     config =
     let
         configArgument = lib.optionalString (cfg.configFile != null) "--config ${cfg.configFile}";
+        omp = lib.getExe cfg.package;
     in lib.mkIf cfg.enable {
         programs.bash.promptInit = lib.mkIf cfg.enableBashIntegration ''
-            eval "$(${cfg.package}/bin/oh-my-posh init bash ${configArgument})"
+            eval "$(${omp} init bash ${configArgument})"
         '';
 
         programs.fish.promptInit = lib.mkIf cfg.enableFishIntegration ''
-            ${cfg.package}/bin/oh-my-posh init fish ${configArgument} | source
+            ${omp} init fish ${configArgument} | source
         '';
 
         programs.zsh.promptInit = lib.mkIf cfg.enableZshIntegration ''
-            eval "$(${cfg.package}/bin/oh-my-posh init zsh ${configArgument})"
+            eval "$(${omp} init zsh ${configArgument})"
         '';
     };
 }
