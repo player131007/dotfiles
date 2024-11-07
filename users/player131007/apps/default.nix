@@ -7,6 +7,7 @@
         ./gtk
         ./hyprland
         ./fcitx5
+        ./helix
     ];
 
     programs = {
@@ -42,7 +43,12 @@
 
         keepassxc
         looking-glass-client
+        clang
     ];
+
+    home.sessionVariables = {
+        ASAN_SYMBOLIZER_PATH = lib.getExe' pkgs.llvm "llvm-symbolizer";
+    };
 
     systemd.user.services = {
         keepassxc = {

@@ -153,34 +153,13 @@
         "type": "github"
       }
     },
-    "nvim-flake": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1730308572,
-        "narHash": "sha256-FzvR5W+m7sgQmV7LGbdRh8zKZuj3BSxH8GhENf0ne+Y=",
-        "owner": "player131007",
-        "repo": "nvim-flake",
-        "rev": "b639b92bdcb006467b9587491d1c2c56c7ebc4ab",
-        "type": "github"
-      },
-      "original": {
-        "owner": "player131007",
-        "repo": "nvim-flake",
-        "type": "github"
-      }
-    },
     "root": {
       "inputs": {
         "base16": "base16",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "lix-module": "lix-module",
-        "nixpkgs": "nixpkgs",
-        "nvim-flake": "nvim-flake"
+        "nixpkgs": "nixpkgs"
       }
     },
     "systems": {

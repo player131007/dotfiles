@@ -19,19 +19,12 @@
         configFile = ./pure.omp.toml;
     };
 
-    environment.variables.EDITOR = "nvim";
     environment.systemPackages = with pkgs; [
         git
         home-manager
 
         eza
         virtiofsd
-        (nvim-flake.packages.${pkgs.system}.default.override {
-            colorscheme =
-            let
-                baseXX = lib.filterAttrs (k: _: lib.hasPrefix "base" k && builtins.stringLength k == 6);
-            in baseXX config.scheme.withHashtag;
-        })
     ];
 
     environment.shellAliases = {
@@ -39,15 +32,4 @@
         ll = "eza --icons -F -lhb";
         l = "eza --icons -F -lhba";
     };
-
-    programs.fish.interactiveShellInit = ''
-        function man2 -w man
-            nvim +"Man $argv | only"
-        end
-    '';
-    programs.bash.interactiveShellInit = ''
-        man2() {
-            nvim +"Man $@ | only"
-        }
-    '';
 }
