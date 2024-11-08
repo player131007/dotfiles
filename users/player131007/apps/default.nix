@@ -39,7 +39,8 @@
         xdg-utils
         btop
         _7zz
-        wl-screenrec
+        # broken as of now
+        # wl-screenrec
 
         keepassxc
         looking-glass-client
