@@ -76,7 +76,6 @@
                 Defaults lecture=never
             '';
         };
-        # rtkit.enable = true;
     };
 
     services = {
