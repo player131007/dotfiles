@@ -10,8 +10,8 @@
         ssh.startAgent = true;
 
         hyprland.enable = true;
-        hyprlock.enable = true;
         virt-manager.enable = true;
+        nano.enable = false;
     };
 
     stuffs.oh-my-posh = {
