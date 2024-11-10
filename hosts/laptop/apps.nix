@@ -1,4 +1,4 @@
-{ pkgs, nvim-flake, config, ... }: {
+{ pkgs, ... }: {
     imports = [
         ./oh-my-posh.nix
     ];
