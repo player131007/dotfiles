@@ -1,7 +1,10 @@
 { config, ... }: {
-    xdg.configFile."btop/themes/base16.theme".source = config.scheme {
-        template = ./btop.mustache;
-        extension = ".theme";
+    xdg.configFile."btop/themes/base16.theme" = {
+        inherit (config.programs.btop) enable;
+        source = config.scheme {
+            template = ./btop.mustache;
+            extension = ".theme";
+        };
     };
 
     programs.btop = {

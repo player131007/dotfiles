@@ -1,7 +1,10 @@
 { pkgs, config, lib, ... }: {
-    xdg.configFile."helix/themes/base16.toml".source = config.scheme {
-        template = ./helix.mustache;
-        extension = ".toml";
+    xdg.configFile."helix/themes/base16.toml" = {
+        inherit (config.programs.helix) enable;
+        source = config.scheme {
+            template = ./helix.mustache;
+            extension = ".toml";
+        };
     };
 
     programs.helix = {

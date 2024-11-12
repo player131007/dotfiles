@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, config, ... }: {
     i18n.inputMethod = {
         enabled = "fcitx5";
         fcitx5.addons = with pkgs; [
@@ -6,5 +6,8 @@
         ];
     };
 
-    xdg.configFile."fcitx5".source = ./.;
+    xdg.configFile."fcitx5" = {
+        enable = config.i18n.inputMethod.enabled == "fcitx5";
+        source = ./.;
+    };
 }
