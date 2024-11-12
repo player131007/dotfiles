@@ -1,14 +1,18 @@
 { pkgs, config, ... }:
 let
     isDarkTheme = config.scheme.variant != "light";
-in {
-    gtk =
-    let
-        base16Css = builtins.readFile (config.scheme {
+    
+    gtkConfig = {
+        extraCss = builtins.readFile (config.scheme {
             template = ./gtk.mustache;
             extension = ".css";
         });
-    in {
+        extraConfig = {
+            gtk-application-prefer-dark-theme = isDarkTheme;
+        };
+    };
+in {
+    gtk = {
         enable = true;
         font = {
             package = pkgs.inter;
@@ -24,16 +28,10 @@ in {
             package = pkgs.adw-gtk3;
             name = "adw-gtk3";
         };
-        gtk3.extraCss = base16Css;
-        gtk4.extraCss = base16Css;
 
-        gtk3.extraConfig = {
-            gtk-application-prefer-dark-theme = isDarkTheme;
-        };
-        gtk4.extraConfig = {
-            gtk-application-prefer-dark-theme = isDarkTheme;
-        };
-    };
+        gtk3 = gtkConfig;
+        gtk4 = gtkConfig;
+   };
 
     dconf.settings."org/gnome/desktop/interface" = {
         color-scheme = if isDarkTheme then "prefer-dark" else "prefer-light";
