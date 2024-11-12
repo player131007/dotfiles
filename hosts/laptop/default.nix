@@ -134,12 +134,15 @@
 
     time.timeZone = "Asia/Ho_Chi_Minh";
 
+    # https://nixos.org/manual/nixos/stable/#ch-system-state
     environment.persistence."/persist" = {
         hideMounts = true;
         directories = [
+            "/var/lib/nixos"
+            "/var/lib/systemd"
+
             "/var/lib/iwd"
             "/var/lib/libvirt"
-            "/var/lib/nixos"
             { directory = "/var/cache/tuigreet"; user = "greeter"; group = "greeter"; }
             ( with config.services.syncthing; { directory = dataDir; inherit user group; } )
         ];
