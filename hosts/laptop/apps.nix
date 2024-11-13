@@ -1,4 +1,4 @@
-{ pkgs, ... }: {
+{ pkgs, lib, config, ... }: {
     imports = [
         ./oh-my-posh.nix
     ];
@@ -12,6 +12,14 @@
         hyprland.enable = true;
         virt-manager.enable = true;
         nano.enable = false;
+        less.envVariables.LESS = "-R --use-color";
+    };
+
+    environment.variables = lib.optionalAttrs config.documentation.man.enable {
+        MANROFFOPT = "-P-c"; # less doesn't support coloring ANSI escape codes
+        MANPAGER = "less -Dd+y -Du+b";
+    } // lib.optionalAttrs config.programs.less.enable {
+        LESS = "-R --use-color";
     };
 
     stuffs.oh-my-posh = {
