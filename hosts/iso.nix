@@ -40,7 +40,8 @@
 
     boot.kernelPackages = pkgs.linuxPackages_zen;
 
-    boot.initrd.systemd.enable = true;
+    # doesn't work
+    # boot.initrd.systemd.enable = true;
     # no zfs
     boot.supportedFilesystems.zfs = lib.mkForce false;
 
