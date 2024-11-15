@@ -22,6 +22,7 @@
         userEmail = "tcm4095@gmail.com";
         extraConfig = {
             core.autocrlf = "input";
+            core.pager = "less -FRX";
         };
     };
 
