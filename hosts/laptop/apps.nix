@@ -12,7 +12,6 @@
         hyprland.enable = true;
         virt-manager.enable = true;
         nano.enable = false;
-        less.envVariables.LESS = "-R --use-color";
     };
 
     environment.variables = lib.optionalAttrs config.documentation.man.enable {
