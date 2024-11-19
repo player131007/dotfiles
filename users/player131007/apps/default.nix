@@ -32,6 +32,7 @@
         grim
         slurp
         brightnessctl
+        mpv
 
         calc
         wl-clipboard
