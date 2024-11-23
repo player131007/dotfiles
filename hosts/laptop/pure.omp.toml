@@ -24,7 +24,7 @@ shell_integration = true
   [[blocks.segments]]
     type = 'path'
     style = 'plain'
-    foreground = 'lightCyan'
+    foreground = 'blue'
     template = "{{ .Path }}{{ if not .Writable }} <yellow>\uE672</>{{ end }} "
 
     [blocks.segments.properties]
@@ -48,8 +48,8 @@ shell_integration = true
       branch_icon = ''
       branch_identical_icon = ''
       branch_gone_icon = ''
-      branch_ahead_icon = "<cyan><b>\uF176</b></>"
-      branch_behind_icon = "<cyan><b>\uF175</b></>"
+      branch_ahead_icon = "<lightCyan><b>\uF176</b></>"
+      branch_behind_icon = "<lightCyan><b>\uF175</b></>"
 
 [[blocks]]
   type = 'prompt'
@@ -82,10 +82,10 @@ shell_integration = true
       style = 'plain'
       foreground_templates = [
         '{{ if .Code }}red{{end}}',
-        'lightYellow',
+        'green',
       ]
       template = "\u276F"
 
 [transient_prompt]
-  foreground = 'lightYellow'
+  foreground = 'green'
   template = "{{ if .Root }}<yellow>\uF0E7</> {{end}}\u276F "
