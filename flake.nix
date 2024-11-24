@@ -22,6 +22,7 @@
                 impermanence.nixosModule
                 base16.nixosModule
                 ./hosts/laptop
+                ./modules/nixos
             ];
         };
 

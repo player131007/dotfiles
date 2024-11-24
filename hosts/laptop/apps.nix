@@ -1,8 +1,4 @@
 { pkgs, lib, config, ... }: {
-    imports = [
-        ./oh-my-posh.nix
-    ];
-
     programs = {
         command-not-found.enable = false;
         nix-index.enable = true;
