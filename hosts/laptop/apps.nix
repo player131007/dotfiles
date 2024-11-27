@@ -5,7 +5,6 @@
         fish.enable = true;
         ssh.startAgent = true;
 
-        hyprland.enable = true;
         virt-manager.enable = true;
         nano.enable = false;
     };

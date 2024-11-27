@@ -115,16 +115,6 @@
         fwupd.enable = true;
     };
 
-    xdg.portal = {
-        enable = true;
-        extraPortals = with pkgs; [
-            xdg-desktop-portal-gtk
-        ];
-        config.common = {
-            default = [ "hyprland" "gtk" ];
-        };
-    };
-
     virtualisation.libvirtd = {
         enable = true;
         qemu.package = pkgs.qemu_kvm;
