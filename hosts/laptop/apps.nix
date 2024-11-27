@@ -21,6 +21,23 @@
         configFile = ./pure.omp.toml;
     };
 
+    stuffs.dwl = {
+        enable = true;
+        package = with config.scheme; pkgs.callPackage ./dwl.nix {
+            rootColor = "0x${base00}ff";
+            borderColor = "0x${base02}ff";
+            focusColor = "0x${base14}ff";
+            urgentColor = "0x${base12}ff";
+        };
+        envVariables = {
+            MOZ_ENABLE_WAYLAND = "1";
+            GDK_BACKEND = "wayland,x11";
+            QT_QPA_PLATFORM = "wayland;xcb";
+        };
+
+        startupCommand = "$HOME/.config/startup";
+    };
+
     environment.systemPackages = with pkgs; [
         git
         home-manager
