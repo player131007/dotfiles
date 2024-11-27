@@ -53,21 +53,4 @@
         ASAN_SYMBOLIZER_PATH = lib.getExe' pkgs.llvm "llvm-symbolizer";
     };
 
-    systemd.user.services = {
-        keepassxc = {
-            Unit = {
-                Description = "KeepassXC";
-                Documentation = [ "man:keepassxc(1)" ];
-                After = [ "ssh-agent.service" ];
-            };
-            Install = {
-                WantedBy = [ "graphical-session.target" ];
-            };
-            Service = {
-                Type = "exec";
-                ExecStart = lib.getExe pkgs.keepassxc;
-                Environment = [ "QT_QPA_PLATFORM=wayland;xcb" "SSH_AUTH_SOCK=%t/ssh-agent" ];
-            };
-        };
-    };
 }
