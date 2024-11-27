@@ -5,7 +5,6 @@
         ./fish
         ./foot
         ./gtk
-        ./hyprland
         ./fcitx5
         ./helix
     ];
