@@ -3,6 +3,13 @@
         ./apps
     ];
 
+    xdg.configFile."startup".source = pkgs.writeShellScript "startup" ''
+        swaybg -i ${./wallpaper.png} &
+        keepassxc &
+
+        wait -f
+    '';
+
     home.username = "player131007";
     home.homeDirectory = "/home/player131007";
 
