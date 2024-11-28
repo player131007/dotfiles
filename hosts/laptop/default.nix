@@ -113,6 +113,7 @@
             openDefaultPorts = true;
         };
         fwupd.enable = true;
+        logind.lidSwitch = "ignore";
     };
 
     virtualisation.libvirtd = {
