@@ -3,27 +3,27 @@ name: "Rosé Pine"
 author: "Emilia Dunfelt <edun@dunfelt.se>"
 variant: "dark"
 palette:
-  base00: "191724" # ok
+  base00: "191724"
   base01: "1f1d2e"
   base02: "26233a"
   base03: "6e6a86"
   base04: "908caa"
   base05: "908caa"
   base06: "e0def4"
-  base07: "e0def4" # ok
-  base08: "eb6f92" # ok
-  base09: "ea9d34" # ok
-  base0A: "f6c177" # ok
-  base0B: "76b6d0" # ok
-  base0C: "ebbcba" # ok
-  base0D: "9ccfd8" # ok
-  base0E: "c4a7e7" # ok
-  base0F: "524f67" # ok
+  base07: "e0def4"
+  base08: "eb6f92"
+  base09: "ea9d34"
+  base0A: "f6c177"
+  base0B: "76b6d0"
+  base0C: "ebbcba"
+  base0D: "9ccfd8"
+  base0E: "c4a7e7"
+  base0F: "524f67"
   base10: "21202e"
   base11: "403d52"
-  base12: "e01f56" # ok
-  base13: "f09619" # ok
-  base14: "31748f" # ok
-  base15: "d16561" # ok
-  base16: "2cb6ce" # ok
-  base17: "7e3fcb" # ok
+  base12: "e01f56"
+  base13: "f09619"
+  base14: "31748f"
+  base15: "d16561"
+  base16: "2cb6ce"
+  base17: "7e3fcb"
