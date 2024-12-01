@@ -147,17 +147,20 @@
     time.timeZone = "Asia/Ho_Chi_Minh";
 
     # https://nixos.org/manual/nixos/stable/#ch-system-state
-    environment.persistence."/persist" = {
+    environment.persistence."/persist" =
+    let
+        getEnableOption = parts: lib.foldl' (acc: x: acc.${x}) config (parts ++ [ "enable" ]);
+    in {
         hideMounts = true;
         directories = [
             "/var/lib/nixos"
             "/var/lib/systemd"
-
-            "/var/lib/iwd"
-            "/var/lib/libvirt"
-            { directory = "/var/cache/tuigreet"; user = "greeter"; group = "greeter"; }
-            ( with config.services.syncthing; { directory = dataDir; inherit user group; } )
-        ];
+        ]
+        ++ lib.optional (getEnableOption [ "networking" "wireless" "iwd" ]) "/var/lib/iwd"
+        ++ lib.optional (getEnableOption [ "virtualisation" "libvirtd" ]) "/var/lib/libvirt"
+        ++ lib.optional (getEnableOption [ "services" "greetd" ]) { directory = "/var/cache/tuigreet"; user = "greeter"; group = "greeter"; }
+        ++ lib.optional (getEnableOption [ "services" "syncthing" ]) (with config.services.syncthing; { directory = dataDir; inherit user group; })
+        ;
         files = [
             "/etc/adjtime"
             "/etc/machine-id"
