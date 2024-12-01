@@ -25,6 +25,7 @@
             powerOnBoot = false;
         };
 
+        amdgpu.amdvlk.enable = true;
         graphics.enable = true;
     };
 
