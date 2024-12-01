@@ -6,10 +6,14 @@
     nixpkgs.hostPlatform = "x86_64-linux";
 
     boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" "sdhci_pci" ];
-    boot.initrd.kernelModules = [ "amdgpu" "vfio-pci" ];
+    boot.initrd.kernelModules = [ "amdgpu" ];
 
-    boot.kernelParams = [ "iommu=pt" "vfio-pci.ids=10de:25a2,10de:2291"];
-    boot.kernelModules = [ "kvm-amd" ];
+    boot.kernelParams = [ "iommu=pt" ];
+    boot.kernelModules = [ "kvm-amd" "vfio-pci" ];
+
+    boot.extraModprobeConfig = ''
+        options vfio-pci ids=10de:25a2,10de:2291
+    '';
 
     hardware = {
         cpu.amd.updateMicrocode = true;
