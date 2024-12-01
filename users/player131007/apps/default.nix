@@ -25,13 +25,27 @@
         };
     };
 
+    programs.mpv = {
+        enable = true;
+        defaultProfiles = [ "gpu-hq" ];
+        config = {
+            gpu-api = "opengl";
+            vo = "gpu-next";
+            hwdec = "vaapi";
+
+            deband-iterations = 2;
+            deband-threshold = 35;
+            deband-range = 20;
+            deband-grain = 5;
+        };
+    };
+
     home.packages = with pkgs; [
         dunst
         swaybg
         grim
         slurp
         brightnessctl
-        mpv
 
         calc
         wl-clipboard
