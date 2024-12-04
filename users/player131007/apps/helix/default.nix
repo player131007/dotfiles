@@ -18,6 +18,7 @@
                 middle-click-paste = false;
                 popup-border = "popup";
                 color-modes = true;
+                bufferline = "multiple";
             };
             editor.cursor-shape.insert = "bar";
             editor.indent-guides = {
