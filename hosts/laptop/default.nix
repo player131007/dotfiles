@@ -52,6 +52,18 @@
         fallbackDns = [];
     };
 
+    systemd.network.networks =
+    let
+        no-dns = {
+            dhcpV4Config.UseDNS = lib.mkForce false;
+            dhcpV6Config.UseDNS = lib.mkForce false;
+            ipv6AcceptRAConfig.UseDNS = lib.mkForce false;
+        };
+    in {
+        "99-ethernet-default-dhcp" = no-dns;
+        "99-wireless-client-dhcp" = no-dns;
+    };
+
     systemd.tmpfiles.rules = [
         "f /dev/shm/looking-glass 0660 player131007 kvm -"
     ];
