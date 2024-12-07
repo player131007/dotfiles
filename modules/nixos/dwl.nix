@@ -36,9 +36,23 @@ in {
     config = lib.mkIf cfg.enable (lib.mkMerge
     [
         {
-            stuffs.dwl.wrapperArgs = lib.optionals (cfg.startupCommand != "") [
+            stuffs.dwl.wrapperArgs =
+            let
+                startupScript = pkgs.writeShellScript "dwl-startup" ''
+                    exec <&-
+
+                    cleanup() {
+                        systemctl --user stop dummy-graphical-session.service
+                    }
+                    systemctl --user start dummy-graphical-session.service
+                    trap cleanup EXIT
+
+                    ${cfg.startupCommand}
+                    sleep inf
+                '';
+            in [
                 "--append-flags" "-s"
-                "--append-flags" cfg.startupCommand
+                "--append-flags" "${startupScript}"
             ] ++ lib.foldlAttrs (acc: name: value: acc ++ [ "--set" name value ]) [] cfg.envVariables;
 
             stuffs.dwl.finalPackage = cfg.package.overrideAttrs (prev: {
@@ -47,6 +61,11 @@ in {
                     wrapProgram $out/bin/dwl ${lib.escapeShellArgs cfg.wrapperArgs}
                 '';
             });
+
+            systemd.user.services.dummy-graphical-session = {
+                description = "Dummy service that pulls in graphical-session.target";
+                bindsTo = [ "graphical-session.target" ];
+            };
 
             environment.systemPackages = [ cfg.finalPackage ];
             services.displayManager.sessionPackages = [ cfg.finalPackage ];
