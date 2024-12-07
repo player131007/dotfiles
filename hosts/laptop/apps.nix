@@ -44,6 +44,8 @@
 
         eza
         virtiofsd
+
+        man-pages
     ];
 
     environment.shellAliases = {
