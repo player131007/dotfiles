@@ -4,6 +4,8 @@
     ];
 
     xdg.configFile."startup".source = pkgs.writeShellScript "startup" ''
+        exec <&-
+
         swaybg -i ${./wallpaper.png} &
         keepassxc &
 
