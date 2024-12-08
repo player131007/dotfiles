@@ -99,7 +99,8 @@
         };
         "/windows" = {
             label = "windows";
-            fsType = "exfat";
+            fsType = "btrfs";
+            options = [ "nodatacow" "noatime" ];
         };
     };
 
