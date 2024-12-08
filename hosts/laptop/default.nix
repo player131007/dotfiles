@@ -3,6 +3,7 @@
     imports = [
         ./hardware-configuration.nix
         ./apps.nix
+        ./virtualization
     ];
 
     environment.sessionVariables = {
@@ -63,10 +64,6 @@
         "99-ethernet-default-dhcp" = no-dns;
         "99-wireless-client-dhcp" = no-dns;
     };
-
-    systemd.tmpfiles.rules = [
-        "f /dev/shm/looking-glass 0660 player131007 kvm -"
-    ];
 
     # it keeps trying to save /etc/machine-id
     systemd.services.systemd-machine-id-commit.enable = false;
@@ -132,11 +129,6 @@
         logind.lidSwitch = "ignore";
     };
 
-    virtualisation.libvirtd = {
-        enable = true;
-        qemu.package = pkgs.qemu_kvm;
-    };
-
     zramSwap.enable = true;
 
     boot = {
@@ -169,7 +161,6 @@
             "/var/lib/systemd"
         ]
         ++ lib.optional (getEnableOption [ "networking" "wireless" "iwd" ]) "/var/lib/iwd"
-        ++ lib.optional (getEnableOption [ "virtualisation" "libvirtd" ]) "/var/lib/libvirt"
         ++ lib.optional (getEnableOption [ "services" "greetd" ]) { directory = "/var/cache/tuigreet"; user = "greeter"; group = "greeter"; }
         ++ lib.optional (getEnableOption [ "services" "syncthing" ]) (with config.services.syncthing; { directory = dataDir; inherit user group; })
         ;
