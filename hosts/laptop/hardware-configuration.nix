@@ -8,13 +8,6 @@
     boot.initrd.availableKernelModules = [ "nvme" "xhci_pci" "ahci" "usbhid" "sd_mod" "sdhci_pci" ];
     boot.initrd.kernelModules = [ "amdgpu" ];
 
-    boot.kernelParams = [ "iommu=pt" ];
-    boot.kernelModules = [ "kvm-amd" "vfio-pci" ];
-
-    boot.extraModprobeConfig = ''
-        options vfio-pci ids=10de:25a2,10de:2291
-    '';
-
     hardware = {
         cpu.amd.updateMicrocode = true;
 
@@ -33,7 +26,6 @@
         graphics.enable = true;
     };
 
-    boot.blacklistedKernelModules = [ "nvidia" "nvidia_drm" "nvidia_uvm" "nvidia_modeset" ];
     services.xserver.videoDrivers = [ "nvidia" ];
     hardware.nvidia = {
         modesetting.enable = true;
@@ -96,11 +88,6 @@
             device = "/dev/disk/by-uuid/584B-F342";
             fsType = "exfat";
             options = [ "uid=player131007" "gid=${config.services.syncthing.group}" "umask=002" ];
-        };
-        "/windows" = {
-            label = "windows";
-            fsType = "btrfs";
-            options = [ "nodatacow" "noatime" ];
         };
     };
 
