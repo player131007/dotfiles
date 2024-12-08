@@ -14,6 +14,4 @@
         enable = true;
         qemu.package = pkgs.qemu_kvm;
     };
-
-    environment.persistence."/persist".directories = [ "/var/lib/libvirt" ];
 }
