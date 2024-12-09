@@ -65,6 +65,10 @@ in {
             systemd.user.services.dummy-graphical-session = {
                 description = "Dummy service that pulls in graphical-session.target";
                 bindsTo = [ "graphical-session.target" ];
+                serviceConfig = {
+                    Type = "exec";
+                    ExecStart = "${lib.getExe' pkgs.coreutils "sleep"} inf";
+                };
             };
 
             environment.systemPackages = [ cfg.finalPackage ];
