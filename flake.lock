@@ -173,6 +173,30 @@
         "type": "github"
       }
     },
+    "nixvirt": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-ovmf": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1712439808,
+        "narHash": "sha256-QoONoZPBpNTw5cia05QSvDlaxXo3moKAJQOw7c5hMXA=",
+        "owner": "AshleyYakeley",
+        "repo": "NixVirt",
+        "rev": "9f1cdca730d92461075709e867c1e9ad93d58a8d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AshleyYakeley",
+        "ref": "v0.5.0",
+        "repo": "NixVirt",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "base16": "base16",
@@ -180,7 +204,8 @@
         "impermanence": "impermanence",
         "lix-module": "lix-module",
         "nixpkgs": "nixpkgs",
-        "nixpkgs-libvirt": "nixpkgs-libvirt"
+        "nixpkgs-libvirt": "nixpkgs-libvirt",
+        "nixvirt": "nixvirt"
       }
     },
     "systems": {

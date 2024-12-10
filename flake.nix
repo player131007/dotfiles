@@ -2,6 +2,12 @@
     inputs = {
         nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
         nixpkgs-libvirt.url = "github:NixOS/nixpkgs/4aa36568d413aca0ea84a1684d2d46f55dbabad7";
+
+        nixvirt = {
+            url = "github:AshleyYakeley/NixVirt/v0.5.0";
+            inputs.nixpkgs.follows = "nixpkgs";
+            inputs.nixpkgs-ovmf.follows = "nixpkgs";
+        };
         impermanence.url = "github:nix-community/impermanence";
         home-manager = {
             url = "github:nix-community/home-manager";
@@ -22,6 +28,7 @@
                 inputs.lix-module.nixosModules.default
                 inputs.impermanence.nixosModule
                 inputs.base16.nixosModule
+                inputs.nixvirt.nixosModules.default
                 ./hosts/laptop
                 ./modules/nixos
                 { virtualisation.libvirtd.package = inputs.nixpkgs-libvirt.legacyPackages.x86_64-linux.libvirt; }

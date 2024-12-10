@@ -43,7 +43,6 @@
         home-manager
 
         eza
-        virtiofsd
 
         man-pages
     ];
