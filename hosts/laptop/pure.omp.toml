@@ -1,6 +1,6 @@
 #:schema https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
 
-version = 2
+version = 3
 console_title_template = '{{ .UserName }}@{{ .HostName }} {{ .Shell }} in {{ .PWD }}'
 final_space = true
 auto_upgrade = false
@@ -19,13 +19,12 @@ shell_integration = true
       '{{ if .Root }}<b>{{ end }} {{- .UserName -}} {{ if .Root }}</b>{{ end }}',
       '{{ if .SSHSession -}} <white>@</><green>{{ .HostName }}</> {{- end }}',
     ]
-    template = "{{ .Templates }} "
 
   [[blocks.segments]]
     type = 'path'
     style = 'plain'
     foreground = 'blue'
-    template = "{{ .Path }}{{ if not .Writable }} <yellow>\uE672</>{{ end }} "
+    template = " {{ .Path }}{{ if not .Writable }} <yellow>\uE672</>{{ end }} "
 
     [blocks.segments.properties]
       style = 'agnoster_short'
@@ -48,8 +47,8 @@ shell_integration = true
       branch_icon = ''
       branch_identical_icon = ''
       branch_gone_icon = ''
-      branch_ahead_icon = "<lightCyan><b>\uF176</b></>"
-      branch_behind_icon = "<lightCyan><b>\uF175</b></>"
+      branch_ahead_icon = "<lightCyan><b>\uF431</b></>"
+      branch_behind_icon = "<lightCyan><b>\uF433</b></>"
 
 [[blocks]]
   type = 'prompt'
