@@ -1,6 +1,7 @@
 { pkgs, config, ... }: {
     home.packages = [
-        (pkgs.nerdfonts.override { fonts = [ "Meslo" ]; })
+        pkgs.nerd-fonts.symbols-only
+        pkgs.meslo-lg
     ];
 
     programs.foot = {
@@ -11,7 +12,7 @@
                     template = ./foot.mustache;
                     extension = ".ini";
                 };
-                font = "MesloLGS Nerd Font Mono:size=11";
+                font = "Meslo LG S:size=11,Symbols Nerd Font Mono:size=10";
                 shell = "fish";
                 pad = "5x5 center";
             };
