@@ -24,7 +24,7 @@ shell_integration = true
     type = 'path'
     style = 'plain'
     foreground = 'blue'
-    template = " {{ .Path }}{{ if not .Writable }} <yellow>\uE672</>{{ end }} "
+    template = " {{ .Path }}{{ if not .Writable }} <yellow></>{{ end }} "
 
     [blocks.segments.properties]
       style = 'agnoster_short'
@@ -37,7 +37,7 @@ shell_integration = true
     templates = [
       '<b>{{ .HEAD }}</b>',
       '{{ if or .Working.Changed .Staging.Changed -}} <b><yellow>*</></b> {{- end }}',
-      "{{ if .StashCount }} <b>\u2261</b>{{ end }}",
+      "{{ if .StashCount }} <b>≡</b>{{ end }}",
       '{{ if .BranchStatus }} {{ .BranchStatus }}{{ end }}',
     ]
 
@@ -47,8 +47,8 @@ shell_integration = true
       branch_icon = ''
       branch_identical_icon = ''
       branch_gone_icon = ''
-      branch_ahead_icon = "<lightCyan><b>\uF431</b></>"
-      branch_behind_icon = "<lightCyan><b>\uF433</b></>"
+      branch_ahead_icon = "<lightCyan><b></b></>"
+      branch_behind_icon = "<lightCyan><b></b></>"
 
 [[blocks]]
   type = 'prompt'
@@ -58,7 +58,7 @@ shell_integration = true
     type = 'executiontime'
     style = 'plain'
     foreground = "yellow"
-    template = "\U000F13AB {{ .FormattedMs }} "
+    template = "󱎫 {{ .FormattedMs }} "
 
     [blocks.segments.properties]
       style = 'austin'
@@ -83,8 +83,8 @@ shell_integration = true
         '{{ if .Code }}red{{end}}',
         'green',
       ]
-      template = "\u276F"
+      template = "❯"
 
 [transient_prompt]
   foreground = 'green'
-  template = "{{ if .Root }}<yellow>\uF0E7</> {{end}}\u276F "
+  template = "{{ if .Root }}<yellow></> {{end}}❯ "
