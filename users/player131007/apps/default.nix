@@ -7,6 +7,7 @@
         ./gtk
         ./fcitx5
         ./helix
+        ./yambar
     ];
 
     programs = {

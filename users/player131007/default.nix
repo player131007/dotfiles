@@ -8,6 +8,7 @@
 
         swaybg -i ${./wallpaper.png} &
         keepassxc &
+        yambar &
 
         wait -f
     '';
