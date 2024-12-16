@@ -41,7 +41,6 @@
     };
 
     home.packages = with pkgs; [
-        dunst
         swaybg
         grim
         slurp
