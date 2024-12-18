@@ -157,6 +157,7 @@ bar:
               conditions:
                 type == "source":
                   map:
+                    on-click: wpctl set-mute @DEFAULT_AUDIO_SOURCE@ toggle
                     conditions:
                       muted:
                         string: { text: 󰍭, font: *icon_font, foreground: "{{base03-hex}}ff" }
@@ -164,6 +165,7 @@ bar:
                         string: { text: 󰍬, font: *icon_font }
                 type == "sink":
                   map:
+                    on-click: wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
                     conditions:
                       muted:
                         string: { text: 󰖁, font: *icon_font, foreground: "{{base03-hex}}ff" }
