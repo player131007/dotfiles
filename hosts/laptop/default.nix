@@ -127,6 +127,7 @@
         };
         fwupd.enable = true;
         logind.lidSwitch = "ignore";
+        dbus.implementation = "broker";
     };
 
     zramSwap.enable = true;
