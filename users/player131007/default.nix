@@ -3,6 +3,7 @@
         ./apps
     ];
 
+    xdg.enable = true;
     xdg.configFile."startup".source = pkgs.writeShellScript "startup" ''
         exec <&-
 
