@@ -1,30 +1,80 @@
 { pkgs, config, lib, modulesPath, ... }:
 let
     cfg = config.stuffs.dwl;
+
+    startupScript =
+    let
+        setSessionVars = lib.pipe cfg.sessionVariables [
+            (lib.filterAttrs (k: v: v != null))
+            (lib.mapAttrsToList (k: v: "${k}=${v}"))
+        ];
+
+        inheritedSessionVars = lib.pipe cfg.sessionVariables [
+            (lib.filterAttrs (k: v: v == null))
+            builtins.attrNames
+        ];
+
+        allSessionVars = builtins.attrNames cfg.sessionVariables;
+    in pkgs.writeShellScript "dwl-startup" ''
+        exec <&-
+
+        cleanup() {
+            systemctl --user stop dummy-graphical-session.service 
+
+            ${lib.optionalString (allSessionVars != []) "systemctl --user unset-environment ${lib.escapeShellArgs allSessionVars}"}
+        }
+        trap cleanup EXIT
+
+        ${lib.optionalString (setSessionVars != []) "systemctl --user set-environment ${lib.escapeShellArgs setSessionVars}"}
+        ${lib.optionalString (inheritedSessionVars != []) "systemctl --user import-environment ${lib.escapeShellArgs inheritedSessionVars}"}
+        systemctl --user start dummy-graphical-session.service
+
+        ${cfg.startupCommand}
+        sleep inf
+    '';
+
+    dwl-script =
+    let
+        envVars = lib.pipe cfg.envVariables [
+            (lib.mapAttrsToList (k: v: "${k}=${v}"))
+            lib.escapeShellArgs
+        ];
+    in pkgs.writeShellScript "dwl" ''
+        export ${envVars}
+        exec ${lib.getExe cfg.package} -s ${startupScript} "$@"
+    '';
+
+    dwl-wrapped = pkgs.runCommandLocal "dwl-wrapped" {
+        buildInputs = [ pkgs.dbus cfg.package ];
+        passthru.providedSessions = [ "dwl" ];
+    } ''
+        mkdir -p $out/bin
+        cp -r ${cfg.package}/share $out
+        cp ${dwl-script} $out/bin/dwl
+    '';
 in {
-    options.stuffs.dwl = {
+    options.stuffs.dwl =
+    let
+        inherit (lib.types) attrsOf str nullOr;
+    in {
         enable = lib.mkEnableOption "dwl";
         package = lib.mkPackageOption pkgs "dwl" {};
-        wrapperArgs = lib.mkOption {
-            type = lib.types.listOf lib.types.str;
-            default = [];
-            internal = true;
-            description = "Arguments passed to `makeWrapper`.";
-        };
 
-        finalPackage = lib.mkOption {
-            type = lib.types.package;
-            readOnly = true;
+        sessionVariables = lib.mkOption {
+            type = attrsOf (nullOr str);
+            description = ''
+                Environment variables to pass to the dbus session and systemd services.
+                If the value is `null`, the variable will be inherited.
+            '';
         };
 
         envVariables = lib.mkOption {
-            type = lib.types.attrsOf (lib.types.uniq lib.types.str);
-            default = {};
+            type = attrsOf str;
             description = "Environment variables to pass to dwl.";
         };
 
         startupCommand = lib.mkOption {
-            type = lib.types.uniq lib.types.str;
+            type = str;
             default = "";
             description = ''
                 Command to run after dwl starts.
@@ -36,31 +86,14 @@ in {
     config = lib.mkIf cfg.enable (lib.mkMerge
     [
         {
-            stuffs.dwl.wrapperArgs =
-            let
-                startupScript = pkgs.writeShellScript "dwl-startup" ''
-                    exec <&-
+            stuffs.dwl.sessionVariables = lib.mapAttrs (_: lib.mkDefault) {
+                XDG_CURRENT_DESKTOP = null;
+                WAYLAND_DISPLAY = null;
+            };
 
-                    cleanup() {
-                        systemctl --user stop dummy-graphical-session.service
-                    }
-                    systemctl --user start dummy-graphical-session.service
-                    trap cleanup EXIT
-
-                    ${cfg.startupCommand}
-                    sleep inf
-                '';
-            in [
-                "--append-flags" "-s"
-                "--append-flags" "${startupScript}"
-            ] ++ lib.foldlAttrs (acc: name: value: acc ++ [ "--set" name value ]) [] cfg.envVariables;
-
-            stuffs.dwl.finalPackage = cfg.package.overrideAttrs (prev: {
-                nativeBuildInputs = prev.nativeBuildInputs or [] ++ lib.optional (cfg.wrapperArgs != []) pkgs.makeWrapper;
-                postInstall = prev.postInstall or "" + lib.optionalString (cfg.wrapperArgs != []) ''
-                    wrapProgram $out/bin/dwl ${lib.escapeShellArgs cfg.wrapperArgs}
-                '';
-            });
+            stuffs.dwl.envVariables = lib.mapAttrs (_: lib.mkDefault) {
+                XDG_CURRENT_DESKTOP = "dwl:wlroots";
+            };
 
             systemd.user.services.dummy-graphical-session = {
                 description = "Dummy service that pulls in graphical-session.target";
@@ -71,10 +104,10 @@ in {
                 };
             };
 
-            environment.systemPackages = [ cfg.finalPackage ];
-            services.displayManager.sessionPackages = [ cfg.finalPackage ];
+            environment.systemPackages = [ dwl-wrapped ];
+            services.displayManager.sessionPackages = [ dwl-wrapped ];
 
-            xdg.portal.config.dwl = {
+            xdg.portal.config.wlroots = {
                 default = [ "wlr" "gtk" ];
             };
         }
