@@ -69,6 +69,8 @@ stdenv.mkDerivation {
     "MANDIR=$(man)/share/man"
   ];
 
+  meta.mainProgram = "dwl";
+
   strictDeps = true;
   enableParallelBuilding = true;
 }
