@@ -6,10 +6,6 @@
         ./virtualization
     ];
 
-    environment.sessionVariables = {
-        XDG_CONFIG_HOME = "$HOME/.config";
-    };
-
     scheme = ../../rose-pine.yaml;
 
     users.mutableUsers = false;
