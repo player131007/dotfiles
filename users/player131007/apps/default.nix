@@ -59,6 +59,9 @@
         keepassxc
         looking-glass-client
         clang
+
+        noto-fonts-cjk-sans
+        noto-fonts-cjk-serif
     ];
 
     home.sessionVariables = {
