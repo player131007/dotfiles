@@ -11,7 +11,7 @@
     users.mutableUsers = false;
     users.users.player131007 = {
         isNormalUser = true;
-        extraGroups = [ "wheel" "audio" "input" "libvirtd" ];
+        extraGroups = [ "wheel" "libvirtd" ];
         hashedPasswordFile = "/persist/password/player131007";
     };
 
