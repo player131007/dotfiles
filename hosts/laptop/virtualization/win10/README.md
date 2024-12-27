@@ -25,6 +25,8 @@ qemu-img create -f qcow2 -o compression_type=zstd,nocow=on /windows/win10.qcow2 
 
 - [ ] oobe
 - [ ] change your time zone
+- [ ] add internet
+- [ ] update
 - [ ] install virtio tools
 - [ ] install winfsp
 - [ ] set virtiofs service to automatic
@@ -35,7 +37,6 @@ qemu-img create -f qcow2 -o compression_type=zstd,nocow=on /windows/win10.qcow2 
 - [ ] remove microsoft edge
 - [ ] install virtual display driver
 - [ ] install looking glass
-- [ ] add internet
 - [ ] activate windows
 - [ ] install nvidia drivers with nvcleanstall
 - [ ] install bloxstrap [here](https://github.com/bloxstraplabs/bloxstrap)
