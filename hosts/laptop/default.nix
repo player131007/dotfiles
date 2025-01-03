@@ -24,6 +24,11 @@
         cudaSupport = true;
         packageOverrides = prev: {
             _7zz = prev._7zz.override { enableUnfree = true; };
+            looking-glass-client = prev.looking-glass-client.overrideAttrs (prevAttrs: {
+                postPatch = prevAttrs.postPatch or "" + ''
+                    sed -i '58d' CMakeLists.txt
+                '';
+            });
         };
     };
 
