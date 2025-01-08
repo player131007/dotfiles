@@ -129,6 +129,7 @@
         fwupd.enable = true;
         logind.lidSwitch = "ignore";
         dbus.implementation = "broker";
+        ratbagd.enable = true;
     };
 
     zramSwap.enable = true;
