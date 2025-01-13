@@ -26,8 +26,8 @@ stdenv.mkDerivation {
   src = fetchFromGitHub {
     owner = "player131007";
     repo = "dwl";
-    rev = "db3b134526eeaaabb21b1a4697d3b7c72a5d03e1";
-    hash = "sha256-HF/P3E+TmEGBdt0p4Cgfp6oC3xm7ERUxnp3hsnGDLpI=";
+    rev = "cf5c7f05bc8739bec7a5bf1e75da798f26ad4dcd";
+    hash = "sha256-Y0YKia9ZfZYdKmCIGJka7VuD2hkvTJzDpfzRN5R76Ek=";
   };
 
   nativeBuildInputs = [
