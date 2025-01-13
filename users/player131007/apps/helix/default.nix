@@ -19,12 +19,16 @@
                 popup-border = "popup";
                 color-modes = true;
                 bufferline = "multiple";
-            };
-            editor.cursor-shape.insert = "bar";
-            editor.indent-guides = {
-                render = true;
-                character = "▏";
-                skip = 1;
+
+                lsp = {
+                    display-messages = true;
+                };
+                cursor-shape.insert = "bar";
+                indent-guides = {
+                    render = true;
+                    character = "▏";
+                    skip = 1;
+                };
             };
 
             keys = {
@@ -58,9 +62,7 @@
                 ];
             };
 
-            language-server.nixd = {
-                command = lib.getExe pkgs.nixd;
-            };
+            language-server.nixd.command = lib.getExe pkgs.nixd;
 
             language = [
                 {
