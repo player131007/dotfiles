@@ -26,7 +26,7 @@
             _7zz = prev._7zz.override { enableUnfree = true; };
             looking-glass-client = prev.looking-glass-client.overrideAttrs (prevAttrs: {
                 postPatch = prevAttrs.postPatch or "" + ''
-                    sed -i '58d' CMakeLists.txt
+                    sed -i 's/"-Wfatal-errors"//g' CMakeLists.txt
                 '';
             });
         };
