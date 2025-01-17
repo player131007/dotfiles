@@ -16,7 +16,7 @@
     fileSystems."/windows" = {
         label = "windows";
         fsType = "btrfs";
-        options = [ "nodatacow" "noatime" ];
+        options = [ "noatime" ];
     };
 
     environment.systemPackages = with pkgs; [ virtiofsd ];
