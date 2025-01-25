@@ -54,24 +54,23 @@
         fallbackDns = [];
     };
 
-    systemd.network.networks =
-    let
-        no-dns = {
-            dhcpV4Config.UseDNS = lib.mkForce false;
-            dhcpV6Config.UseDNS = lib.mkForce false;
-            ipv6AcceptRAConfig.UseDNS = lib.mkForce false;
-        };
-    in {
-        "99-ethernet-default-dhcp" = no-dns;
-        "99-wireless-client-dhcp" = no-dns;
-    };
-
     # it keeps trying to save /etc/machine-id
     systemd.services.systemd-machine-id-commit.enable = false;
 
     systemd.network = {
         enable = true;
         wait-online.enable = false;
+        networks =
+        let
+            no-dns = {
+                dhcpV4Config.UseDNS = lib.mkForce false;
+                dhcpV6Config.UseDNS = lib.mkForce false;
+                ipv6AcceptRAConfig.UseDNS = lib.mkForce false;
+            };
+        in {
+            "99-ethernet-default-dhcp" = no-dns;
+            "99-wireless-client-dhcp" = no-dns;
+        };
     };
 
     system.activationScripts = {
