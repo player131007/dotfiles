@@ -30,7 +30,8 @@
                 inputs.base16.nixosModule
                 inputs.nixvirt.nixosModules.default
                 ./hosts/laptop
-                ./modules/nixos
+                ./modules/nixos/oh-my-posh.nix
+                ./modules/nixos/dwl.nix
                 { virtualisation.libvirtd.package = inputs.nixpkgs-libvirt.legacyPackages.x86_64-linux.libvirt; }
             ];
         };
