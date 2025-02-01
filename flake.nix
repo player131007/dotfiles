@@ -30,6 +30,7 @@
                 inputs.base16.nixosModule
                 inputs.nixvirt.nixosModules.default
                 ./hosts/laptop
+                ./modules/nixos/base.nix
                 ./modules/nixos/oh-my-posh.nix
                 ./modules/nixos/dwl.nix
                 { virtualisation.libvirtd.package = inputs.nixpkgs-libvirt.legacyPackages.x86_64-linux.libvirt; }
@@ -38,7 +39,10 @@
 
         nixosImage = (nixpkgs.lib.nixosSystem {
             pkgs = self.nixosConfigurations.laptop.pkgs;
-            modules = [ ./hosts/iso.nix ];
+            modules = [
+                ./modules/nixos/base.nix
+                ./hosts/iso.nix
+            ];
         }).config.system.build.isoImage;
 
         homeConfigurations."player131007@laptop" = home-manager.lib.homeManagerConfiguration {
