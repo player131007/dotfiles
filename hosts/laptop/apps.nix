@@ -23,7 +23,7 @@
 
     stuffs.dwl = {
         enable = true;
-        package = with config.scheme; pkgs.callPackage ./dwl.nix {
+        package = with config.scheme; pkgs.dwl.override {
             rootColor = "0x${base00}ff";
             borderColor = "0x${base02}ff";
             focusColor = "0x${base14}ff";

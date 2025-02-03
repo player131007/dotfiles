@@ -23,6 +23,18 @@
     };
 
     outputs = { self, nixpkgs, home-manager, ... }@inputs: {
+        overlays = let
+            inherit (nixpkgs) lib;
+            allOverlays = lib.pipe ./overlays [
+                builtins.readDir
+                builtins.attrNames
+                (map (lib.path.append ./overlays))
+                (map import)
+            ];
+        in {
+            default = lib.composeManyExtensions allOverlays;
+        };
+
         nixosConfigurations.laptop = nixpkgs.lib.nixosSystem {
             modules = [
                 inputs.lix-module.nixosModules.default
@@ -33,7 +45,10 @@
                 ./modules/nixos/base.nix
                 ./modules/nixos/oh-my-posh.nix
                 ./modules/nixos/dwl.nix
-                { virtualisation.libvirtd.package = inputs.nixpkgs-libvirt.legacyPackages.x86_64-linux.libvirt; }
+                {
+                    virtualisation.libvirtd.package = inputs.nixpkgs-libvirt.legacyPackages.x86_64-linux.libvirt;
+                    nixpkgs.overlays = [ self.overlays.default ];
+                }
             ];
         };
 

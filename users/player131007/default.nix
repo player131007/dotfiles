@@ -20,13 +20,7 @@
     scheme = ../../rose-pine.yaml;
 
     home.pointerCursor = {
-        package = pkgs.bibata-cursors.overrideAttrs {
-            buildPhase = ''
-                runHook preBuild
-                ctgen configs/normal/x.build.toml -p x11 -d $bitmaps/Bibata-Modern-Classic -n 'Bibata-Modern-Classic' -c 'Black and rounded edge Bibata cursors.'
-                runHook postBuild
-            '';
-        };
+        package = pkgs.bibata-cursors;
         name = "Bibata-Modern-Classic";
         size = 24;
         gtk.enable = true;
