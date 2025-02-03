@@ -103,7 +103,7 @@
                     };
                     "addon@darkreader.org" =
                     let
-                        darkreader = pkgs.callPackage ./darkreader.nix (with config.scheme; {
+                        darkreader = pkgs.darkreader.override (with config.scheme; {
                             background = base01;
                             text = base05;
                             isDarkTheme = variant != "light";
