@@ -53,7 +53,6 @@
         };
 
         nixosImage = (nixpkgs.lib.nixosSystem {
-            pkgs = self.nixosConfigurations.laptop.pkgs;
             modules = [
                 ./modules/nixos/base.nix
                 ./hosts/iso.nix
