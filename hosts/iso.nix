@@ -1,49 +1,55 @@
-{ pkgs, modulesPath, lib, ... }: {
-    imports = [
-        (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
+{
+  pkgs,
+  modulesPath,
+  lib,
+  ...
+}:
+{
+  imports = [
+    (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
+  ];
+
+  nixpkgs.hostPlatform = "x86_64-linux";
+
+  # the nixpkgs flake is pinned by default
+  system.installer.channel.enable = false;
+
+  networking = {
+    wireless.enable = false;
+    wireless.iwd.enable = true;
+    useNetworkd = true;
+    dhcpcd.enable = false;
+    nameservers = [
+      "1.1.1.1#cloudflare-dns.com"
+      "2606:4700:4700::1111#cloudflare-dns.com"
+      "9.9.9.9#dns.quad9.net"
+      "8.8.8.8#dns.google"
+      "2620:fe::9#dns.quad9.net"
+      "2001:4860:4860::8888#dns.google"
     ];
+  };
 
-    nixpkgs.hostPlatform = "x86_64-linux";
+  services.resolved = {
+    enable = true;
+    fallbackDns = [ ];
+  };
 
-    # the nixpkgs flake is pinned by default
-    system.installer.channel.enable = false;
+  systemd.network = {
+    enable = true;
+    wait-online.enable = false;
+  };
 
-    networking = {
-        wireless.enable = false;
-        wireless.iwd.enable = true;
-        useNetworkd = true;
-        dhcpcd.enable = false;
-        nameservers = [
-            "1.1.1.1#cloudflare-dns.com"
-            "2606:4700:4700::1111#cloudflare-dns.com"
-            "9.9.9.9#dns.quad9.net"
-            "8.8.8.8#dns.google"
-            "2620:fe::9#dns.quad9.net"
-            "2001:4860:4860::8888#dns.google"
-        ];
-    };
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
-    services.resolved = {
-        enable = true;
-        fallbackDns = [];
-    };
+  # doesn't work
+  # boot.initrd.systemd.enable = true;
+  # no zfs
+  boot.supportedFilesystems.zfs = lib.mkForce false;
 
-    systemd.network = {
-        enable = true;
-        wait-online.enable = false;
-    };
+  environment.systemPackages = with pkgs; [
+    gitMinimal
+    home-manager
+  ];
 
-    boot.kernelPackages = pkgs.linuxPackages_zen;
-
-    # doesn't work
-    # boot.initrd.systemd.enable = true;
-    # no zfs
-    boot.supportedFilesystems.zfs = lib.mkForce false;
-
-    environment.systemPackages = with pkgs; [
-        gitMinimal
-        home-manager
-    ];
-
-    isoImage.squashfsCompression = "zstd -Xcompression-level 10";
+  isoImage.squashfsCompression = "zstd -Xcompression-level 10";
 }

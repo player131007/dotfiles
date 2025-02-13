@@ -1,80 +1,92 @@
-{ pkgs, config, lib, ... }: {
-    xdg.configFile."helix/themes/base16.toml" = {
-        inherit (config.programs.helix) enable;
-        source = config.scheme {
-            template = ./helix.mustache;
-            extension = ".toml";
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
+{
+  xdg.configFile."helix/themes/base16.toml" = {
+    inherit (config.programs.helix) enable;
+    source = config.scheme {
+      template = ./helix.mustache;
+      extension = ".toml";
+    };
+  };
+
+  programs.helix = {
+    enable = true;
+    defaultEditor = true;
+    settings = {
+      theme = "base16";
+      editor = {
+        line-number = "relative";
+        mouse = false;
+        middle-click-paste = false;
+        popup-border = "popup";
+        color-modes = true;
+        bufferline = "multiple";
+
+        lsp = {
+          display-messages = true;
         };
+        cursor-shape.insert = "bar";
+        indent-guides = {
+          render = true;
+          character = "▏";
+          skip = 1;
+        };
+      };
+
+      keys = {
+        normal = {
+          tab = "move_parent_node_end";
+          S-tab = "move_parent_node_start";
+        };
+
+        insert = {
+          S-tab = "move_parent_node_start";
+        };
+
+        select = {
+          tab = "extend_parent_node_end";
+          S-tab = "extend_parent_node_start";
+        };
+      };
     };
 
-    programs.helix = {
-        enable = true;
-        defaultEditor = true;
-        settings = {
-            theme = "base16";
-            editor = {
-                line-number = "relative";
-                mouse = false;
-                middle-click-paste = false;
-                popup-border = "popup";
-                color-modes = true;
-                bufferline = "multiple";
+    languages = {
+      language-server.clangd = {
+        command = lib.getExe' pkgs.clang-tools "clangd";
+        args = [
+          "--log=error"
+          "--header-insertion=never"
+          "--header-insertion-decorators=false"
+          "-j"
+          "8"
+          "--malloc-trim"
+          "--pch-storage=memory"
+        ];
+      };
 
-                lsp = {
-                    display-messages = true;
-                };
-                cursor-shape.insert = "bar";
-                indent-guides = {
-                    render = true;
-                    character = "▏";
-                    skip = 1;
-                };
-            };
+      language-server.nixd.command = lib.getExe pkgs.nixd;
 
-            keys = {
-                normal = {
-                    tab = "move_parent_node_end";
-                    S-tab = "move_parent_node_start";
-                };
-
-                insert = {
-                    S-tab = "move_parent_node_start";
-                };
-
-                select = {
-                    tab = "extend_parent_node_end";
-                    S-tab = "extend_parent_node_start";
-                };
-            };
-        };
-
-        languages = {
-            language-server.clangd = {
-                command = lib.getExe' pkgs.clang-tools "clangd";
-                args = [
-                    "--log=error"
-                    "--header-insertion=never"
-                    "--header-insertion-decorators=false"
-                    "-j"
-                    "8"
-                    "--malloc-trim"
-                    "--pch-storage=memory"
-                ];
-            };
-
-            language-server.nixd.command = lib.getExe pkgs.nixd;
-
-            language = [
-                {
-                    name = "nix";
-                    language-servers = [ "nixd" ];
-                    indent = { tab-width = 4; unit = "    "; };
-                }
-                {
-                    name = "cpp";
-                    indent = { tab-width = 4; unit = "    "; };
-                }
-            ];
-        };
+      language = [
+        {
+          name = "nix";
+          language-servers = [ "nixd" ];
+          indent = {
+            tab-width = 4;
+            unit = "    ";
+          };
+        }
+        {
+          name = "cpp";
+          indent = {
+            tab-width = 4;
+            unit = "    ";
+          };
+        }
+      ];
     };
+  };
 }
