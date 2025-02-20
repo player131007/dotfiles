@@ -1,10 +1,10 @@
 _: prev:
 let
+  src = (import ../npins).dwl;
   dwl =
     {
       stdenv,
       lib,
-      fetchFromGitHub,
       pkg-config,
       wayland-scanner,
       wayland-protocols,
@@ -25,14 +25,9 @@ let
     }:
     stdenv.mkDerivation {
       pname = "dwl";
-      version = "0.7";
+      version = "unstable-${builtins.substring 0 7 src.revision}";
 
-      src = fetchFromGitHub {
-        owner = "player131007";
-        repo = "dwl";
-        rev = "cf5c7f05bc8739bec7a5bf1e75da798f26ad4dcd";
-        hash = "sha256-Y0YKia9ZfZYdKmCIGJka7VuD2hkvTJzDpfzRN5R76Ek=";
-      };
+      inherit src;
 
       nativeBuildInputs = [
         pkg-config
