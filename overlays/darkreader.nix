@@ -1,9 +1,8 @@
 _: prev:
 let
-  version = "4.9.100";
+  src = (import ../npins).darkreader;
   darkreader =
     {
-      fetchFromGitHub,
       buildNpmPackage,
       background ? "18131b",
       text ? "e8e6e3",
@@ -11,15 +10,11 @@ let
     }:
     buildNpmPackage {
       pname = "darkreader";
-      inherit version;
+      version = builtins.head (builtins.match "v(.+)" src.version);
 
-      src = fetchFromGitHub {
-        owner = "darkreader";
-        repo = "darkreader";
-        rev = "v${version}";
-        hash = "sha256-FgCdDdOu4VE+UQyxmAAxptvp2JJgni6LVMdlNqwEJUs=";
-      };
+      inherit src;
 
+      # bruh
       npmDepsHash = "sha256-34GBvRmnJ+TQy6xkDUjSEdvMMGitHWV9Mj3TUf0KSJE=";
 
       prePatch =

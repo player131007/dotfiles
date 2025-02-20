@@ -1,0 +1,32 @@
+{
+  "pins": {
+    "darkreader": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "darkreader",
+        "repo": "darkreader"
+      },
+      "pre_releases": false,
+      "version_upper_bound": null,
+      "release_prefix": null,
+      "version": "v4.9.104",
+      "revision": "f83be7a8e8ef6c5ccee26c45dfe7a02649011663",
+      "url": "https://api.github.com/repos/darkreader/darkreader/tarball/v4.9.104",
+      "hash": "014k26dks0yasqifwjafyfg943lph5fbkd3s333b5gp1b6j6j0h1"
+    },
+    "dwl": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "player131007",
+        "repo": "dwl"
+      },
+      "branch": "main",
+      "revision": "cf5c7f05bc8739bec7a5bf1e75da798f26ad4dcd",
+      "url": "https://github.com/player131007/dwl/archive/cf5c7f05bc8739bec7a5bf1e75da798f26ad4dcd.tar.gz",
+      "hash": "0jg8gfa3glgwlp1rqk1g37d86nzd3acii23058frczarmy4hlik3"
+    }
+  },
+  "version": 3
+}
