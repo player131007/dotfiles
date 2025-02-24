@@ -1,7 +1,6 @@
-{ pkgs, ... }:
-{
-  boot.kernelParams = [ "iommu=pt" ];
-  boot.kernelModules = [ "vfio-pci" ];
+{pkgs, ...}: {
+  boot.kernelParams = ["iommu=pt"];
+  boot.kernelModules = ["vfio-pci"];
 
   boot.extraModprobeConfig = ''
     options vfio-pci ids=10de:25a2,10de:2291
@@ -21,10 +20,10 @@
   fileSystems."/windows" = {
     label = "windows";
     fsType = "btrfs";
-    options = [ "noatime" ];
+    options = ["noatime"];
   };
 
-  environment.systemPackages = with pkgs; [ virtiofsd ];
+  environment.systemPackages = with pkgs; [virtiofsd];
 
   virtualisation.libvirt.connections."qemu:///system".domains = [
     {

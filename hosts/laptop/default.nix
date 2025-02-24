@@ -3,8 +3,7 @@
   config,
   lib,
   ...
-}:
-{
+}: {
   imports = [
     ./hardware-configuration.nix
     ./apps.nix
@@ -46,7 +45,7 @@
   services.resolved = {
     enable = true;
     dnssec = "true";
-    fallbackDns = [ ];
+    fallbackDns = [];
   };
 
   # it keeps trying to save /etc/machine-id
@@ -55,18 +54,16 @@
   systemd.network = {
     enable = true;
     wait-online.enable = false;
-    networks =
-      let
-        no-dns = {
-          dhcpV4Config.UseDNS = lib.mkForce false;
-          dhcpV6Config.UseDNS = lib.mkForce false;
-          ipv6AcceptRAConfig.UseDNS = lib.mkForce false;
-        };
-      in
-      {
-        "99-ethernet-default-dhcp" = no-dns;
-        "99-wireless-client-dhcp" = no-dns;
+    networks = let
+      no-dns = {
+        dhcpV4Config.UseDNS = lib.mkForce false;
+        dhcpV6Config.UseDNS = lib.mkForce false;
+        ipv6AcceptRAConfig.UseDNS = lib.mkForce false;
       };
+    in {
+      "99-ethernet-default-dhcp" = no-dns;
+      "99-wireless-client-dhcp" = no-dns;
+    };
   };
 
   system.activationScripts = {
@@ -147,51 +144,46 @@
   time.timeZone = "Asia/Ho_Chi_Minh";
 
   # https://nixos.org/manual/nixos/stable/#ch-system-state
-  environment.persistence."/persist" =
-    let
-      getEnableOption = parts: lib.foldl' (acc: x: acc.${x}) config (parts ++ [ "enable" ]);
-    in
-    {
-      hideMounts = true;
-      directories =
-        [
-          "/var/lib/nixos"
-          "/var/lib/systemd"
-        ]
-        ++ lib.optional (getEnableOption [
-          "networking"
-          "wireless"
-          "iwd"
-        ]) "/var/lib/iwd"
-        ++
-          lib.optional
-            (getEnableOption [
-              "services"
-              "greetd"
-            ])
-            {
-              directory = "/var/cache/tuigreet";
-              user = "greeter";
-              group = "greeter";
-            }
-        ++
-          lib.optional
-            (getEnableOption [
-              "services"
-              "syncthing"
-            ])
-            (
-              with config.services.syncthing;
-              {
-                directory = dataDir;
-                inherit user group;
-              }
-            );
-      files = [
-        "/etc/adjtime"
-        "/etc/machine-id"
-      ];
-    };
+  environment.persistence."/persist" = let
+    getEnableOption = parts: lib.foldl' (acc: x: acc.${x}) config (parts ++ ["enable"]);
+  in {
+    hideMounts = true;
+    directories =
+      [
+        "/var/lib/nixos"
+        "/var/lib/systemd"
+      ]
+      ++ lib.optional (getEnableOption [
+        "networking"
+        "wireless"
+        "iwd"
+      ]) "/var/lib/iwd"
+      ++ lib.optional
+      (getEnableOption [
+        "services"
+        "greetd"
+      ])
+      {
+        directory = "/var/cache/tuigreet";
+        user = "greeter";
+        group = "greeter";
+      }
+      ++ lib.optional
+      (getEnableOption [
+        "services"
+        "syncthing"
+      ])
+      (
+        with config.services.syncthing; {
+          directory = dataDir;
+          inherit user group;
+        }
+      );
+    files = [
+      "/etc/adjtime"
+      "/etc/machine-id"
+    ];
+  };
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
 

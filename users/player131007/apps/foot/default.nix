@@ -1,5 +1,8 @@
-{ pkgs, config, ... }:
 {
+  pkgs,
+  config,
+  ...
+}: {
   home.packages = [
     pkgs.nerd-fonts.symbols-only
     pkgs.meslo-lg
