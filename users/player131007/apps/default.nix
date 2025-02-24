@@ -1,5 +1,8 @@
-{ pkgs, lib, ... }:
 {
+  pkgs,
+  lib,
+  ...
+}: {
   imports = [
     ./btop
     ./firefox
@@ -29,7 +32,7 @@
 
   programs.mpv = {
     enable = true;
-    defaultProfiles = [ "gpu-hq" ];
+    defaultProfiles = ["gpu-hq"];
     config = {
       gpu-api = "opengl";
       vo = "gpu-next";
@@ -68,5 +71,4 @@
   home.sessionVariables = {
     ASAN_SYMBOLIZER_PATH = lib.getExe' pkgs.llvm "llvm-symbolizer";
   };
-
 }

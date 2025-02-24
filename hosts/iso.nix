@@ -3,8 +3,7 @@
   modulesPath,
   lib,
   ...
-}:
-{
+}: {
   imports = [
     (modulesPath + "/installer/cd-dvd/installation-cd-minimal.nix")
   ];
@@ -31,7 +30,7 @@
 
   services.resolved = {
     enable = true;
-    fallbackDns = [ ];
+    fallbackDns = [];
   };
 
   systemd.network = {
