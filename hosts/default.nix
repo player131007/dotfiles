@@ -26,6 +26,7 @@ in {
     image = lib.nixosSystem {
       modules = [
         ./iso.nix
+        inputs.lix-module.nixosModules.default
         self.nixosModules.base
       ];
     };
