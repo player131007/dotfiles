@@ -46,7 +46,7 @@
   boot.supportedFilesystems.zfs = lib.mkForce false;
 
   environment.systemPackages = with pkgs; [
-    gitMinimal
+    git
     home-manager
   ];
 
