@@ -214,13 +214,13 @@ or other application using the libvirt API.
     <video>
       <model type='none'/>
     </video>
-    <hostdev mode='subsystem' type='pci' managed='no'>
+    <hostdev mode='subsystem' type='pci' managed='yes'>
       <source>
         <address domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
       </source>
       <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0' multifunction='on'/>
     </hostdev>
-    <hostdev mode='subsystem' type='pci' managed='no'>
+    <hostdev mode='subsystem' type='pci' managed='yes'>
       <source>
         <address domain='0x0000' bus='0x01' slot='0x00' function='0x1'/>
       </source>
