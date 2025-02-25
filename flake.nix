@@ -6,6 +6,10 @@
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
+    treefmt-nix = {
+      url = "github:numtide/treefmt-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nixpkgs-libvirt.url = "github:NixOS/nixpkgs/4aa36568d413aca0ea84a1684d2d46f55dbabad7";
     nixvirt = {
@@ -35,6 +39,7 @@
 
       imports = [
         ./overlays.nix
+        ./treefmt.nix
         ./modules
         ./hosts
         ./users
