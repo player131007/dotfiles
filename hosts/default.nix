@@ -11,11 +11,11 @@ in {
         ./laptop
         inputs.lix-module.nixosModules.default
         inputs.impermanence.nixosModule
-        inputs.base16.nixosModule
         inputs.nixvirt.nixosModules.default
         self.nixosModules.base
         self.nixosModules.oh-my-posh
         self.nixosModules.dwl
+        self.modules.generic.theme
         {
           virtualisation.libvirtd.package = inputs.nixpkgs-libvirt.legacyPackages.x86_64-linux.libvirt;
           nixpkgs.overlays = [self.overlays.default];
