@@ -9,7 +9,7 @@ in {
     pkgs = self.nixosConfigurations.laptop.pkgs;
     modules = [
       ./player131007
-      inputs.base16.homeManagerModule
+      self.modules.generic.theme
     ];
   };
 }
