@@ -27,6 +27,7 @@
 
         lsp = {
           display-messages = true;
+          display-progress-messages = true;
         };
         cursor-shape.insert = "bar";
         indent-guides = {
