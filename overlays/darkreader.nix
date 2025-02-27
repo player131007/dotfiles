@@ -13,7 +13,7 @@ _: prev: let
       inherit src;
 
       # bruh
-      npmDepsHash = "sha256-YxVvvQEoZ5u7LSkSa4GTL5busCVIaLtO22ubh34z108=";
+      npmDepsHash = "sha256-NamyPTm0bwXWcun5hYkNqrkJvzah3idTH1aFW51+S0Q=";
 
       prePatch = let
         mode =
