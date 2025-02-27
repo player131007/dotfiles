@@ -16,7 +16,7 @@
 
   programs = {
     bash.enable = true;
-    home-manager.enable = true;
+    nh.enable = true;
   };
 
   programs.git = {

@@ -68,17 +68,6 @@
     run-nix-index.text = ''
       echo -e '\033[31;1m!!!\033[0m' remember to run nix-index if u updated nixpkgs
     '';
-
-    diff-current-gen = {
-      supportsDryActivation = true;
-      text = ''
-        if [[ -e /run/current-system ]]; then
-          echo "=== diff to current-system ==="
-          ${pkgs.nvd}/bin/nvd --nix-bin-dir='${config.nix.package}/bin' diff /run/current-system "$systemConfig"
-          echo "=== end of the system diff ==="
-        fi
-      '';
-    };
   };
 
   console.colors = with config.scheme; [
