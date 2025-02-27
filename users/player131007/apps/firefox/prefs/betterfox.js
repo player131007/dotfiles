@@ -62,8 +62,8 @@ pref("network.predictor.enable-prefetch", false);
 ****************************************************************************/
 /** TRACKING PROTECTION ***/
 pref("browser.contentblocking.category", "strict");
-pref("urlclassifier.trackingSkipURLs", "*.reddit.com, *.twitter.com, *.twimg.com, *.tiktok.com");
-pref("urlclassifier.features.socialtracking.skipURLs", "*.instagram.com, *.twitter.com, *.twimg.com");
+pref("urlclassifier.trackingSkipURLs", "*.zadn.vn, *.reddit.com, *.twitter.com, *.twimg.com, *.tiktok.com");
+pref("urlclassifier.features.socialtracking.skipURLs", "*.zadn.vn, *.instagram.com, *.twitter.com, *.twimg.com");
 pref("network.cookie.sameSite.noneRequiresSecure", true);
 pref("browser.uitour.enabled", false);
 pref("privacy.globalprivacycontrol.enabled", true);
