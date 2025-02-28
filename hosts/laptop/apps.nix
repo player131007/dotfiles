@@ -14,10 +14,15 @@
     nano.enable = false;
   };
 
-  environment.variables = lib.mkIf config.documentation.man.enable {
-    MANROFFOPT = "-P-c";
-    MANPAGER = "less -R --use-color -s -Dd+y -Du+b";
-  };
+  environment.variables = lib.mkMerge [
+    (lib.mkIf config.documentation.man.enable {
+      MANROFFOPT = "-P-c";
+      MANPAGER = "less -s -Dd+y -Du+b";
+    })
+    (lib.mkIf config.programs.less.enable {
+      LESS = "-R --use-color";
+    })
+  ];
 
   stuffs.oh-my-posh = {
     enable = true;
