@@ -11,7 +11,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixpkgs-libvirt.url = "github:NixOS/nixpkgs/4aa36568d413aca0ea84a1684d2d46f55dbabad7";
     nixvirt = {
       url = "github:AshleyYakeley/NixVirt/v0.5.0";
       inputs.nixpkgs.follows = "nixpkgs";

@@ -17,7 +17,6 @@ in {
         self.nixosModules.dwl
         self.modules.generic.theme
         {
-          virtualisation.libvirtd.package = inputs.nixpkgs-libvirt.legacyPackages.x86_64-linux.libvirt;
           nixpkgs.overlays = [self.overlays.default];
         }
       ];
