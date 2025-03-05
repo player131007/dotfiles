@@ -45,7 +45,6 @@
     powerManagement.finegrained = true;
     nvidiaSettings = false;
 
-    # doesnt work if not set explicitly
     open = true;
 
     prime = {
