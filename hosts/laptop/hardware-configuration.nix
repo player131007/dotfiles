@@ -23,11 +23,7 @@
   hardware = {
     cpu.amd.updateMicrocode = true;
 
-    enableRedistributableFirmware = false;
-    wirelessRegulatoryDatabase = true;
-    firmware = with pkgs; [
-      linux-firmware
-    ];
+    enableRedistributableFirmware = true;
 
     bluetooth = {
       enable = true;
