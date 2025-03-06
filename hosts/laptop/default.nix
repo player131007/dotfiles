@@ -11,6 +11,8 @@
   ];
 
   users.mutableUsers = false;
+  # when in doubt, rm -rf ~
+  # somehow it fixed pipewire for me
   users.users.player131007 = {
     isNormalUser = true;
     extraGroups = [
