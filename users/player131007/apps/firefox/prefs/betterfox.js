@@ -236,6 +236,17 @@ pref("layout.word_select.eat_space_to_next_word", false);
 lockPref("xpinstall.signatures.required", false);
 pref("extensions.formautofill.addresses.enabled", false);
 pref("extensions.formautofill.creditCards.enabled", false);
+
+// PREF: initial paint delay
+// How long FF will wait before rendering the page (in ms)
+// [NOTE] You may prefer using 250.
+// [NOTE] Dark Reader users may want to use 1000 [3].
+// [1] https://bugzilla.mozilla.org/show_bug.cgi?id=1283302
+// [2] https://docs.google.com/document/d/1BvCoZzk2_rNZx3u9ESPoFjSADRI0zIPeJRXFLwWXx_4/edit#heading=h.28ki6m8dg30z
+// [3] https://old.reddit.com/r/firefox/comments/o0xl1q/reducing_cpu_usage_of_dark_reader_extension/
+// [4] https://reddit.com/r/browsers/s/wvNB7UVCpx
+pref("nglayout.initialpaint.delay", 1000); // DEFAULT; formerly 250
+pref("nglayout.initialpaint.delay_in_oopif", 1000); // DEFAULT
 /****************************************************************************
  * SECTION: SMOOTHFOX                                                       *
 ****************************************************************************/
