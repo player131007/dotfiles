@@ -119,7 +119,7 @@
       device = "/dev/disk/by-uuid/584B-F342";
       fsType = "exfat";
       options = [
-        "uid=player131007"
+        "uid=${config.users.users.player131007.name}"
         "gid=${config.services.syncthing.group}"
         "umask=002"
       ];

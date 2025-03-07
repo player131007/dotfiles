@@ -1,8 +1,8 @@
-{pkgs, ...}: {
+{pkgs, config, ...}: {
   boot.kernelParams = ["iommu=pt"];
 
   systemd.tmpfiles.rules = [
-    "f /dev/shm/looking-glass 0660 player131007 kvm -"
+    "f /dev/shm/looking-glass 0660 ${config.users.users.player131007.name} kvm -"
   ];
 
   boot.blacklistedKernelModules = [
