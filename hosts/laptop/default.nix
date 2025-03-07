@@ -11,8 +11,6 @@
   ];
 
   users.mutableUsers = false;
-  # when in doubt, rm -rf ~
-  # somehow it fixed pipewire for me
   users.users.player131007 = {
     isNormalUser = true;
     extraGroups = [
@@ -102,6 +100,7 @@
   };
 
   services = {
+    # when in doubt: https://wiki.archlinux.org/title/WirePlumber#Delete_corrupt_settings
     pipewire = {
       enable = true;
       alsa.enable = true;
