@@ -1,4 +1,8 @@
-{pkgs, config, ...}: {
+{
+  pkgs,
+  config,
+  ...
+}: {
   boot.kernelParams = ["iommu=pt"];
 
   systemd.tmpfiles.rules = [
