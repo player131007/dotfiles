@@ -24,6 +24,8 @@
     cudaSupport = true;
   };
 
+  nix.settings.trusted-users = ["root" "@wheel"];
+
   networking = {
     hostName = "laptop";
 
