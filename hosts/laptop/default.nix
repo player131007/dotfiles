@@ -106,6 +106,13 @@
     pipewire = {
       enable = true;
       alsa.enable = true;
+      wireplumber.extraConfig = {
+        no-restore-props = {
+          "wireplumber.settings" = {
+            "node.stream.restore-props" = false;
+          };
+        };
+      };
     };
     greetd = {
       enable = true;
