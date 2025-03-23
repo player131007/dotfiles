@@ -49,11 +49,11 @@
     swaybg
     grim
     slurp
+    foot
     brightnessctl
 
     calc
     wl-clipboard
-    foot
     ripgrep
     xdg-utils
     btop
