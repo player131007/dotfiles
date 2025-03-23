@@ -52,6 +52,9 @@
     foot
     brightnessctl
 
+    npins
+    sttr
+    jq
     calc
     wl-clipboard
     ripgrep
