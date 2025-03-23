@@ -7,9 +7,9 @@
   xdg.configFile."startup".source = pkgs.writeShellScript "startup" ''
     exec <&-
 
-    swaybg -i ${./wallpaper.png} &
-    keepassxc &
-    yambar -d none &
+    nohup swaybg -i ${./wallpaper.png} &
+    nohup keepassxc &
+    nohup yambar -d none &
 
     wait -f
   '';
