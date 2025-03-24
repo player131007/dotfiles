@@ -12,7 +12,7 @@
     nohup swaybg -i ${./wallpaper.png} &
     nohup keepassxc &
     nohup yambar -d none &
-    clipse -listen
+    nohup clipse -listen-shell &
 
     wait -f
   '';
