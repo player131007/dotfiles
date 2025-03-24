@@ -7,6 +7,8 @@
   xdg.configFile."startup".source = pkgs.writeShellScript "startup" ''
     exec <&-
 
+    cd $DWL_RUNTIME
+
     nohup swaybg -i ${./wallpaper.png} &
     nohup keepassxc &
     nohup yambar -d none &
