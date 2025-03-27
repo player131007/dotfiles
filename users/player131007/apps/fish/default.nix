@@ -25,7 +25,10 @@
         }
       }
       function fish_user_key_bindings
-          bind \cc 'commandline ""'
+        bind ctrl-c 'commandline ""'
+        bind ctrl-left backward-token
+        bind ctrl-right forward-token
+        bind ctrl-backspace backward-kill-token
       end
     '';
   };
