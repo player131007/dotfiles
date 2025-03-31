@@ -23,7 +23,7 @@
     };
 
     lix-module = {
-      url = "git+https://git.lix.systems/lix-project/nixos-module?ref=stable&shallow=1";
+      url = "git+https://git.lix.systems/lix-project/nixos-module?ref=release-2.92&shallow=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
