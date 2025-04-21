@@ -198,5 +198,14 @@
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
+  # FIXME: when this gets merged
+  # https://lore.kernel.org/linux-pci/20250313142333.5792-1-ilpo.jarvinen@linux.intel.com
+  boot.kernelPatches = [
+    {
+      name = "fix-gpu-passthrough";
+      patch = ./fix-gpu-passthrough.patch;
+    }
+  ];
+
   system.stateVersion = "23.05";
 }
