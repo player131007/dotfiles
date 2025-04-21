@@ -196,7 +196,7 @@
     ];
   };
 
-  boot.kernelPackages = pkgs.linuxPackages;
+  boot.kernelPackages = pkgs.linuxPackages_zen;
 
   system.stateVersion = "23.05";
 }
