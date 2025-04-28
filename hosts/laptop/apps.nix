@@ -12,6 +12,16 @@
 
     virt-manager.enable = true;
     nano.enable = false;
+
+    git = {
+      enable = true;
+      config = {
+        core = {
+          autocrlf = "input";
+          pager = "less -FRX";
+        };
+      };
+    };
   };
 
   environment.variables = lib.mkMerge [
@@ -48,7 +58,6 @@
   };
 
   environment.systemPackages = with pkgs; [
-    git
     piper
 
     eza

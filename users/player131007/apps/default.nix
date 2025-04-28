@@ -24,10 +24,6 @@
     package = pkgs.git;
     userName = "Lương Việt Hoàng";
     userEmail = "tcm4095@gmail.com";
-    extraConfig = {
-      core.autocrlf = "input";
-      core.pager = "less -FRX";
-    };
   };
 
   programs.mpv = {
