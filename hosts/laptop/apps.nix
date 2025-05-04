@@ -19,7 +19,12 @@
         core = {
           autocrlf = "input";
           pager = "less -FRX";
+
+          compression = 9;
+          whitespace = "error";
         };
+        status.showStash = true;
+        commit.verbose = true;
       };
     };
   };
