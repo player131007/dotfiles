@@ -55,7 +55,7 @@
 
   fileSystems = {
     "/" = {
-      device = "none";
+      device = "tmpfs";
       fsType = "tmpfs";
       options = [
         "defaults"
