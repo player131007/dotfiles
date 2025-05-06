@@ -16,27 +16,27 @@
   programs = {
     bash.enable = true;
     nh.enable = true;
-  };
 
-  programs.git = {
-    enable = true;
-    package = pkgs.git;
-    userName = "Lương Việt Hoàng";
-    userEmail = "tcm4095@gmail.com";
-  };
+    git = {
+      enable = true;
+      package = pkgs.git;
+      userName = "Lương Việt Hoàng";
+      userEmail = "tcm4095@gmail.com";
+    };
 
-  programs.mpv = {
-    enable = true;
-    defaultProfiles = ["gpu-hq"];
-    config = {
-      gpu-api = "opengl";
-      vo = "gpu-next";
-      hwdec = "vaapi";
+    mpv = {
+      enable = true;
+      defaultProfiles = ["gpu-hq"];
+      config = {
+        gpu-api = "opengl";
+        vo = "gpu-next";
+        hwdec = "vaapi";
 
-      deband-iterations = 2;
-      deband-threshold = 35;
-      deband-range = 20;
-      deband-grain = 5;
+        deband-iterations = 2;
+        deband-threshold = 35;
+        deband-range = 20;
+        deband-grain = 5;
+      };
     };
   };
 
