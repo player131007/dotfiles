@@ -126,30 +126,5 @@
     };
   };
 
-  systemd.services = {
-    reset-tmp = {
-      description = "Reset /tmp";
-
-      wantedBy = ["tmp.mount"];
-      before = ["tmp.mount"];
-      after = ["blockdev@dev-disk-by\\x2dlabel-nixos.target"];
-
-      unitConfig.DefaultDependencies = "no";
-      serviceConfig.Type = "oneshot";
-      path = with pkgs; [
-        util-linux
-        btrfs-progs
-      ];
-      script = ''
-        mkdir -p /mnt
-        mount /dev/disk/by-label/nixos /mnt
-        if [ -e /mnt/tmp ]; then
-            btrfs subvolume delete /mnt/tmp --commit-after
-        fi
-        btrfs subvolume create /mnt/tmp
-        umount /mnt
-        rmdir /mnt
-      '';
-    };
-  };
+  boot.tmp.cleanOnBoot = true;
 }
