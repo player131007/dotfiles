@@ -37,18 +37,6 @@
     };
   };
 
-  services.clipse = {
-    enable = true;
-    # i'll do it myself
-    package = null;
-    imageDisplay = {
-      type = "sixel";
-      scaleX = 14;
-      scaleY = 14;
-      heightCut = 10;
-    };
-  };
-
   home.packages = with pkgs; [
     swaybg
     grim
@@ -56,7 +44,6 @@
     foot
     brightnessctl
 
-    clipse
     npins
     sttr
     jq
