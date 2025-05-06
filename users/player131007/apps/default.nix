@@ -74,10 +74,5 @@
 
     keepassxc
     looking-glass-client
-    clang
   ];
-
-  home.sessionVariables = {
-    ASAN_SYMBOLIZER_PATH = lib.getExe' pkgs.llvm "llvm-symbolizer";
-  };
 }

@@ -56,7 +56,6 @@
 
     languages = {
       language-server.clangd = {
-        command = lib.getExe' pkgs.clang-tools "clangd";
         args = [
           "--log=error"
           "--header-insertion=never"
