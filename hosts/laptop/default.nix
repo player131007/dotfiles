@@ -152,6 +152,11 @@
     };
   };
 
+  fonts.packages = with pkgs; [
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
+  ];
+
   time.timeZone = "Asia/Ho_Chi_Minh";
 
   # https://nixos.org/manual/nixos/stable/#ch-system-state
