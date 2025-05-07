@@ -188,6 +188,7 @@
             directory = cfg.dataDir;
             inherit (cfg) user group;
           };
+        upower = lib.optional config.services.upower.enable "/var/lib/upower";
       in
       lib.concatLists [
         [
@@ -197,6 +198,7 @@
         iwd
         tuigreet
         syncthing
+        upower
       ];
     files = [
       "/etc/adjtime"
