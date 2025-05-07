@@ -10,7 +10,6 @@
     nixos = {
       base = ./nixos/base.nix;
       oh-my-posh = ./nixos/oh-my-posh.nix;
-      dwl = ./nixos/dwl.nix;
     };
 
     generic = {

@@ -15,19 +15,6 @@
       "revision": "51f97ccd34ed0a70832421c2768a19bc46fcec4d",
       "url": "https://api.github.com/repos/darkreader/darkreader/tarball/v4.9.105",
       "hash": "1ddrrn643mly0abc0p2ljmj7i9abb4c1xs5x2ys7lhxckagzppvw"
-    },
-    "dwl": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "player131007",
-        "repo": "dwl"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "8dfe609efe15d95c8771d2ef407a0581a0f2b9a8",
-      "url": "https://github.com/player131007/dwl/archive/8dfe609efe15d95c8771d2ef407a0581a0f2b9a8.tar.gz",
-      "hash": "14m0rd6k8cclz0m83j4kpg4bx7747yxdcrdysxshzc2l72xf56xg"
     }
   },
   "version": 5
