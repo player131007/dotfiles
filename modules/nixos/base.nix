@@ -1,4 +1,5 @@
-{lib, ...}: {
+{ lib, ... }:
+{
   nix = {
     channel.enable = lib.mkDefault false;
     settings.experimental-features = [

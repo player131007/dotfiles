@@ -3,34 +3,37 @@
   pkgs,
   lib,
   ...
-}: {
+}:
+{
   programs.firefox = {
     enable = true;
     profiles.profile = {
       isDefault = true;
-      userChrome = let
-        baseXX = lib.filterAttrs (k: _: lib.hasPrefix "base" k && builtins.stringLength k == 6);
-      in ''
-        :root {
-            ${lib.concatLines (
-          lib.mapAttrsToList (k: v: "--${k}: ${v};") (baseXX config.scheme.withHashtag)
-        )}
-        }
-        ${builtins.readFile ./userChrome.css}
-      '';
+      userChrome =
+        let
+          baseXX = lib.filterAttrs (k: _: lib.hasPrefix "base" k && builtins.stringLength k == 6);
+        in
+        ''
+          :root {
+              ${lib.concatLines (
+                lib.mapAttrsToList (k: v: "--${k}: ${v};") (baseXX config.scheme.withHashtag)
+              )}
+          }
+          ${builtins.readFile ./userChrome.css}
+        '';
     };
 
     package = pkgs.wrapFirefox pkgs.firefox-esr-unwrapped {
       extraPrefs =
         lib.pipe
-        [
-          ./prefs/betterfox.js
-          ./prefs/smooth_scrolling.js
-        ]
-        [
-          (map builtins.readFile)
-          lib.concatLines
-        ];
+          [
+            ./prefs/betterfox.js
+            ./prefs/smooth_scrolling.js
+          ]
+          [
+            (map builtins.readFile)
+            lib.concatLines
+          ];
       extraPolicies = {
         DisableAppUpdate = true;
         DisableFirefoxAccounts = true;
@@ -110,18 +113,21 @@
             installation_mode = "normal_installed";
             install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
           };
-          "addon@darkreader.org" = let
-            darkreader = pkgs.darkreader.override (
-              with config.scheme; {
-                background = base01;
-                text = base05;
-                isDarkTheme = variant != "light";
-              }
-            );
-          in {
-            installation_mode = "normal_installed";
-            install_url = "file://${darkreader}/release/darkreader-firefox.xpi";
-          };
+          "addon@darkreader.org" =
+            let
+              darkreader = pkgs.darkreader.override (
+                with config.scheme;
+                {
+                  background = base01;
+                  text = base05;
+                  isDarkTheme = variant != "light";
+                }
+              );
+            in
+            {
+              installation_mode = "normal_installed";
+              install_url = "file://${darkreader}/release/darkreader-firefox.xpi";
+            };
         };
       };
     };

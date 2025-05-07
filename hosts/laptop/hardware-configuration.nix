@@ -3,7 +3,8 @@
   modulesPath,
   config,
   ...
-}: {
+}:
+{
   imports = [
     (modulesPath + "/installer/scan/not-detected.nix")
   ];
@@ -18,7 +19,7 @@
     "sd_mod"
     "sdhci_pci"
   ];
-  boot.initrd.kernelModules = ["amdgpu"];
+  boot.initrd.kernelModules = [ "amdgpu" ];
 
   hardware = {
     cpu.amd.updateMicrocode = true;
@@ -34,7 +35,7 @@
     graphics.enable = true;
   };
 
-  services.xserver.videoDrivers = ["nvidia"];
+  services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
     powerManagement.enable = true;
@@ -113,7 +114,7 @@
     "/boot" = {
       label = "ESP";
       fsType = "vfat";
-      options = ["umask=0077"];
+      options = [ "umask=0077" ];
     };
     "/d" = {
       device = "/dev/disk/by-uuid/584B-F342";

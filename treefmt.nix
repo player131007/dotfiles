@@ -1,12 +1,11 @@
-{inputs, ...}: {
-  imports = [inputs.treefmt-nix.flakeModule];
+{ inputs, ... }:
+{
+  imports = [ inputs.treefmt-nix.flakeModule ];
 
   perSystem = {
     treefmt = {
-      programs.alejandra = {
-        enable = true;
-        excludes = ["npins/*"];
-      };
+      settings.global.excludes = [ "npins/*" ];
+      programs.nixfmt.enable = true;
     };
   };
 }

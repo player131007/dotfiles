@@ -1,24 +1,26 @@
-_: prev: let
+_: prev:
+let
   src = (import ../npins).dwl;
-  dwl = {
-    stdenv,
-    lib,
-    pkg-config,
-    wayland-scanner,
-    wayland-protocols,
-    libinput,
-    wayland,
-    wlroots,
-    pixman,
-    libxkbcommon,
-    xwayland,
-    libxcb,
-    xcbutilwm,
-    rootColor ? "0x222222ff",
-    borderColor ? "0x444444ff",
-    focusColor ? "0x005577ff",
-    urgentColor ? "0xff0000ff",
-  }:
+  dwl =
+    {
+      stdenv,
+      lib,
+      pkg-config,
+      wayland-scanner,
+      wayland-protocols,
+      libinput,
+      wayland,
+      wlroots,
+      pixman,
+      libxkbcommon,
+      xwayland,
+      libxcb,
+      xcbutilwm,
+      rootColor ? "0x222222ff",
+      borderColor ? "0x444444ff",
+      focusColor ? "0x005577ff",
+      urgentColor ? "0xff0000ff",
+    }:
     stdenv.mkDerivation {
       pname = "dwl";
       version = "unstable-${builtins.substring 0 7 src.revision}";
@@ -46,21 +48,20 @@ _: prev: let
 
       postPatch = ''
         sed -Ei "
-          ${
-          lib.pipe
-          {
-            inherit
-              rootColor
-              borderColor
-              focusColor
-              urgentColor
-              ;
+          ${lib.pipe
+            {
+              inherit
+                rootColor
+                borderColor
+                focusColor
+                urgentColor
+                ;
+            }
+            [
+              (lib.mapAttrsToList (name: value: "1,4s/(${lib.toUpper name}).*/\\1 ${value}/"))
+              lib.concatLines
+            ]
           }
-          [
-            (lib.mapAttrsToList (name: value: "1,4s/(${lib.toUpper name}).*/\\1 ${value}/"))
-            lib.concatLines
-          ]
-        }
         " config.def.h
       '';
 
@@ -69,7 +70,7 @@ _: prev: let
         "man"
       ];
 
-      passthru.providedSessions = ["dwl"];
+      passthru.providedSessions = [ "dwl" ];
 
       makeFlags = [
         "WAYLAND_PROTOCOLS=${wayland-protocols}/share/wayland-protocols"
@@ -83,6 +84,7 @@ _: prev: let
       strictDeps = true;
       enableParallelBuilding = true;
     };
-in {
-  dwl = prev.callPackage dwl {};
+in
+{
+  dwl = prev.callPackage dwl { };
 }

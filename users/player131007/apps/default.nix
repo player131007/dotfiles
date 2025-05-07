@@ -1,4 +1,5 @@
-{pkgs, ...}: {
+{ pkgs, ... }:
+{
   imports = [
     ./btop
     ./firefox
@@ -23,7 +24,7 @@
 
     mpv = {
       enable = true;
-      defaultProfiles = ["gpu-hq"];
+      defaultProfiles = [ "gpu-hq" ];
       config = {
         gpu-api = "opengl";
         vo = "gpu-next";

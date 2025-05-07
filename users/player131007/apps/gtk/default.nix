@@ -2,7 +2,8 @@
   pkgs,
   config,
   ...
-}: let
+}:
+let
   isDarkTheme = config.scheme.variant != "light";
 
   gtkConfig = {
@@ -16,7 +17,8 @@
       gtk-application-prefer-dark-theme = isDarkTheme;
     };
   };
-in {
+in
+{
   gtk = {
     enable = true;
     font = {
@@ -39,9 +41,6 @@ in {
   };
 
   dconf.settings."org/gnome/desktop/interface" = {
-    color-scheme =
-      if isDarkTheme
-      then "prefer-dark"
-      else "prefer-light";
+    color-scheme = if isDarkTheme then "prefer-dark" else "prefer-light";
   };
 }

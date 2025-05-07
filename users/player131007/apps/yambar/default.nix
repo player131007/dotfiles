@@ -2,7 +2,8 @@
   pkgs,
   config,
   ...
-}: {
+}:
+{
   home.packages = [
     pkgs.nerd-fonts.symbols-only
     pkgs.inter

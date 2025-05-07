@@ -2,8 +2,9 @@
   pkgs,
   config,
   ...
-}: {
-  boot.kernelParams = ["iommu=pt"];
+}:
+{
+  boot.kernelParams = [ "iommu=pt" ];
 
   systemd.tmpfiles.rules = [
     "f /dev/shm/looking-glass 0660 ${config.users.users.player131007.name} kvm -"
@@ -19,10 +20,10 @@
   fileSystems."/windows" = {
     label = "windows";
     fsType = "btrfs";
-    options = ["noatime"];
+    options = [ "noatime" ];
   };
 
-  environment.systemPackages = with pkgs; [virtiofsd];
+  environment.systemPackages = with pkgs; [ virtiofsd ];
 
   virtualisation.libvirt.connections."qemu:///system".domains = [
     {

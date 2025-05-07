@@ -30,11 +30,12 @@
     base16.url = "github:SenchoPens/base16.nix";
   };
 
-  outputs = {flake-parts, ...} @ inputs:
-    flake-parts.lib.mkFlake {inherit inputs;} {
+  outputs =
+    { flake-parts, ... }@inputs:
+    flake-parts.lib.mkFlake { inherit inputs; } {
       debug = true;
 
-      systems = ["x86_64-linux"];
+      systems = [ "x86_64-linux" ];
 
       imports = [
         ./overlays.nix

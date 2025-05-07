@@ -3,7 +3,8 @@
   lib,
   config,
   ...
-}: {
+}:
+{
   programs = {
     command-not-found.enable = false;
     nix-index.enable = true;
@@ -46,7 +47,8 @@
 
   stuffs.dwl = {
     enable = true;
-    package = with config.scheme;
+    package =
+      with config.scheme;
       pkgs.dwl.override {
         rootColor = "0x${base00}ff";
         borderColor = "0x${base02}ff";

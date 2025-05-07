@@ -3,7 +3,8 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   xdg.configFile."helix/themes/base16.toml" = {
     inherit (config.programs.helix) enable;
     source = config.scheme {
@@ -72,7 +73,7 @@
       language = [
         {
           name = "nix";
-          language-servers = ["nixd"];
+          language-servers = [ "nixd" ];
           indent = {
             tab-width = 2;
             unit = "  ";

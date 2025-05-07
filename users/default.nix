@@ -2,9 +2,11 @@
   inputs,
   self,
   ...
-}: let
+}:
+let
   inherit (inputs.home-manager) lib;
-in {
+in
+{
   flake.homeConfigurations."player131007@laptop" = lib.homeManagerConfiguration {
     pkgs = self.nixosConfigurations.laptop.pkgs;
     modules = [

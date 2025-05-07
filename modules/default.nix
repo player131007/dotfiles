@@ -2,8 +2,9 @@
   config,
   inputs,
   ...
-}: {
-  imports = [inputs.flake-parts.flakeModules.modules];
+}:
+{
+  imports = [ inputs.flake-parts.flakeModules.modules ];
 
   flake.modules = {
     nixos = {
@@ -15,7 +16,7 @@
     generic = {
       theme = {
         # same module as homeManagerModule
-        imports = [inputs.base16.nixosModule];
+        imports = [ inputs.base16.nixosModule ];
         scheme = ./generic/theme/rose-pine.yaml;
       };
     };

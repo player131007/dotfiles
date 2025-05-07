@@ -3,7 +3,8 @@
   config,
   lib,
   ...
-}: {
+}:
+{
   imports = [
     ./hardware-configuration.nix
     ./apps.nix
@@ -24,7 +25,10 @@
     cudaSupport = true;
   };
 
-  nix.settings.trusted-users = ["root" "@wheel"];
+  nix.settings.trusted-users = [
+    "root"
+    "@wheel"
+  ];
 
   networking = {
     hostName = "laptop";
@@ -45,7 +49,7 @@
   services.resolved = {
     enable = true;
     dnssec = "true";
-    fallbackDns = [];
+    fallbackDns = [ ];
   };
 
   # it keeps trying to save /etc/machine-id
@@ -54,16 +58,18 @@
   systemd.network = {
     enable = true;
     wait-online.enable = false;
-    networks = let
-      no-dns = {
-        dhcpV4Config.UseDNS = lib.mkForce false;
-        dhcpV6Config.UseDNS = lib.mkForce false;
-        ipv6AcceptRAConfig.UseDNS = lib.mkForce false;
+    networks =
+      let
+        no-dns = {
+          dhcpV4Config.UseDNS = lib.mkForce false;
+          dhcpV6Config.UseDNS = lib.mkForce false;
+          ipv6AcceptRAConfig.UseDNS = lib.mkForce false;
+        };
+      in
+      {
+        "99-ethernet-default-dhcp" = no-dns;
+        "99-wireless-client-dhcp" = no-dns;
       };
-    in {
-      "99-ethernet-default-dhcp" = no-dns;
-      "99-wireless-client-dhcp" = no-dns;
-    };
   };
 
   system.activationScripts = {
@@ -162,27 +168,36 @@
   # https://nixos.org/manual/nixos/stable/#ch-system-state
   environment.persistence."/persist" = {
     hideMounts = true;
-    directories = let
-      iwd = lib.optional config.networking.wireless.iwd.enable "/var/lib/iwd";
-      tuigreet = let
-        user = config.users.users.greeter;
-      in lib.optional config.services.greetd.enable {
-        directory = "/var/cache/tuigreet";
-        user = user.name;
-        group = user.group;
-      };
-      syncthing = let
-        cfg = config.services.syncthing;
-      in lib.optional cfg.enable {
-        directory = cfg.dataDir;
-        inherit (cfg) user group;
-      };
-    in lib.concatLists [
-      ["/var/lib/nixos" "/var/lib/systemd"]
-      iwd
-      tuigreet
-      syncthing
-    ];
+    directories =
+      let
+        iwd = lib.optional config.networking.wireless.iwd.enable "/var/lib/iwd";
+        tuigreet =
+          let
+            user = config.users.users.greeter;
+          in
+          lib.optional config.services.greetd.enable {
+            directory = "/var/cache/tuigreet";
+            user = user.name;
+            group = user.group;
+          };
+        syncthing =
+          let
+            cfg = config.services.syncthing;
+          in
+          lib.optional cfg.enable {
+            directory = cfg.dataDir;
+            inherit (cfg) user group;
+          };
+      in
+      lib.concatLists [
+        [
+          "/var/lib/nixos"
+          "/var/lib/systemd"
+        ]
+        iwd
+        tuigreet
+        syncthing
+      ];
     files = [
       "/etc/adjtime"
       "/etc/machine-id"

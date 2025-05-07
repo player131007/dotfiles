@@ -1,4 +1,5 @@
-{config, ...}: {
+{ config, ... }:
+{
   xdg.configFile."btop/themes/base16.theme" = {
     inherit (config.programs.btop) enable;
     source = config.scheme {

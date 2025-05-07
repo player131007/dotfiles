@@ -2,9 +2,11 @@
   inputs,
   self,
   ...
-}: let
+}:
+let
   inherit (inputs.nixpkgs) lib;
-in {
+in
+{
   flake.nixosConfigurations = {
     laptop = lib.nixosSystem {
       modules = [
@@ -17,7 +19,7 @@ in {
         self.nixosModules.dwl
         self.modules.generic.theme
         {
-          nixpkgs.overlays = [self.overlays.default];
+          nixpkgs.overlays = [ self.overlays.default ];
         }
       ];
     };
