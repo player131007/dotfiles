@@ -16,7 +16,6 @@ in
         inputs.nixvirt.nixosModules.default
         self.nixosModules.base
         self.nixosModules.oh-my-posh
-        self.modules.generic.theme
         {
           nixpkgs.overlays = [ self.overlays.default ];
         }

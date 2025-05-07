@@ -11,14 +11,6 @@
       base = ./nixos/base.nix;
       oh-my-posh = ./nixos/oh-my-posh.nix;
     };
-
-    generic = {
-      theme = {
-        # same module as homeManagerModule
-        imports = [ inputs.base16.nixosModule ];
-        scheme = ./generic/theme/rose-pine.yaml;
-      };
-    };
   };
 
   flake.nixosModules = config.flake.modules.nixos;

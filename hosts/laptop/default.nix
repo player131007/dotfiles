@@ -75,25 +75,6 @@
     '';
   };
 
-  console.colors = with config.scheme; [
-    base00
-    base08
-    base0B
-    base0A
-    base0D
-    base0E
-    base0C
-    base05
-    base11
-    base12
-    base14
-    base13
-    base16
-    base17
-    base15
-    base07
-  ];
-
   security = {
     sudo = {
       enable = true;

@@ -5,19 +5,10 @@
   ...
 }:
 {
-  xdg.configFile."helix/themes/base16.toml" = {
-    inherit (config.programs.helix) enable;
-    source = config.scheme {
-      template = ./helix.mustache;
-      extension = ".toml";
-    };
-  };
-
   programs.helix = {
     enable = true;
     defaultEditor = true;
     settings = {
-      theme = "base16";
       editor = {
         line-number = "relative";
         mouse = false;

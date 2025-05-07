@@ -9,18 +9,6 @@
     enable = true;
     profiles.profile = {
       isDefault = true;
-      userChrome =
-        let
-          baseXX = lib.filterAttrs (k: _: lib.hasPrefix "base" k && builtins.stringLength k == 6);
-        in
-        ''
-          :root {
-              ${lib.concatLines (
-                lib.mapAttrsToList (k: v: "--${k}: ${v};") (baseXX config.scheme.withHashtag)
-              )}
-          }
-          ${builtins.readFile ./userChrome.css}
-        '';
     };
 
     package = pkgs.wrapFirefox pkgs.firefox-esr-unwrapped {
@@ -116,14 +104,7 @@
           };
           "addon@darkreader.org" =
             let
-              darkreader = pkgs.darkreader.override (
-                with config.scheme;
-                {
-                  background = base01;
-                  text = base05;
-                  isDarkTheme = variant != "light";
-                }
-              );
+              inherit (pkgs) darkreader;
             in
             {
               installation_mode = "normal_installed";

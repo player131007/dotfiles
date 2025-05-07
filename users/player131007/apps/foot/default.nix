@@ -13,12 +13,6 @@
     enable = true;
     settings = {
       main = {
-        include = toString (
-          config.scheme {
-            template = ./foot.mustache;
-            extension = ".ini";
-          }
-        );
         font = "Meslo LG S:pixelsize=14,Symbols Nerd Font Mono:pixelsize=10";
         shell = "fish";
         pad = "5x5 center";
