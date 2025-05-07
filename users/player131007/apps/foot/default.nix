@@ -19,7 +19,7 @@
             extension = ".ini";
           }
         );
-        font = "Meslo LG S:size=11,Symbols Nerd Font Mono:size=10";
+        font = "Meslo LG S:pixelsize=14,Symbols Nerd Font Mono:pixelsize=10";
         shell = "fish";
         pad = "5x5 center";
       };

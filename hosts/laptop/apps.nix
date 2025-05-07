@@ -28,6 +28,11 @@
         commit.verbose = true;
       };
     };
+
+    river = {
+      enable = true;
+      extraPackages = [ ];
+    };
   };
 
   environment.variables = lib.mkMerge [

@@ -8,6 +8,7 @@
     ./gtk
     ./fcitx5
     ./helix
+    ./river
   ];
 
   programs = {
@@ -38,22 +39,16 @@
   };
 
   home.packages = with pkgs; [
-    swaybg
-    grim
-    slurp
-    foot
     brightnessctl
 
     npins
     sttr
     jq
     calc
-    wl-clipboard
     ripgrep
     xdg-utils
     btop
     _7zz
-    wl-screenrec
 
     keepassxc
     looking-glass-client
