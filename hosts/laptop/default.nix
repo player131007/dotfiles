@@ -160,41 +160,29 @@
   time.timeZone = "Asia/Ho_Chi_Minh";
 
   # https://nixos.org/manual/nixos/stable/#ch-system-state
-  environment.persistence."/persist" = let
-    getEnableOption = parts: lib.foldl' (acc: x: acc.${x}) config (parts ++ ["enable"]);
-  in {
+  environment.persistence."/persist" = {
     hideMounts = true;
-    directories =
-      [
-        "/var/lib/nixos"
-        "/var/lib/systemd"
-      ]
-      ++ lib.optional (getEnableOption [
-        "networking"
-        "wireless"
-        "iwd"
-      ]) "/var/lib/iwd"
-      ++ lib.optional
-      (getEnableOption [
-        "services"
-        "greetd"
-      ])
-      {
+    directories = let
+      iwd = lib.optional config.networking.wireless.iwd.enable "/var/lib/iwd";
+      tuigreet = let
+        user = config.users.users.greeter;
+      in lib.optional config.services.greetd.enable {
         directory = "/var/cache/tuigreet";
-        user = "greeter";
-        group = "greeter";
-      }
-      ++ lib.optional
-      (getEnableOption [
-        "services"
-        "syncthing"
-      ])
-      (
-        with config.services.syncthing; {
-          directory = dataDir;
-          inherit user group;
-        }
-      );
+        user = user.name;
+        group = user.group;
+      };
+      syncthing = let
+        cfg = config.services.syncthing;
+      in lib.optional cfg.enable {
+        directory = cfg.dataDir;
+        inherit (cfg) user group;
+      };
+    in lib.concatLists [
+      ["/var/lib/nixos" "/var/lib/systemd"]
+      iwd
+      tuigreet
+      syncthing
+    ];
     files = [
       "/etc/adjtime"
       "/etc/machine-id"
