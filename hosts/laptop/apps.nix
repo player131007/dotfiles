@@ -24,6 +24,14 @@
           compression = 9;
           whitespace = "error";
         };
+
+        pager.diff = "diff-so-fancy | $PAGER";
+        diff-so-fancy.markEmptyLines = false;
+        color.diff = {
+          meta = "black bold";
+          frag = "magenta";
+          whitespace = "yellow reverse";
+        };
         status.showStash = true;
         commit.verbose = true;
       };
@@ -56,6 +64,7 @@
     eza
 
     man-pages
+    diff-so-fancy # for git
   ];
 
   environment.shellAliases = {
