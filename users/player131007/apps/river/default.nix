@@ -81,6 +81,7 @@
       spawn = map (s: "\"${s}\"") [
         "rivertile -main-ratio 0.5"
         "${lib.getExe pkgs.swaybg} -i ${../../wallpaper.png}"
+        "keepassxc --minimized"
       ];
 
       set-repeat = "30 300";
