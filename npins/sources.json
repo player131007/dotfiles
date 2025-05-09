@@ -11,10 +11,10 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "v4.9.105",
-      "revision": "51f97ccd34ed0a70832421c2768a19bc46fcec4d",
-      "url": "https://api.github.com/repos/darkreader/darkreader/tarball/v4.9.105",
-      "hash": "1ddrrn643mly0abc0p2ljmj7i9abb4c1xs5x2ys7lhxckagzppvw"
+      "version": "v4.9.106",
+      "revision": "7c9f64c75434a74dbfc528c9acf34be67eb34f46",
+      "url": "https://api.github.com/repos/darkreader/darkreader/tarball/v4.9.106",
+      "hash": "0kpq64ihmmmn7s9k6rwd8xydw857754rawgjcwgq6bw3nqwfg7y8"
     }
   },
   "version": 5

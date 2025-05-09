@@ -15,7 +15,7 @@ let
       inherit src;
 
       # bruh
-      npmDepsHash = "sha256-NamyPTm0bwXWcun5hYkNqrkJvzah3idTH1aFW51+S0Q=";
+      npmDepsHash = "sha256-uA3/uv5ZNa2f4l2ZhmNCzX+96FKlQCq4XlK5QkfYQQU=";
 
       prePatch =
         let
