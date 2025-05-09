@@ -52,9 +52,6 @@
     fallbackDns = [ ];
   };
 
-  # it keeps trying to save /etc/machine-id
-  systemd.services.systemd-machine-id-commit.enable = false;
-
   systemd.network = {
     enable = true;
     wait-online.enable = false;
