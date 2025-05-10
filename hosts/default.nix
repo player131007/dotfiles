@@ -14,6 +14,7 @@ in
         inputs.lix-module.nixosModules.default
         inputs.impermanence.nixosModule
         inputs.nixvirt.nixosModules.default
+        self.modules.generic.base24
         self.nixosModules.base
         self.nixosModules.oh-my-posh
         {
