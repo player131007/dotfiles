@@ -16,6 +16,19 @@
       "url": "https://api.github.com/repos/darkreader/darkreader/tarball/v4.9.106",
       "hash": "0kpq64ihmmmn7s9k6rwd8xydw857754rawgjcwgq6bw3nqwfg7y8"
     },
+    "tinted-shell": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "tinted-theming",
+        "repo": "tinted-shell"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "7b81c394be07b3e7a3a4713c6ab0e2154eb90e14",
+      "url": "https://github.com/tinted-theming/tinted-shell/archive/7b81c394be07b3e7a3a4713c6ab0e2154eb90e14.tar.gz",
+      "hash": "1zwz2h8s2vxj3yjpwjpdpbj9g0dhb17wdzy0lncw55q20fwq8gni"
+    },
     "tinted-terminal": {
       "type": "Git",
       "repository": {

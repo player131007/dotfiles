@@ -2,46 +2,65 @@
   pkgs,
   lib,
   config,
+  npins,
   ...
 }:
 {
-  programs = {
-    command-not-found.enable = false;
-    nix-index.enable = true;
-    fish.enable = true;
-    ssh.startAgent = true;
+  programs =
+    let
+      src = npins.tinted-shell;
+      tinted-shell = pkgs.fetchFromGitHub {
+        inherit (src.repository) owner repo;
+        rev = src.revision;
+        sha256 = src.hash;
+      };
 
-    virt-manager.enable = true;
-    nano.enable = false;
+      base24-script = config.colorscheme {
+        template = "${tinted-shell}/templates/base24.mustache";
+        extension = "sh";
+      };
 
-    git = {
-      enable = true;
-      config = {
-        core = {
-          autocrlf = "input";
-          pager = "less -FRX";
+      base24-init = lib.mkAfter "sh ${base24-script}";
+    in
+    {
+      fish.interactiveShellInit = base24-init;
+      bash.interactiveShellInit = base24-init;
+      command-not-found.enable = false;
+      nix-index.enable = true;
+      fish.enable = true;
+      ssh.startAgent = true;
 
-          compression = 9;
-          whitespace = "error";
+      virt-manager.enable = true;
+      nano.enable = false;
+
+      git = {
+        enable = true;
+        config = {
+          core = {
+            autocrlf = "input";
+            pager = "less -FRX";
+
+            compression = 9;
+            whitespace = "error";
+          };
+
+          pager.diff = "diff-so-fancy | $PAGER";
+          diff-so-fancy.markEmptyLines = false;
+          color.diff = {
+            meta = "black bold";
+            frag = "magenta";
+            whitespace = "yellow reverse";
+          };
+          status.showStash = true;
+          commit.verbose = true;
         };
+      };
 
-        pager.diff = "diff-so-fancy | $PAGER";
-        diff-so-fancy.markEmptyLines = false;
-        color.diff = {
-          meta = "black bold";
-          frag = "magenta";
-          whitespace = "yellow reverse";
-        };
-        status.showStash = true;
-        commit.verbose = true;
+      river = {
+        enable = true;
+        extraPackages = [ ];
       };
     };
-
-    river = {
-      enable = true;
-      extraPackages = [ ];
-    };
-  };
 
   environment.variables = lib.mkMerge [
     (lib.mkIf config.documentation.man.enable {

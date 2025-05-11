@@ -21,6 +21,9 @@ in
           nixpkgs.overlays = [ self.overlays.default ];
         }
       ];
+      specialArgs = {
+        inherit (self) npins;
+      };
     };
 
     image = lib.nixosSystem {
