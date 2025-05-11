@@ -13,5 +13,8 @@ in
       ./player131007
       self.modules.generic.base24
     ];
+    extraSpecialArgs = {
+      inherit (self) npins;
+    };
   };
 }

@@ -41,6 +41,10 @@
 
       systems = [ "x86_64-linux" ];
 
+      flake = {
+        npins = (inputs.nixpkgs.lib.importJSON ./npins/sources.json).pins;
+      };
+
       imports = [
         ./treefmt.nix
         ./overlays
