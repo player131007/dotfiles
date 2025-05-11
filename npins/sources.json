@@ -16,6 +16,19 @@
       "url": "https://api.github.com/repos/darkreader/darkreader/tarball/v4.9.106",
       "hash": "0kpq64ihmmmn7s9k6rwd8xydw857754rawgjcwgq6bw3nqwfg7y8"
     },
+    "tinted-btop": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "player131007",
+        "repo": "tinted-btop"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "82e94149fe37762ceef36a155d44ff7f255f6327",
+      "url": "https://github.com/player131007/tinted-btop/archive/82e94149fe37762ceef36a155d44ff7f255f6327.tar.gz",
+      "hash": "1fbgd8z6mm0i6a0z4wjvglzxbv4bzvwhn7dpjra83xknivz5ign7"
+    },
     "tinted-shell": {
       "type": "Git",
       "repository": {
