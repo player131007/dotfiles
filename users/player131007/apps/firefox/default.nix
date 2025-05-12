@@ -104,7 +104,12 @@
           };
           "addon@darkreader.org" =
             let
-              inherit (pkgs) darkreader;
+              inherit (config.colorscheme) palette variant;
+              darkreader = pkgs.darkreader.override {
+                background = palette.base00;
+                text = palette.base05;
+                darkMode = variant == "dark";
+              };
             in
             {
               installation_mode = "normal_installed";

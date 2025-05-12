@@ -1,14 +1,15 @@
+{ npins, ... }:
 _: prev:
 let
-  src = (prev.lib.importJSON ../npins/sources.json).pins.darkreader;
+  src = npins.darkreader;
   darkreader =
     {
       lib,
       fetchFromGitHub,
       buildNpmPackage,
-      background ? "18131b",
+      background ? "181a1b",
       text ? "e8e6e3",
-      isDarkTheme ? true,
+      darkMode ? true,
     }:
     buildNpmPackage {
       pname = "darkreader";
@@ -23,17 +24,13 @@ let
       # bruh
       npmDepsHash = "sha256-uA3/uv5ZNa2f4l2ZhmNCzX+96FKlQCq4XlK5QkfYQQU=";
 
-      prePatch =
-        let
-          mode = if isDarkTheme then "1" else "0";
-        in
-        ''
-          sed -i "
-              s/\(background: '#\)[0-9A-Fa-f]\{6\}/\1${background}/g;
-              s/\(text: '#\)[0-9A-Fa-f]\{6\}/\1${text}/g;
-              s/mode: 1/mode: ${mode}/g;
-          " src/defaults.ts
-        '';
+      patches = [ ./default-theme.patch ];
+      postPatch = ''
+        substituteInPlace ./src/defaults.ts \
+          --subst-var-by background ${background} \
+          --subst-var-by text ${text} \
+          --subst-var-by darkMode ${if darkMode then "1" else "0"}
+      '';
 
       npmBuildFlags = [
         "--"
