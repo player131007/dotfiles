@@ -38,8 +38,8 @@
       systems = [ "x86_64-linux" ];
 
       imports = [
-        ./overlays.nix
         ./treefmt.nix
+        ./overlays
         ./modules
         ./hosts
         ./users
