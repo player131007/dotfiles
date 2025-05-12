@@ -24,16 +24,11 @@
     };
 
     package = pkgs.wrapFirefox pkgs.firefox-esr-unwrapped {
-      extraPrefs =
-        lib.pipe
-          [
-            ./prefs/betterfox.js
-            ./prefs/smooth_scrolling.js
-          ]
-          [
-            (map builtins.readFile)
-            lib.concatLines
-          ];
+      # https://github.com/NixOS/nixpkgs/pull/397970 funny
+      extraPrefsFiles = [
+        "${./prefs/betterfox.js}"
+        "${./prefs/smooth_scrolling.js}"
+      ];
       extraPolicies = {
         DisableAppUpdate = true;
         DisableFirefoxAccounts = true;
