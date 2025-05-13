@@ -39,6 +39,7 @@
 
             "Super Q" = "spawn foot";
             "Super A" = "spawn firefox";
+            "Super D" = "spawn keepassxc";
 
             "Super W" = "toggle-float";
             "Super E" = "toggle-fullscreen";
