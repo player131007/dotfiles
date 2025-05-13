@@ -4,7 +4,10 @@
   ...
 }:
 let
+  darkMode = config.colorscheme.variant == "dark";
+
   gtkConfig = {
+    extraConfig.gtk-application-prefer-dark-theme = darkMode;
   };
 in
 {
@@ -27,5 +30,9 @@ in
 
     gtk3 = gtkConfig;
     gtk4 = gtkConfig;
+  };
+
+  dconf.settings."org/gnome/desktop/interface" = {
+    color-scheme = if darkMode then "prefer-dark" else "prefer-light";
   };
 }
