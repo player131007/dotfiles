@@ -1,10 +1,16 @@
-{ pkgs, lib, ... }:
+{ pkgs, lib, config, ... }:
 {
-  wayland.windowManager.river = {
+  wayland.windowManager.river =
+  let
+    colors = config.colorscheme.palette;
+  in {
     enable = true;
     package = null;
     settings = {
       allow-tearing = true;
+      border-color-focused = "0x${colors.base0C}AA";
+      border-color-unfocused = "0x${colors.base03}AA";
+      border-color-urgent = "0x${colors.base08}";
       border-width = 3;
       declare-mode = [
         /*
