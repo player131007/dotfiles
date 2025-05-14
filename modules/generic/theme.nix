@@ -96,10 +96,15 @@ nix-colors:
             "${base-name}-${type}-b" = lib.elemAt value 2;
           }) color-types;
         builder-attrs = scheme-meta // lib.concatMapAttrs generate-colors self.palette;
+
+        name-no-ext = "${self.system}-${self.slug}";
       in
-      pkgs.runCommand "${self.system}-${self.slug}.${extension}" {
+      pkgs.runCommand "${name-no-ext}.${extension}" {
         passAsFile = [ "jsonBuilderAttrs" ];
         jsonBuilderAttrs = builtins.toJSON builder-attrs;
+        passthru = {
+          inherit name-no-ext;
+        };
       } "${lib.getExe pkgs.mustache-go} $jsonBuilderAttrsPath ${template} > $out";
   };
 }

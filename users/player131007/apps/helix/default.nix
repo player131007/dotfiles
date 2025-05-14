@@ -6,10 +6,9 @@
   ...
 }:
 let
-  ext = "toml";
   theme = config.colorscheme {
     template = "${npins.tinted-helix}/templates/base24.mustache";
-    extension = ext;
+    extension = "toml";
   };
 in
 {
@@ -22,7 +21,7 @@ in
     enable = true;
     defaultEditor = true;
     settings = {
-      theme = lib.removeSuffix ".${ext}" theme.name;
+      theme = theme.name-no-ext;
       editor = {
         line-number = "relative";
         mouse = false;
