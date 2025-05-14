@@ -2,7 +2,6 @@ nix-colors:
 {
   lib,
   pkgs,
-  config,
   ...
 }:
 {
