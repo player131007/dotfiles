@@ -17,7 +17,6 @@ in
         self.modules.generic.npins
         self.modules.generic.base24
         self.nixosModules.base
-        self.nixosModules.oh-my-posh
         {
           nixpkgs.overlays = [ self.overlays.default ];
         }

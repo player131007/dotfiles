@@ -65,11 +65,6 @@
     })
   ];
 
-  stuffs.oh-my-posh = {
-    enable = true;
-    configFile = ./pure.omp.toml;
-  };
-
   environment.systemPackages = with pkgs; [
     piper
 

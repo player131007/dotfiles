@@ -10,7 +10,6 @@
   flake.modules = {
     nixos = {
       base = ./nixos/base.nix;
-      oh-my-posh = ./nixos/oh-my-posh.nix;
     };
 
     generic = {

@@ -28,6 +28,4 @@
       colors.alpha = 0.7;
     };
   };
-
-  # oh-my-posh will take care of shell integration
 }
