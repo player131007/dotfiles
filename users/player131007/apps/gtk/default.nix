@@ -4,18 +4,20 @@
   ...
 }:
 let
-  isDarkTheme = config.scheme.variant != "light";
+  darkMode = config.colorscheme.variant == "dark";
 
   gtkConfig = {
-    extraCss = builtins.readFile (
-      config.scheme {
-        template = ./gtk.mustache;
-        extension = ".css";
-      }
-    );
-    extraConfig = {
-      gtk-application-prefer-dark-theme = isDarkTheme;
-    };
+    extraCss =
+      let
+        theme = config.colorscheme {
+          template = ./gtk.css.mustache;
+          extension = "css";
+        };
+      in
+      ''
+        @import "${theme}";
+      '';
+    extraConfig.gtk-application-prefer-dark-theme = darkMode;
   };
 in
 {
@@ -41,6 +43,6 @@ in
   };
 
   dconf.settings."org/gnome/desktop/interface" = {
-    color-scheme = if isDarkTheme then "prefer-dark" else "prefer-light";
+    color-scheme = if darkMode then "prefer-dark" else "prefer-light";
   };
 }

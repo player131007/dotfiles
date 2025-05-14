@@ -27,7 +27,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    base16.url = "github:SenchoPens/base16.nix";
+    nix-colors = {
+      url = "github:Misterio77/nix-colors";
+      inputs.nixpkgs-lib.follows = "nixpkgs";
+      inputs.base16-schemes.follows = "";
+    };
   };
 
   outputs =

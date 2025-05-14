@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  lib,
+  npins,
   ...
 }:
 {
@@ -11,15 +11,14 @@
       isDefault = true;
       userChrome =
         let
-          baseXX = lib.filterAttrs (k: _: lib.hasPrefix "base" k && builtins.stringLength k == 6);
+          css-vars = config.colorscheme {
+            template = "${npins.base24-css-etc}/templates/css-variables.mustache";
+            extension = "css";
+          };
         in
         ''
-          :root {
-              ${lib.concatLines (
-                lib.mapAttrsToList (k: v: "--${k}: ${v};") (baseXX config.scheme.withHashtag)
-              )}
-          }
-          ${builtins.readFile ./userChrome.css}
+          @import "${css-vars}";
+          @import "${./userChrome.css}";
         '';
     };
 
@@ -116,14 +115,12 @@
           };
           "addon@darkreader.org" =
             let
-              darkreader = pkgs.darkreader.override (
-                with config.scheme;
-                {
-                  background = base01;
-                  text = base05;
-                  isDarkTheme = variant != "light";
-                }
-              );
+              inherit (config.colorscheme) palette variant;
+              darkreader = pkgs.darkreader.override {
+                background = palette.base00;
+                text = palette.base05;
+                darkMode = variant == "dark";
+              };
             in
             {
               installation_mode = "normal_installed";

@@ -1,6 +1,5 @@
 {
   pkgs,
-  config,
   ...
 }:
 {
@@ -19,12 +18,6 @@
     ];
     interactiveShellInit = ''
       set -g fish_greeting
-      source ${
-        config.scheme {
-          template = ./fish.mustache;
-          extension = ".fish";
-        }
-      }
       function fish_user_key_bindings
         bind ctrl-c 'commandline ""'
         bind ctrl-left backward-token

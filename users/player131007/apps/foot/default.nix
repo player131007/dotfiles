@@ -1,6 +1,7 @@
 {
   pkgs,
   config,
+  npins,
   ...
 }:
 {
@@ -14,9 +15,9 @@
     settings = {
       main = {
         include = toString (
-          config.scheme {
-            template = ./foot.mustache;
-            extension = ".ini";
+          config.colorscheme {
+            template = "${npins.tinted-terminal}/templates/foot-base24.mustache";
+            extension = "ini";
           }
         );
         font = "Meslo LG S:pixelsize=14,Symbols Nerd Font Mono:pixelsize=10";

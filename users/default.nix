@@ -11,7 +11,8 @@ in
     pkgs = self.nixosConfigurations.laptop.pkgs;
     modules = [
       ./player131007
-      self.modules.generic.theme
+      self.modules.generic.base24
+      self.modules.generic.npins
     ];
   };
 }

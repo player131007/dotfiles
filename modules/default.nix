@@ -1,6 +1,7 @@
 {
   config,
   inputs,
+  self,
   ...
 }:
 {
@@ -13,11 +14,22 @@
     };
 
     generic = {
-      theme = {
-        # same module as homeManagerModule
-        imports = [ inputs.base16.nixosModule ];
-        scheme = ./generic/theme/rose-pine.yaml;
+      base24 = {
+        imports = [
+          "${inputs.nix-colors}/module/colorscheme.nix"
+          (import ./generic/theme.nix inputs.nix-colors)
+        ];
       };
+      npins =
+        { pkgs, ... }:
+        {
+          _module.args.npins =
+            builtins.removeAttrs (pkgs.callPackage "${self}/npins/fetch-with-nixpkgs.nix" { })
+              [
+                "override"
+                "overrideDerivation"
+              ];
+        };
     };
   };
 
