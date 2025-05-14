@@ -11,7 +11,8 @@ let
     template = "${npins.tinted-helix}/templates/base24.mustache";
     extension = ext;
   };
-in {
+in
+{
   xdg.configFile."helix/themes/${theme.name}" = {
     inherit (config.programs.helix) enable;
     source = theme;
