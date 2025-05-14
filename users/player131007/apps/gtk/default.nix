@@ -7,6 +7,15 @@ let
   darkMode = config.colorscheme.variant == "dark";
 
   gtkConfig = {
+    extraCss =
+    let
+      theme = config.colorscheme {
+        template = ./gtk.css.mustache;
+        extension = "css";
+      };
+    in ''
+      @import ${theme};
+    '';
     extraConfig.gtk-application-prefer-dark-theme = darkMode;
   };
 in
