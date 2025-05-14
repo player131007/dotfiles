@@ -1,7 +1,7 @@
 {
   config,
   pkgs,
-  lib,
+  npins,
   ...
 }:
 {
@@ -9,6 +9,16 @@
     enable = true;
     profiles.profile = {
       isDefault = true;
+      userChrome =
+      let
+        css-vars = config.colorscheme {
+          template = "${npins.base24-css-etc}/templates/css-variables.mustache";
+          extension = "css";
+        };
+      in ''
+        @import "${css-vars}";
+        @import "${./userChrome.css}";
+      '';
     };
 
     package = pkgs.wrapFirefox pkgs.firefox-esr-unwrapped {

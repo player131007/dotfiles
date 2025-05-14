@@ -1,5 +1,18 @@
 {
   "pins": {
+    "base24-css-etc": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "tinted-theming",
+        "repo": "base24-css-etc"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "110713157c5dbe156b23a7cb22e55d448795892c",
+      "url": "https://github.com/tinted-theming/base24-css-etc/archive/110713157c5dbe156b23a7cb22e55d448795892c.tar.gz",
+      "hash": "0ws7ahzj0ws2cc0i0mnlsyxlkxaapshpa2wbbyyhk5s381c2gcda"
+    },
     "darkreader": {
       "type": "GitRelease",
       "repository": {
