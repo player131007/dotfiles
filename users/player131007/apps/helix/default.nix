@@ -2,13 +2,26 @@
   pkgs,
   config,
   lib,
+  npins,
   ...
 }:
-{
+let
+  ext = "toml";
+  theme = config.colorscheme {
+    template = "${npins.tinted-helix}/templates/base24.mustache";
+    extension = ext;
+  };
+in {
+  xdg.configFile."helix/themes/${theme.name}" = {
+    inherit (config.programs.helix) enable;
+    source = theme;
+  };
+
   programs.helix = {
     enable = true;
     defaultEditor = true;
     settings = {
+      theme = lib.removeSuffix ".${ext}" theme.name;
       editor = {
         line-number = "relative";
         mouse = false;

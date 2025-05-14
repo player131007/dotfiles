@@ -42,6 +42,19 @@
       "url": "https://github.com/player131007/tinted-btop/archive/82e94149fe37762ceef36a155d44ff7f255f6327.tar.gz",
       "hash": "1fbgd8z6mm0i6a0z4wjvglzxbv4bzvwhn7dpjra83xknivz5ign7"
     },
+    "tinted-helix": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "player131007",
+        "repo": "tinted-helix"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "fbc059536c021f08ea88639bb53717dda506b76c",
+      "url": "https://github.com/player131007/tinted-helix/archive/fbc059536c021f08ea88639bb53717dda506b76c.tar.gz",
+      "hash": "0kgmm3fmdc3i0y5a1n1q7a2r7zc41760yj5ab7rha6mmkphwjsbl"
+    },
     "tinted-shell": {
       "type": "Git",
       "repository": {
