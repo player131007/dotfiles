@@ -1,25 +1,19 @@
-{ npins, ... }:
+{ self, ... }:
 _: prev:
 let
-  src = npins.darkreader;
   darkreader =
     {
       lib,
-      fetchFromGitHub,
       buildNpmPackage,
       background ? "181a1b",
       text ? "e8e6e3",
       darkMode ? true,
+      callPackage,
     }:
-    buildNpmPackage {
+    buildNpmPackage (finalAttrs: {
       pname = "darkreader";
-      version = lib.removePrefix "v" src.version;
-
-      src = fetchFromGitHub {
-        inherit (src.repository) owner repo;
-        rev = src.revision;
-        sha256 = src.hash;
-      };
+      version = lib.removePrefix "v" finalAttrs.src.version;
+      src = (callPackage "${self}/npins/fetch-with-nixpkgs.nix" { }).darkreader;
 
       # bruh
       npmDepsHash = "sha256-uA3/uv5ZNa2f4l2ZhmNCzX+96FKlQCq4XlK5QkfYQQU=";
@@ -42,7 +36,7 @@ let
         cp -r build $out/
         runHook postInstall
       '';
-    };
+    });
 in
 {
   darkreader = prev.callPackage darkreader { };

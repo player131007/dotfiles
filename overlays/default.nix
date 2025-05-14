@@ -4,7 +4,7 @@
     builtins.readDir
     builtins.attrNames
     (builtins.filter (f: f != "default.nix"))
-    (map (x: import ./${x} { inherit (self) npins; }))
+    (map (x: import ./${x} { inherit self; }))
     lib.composeManyExtensions
   ];
 }

@@ -1,6 +1,7 @@
 {
   config,
   inputs,
+  self,
   ...
 }:
 {
@@ -19,6 +20,16 @@
           (import ./generic/theme.nix inputs.nix-colors)
         ];
       };
+      npins =
+        { pkgs, ... }:
+        {
+          _module.args.npins =
+            builtins.removeAttrs (pkgs.callPackage "${self}/npins/fetch-with-nixpkgs.nix" { })
+              [
+                "override"
+                "overrideDerivation"
+              ];
+        };
     };
   };
 

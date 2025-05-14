@@ -14,6 +14,7 @@ in
         inputs.lix-module.nixosModules.default
         inputs.impermanence.nixosModule
         inputs.nixvirt.nixosModules.default
+        self.modules.generic.npins
         self.modules.generic.base24
         self.nixosModules.base
         self.nixosModules.oh-my-posh
@@ -21,9 +22,6 @@ in
           nixpkgs.overlays = [ self.overlays.default ];
         }
       ];
-      specialArgs = {
-        inherit (self) npins;
-      };
     };
 
     image = lib.nixosSystem {

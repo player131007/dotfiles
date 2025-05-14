@@ -8,15 +8,8 @@
 {
   programs =
     let
-      src = npins.tinted-shell;
-      tinted-shell = pkgs.fetchFromGitHub {
-        inherit (src.repository) owner repo;
-        rev = src.revision;
-        sha256 = src.hash;
-      };
-
       base24-script = config.colorscheme {
-        template = "${tinted-shell}/templates/base24.mustache";
+        template = "${npins.tinted-shell}/templates/base24.mustache";
         extension = "sh";
       };
 

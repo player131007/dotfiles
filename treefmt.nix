@@ -4,7 +4,10 @@
 
   perSystem = {
     treefmt = {
-      settings.global.excludes = [ "npins/*" ];
+      settings.global.excludes = [
+        "npins/default.nix"
+        "npins/sources.json"
+      ];
       programs.nixfmt.enable = true;
     };
   };

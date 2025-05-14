@@ -1,25 +1,15 @@
 {
   config,
   npins,
-  pkgs,
   ...
 }:
 {
   xdg.configFile."btop/themes/${config.colorscheme.system}-${config.colorscheme.slug}.theme" = {
     inherit (config.programs.btop) enable;
-    source =
-      let
-        src = npins.tinted-btop;
-        tinted-btop = pkgs.fetchFromGitHub {
-          inherit (src.repository) owner repo;
-          rev = src.revision;
-          sha256 = src.hash;
-        };
-      in
-      config.colorscheme {
-        template = "${tinted-btop}/templates/base16.mustache";
-        extension = "theme";
-      };
+    source = config.colorscheme {
+      template = "${npins.tinted-btop}/templates/base16.mustache";
+      extension = "theme";
+    };
   };
 
   programs.btop = {

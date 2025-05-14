@@ -12,9 +12,7 @@ in
     modules = [
       ./player131007
       self.modules.generic.base24
+      self.modules.generic.npins
     ];
-    extraSpecialArgs = {
-      inherit (self) npins;
-    };
   };
 }
