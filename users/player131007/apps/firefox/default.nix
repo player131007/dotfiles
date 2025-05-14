@@ -88,14 +88,20 @@
           ];
         };
 
-        ManagedBookmarks = [
+        Bookmarks = [
           {
-            url = "https://nixos.org/manual/nixpkgs/unstable/";
-            name = "Nixpkgs manual";
+            Title = "Nixpkgs manual";
+            URL = "https://nixos.org/manual/nixpkgs/unstable";
+            Favicon = "https://nix.dev/_static/favicon.png";
+            Placement = "menu";
+            Folder = "nix stuff";
           }
           {
-            url = "https://nix.dev/manual/nix/rolling/language/builtins";
-            name = "Nix built-in functions";
+            Title = "Nix manual";
+            URL = "https://nix.dev/manual/nix/rolling";
+            Favicon = "https://nix.dev/_static/favicon.png";
+            Placement = "menu";
+            Folder = "nix stuff";
           }
         ];
 
