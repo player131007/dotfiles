@@ -15,10 +15,9 @@
     in
     {
       fish.interactiveShellInit = lib.mkAfter "sh ${base24-script}";
-      bash.interactiveShellInit = lib.mkAfter ''
-        sh ${base24-script}
-
-        # shell integration
+      bash.interactiveShellInit = lib.mkAfter "sh ${base24-script}";
+      bash.promptInit = lib.mkBefore ''
+        # foot shell integration
         osc7_cwd() {
           local strlen=''${#PWD}
           local encoded=""
@@ -33,18 +32,17 @@
           done
           printf '\e]7;file://%s%s\e\\' "''${HOSTNAME}" "''${encoded}"
         }
-        PROMPT_COMMAND=''${PROMPT_COMMAND:+''${PROMPT_COMMAND%;}; }osc7_cwd
 
         prompt_marker() {
           printf '\e]133;A\e\\'
         }
-        PROMPT_COMMAND=''${PROMPT_COMMAND:+$PROMPT_COMMAND; }prompt_marker
 
-        PS0+='\e]133;C\e\\'
         command_done() {
             printf '\e]133;D\e\\'
         }
-        PROMPT_COMMAND=''${PROMPT_COMMAND:+$PROMPT_COMMAND; }command_done
+
+        PS0+='\e]133;C\e\\'
+        PROMPT_COMMAND=(command_done prompt_marker osc7_cwd)
       '';
       command-not-found.enable = false;
       nix-index.enable = true;
