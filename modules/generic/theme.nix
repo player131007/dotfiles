@@ -80,7 +80,11 @@ nix-colors:
           let
             inherit (nix-colors.lib.conversions) hexToDec;
             color-types = rec {
-              hex = map (x: builtins.substring x 2 value) [ 0 2 4 ];
+              hex = map (x: builtins.substring x 2 value) [
+                0
+                2
+                4
+              ];
               rgb = map hexToDec hex;
               rgb16 = map (x: x * 256) rgb;
               dec = map (x: x / 255.0) rgb;
