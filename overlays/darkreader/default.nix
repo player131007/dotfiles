@@ -13,7 +13,7 @@ let
     buildNpmPackage (finalAttrs: {
       pname = "darkreader";
       version = lib.removePrefix "v" finalAttrs.src.version;
-      src = (callPackage "${self}/npins/fetch-with-nixpkgs.nix" { }).darkreader;
+      src = (callPackage self.npins-nixpkgs { }).darkreader;
 
       # bruh
       npmDepsHash = "sha256-uA3/uv5ZNa2f4l2ZhmNCzX+96FKlQCq4XlK5QkfYQQU=";

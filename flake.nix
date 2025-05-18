@@ -41,6 +41,16 @@
 
       systems = [ "x86_64-linux" ];
 
+      _module.args = {
+        npins = import ./npins;
+        npins-nixpkgs = import ./npins/fetch-with-nixpkgs.nix;
+      };
+
+      flake = {
+        npins = import ./npins;
+        npins-nixpkgs = import ./npins/fetch-with-nixpkgs.nix;
+      };
+
       imports = [
         ./treefmt.nix
         ./overlays

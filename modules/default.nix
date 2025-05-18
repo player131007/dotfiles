@@ -22,12 +22,7 @@
       npins =
         { pkgs, ... }:
         {
-          _module.args.npins =
-            builtins.removeAttrs (pkgs.callPackage "${self}/npins/fetch-with-nixpkgs.nix" { })
-              [
-                "override"
-                "overrideDerivation"
-              ];
+          _module.args.npins = self.npins-nixpkgs pkgs;
         };
     };
   };

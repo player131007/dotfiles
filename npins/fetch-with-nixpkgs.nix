@@ -3,6 +3,7 @@
   fetchzip,
   fetchgit,
   sources ? ./sources.json,
+  ...
 }:
 let
   data = lib.importJSON sources;
