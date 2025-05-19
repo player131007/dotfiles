@@ -14,8 +14,8 @@
       };
     in
     {
-      fish.interactiveShellInit = lib.mkAfter "sh ${base24-script}";
-      bash.interactiveShellInit = lib.mkAfter "sh ${base24-script}";
+      fish.interactiveShellInit = lib.mkBefore "sh ${base24-script}";
+      bash.interactiveShellInit = lib.mkBefore "sh ${base24-script}";
       bash.promptInit = lib.mkBefore ''
         # foot shell integration
         osc7_cwd() {
