@@ -5,10 +5,7 @@
   ...
 }:
 {
-  home.packages = [
-    pkgs.nerd-fonts.symbols-only
-    pkgs.meslo-lg
-  ];
+  home.packages = [ pkgs.nerd-fonts.iosevka-term ];
 
   programs.foot = {
     enable = true;
@@ -20,7 +17,7 @@
             extension = "ini";
           }
         );
-        font = "Meslo LG S:pixelsize=14,Symbols Nerd Font Mono:pixelsize=10";
+        font = "IosevkaTerm NF:size=12";
         shell = "fish";
         pad = "5x5 center";
       };
