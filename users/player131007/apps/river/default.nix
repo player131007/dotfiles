@@ -45,9 +45,9 @@
               };
           in
           {
-            passthrough."Shift Insert" = "enter-mode normal";
+            passthrough."Alt Insert" = "enter-mode normal";
             normal = {
-              "Shift Insert" = "enter-mode passthrough";
+              "Alt Insert" = "enter-mode passthrough";
 
               "Super Q" = "spawn foot";
               "Super A" = "spawn firefox";
