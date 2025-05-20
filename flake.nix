@@ -69,15 +69,20 @@
             ./hosts
           ];
 
-          perSystem = {
-            treefmt = {
-              settings.global.excludes = [
-                "npins/default.nix"
-                "npins/sources.json"
-              ];
-              programs.nixfmt.enable = true;
+          perSystem =
+            { pkgs, ... }:
+            {
+              devShells.default = pkgs.mkShellNoCC {
+                packages = [ pkgs.nixd ];
+              };
+              treefmt = {
+                settings.global.excludes = [
+                  "npins/default.nix"
+                  "npins/sources.json"
+                ];
+                programs.nixfmt.enable = true;
+              };
             };
-          };
         };
     in
     flake-parts.lib.mkFlake { inherit inputs; } module;

@@ -60,8 +60,8 @@ in
     };
 
     languages = {
-      language-server.clangd = {
-        args = [
+      language-server = {
+        clangd.args = [
           "--log=error"
           "--header-insertion=never"
           "--header-insertion-decorators=false"
@@ -70,9 +70,11 @@ in
           "--malloc-trim"
           "--pch-storage=memory"
         ];
-      };
 
-      language-server.nixd.command = lib.getExe pkgs.nixd;
+        nixd.args = [
+          "--log=error"
+        ];
+      };
 
       language = [
         {
