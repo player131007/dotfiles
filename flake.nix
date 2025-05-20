@@ -36,26 +36,49 @@
 
   outputs =
     { flake-parts, ... }@inputs:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      debug = true;
+    let
+      npins = import ./npins;
+      npins-nixpkgs = import ./npins/fetch-with-nixpkgs.nix;
 
-      systems = [ "x86_64-linux" ];
+      module =
+        {
+          inputs,
+          lib,
+          self,
+          ...
+        }:
+        {
+          debug = true;
+          systems = [ "x86_64-linux" ];
 
-      _module.args = {
-        npins = import ./npins;
-        npins-nixpkgs = import ./npins/fetch-with-nixpkgs.nix;
-      };
+          _module.args = { inherit npins npins-nixpkgs; };
+          flake = {
+            inherit npins npins-nixpkgs;
 
-      flake = {
-        npins = import ./npins;
-        npins-nixpkgs = import ./npins/fetch-with-nixpkgs.nix;
-      };
+            overlays.default = lib.pipe ./overlays [
+              builtins.readDir
+              builtins.attrNames
+              (map (x: import ./overlays/${x} { inherit self; }))
+              lib.composeManyExtensions
+            ];
+          };
 
-      imports = [
-        ./treefmt.nix
-        ./overlays
-        ./modules
-        ./hosts
-      ];
-    };
+          imports = [
+            inputs.treefmt-nix.flakeModule
+            ./modules
+            ./hosts
+          ];
+
+          perSystem = {
+            treefmt = {
+              settings.global.excludes = [
+                "npins/default.nix"
+                "npins/sources.json"
+              ];
+              programs.nixfmt.enable = true;
+            };
+          };
+        };
+    in
+    flake-parts.lib.mkFlake { inherit inputs; } module;
 }
