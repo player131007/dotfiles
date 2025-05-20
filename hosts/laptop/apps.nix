@@ -57,7 +57,7 @@
         config = {
           core = {
             autocrlf = "input";
-            pager = "diff-so-fancy | less -FR";
+            pager = "diff-so-fancy | less -+X -FR --use-color";
 
             compression = 9;
           };
@@ -120,11 +120,9 @@
 
   environment.variables = lib.mkMerge [
     (lib.mkIf config.documentation.man.enable {
+      # less doesn't support coloring text formatted with ANSI escape sequences
       MANROFFOPT = "-P-c";
-      MANPAGER = "less -s -Dd+y -Du+b";
-    })
-    (lib.mkIf config.programs.less.enable {
-      LESS = "-R --use-color";
+      MANPAGER = "less -Rs --use-color -Dd+y -Du+b";
     })
   ];
 
