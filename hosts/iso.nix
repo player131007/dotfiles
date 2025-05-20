@@ -41,15 +41,11 @@
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
-  # doesn't work
+  # doesn't work, see funny pr here
+  # https://github.com/NixOS/nixpkgs/pull/291750
   # boot.initrd.systemd.enable = true;
   # no zfs
   boot.supportedFilesystems.zfs = lib.mkForce false;
-
-  environment.systemPackages = with pkgs; [
-    git
-    home-manager
-  ];
 
   isoImage.squashfsCompression = "zstd -Xcompression-level 10";
 }
