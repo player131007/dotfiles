@@ -56,7 +56,6 @@
         ./overlays
         ./modules
         ./hosts
-        ./users
       ];
     };
 }

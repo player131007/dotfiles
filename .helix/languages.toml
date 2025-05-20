@@ -4,5 +4,4 @@ nixpkgs = { expr = "import (builtins.getFlake (toString ./.)).inputs.nixpkgs {}"
 [language-server.nixd.config.nixd.options]
 nixos = { expr = "(builtins.getFlake (toString ./.)).nixosConfigurations.laptop.options" }
 nixos-image = { expr = "(builtins.getFlake (toString ./.)).nixosConfigurations.image.options" }
-home-manager = { expr = "(builtins.getFlake (toString ./.)).homeConfigurations.\"player131007@laptop\".options" }
 flake-parts = { expr = "(builtins.getFlake (toString ./.)).debug.options" }
