@@ -18,6 +18,7 @@ in
         self.modules.generic.npins
         self.modules.generic.base24
         self.nixosModules.base
+        self.nixosModules.oh-my-posh
         {
           nixpkgs.overlays = builtins.attrValues self.overlays;
           home-manager = {

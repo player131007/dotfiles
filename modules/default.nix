@@ -9,6 +9,7 @@
 
   flake.modules = {
     nixos = {
+      oh-my-posh = ./nixos/oh-my-posh.nix;
       base = ./nixos/base.nix;
     };
 
