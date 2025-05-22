@@ -55,12 +55,26 @@
           flake = {
             inherit npins npins-nixpkgs;
 
-            overlays.default = lib.pipe ./overlays [
-              builtins.readDir
-              builtins.attrNames
-              (map (x: import ./overlays/${x} { inherit self; }))
-              lib.composeManyExtensions
-            ];
+            overlays = {
+              default = lib.pipe ./overlays [
+                builtins.readDir
+                builtins.attrNames
+                (map (x: import ./overlays/${x} { inherit self; }))
+                lib.composeManyExtensions
+              ];
+              packages = (
+                final: prev:
+                let
+                  scope-with-overrides = prev.lib.makeScope prev.newScope (self: {
+                    npins-nixpkgs = self.callPackage npins-nixpkgs { };
+                  });
+                in
+                prev.lib.packagesFromDirectoryRecursive {
+                  inherit (scope-with-overrides) callPackage newScope;
+                  directory = ./pkgs;
+                }
+              );
+            };
           };
 
           imports = [
@@ -70,8 +84,13 @@
           ];
 
           perSystem =
-            { pkgs, ... }:
+            { pkgs, system, ... }:
             {
+              _module.args.pkgs = import inputs.nixpkgs {
+                inherit system;
+                overlays = builtins.attrValues self.overlays;
+              };
+              legacyPackages = self.overlays.packages pkgs pkgs;
               devShells.default = pkgs.mkShellNoCC {
                 packages = [ pkgs.nixd ];
               };

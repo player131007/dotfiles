@@ -19,7 +19,7 @@ in
         self.modules.generic.base24
         self.nixosModules.base
         {
-          nixpkgs.overlays = [ self.overlays.default ];
+          nixpkgs.overlays = builtins.attrValues self.overlays;
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
