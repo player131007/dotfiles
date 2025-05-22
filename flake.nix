@@ -95,6 +95,7 @@
                 packages = [ pkgs.nixd ];
               };
               treefmt = {
+                projectRootFile = "flake.nix";
                 settings.global.excludes = [
                   "npins/default.nix"
                   "npins/sources.json"
