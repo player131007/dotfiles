@@ -32,6 +32,11 @@
       inputs.nixpkgs-lib.follows = "nixpkgs";
       inputs.base16-schemes.follows = "";
     };
+
+    fenix = {
+      url = "github:nix-community/fenix/monthly";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
@@ -65,8 +70,13 @@
               packages = (
                 final: prev:
                 let
+                  rust-toolchain = inputs.fenix.packages.${prev.system}.minimal.toolchain;
+
                   scope-with-overrides = prev.lib.makeScope prev.newScope (self: {
-                    # nothing for now
+                    rustPlatform_nightly = prev.makeRustPlatform {
+                      rustc = rust-toolchain;
+                      cargo = rust-toolchain;
+                    };
                   });
                 in
                 prev.lib.packagesFromDirectoryRecursive {
