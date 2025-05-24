@@ -6,6 +6,7 @@
   ringboard-cli,
   ringboard-tui,
   ringboard-x11,
+  ringboard-wayland,
 
   withSystemd ? true,
 }:
@@ -29,7 +30,7 @@ rustPlatform_nightly.buildRustPackage (finalAttrs: {
     "human-logs"
   ] ++ (lib.optional withSystemd "systemd");
 
-  passthru = { inherit ringboard-cli ringboard-tui ringboard-x11; };
+  passthru = { inherit ringboard-cli ringboard-tui ringboard-x11 ringboard-wayland; };
 
   meta = {
     description = "Server component for Ringboard, a clipboard manager for Linux";
