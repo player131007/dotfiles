@@ -3,6 +3,9 @@
   fetchFromGitHub,
   rustPlatform_nightly,
 
+  ringboard-cli,
+  ringboard-tui,
+
   withSystemd ? true,
 }:
 rustPlatform_nightly.buildRustPackage (finalAttrs: {
@@ -24,6 +27,8 @@ rustPlatform_nightly.buildRustPackage (finalAttrs: {
   buildFeatures = [
     "human-logs"
   ] ++ (lib.optional withSystemd "systemd");
+
+  passthru = { inherit ringboard-cli ringboard-tui; };
 
   meta = {
     description = "Server component for Ringboard, a clipboard manager for Linux";
