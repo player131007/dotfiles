@@ -1,12 +1,9 @@
 {
-  pkgs,
   config,
   npins,
   ...
 }:
 {
-  home.packages = [ pkgs.nerd-fonts.iosevka-term ];
-
   # oh-my-posh takes care of shell integration
   programs.foot = {
     enable = true;
