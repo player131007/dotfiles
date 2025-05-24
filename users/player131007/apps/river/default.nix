@@ -121,7 +121,7 @@
     grim
     slurp
     foot
-    wl-clipboard
+    ringboard-wayland
     wl-screenrec
     wlr-randr
   ];
