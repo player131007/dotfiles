@@ -5,19 +5,28 @@
 }:
 let
   inherit (inputs.nixpkgs) lib;
-in
-{
-  flake.nixosConfigurations = {
-    laptop = lib.nixosSystem {
+  mkHost =
+    host: args:
+    lib.nixosSystem (
+      {
+        modules = (args.modules or [ ]) ++ [
+          ./${host}
+          { networking.hostName = lib.mkDefault host; }
+          self.nixosModules.base
+        ];
+      }
+      // builtins.removeAttrs args [ "modules" ]
+    );
+
+  hosts = {
+    unora = {
       modules = [
-        ./laptop
         inputs.lix-module.nixosModules.default
         inputs.impermanence.nixosModule
         inputs.nixvirt.nixosModules.default
         inputs.home-manager.nixosModules.default
         self.modules.generic.npins
         self.modules.generic.base24
-        self.nixosModules.base
         self.nixosModules.oh-my-posh
         {
           nixpkgs.overlays = builtins.attrValues self.overlays;
@@ -36,12 +45,13 @@ in
       ];
     };
 
-    image = lib.nixosSystem {
+    tahari = {
       modules = [
-        ./iso.nix
         inputs.lix-module.nixosModules.default
-        self.nixosModules.base
       ];
     };
   };
+in
+{
+  flake.nixosConfigurations = lib.mapAttrs mkHost hosts;
 }

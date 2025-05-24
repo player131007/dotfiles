@@ -31,8 +31,6 @@
   ];
 
   networking = {
-    hostName = "laptop";
-
     useNetworkd = true;
     dhcpcd.enable = false;
     wireless.iwd.enable = true;
