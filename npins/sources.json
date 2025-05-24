@@ -13,22 +13,6 @@
       "url": "https://github.com/tinted-theming/base24-css-etc/archive/110713157c5dbe156b23a7cb22e55d448795892c.tar.gz",
       "hash": "0ws7ahzj0ws2cc0i0mnlsyxlkxaapshpa2wbbyyhk5s381c2gcda"
     },
-    "darkreader": {
-      "type": "GitRelease",
-      "repository": {
-        "type": "GitHub",
-        "owner": "darkreader",
-        "repo": "darkreader"
-      },
-      "pre_releases": false,
-      "version_upper_bound": null,
-      "release_prefix": null,
-      "submodules": false,
-      "version": "v4.9.106",
-      "revision": "7c9f64c75434a74dbfc528c9acf34be67eb34f46",
-      "url": "https://api.github.com/repos/darkreader/darkreader/tarball/v4.9.106",
-      "hash": "0kpq64ihmmmn7s9k6rwd8xydw857754rawgjcwgq6bw3nqwfg7y8"
-    },
     "tinted-btop": {
       "type": "Git",
       "repository": {

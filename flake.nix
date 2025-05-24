@@ -66,7 +66,7 @@
                 final: prev:
                 let
                   scope-with-overrides = prev.lib.makeScope prev.newScope (self: {
-                    npins-nixpkgs = self.callPackage npins-nixpkgs { };
+                    # nothing for now
                   });
                 in
                 prev.lib.packagesFromDirectoryRecursive {
@@ -91,6 +91,7 @@
                 overlays = builtins.attrValues self.overlays;
               };
               legacyPackages = self.overlays.packages pkgs pkgs;
+
               devShells.default = pkgs.mkShellNoCC {
                 packages = [ pkgs.nixd ];
               };
