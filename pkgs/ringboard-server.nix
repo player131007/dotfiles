@@ -33,6 +33,10 @@ rustPlatform_nightly.buildRustPackage (finalAttrs: {
 
   passthru = { inherit ringboard-cli ringboard-tui ringboard-x11 ringboard-wayland ringboard-egui; };
 
+  env = {
+    RUSTFLAGS = "-C debug_assertions";
+  };
+
   meta = {
     description = "Server component for Ringboard, a clipboard manager for Linux";
     homepage = "https://github.com/SUPERCILEX/clipboard-history";

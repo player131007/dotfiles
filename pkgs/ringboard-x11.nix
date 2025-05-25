@@ -10,6 +10,10 @@ rustPlatform_nightly.buildRustPackage {
 
   cargoHash = "sha256-+E6BzfgUvpBZzkzvPvFfEt/IoVR/wU4uHECs4Dn5pIE=";
 
+  env = {
+    RUSTFLAGS = "-C debug_assertions";
+  };
+
   meta = {
     inherit (ringboard-server.meta) homepage changelog license platforms;
     description = "X11 clipboard watcher for Ringboard, a clipboard manager for Linux";
