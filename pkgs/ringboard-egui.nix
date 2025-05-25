@@ -14,7 +14,7 @@ rustPlatform_nightly.buildRustPackage {
     inherit (ringboard-server.meta) homepage changelog license platforms;
     broken = true; # egui
     description = "GUI for Ringboard, a clipboard manager for Linux";
-    mainProgram = "ringboard";
+    mainProgram = "ringboard-egui";
   };
 }
 

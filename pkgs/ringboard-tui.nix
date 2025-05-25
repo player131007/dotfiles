@@ -13,7 +13,7 @@ rustPlatform_nightly.buildRustPackage {
   meta = {
     inherit (ringboard-server.meta) homepage changelog license platforms;
     description = "TUI for Ringboard, a clipboard manager for Linux";
-    mainProgram = "ringboard";
+    mainProgram = "ringboard-tui";
   };
 }
 
