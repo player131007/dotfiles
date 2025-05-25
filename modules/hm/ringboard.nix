@@ -73,6 +73,9 @@ in {
           Environment = [ "RUST_LOG=debug" ];
           ExecStart = lib.getExe cfg.wayland.package;
           Restart = "on-failure";
+          RestartSec = "10s";
+          RestartSteps = 5;
+          RestartMaxDelaySec = "1min";
           Slice = "ringboard.slice";
         };
         Install = {
