@@ -38,6 +38,7 @@ let
                 (self + "/users/player131007")
                 self.modules.generic.base24
                 self.modules.generic.npins
+                self.modules.homeManager.ringboard
               ];
             };
           };

@@ -13,6 +13,10 @@
       base = ./nixos/base.nix;
     };
 
+    homeManager = {
+      ringboard = ./hm/ringboard.nix;
+    };
+
     generic = {
       base24 = {
         imports = [

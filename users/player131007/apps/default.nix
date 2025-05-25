@@ -45,6 +45,11 @@
         deband-grain = 5;
       };
     };
+
+    ringboard = {
+      enable = true;
+      wayland.enable = true;
+    };
   };
 
   home.packages = with pkgs; [
@@ -62,7 +67,6 @@
     keepassxc
     looking-glass-client
 
-    ringboard-server
     ringboard-cli
     ringboard-tui
   ];
