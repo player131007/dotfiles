@@ -67,6 +67,8 @@
     keepassxc
     looking-glass-client
 
+    ringboard-server
+    ringboard-wayland
     ringboard-cli
     ringboard-tui
   ];
