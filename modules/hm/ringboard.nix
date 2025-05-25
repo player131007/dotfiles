@@ -32,7 +32,7 @@ in {
           Type = "notify";
           Environment = [ "RUST_LOG=debug" ];
           ExecStart = lib.getExe cfg.package;
-          Restart = "on-failure";
+          Restart = "always"; # server can gracefully die when running `ringboard wipe`
           Slice = "ringboard.slice";
         };
         Install = {
