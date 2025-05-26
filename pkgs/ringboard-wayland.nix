@@ -17,7 +17,12 @@ rustPlatform_nightly.buildRustPackage {
   };
 
   meta = {
-    inherit (ringboard-server.meta) homepage changelog license platforms;
+    inherit (ringboard-server.meta)
+      homepage
+      changelog
+      license
+      platforms
+      ;
     description = "Wayland clipboard watcher for Ringboard, a clipboard manager for Linux";
     mainProgram = "ringboard-wayland";
   };

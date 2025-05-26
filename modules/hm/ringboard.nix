@@ -6,17 +6,18 @@
 }:
 let
   cfg = config.programs.ringboard;
-in {
+in
+{
   options.programs.ringboard = {
     enable = lib.mkEnableOption "Ringboard, a clipboard manager for Linux";
-    package = lib.mkPackageOption pkgs "ringboard-server" {};
+    package = lib.mkPackageOption pkgs "ringboard-server" { };
     x11 = {
       enable = lib.mkEnableOption "the X11 clipboard listener for Ringboard";
-      package = lib.mkPackageOption pkgs "ringboard-x11" {};
+      package = lib.mkPackageOption pkgs "ringboard-x11" { };
     };
     wayland = {
       enable = lib.mkEnableOption "the Wayland clipboard listener for Ringboard";
-      package = lib.mkPackageOption pkgs "ringboard-wayland" {};
+      package = lib.mkPackageOption pkgs "ringboard-wayland" { };
     };
   };
 
@@ -46,7 +47,10 @@ in {
           Documentation = "https://github.com/SUPERCILEX/clipboard-history";
           Requires = "ringboard-server.service";
           BindsTo = "graphical-session.target";
-          After = [ "ringboard-server.service" "graphical-session.target" ];
+          After = [
+            "ringboard-server.service"
+            "graphical-session.target"
+          ];
         };
         Service = {
           Type = "exec";
@@ -66,7 +70,10 @@ in {
           Documentation = "https://github.com/SUPERCILEX/clipboard-history";
           Requires = "ringboard-server.service";
           BindsTo = "graphical-session.target";
-          After = [ "ringboard-server.service" "graphical-session.target" ];
+          After = [
+            "ringboard-server.service"
+            "graphical-session.target"
+          ];
         };
         Service = {
           Type = "exec";

@@ -33,7 +33,15 @@ rustPlatform_nightly.buildRustPackage (finalAttrs: {
     "human-logs"
   ] ++ (lib.optional withSystemd "systemd");
 
-  passthru = { inherit ringboard-cli ringboard-tui ringboard-x11 ringboard-wayland ringboard-egui; };
+  passthru = {
+    inherit
+      ringboard-cli
+      ringboard-tui
+      ringboard-x11
+      ringboard-wayland
+      ringboard-egui
+      ;
+  };
 
   env = {
     RUSTFLAGS = "-C debug_assertions";

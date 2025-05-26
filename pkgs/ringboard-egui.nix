@@ -19,7 +19,8 @@
 }:
 let
   inherit (lib) flatten;
-in rustPlatform_nightly.buildRustPackage {
+in
+rustPlatform_nightly.buildRustPackage {
   pname = "ringboard-egui";
   inherit (ringboard-server) version src;
 
@@ -49,11 +50,20 @@ in rustPlatform_nightly.buildRustPackage {
     libxkbcommon
     libGL
     (lib.optionals waylandSupport [ wayland ])
-    (lib.optionals x11Support [ xorg.libX11 xorg.libXcursor xorg.libXi ])
+    (lib.optionals x11Support [
+      xorg.libX11
+      xorg.libXcursor
+      xorg.libXi
+    ])
   ];
 
   meta = {
-    inherit (ringboard-server.meta) homepage changelog license platforms;
+    inherit (ringboard-server.meta)
+      homepage
+      changelog
+      license
+      platforms
+      ;
     description = "GUI for Ringboard, a clipboard manager for Linux";
     mainProgram = "ringboard-egui";
   };

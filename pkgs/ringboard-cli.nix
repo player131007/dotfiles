@@ -13,7 +13,12 @@ rustPlatform_nightly.buildRustPackage {
   cargoHash = "sha256-+E6BzfgUvpBZzkzvPvFfEt/IoVR/wU4uHECs4Dn5pIE=";
 
   meta = {
-    inherit (ringboard-server.meta) homepage changelog license platforms;
+    inherit (ringboard-server.meta)
+      homepage
+      changelog
+      license
+      platforms
+      ;
     description = "CLI for Ringboard, a clipboard manager for Linux";
     mainProgram = "ringboard";
   };
