@@ -46,10 +46,7 @@
       };
     };
 
-    ringboard = {
-      enable = true;
-      wayland.enable = true;
-    };
+    ringboard.enable = true;
   };
 
   home.packages = with pkgs; [
