@@ -8,6 +8,8 @@ rustPlatform_nightly.buildRustPackage {
 
   buildAndTestSubdir = "cli";
 
+  strictDeps = true;
+
   cargoHash = "sha256-+E6BzfgUvpBZzkzvPvFfEt/IoVR/wU4uHECs4Dn5pIE=";
 
   meta = {

@@ -10,6 +10,8 @@ rustPlatform_nightly.buildRustPackage {
 
   cargoHash = "sha256-+E6BzfgUvpBZzkzvPvFfEt/IoVR/wU4uHECs4Dn5pIE=";
 
+  strictDeps = true;
+
   env = {
     RUSTFLAGS = "-C debug_assertions";
   };
