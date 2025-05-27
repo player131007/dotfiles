@@ -117,7 +117,74 @@
       '';
     };
 
-  programs.ringboard.wayland.enable = true;
+  programs = {
+    ringboard.wayland.enable = true;
+    swayimg = {
+      enable = true;
+      settings =
+        let
+          inherit (config.colorscheme) palette;
+        in
+        {
+          general = {
+            decoration = "no";
+            app_id = "swayimg";
+          };
+          viewer = {
+            window = "#${palette.base01}ff";
+            fixed = "no";
+          };
+          gallery.window = "#${palette.base01}cc";
+          list.loop = "no";
+          info.show = "no";
+          font = {
+            shadow = "#00000000";
+            color = "#${palette.base05}ff";
+            background = "#${palette.base01}ee";
+          };
+          "keys.viewer" = {
+            "Shift+?" = "help";
+            "r" = "reload";
+            "e" = "info viewer";
+            "Home" = "first_file";
+            "End" = "last_file";
+            "f" = "fullscreen";
+            "Escape" = "mode";
+            "Backspace" = "zoom optimal";
+            "Shift+r" = "rand_file";
+            "h" = "prev_file";
+            "l" = "next_file";
+            "Ctrl+h" = "prev_frame";
+            "Ctrl+l" = "next_frame";
+            "Equal" = "zoom +10";
+            "Minus" = "zoom -10";
+            "bracketleft" = "rotate_left";
+            "bracketright" = "rotate_right";
+            "ScrollUp" = "zoom +10";
+            "ScrollDown" = "zoom -10";
+            "Ctrl+ScrollUp" = "none";
+            "Ctrl+ScrollDown" = "none";
+            "Shift+ScrollUp" = "none";
+            "Shift+ScrollDown" = "none";
+            "Alt+ScrollUp" = "none";
+            "Alt+ScrollDown" = "none";
+          };
+          "keys.gallery" = {
+            "Shift+?" = "help";
+            "r" = "reload";
+            "e" = "info gallery";
+            "f" = "fullscreen";
+            "Escape" = "mode";
+            "Home" = "first_file";
+            "End" = "last_file";
+            "h" = "step_left";
+            "l" = "step_right";
+            "j" = "step_down";
+            "k" = "step_up";
+          };
+        };
+    };
+  };
 
   home.packages = with pkgs; [
     grim
