@@ -93,7 +93,6 @@
         };
         spawn = map (s: "\"${s}\"") [
           "rivertile -main-ratio 0.5"
-          "${lib.getExe pkgs.swaybg} -i ${../../wallpaper.png} -m fill"
           "keepassxc --minimized"
         ];
 
@@ -114,6 +113,7 @@
         riverctl map normal Super+Shift 0 set-view-tags $all_tags
 
         wlr-randr --output eDP-1 --scale 1.125 --adaptive-sync enabled
+        riverctl spawn "${lib.getExe pkgs.swaybg} -i ${../../wallpaper.png} -m fill"
       '';
     };
 
