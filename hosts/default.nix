@@ -18,8 +18,9 @@ let
       }
       // builtins.removeAttrs args [ "modules" ]
     );
-
-  hosts = {
+in
+{
+  flake.nixosConfigurations = lib.mapAttrs mkHost {
     unora = {
       modules = [
         inputs.lix-module.nixosModules.default
@@ -58,7 +59,4 @@ let
       ];
     };
   };
-in
-{
-  flake.nixosConfigurations = lib.mapAttrs mkHost hosts;
 }
