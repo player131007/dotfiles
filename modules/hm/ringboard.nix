@@ -1,7 +1,6 @@
 {
   lib,
   config,
-  pkgs,
   ...
 }:
 let
@@ -10,14 +9,20 @@ in
 {
   options.programs.ringboard = {
     enable = lib.mkEnableOption "Ringboard, a clipboard manager for Linux";
-    package = lib.mkPackageOption pkgs "ringboard-server" { };
+    package = lib.mkOption {
+      type = lib.types.package;
+    };
     x11 = {
       enable = lib.mkEnableOption "the X11 clipboard listener for Ringboard";
-      package = lib.mkPackageOption pkgs "ringboard-x11" { };
+      package = lib.mkOption {
+        type = lib.types.package;
+      };
     };
     wayland = {
       enable = lib.mkEnableOption "the Wayland clipboard listener for Ringboard";
-      package = lib.mkPackageOption pkgs "ringboard-wayland" { };
+      package = lib.mkOption {
+        type = lib.types.package;
+      };
     };
   };
 

@@ -1,6 +1,7 @@
 {
   config,
   pkgs,
+  otherpkgs,
   npins,
   ...
 }:
@@ -116,7 +117,7 @@
           "addon@darkreader.org" =
             let
               inherit (config.colorscheme) palette variant;
-              darkreader = pkgs.darkreader.override {
+              darkreader = otherpkgs.darkreader.override {
                 background = palette.base00;
                 text = palette.base05;
                 darkMode = variant == "dark";

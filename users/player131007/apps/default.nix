@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, otherpkgs, ... }:
 {
   imports = [
     ./btop
@@ -49,24 +49,30 @@
     ringboard.enable = true;
   };
 
-  home.packages = with pkgs; [
-    brightnessctl
+  home.packages =
+    with pkgs;
+    [
+      brightnessctl
 
-    npins
-    sttr
-    jq
-    calc
-    ripgrep
-    xdg-utils
-    btop
-    _7zz
+      npins
+      sttr
+      jq
+      calc
+      ripgrep
+      xdg-utils
+      btop
+      _7zz
 
-    keepassxc
-    looking-glass-client
+      keepassxc
+      looking-glass-client
 
-    ringboard-server
-    ringboard-wayland
-    ringboard-cli
-    ringboard-tui
-  ];
+    ]
+    ++ (builtins.attrValues {
+      inherit (otherpkgs)
+        ringboard-server
+        ringboard-wayland
+        ringboard-cli
+        ringboard-tui
+        ;
+    });
 }

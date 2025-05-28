@@ -67,23 +67,6 @@
                 (map (x: import ./overlays/${x} { inherit self; }))
                 lib.composeManyExtensions
               ];
-              packages = (
-                final: prev:
-                let
-                  rust-toolchain = inputs.fenix.packages.${prev.system}.minimal.toolchain;
-
-                  scope-with-overrides = prev.lib.makeScope prev.newScope (self: {
-                    rustPlatform_nightly = prev.makeRustPlatform {
-                      rustc = rust-toolchain;
-                      cargo = rust-toolchain;
-                    };
-                  });
-                in
-                prev.lib.packagesFromDirectoryRecursive {
-                  inherit (scope-with-overrides) callPackage newScope;
-                  directory = ./pkgs;
-                }
-              );
             };
           };
 
@@ -94,13 +77,23 @@
           ];
 
           perSystem =
-            { pkgs, system, ... }:
+            { pkgs, inputs', ... }:
             {
-              _module.args.pkgs = import inputs.nixpkgs {
-                inherit system;
-                overlays = builtins.attrValues self.overlays;
-              };
-              legacyPackages = self.overlays.packages pkgs pkgs;
+              legacyPackages =
+                let
+                  rust-toolchain = inputs'.fenix.packages.minimal.toolchain;
+
+                  scope-with-overrides = pkgs.lib.makeScope pkgs.newScope (self: {
+                    rustPlatform_nightly = pkgs.makeRustPlatform {
+                      rustc = rust-toolchain;
+                      cargo = rust-toolchain;
+                    };
+                  });
+                in
+                pkgs.lib.packagesFromDirectoryRecursive {
+                  inherit (scope-with-overrides) callPackage newScope;
+                  directory = ./pkgs;
+                };
 
               devShells.default = pkgs.mkShellNoCC {
                 packages = [ pkgs.nixd ];

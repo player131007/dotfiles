@@ -2,6 +2,7 @@
   config,
   inputs,
   self,
+  moduleWithSystem,
   ...
 }:
 {
@@ -14,7 +15,19 @@
     };
 
     homeManager = {
-      ringboard = ./hm/ringboard.nix;
+      ringboard = moduleWithSystem (
+        { config }:
+        { lib, ... }:
+        {
+          imports = [ ./hm/ringboard.nix ];
+
+          programs.ringboard = {
+            package = lib.mkDefault config.legacyPackages.ringboard-server;
+            x11.package = lib.mkDefault config.legacyPackages.ringboard-x11;
+            wayland.package = lib.mkDefault config.legacyPackages.ringboard-wayland;
+          };
+        }
+      );
     };
 
     generic = {
@@ -29,6 +42,12 @@
         {
           _module.args.npins = self.npins-nixpkgs pkgs;
         };
+      otherpkgs = moduleWithSystem (
+        { config }:
+        {
+          _module.args.otherpkgs = config.legacyPackages;
+        }
+      );
     };
   };
 

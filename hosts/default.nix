@@ -9,6 +9,7 @@ let
     host: args:
     lib.nixosSystem (
       {
+        system = null;
         modules = (args.modules or [ ]) ++ [
           ./${host}
           { networking.hostName = lib.mkDefault host; }
@@ -27,22 +28,27 @@ let
         inputs.home-manager.nixosModules.default
         self.modules.generic.npins
         self.modules.generic.base24
+        self.modules.generic.otherpkgs
         self.nixosModules.oh-my-posh
-        {
-          nixpkgs.overlays = builtins.attrValues self.overlays;
-          home-manager = {
-            useGlobalPkgs = true;
-            useUserPackages = true;
-            users.player131007 = {
-              imports = [
-                (self + "/users/player131007")
-                self.modules.generic.base24
-                self.modules.generic.npins
-                self.modules.homeManager.ringboard
-              ];
+        (
+          { otherpkgs, ... }:
+          {
+            nixpkgs.overlays = [ self.overlays.default ];
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              extraSpecialArgs = { inherit otherpkgs; };
+              users.player131007 = {
+                imports = [
+                  (self + "/users/player131007")
+                  self.modules.generic.base24
+                  self.modules.generic.npins
+                  self.modules.homeManager.ringboard
+                ];
+              };
             };
-          };
-        }
+          }
+        )
       ];
     };
 
