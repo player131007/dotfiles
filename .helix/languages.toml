@@ -2,6 +2,16 @@
 nixpkgs = { expr = "import (builtins.getFlake (toString ./.)).inputs.nixpkgs {}" }
 
 [language-server.nixd.config.nixd.options]
-nixos = { expr = "(builtins.getFlake (toString ./.)).nixosConfigurations.laptop.options" }
-nixos-image = { expr = "(builtins.getFlake (toString ./.)).nixosConfigurations.image.options" }
+nixos = { expr = "{}" }
+unora = { expr = "(builtins.getFlake (toString ./.)).nixosConfigurations.unora.options" }
+unora-player = { expr = """
+  let
+    hm-users = (builtins.getFlake (toString ./.)).nixosConfigurations.unora.options.home-manager.users;
+    user-modules = [ (builtins.head hm-users.definitions).player131007 ];
+    hm-submodule = hm-users.type.nestedTypes.elemType;
+
+    final-module = hm-submodule.substSubModules (hm-submodule.getSubModules ++ user-modules);
+  in final-module.getSubOptions []
+""" }
+tahari = { expr = "(builtins.getFlake (toString ./.)).nixosConfigurations.tahari.options" }
 flake-parts = { expr = "(builtins.getFlake (toString ./.)).debug.options" }
