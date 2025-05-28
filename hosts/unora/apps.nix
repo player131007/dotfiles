@@ -152,7 +152,7 @@
                   type = "text";
                   style = "plain";
                   foreground = "green";
-                  foreground_templates = lib.singleton "{{ if .Code }}red{{ end }}";
+                  foreground_templates = [ "{{ if .Code }}red{{ end }}" ];
                   template = "<b>❯</b>";
                 }
               ];
