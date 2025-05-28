@@ -6,8 +6,6 @@
 
   xdg.enable = true;
 
-  home.username = "player131007";
-  home.homeDirectory = "/home/player131007";
   home.packages = [ pkgs.nerd-fonts.iosevka-term ];
 
   fonts.fontconfig.defaultFonts.monospace = [ "IosevkaTerm NF" ];
