@@ -1,6 +1,7 @@
 {
   lib,
   fetchzip,
+  fetchurl,
   fetchgit,
   sources ? ./sources.json,
   ...
@@ -77,6 +78,27 @@ let
         fetchSubmodules = submodules;
       };
 
+  mkPyPiSource =
+    { url, hash, ... }:
+    fetchurl {
+      inherit url;
+      sha256 = hash;
+    };
+
+  mkChannelSource =
+    { url, hash, ... }:
+    fetchzip {
+      inherit url;
+      sha256 = hash;
+    };
+
+  mkTarballSource =
+    { url, hash, ... }:
+    fetchzip {
+      inherit url;
+      sha256 = hash;
+    };
+
   mkSource =
     name: spec:
     assert spec ? type;
@@ -86,12 +108,12 @@ let
           mkGitSource spec
         else if spec.type == "GitRelease" then
           mkGitSource spec
-        # else if spec.type == "PyPi" then
-        #   mkPyPiSource spec
-        # else if spec.type == "Channel" then
-        #   mkChannelSource spec
-        # else if spec.type == "Tarball" then
-        #   mkTarballSource spec
+        else if spec.type == "PyPi" then
+          mkPyPiSource spec
+        else if spec.type == "Channel" then
+          mkChannelSource spec
+        else if spec.type == "Tarball" then
+          mkTarballSource spec
         else
           builtins.throw "Unknown source type ${spec.type}";
     in
