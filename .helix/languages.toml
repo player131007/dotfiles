@@ -7,7 +7,7 @@ unora = { expr = "(builtins.getFlake (toString ./.)).nixosConfigurations.unora.o
 unora-player = { expr = """
   let
     hm-users = (builtins.getFlake (toString ./.)).nixosConfigurations.unora.options.home-manager.users;
-    user-modules = [ (builtins.head hm-users.definitions).player131007 ];
+    user-modules = map (def: def.player131007 or {}) hm-users.definitions;
     hm-submodule = hm-users.type.nestedTypes.elemType;
 
     final-module = hm-submodule.substSubModules (hm-submodule.getSubModules ++ user-modules);
