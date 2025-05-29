@@ -6,7 +6,6 @@
   autoPatchelfHook,
   pkg-config,
 
-  stdenv,
   fontconfig,
   libxkbcommon,
   libGL,
@@ -31,7 +30,6 @@ rustPlatform_nightly.buildRustPackage {
   strictDeps = true;
 
   buildInputs = [
-    stdenv.cc.cc.lib
     fontconfig
   ];
   nativeBuildInputs = [
