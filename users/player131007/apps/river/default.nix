@@ -118,7 +118,6 @@
     };
 
   programs = {
-    ringboard.wayland.enable = true;
     swayimg = {
       enable = true;
       settings =
@@ -192,5 +191,6 @@
     foot
     wl-screenrec
     wlr-randr
+    wl-clipboard
   ];
 }

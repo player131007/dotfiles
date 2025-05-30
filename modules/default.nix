@@ -14,22 +14,6 @@
       base = ./nixos/base.nix;
     };
 
-    homeManager = {
-      ringboard = moduleWithSystem (
-        { config }:
-        { lib, ... }:
-        {
-          imports = [ ./hm/ringboard.nix ];
-
-          programs.ringboard = {
-            package = lib.mkDefault config.legacyPackages.ringboard-server;
-            x11.package = lib.mkDefault config.legacyPackages.ringboard-x11;
-            wayland.package = lib.mkDefault config.legacyPackages.ringboard-wayland;
-          };
-        }
-      );
-    };
-
     generic = {
       base24 = {
         imports = [

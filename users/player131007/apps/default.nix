@@ -45,34 +45,21 @@
         deband-grain = 5;
       };
     };
-
-    ringboard.enable = true;
   };
 
-  home.packages =
-    with pkgs;
-    [
-      brightnessctl
+  home.packages = with pkgs; [
+    brightnessctl
 
-      npins
-      sttr
-      jq
-      calc
-      ripgrep
-      xdg-utils
-      btop
-      _7zz
+    npins
+    sttr
+    jq
+    calc
+    ripgrep
+    xdg-utils
+    btop
+    _7zz
 
-      keepassxc
-      looking-glass-client
-
-    ]
-    ++ (builtins.attrValues {
-      inherit (otherpkgs)
-        ringboard-server
-        ringboard-wayland
-        ringboard-cli
-        ringboard-tui
-        ;
-    });
+    keepassxc
+    looking-glass-client
+  ];
 }
