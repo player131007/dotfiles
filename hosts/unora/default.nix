@@ -21,10 +21,6 @@
     hashedPasswordFile = "/persist/password/player131007";
   };
 
-  nixpkgs.config = {
-    cudaSupport = true;
-  };
-
   nix.settings.trusted-users = [
     "root"
     "@wheel"
