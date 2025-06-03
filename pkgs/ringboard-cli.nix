@@ -7,10 +7,9 @@ rustPlatform_nightly.buildRustPackage {
   inherit (ringboard-server) version src;
 
   buildAndTestSubdir = "cli";
+  inherit (ringboard-server) cargoDeps;
 
   strictDeps = true;
-
-  cargoHash = "sha256-+E6BzfgUvpBZzkzvPvFfEt/IoVR/wU4uHECs4Dn5pIE=";
 
   meta = {
     inherit (ringboard-server.meta)

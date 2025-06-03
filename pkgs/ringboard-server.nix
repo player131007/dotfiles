@@ -9,7 +9,7 @@
   ringboard-wayland,
   ringboard-egui,
 
-  withSystemd ? true,
+  systemdSupport ? true,
 }:
 rustPlatform_nightly.buildRustPackage (finalAttrs: {
   pname = "ringboard-server";
@@ -22,16 +22,19 @@ rustPlatform_nightly.buildRustPackage (finalAttrs: {
     hash = "sha256-e5cZQ0j4gvXlbLCHc6dUVStWzih9HbDAtnSW7v+PKCk=";
   };
 
-  cargoHash = "sha256-+E6BzfgUvpBZzkzvPvFfEt/IoVR/wU4uHECs4Dn5pIE=";
+  buildAndTestSubdir = "server";
+  cargoDeps = rustPlatform_nightly.fetchCargoVendor {
+    inherit (finalAttrs) src;
+    name = "ringboard-${finalAttrs.version}";
+    hash = "sha256-+E6BzfgUvpBZzkzvPvFfEt/IoVR/wU4uHECs4Dn5pIE=";  
+  };
 
   strictDeps = true;
-
-  buildAndTestSubdir = "server";
 
   buildNoDefaultFeatures = true;
   buildFeatures = [
     "human-logs"
-  ] ++ (lib.optional withSystemd "systemd");
+  ] ++ (lib.optional systemdSupport "systemd");
 
   passthru = {
     inherit

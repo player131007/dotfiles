@@ -7,8 +7,7 @@ rustPlatform_nightly.buildRustPackage {
   inherit (ringboard-server) version src;
 
   buildAndTestSubdir = "tui";
-
-  cargoHash = "sha256-+E6BzfgUvpBZzkzvPvFfEt/IoVR/wU4uHECs4Dn5pIE=";
+  inherit (ringboard-server) cargoDeps;
 
   strictDeps = true;
 
