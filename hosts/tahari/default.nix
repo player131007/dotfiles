@@ -29,9 +29,14 @@
     ];
   };
 
-  services.resolved = {
-    enable = true;
-    fallbackDns = [ ];
+  environment.systemPackages = [ pkgs.cryptsetup ];
+
+  services = {
+    lvm.enable = true;
+    resolved = {
+      enable = true;
+      fallbackDns = [ ];
+    };
   };
 
   systemd.network = {
