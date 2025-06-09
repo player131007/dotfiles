@@ -8,7 +8,6 @@
   imports = [
     ./hardware-configuration.nix
     ./apps.nix
-    ./virtualization
   ];
 
   users.mutableUsers = false;
@@ -61,6 +60,17 @@
         "99-ethernet-default-dhcp" = no-dns;
         "99-wireless-client-dhcp" = no-dns;
       };
+  };
+
+  virtualisation.libvirtd = {
+    enable = true;
+    onShutdown = "shutdown";
+    shutdownTimeout = 30;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = false;
+      vhostUserPackages = [ pkgs.virtiofsd ];
+    };
   };
 
   system.activationScripts = {

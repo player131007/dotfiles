@@ -34,6 +34,13 @@
     graphics.enable = true;
   };
 
+  # blacklist nvidia for GPU passthrough
+  boot.blacklistedKernelModules = [
+    "nvidia"
+    "nvidia_drm"
+    "nvidia_uvm"
+    "nvidia_modeset"
+  ];
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
