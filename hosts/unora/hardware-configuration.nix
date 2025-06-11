@@ -60,6 +60,13 @@
     };
   };
 
+  boot.initrd.luks.devices.cryptroot = {
+    device = throw "specify your root device bruh";
+    fallbackToPassword = true;
+    allowDiscards = true;
+    bypassWorkqueues = true;
+  };
+
   fileSystems = {
     "/" = {
       device = "tmpfs";
