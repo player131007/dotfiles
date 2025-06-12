@@ -72,71 +72,14 @@
       device = "tmpfs";
       fsType = "tmpfs";
       options = [
-        "defaults"
         "size=2G"
         "mode=755"
-      ];
-    };
-    "/persist" = {
-      label = "nixos";
-      fsType = "btrfs";
-      options = [
-        "compress=zstd"
-        "noatime"
-        "subvol=persist"
-      ];
-      neededForBoot = true;
-    };
-    "/nix" = {
-      label = "nixos";
-      fsType = "btrfs";
-      options = [
-        "compress=zstd"
-        "noatime"
-        "subvol=nix"
-      ];
-    };
-    "/var/log" = {
-      label = "nixos";
-      fsType = "btrfs";
-      options = [
-        "compress=zstd"
-        "noatime"
-        "subvol=log"
-      ];
-      neededForBoot = true;
-    };
-    "/home" = {
-      label = "nixos";
-      fsType = "btrfs";
-      options = [
-        "compress=zstd"
-        "noatime"
-        "subvol=home"
-      ];
-    };
-    "/tmp" = {
-      label = "nixos";
-      fsType = "btrfs";
-      options = [
-        "compress=zstd"
-        "noatime"
-        "subvol=tmp"
       ];
     };
     "/boot" = {
       label = "ESP";
       fsType = "vfat";
       options = [ "umask=0077" ];
-    };
-    "/d" = {
-      device = "/dev/disk/by-uuid/584B-F342";
-      fsType = "exfat";
-      options = [
-        "uid=${config.users.users.player131007.name}"
-        "gid=${config.services.syncthing.group}"
-        "umask=002"
-      ];
     };
   };
 
