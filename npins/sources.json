@@ -35,9 +35,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "f3ce2525a2105611a59f472eb8b6095b732803c9",
-      "url": "https://github.com/player131007/tinted-helix/archive/f3ce2525a2105611a59f472eb8b6095b732803c9.tar.gz",
-      "hash": "1ls1bhsqsx7as0299fl344p7s744in6a5g7dfwvs3qk24w4l7jns"
+      "revision": "16b668220dd292e215879c6de018cf3ce1234006",
+      "url": "https://github.com/player131007/tinted-helix/archive/16b668220dd292e215879c6de018cf3ce1234006.tar.gz",
+      "hash": "0i3293q6kgm84mbmr1fqzjp2pa44b8ldy1ga4x4w5x9gv9bq0j3y"
     },
     "tinted-shell": {
       "type": "Git",
