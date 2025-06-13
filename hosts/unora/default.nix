@@ -97,6 +97,8 @@
     syncthing = {
       enable = true;
       openDefaultPorts = true;
+      overrideDevices = false;
+      overrideFolders = false;
     };
     fwupd.enable = true;
     logind.lidSwitch = "ignore";
