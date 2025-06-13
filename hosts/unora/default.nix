@@ -63,12 +63,6 @@
       };
   };
 
-  system.activationScripts = {
-    run-nix-index.text = ''
-      echo -e '\033[31;1m!!!\033[0m' remember to run nix-index if u updated nixpkgs
-    '';
-  };
-
   security = {
     sudo = {
       enable = true;
