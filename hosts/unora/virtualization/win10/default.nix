@@ -23,7 +23,7 @@
     options = [ "noatime" ];
   };
 
-  environment.systemPackages = with pkgs; [ virtiofsd ];
+  environment.systemPackages = [ pkgs.virtiofsd ];
 
   virtualisation.libvirt.connections."qemu:///system".domains = [
     {
