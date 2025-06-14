@@ -12,9 +12,8 @@
     };
 
     nixvirt = {
-      url = "github:AshleyYakeley/NixVirt/v0.5.0";
+      url = "github:AshleyYakeley/NixVirt/v0.6.0";
       inputs.nixpkgs.follows = "nixpkgs";
-      inputs.nixpkgs-ovmf.follows = "nixpkgs";
     };
     impermanence.url = "github:nix-community/impermanence";
     home-manager = {
