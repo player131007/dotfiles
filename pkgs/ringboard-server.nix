@@ -26,7 +26,7 @@ rustPlatform_nightly.buildRustPackage (finalAttrs: {
   cargoDeps = rustPlatform_nightly.fetchCargoVendor {
     inherit (finalAttrs) src;
     name = "ringboard-${finalAttrs.version}";
-    hash = "sha256-+E6BzfgUvpBZzkzvPvFfEt/IoVR/wU4uHECs4Dn5pIE=";  
+    hash = "sha256-+E6BzfgUvpBZzkzvPvFfEt/IoVR/wU4uHECs4Dn5pIE=";
   };
 
   strictDeps = true;
