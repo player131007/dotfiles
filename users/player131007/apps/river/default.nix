@@ -131,7 +131,7 @@
           };
           viewer = {
             window = "#${palette.base01}ff";
-            fixed = "no";
+            position = "free";
           };
           gallery.window = "#${palette.base01}cc";
           list.loop = "no";
