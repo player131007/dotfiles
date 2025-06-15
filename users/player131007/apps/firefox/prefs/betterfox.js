@@ -245,8 +245,8 @@ pref("extensions.formautofill.creditCards.enabled", false);
 // [2] https://docs.google.com/document/d/1BvCoZzk2_rNZx3u9ESPoFjSADRI0zIPeJRXFLwWXx_4/edit#heading=h.28ki6m8dg30z
 // [3] https://old.reddit.com/r/firefox/comments/o0xl1q/reducing_cpu_usage_of_dark_reader_extension/
 // [4] https://reddit.com/r/browsers/s/wvNB7UVCpx
-pref("nglayout.initialpaint.delay", 1000); // DEFAULT; formerly 250
-pref("nglayout.initialpaint.delay_in_oopif", 1000); // DEFAULT
+pref("nglayout.initialpaint.delay", 2000); // DEFAULT; formerly 250
+pref("nglayout.initialpaint.delay_in_oopif", 2000); // DEFAULT
 /****************************************************************************
  * SECTION: SMOOTHFOX                                                       *
 ****************************************************************************/
