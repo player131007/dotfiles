@@ -6,6 +6,9 @@
       "nix-command"
       "flakes"
     ];
+
+    daemonCPUSchedPolicy = "idle";
+    daemonIOSchedClass = "idle";
   };
 
   nixpkgs.config.allowUnfree = lib.mkDefault true;
