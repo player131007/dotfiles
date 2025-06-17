@@ -189,7 +189,6 @@
     grim
     slurp
     foot
-    wl-screenrec
     wlr-randr
     wl-clipboard
   ];

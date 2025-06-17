@@ -24,6 +24,13 @@
       };
     };
 
+    obs-studio = {
+      enable = true;
+      plugins = builtins.attrValues {
+        inherit (pkgs.obs-studio-plugins) wlrobs obs-pipewire-audio-capture obs-vaapi;
+      };
+    };
+
     git = {
       enable = true;
       package = pkgs.git;
