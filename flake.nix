@@ -29,7 +29,6 @@
     nix-colors = {
       url = "github:Misterio77/nix-colors";
       inputs.nixpkgs-lib.follows = "nixpkgs";
-      inputs.base16-schemes.follows = "";
     };
 
     fenix = {
