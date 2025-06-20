@@ -3,6 +3,7 @@
   inputs,
   self,
   moduleWithSystem,
+  lib,
   ...
 }:
 {
@@ -18,7 +19,7 @@
       base24 = {
         imports = [
           "${inputs.nix-colors}/module/colorscheme.nix"
-          (import ./generic/theme.nix inputs.nix-colors)
+          (lib.modules.importApply ./generic/theme.nix inputs.nix-colors)
         ];
       };
       npins =
