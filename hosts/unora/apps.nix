@@ -166,7 +166,7 @@
         config = {
           core = {
             autocrlf = "input";
-            pager = "diff-so-fancy | less -+X -FR --use-color";
+            pager = "${lib.getExe pkgs.diff-so-fancy} | less -+X -FR --use-color";
 
             compression = 9;
           };
@@ -209,7 +209,7 @@
           };
 
           interactive = {
-            diffFilter = "diff-so-fancy --patch";
+            diffFilter = "${lib.getExe pkgs.diff-so-fancy} --patch";
             singlekey = true;
           };
           diff-so-fancy.markEmptyLines = false;
@@ -241,7 +241,7 @@
     eza
 
     man-pages
-    diff-so-fancy # for git
+    diff-so-fancy
   ];
 
   environment.shellAliases = {
