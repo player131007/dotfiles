@@ -12,6 +12,9 @@
     {
       enable = true;
       package = null;
+      extraSessionVariables = {
+        XDG_CURRENT_DESKTOP = "river";
+      };
       settings = {
         allow-tearing = true;
         border-color-focused = "0x${colors.base0C}AA";
