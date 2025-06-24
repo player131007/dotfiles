@@ -42,7 +42,7 @@
 
   services.resolved = {
     enable = true;
-    dnssec = "true";
+    dnssec = "allow-downgrade";
     fallbackDns = [ ];
   };
 
