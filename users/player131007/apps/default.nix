@@ -27,7 +27,7 @@
     obs-studio = {
       enable = true;
       plugins = builtins.attrValues {
-        inherit (pkgs.obs-studio-plugins) wlrobs obs-pipewire-audio-capture obs-vaapi;
+        inherit (pkgs.obs-studio-plugins) wlrobs obs-pipewire-audio-capture obs-vaapi looking-glass-obs;
       };
     };
 
