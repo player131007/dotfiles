@@ -211,8 +211,7 @@
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
-  # FIXME: when this gets merged
-  # https://lore.kernel.org/linux-pci/20250313142333.5792-1-ilpo.jarvinen@linux.intel.com
+  # FIXME: fixed in 6.16 and 6.15.4
   boot.kernelPatches = [
     {
       name = "fix-gpu-passthrough";
