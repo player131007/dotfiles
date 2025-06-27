@@ -118,6 +118,7 @@
     logind.lidSwitch = "ignore";
     dbus.implementation = "broker";
     ratbagd.enable = true;
+    userborn.enable = true;
   };
 
   zramSwap.enable = true;
