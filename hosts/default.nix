@@ -24,7 +24,7 @@ in
     unora = {
       modules = [
         inputs.lix-module.nixosModules.default
-        inputs.impermanence.nixosModule
+        inputs.preservation.nixosModules.default
         inputs.home-manager.nixosModules.default
         self.modules.generic.npins
         self.modules.generic.base24

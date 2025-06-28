@@ -168,46 +168,77 @@
     base07
   ];
 
-  # https://nixos.org/manual/nixos/stable/#ch-system-state
-  environment.persistence."/persist" = {
-    hideMounts = true;
-    directories =
-      let
-        iwd = lib.optional config.networking.wireless.iwd.enable "/var/lib/iwd";
-        tuigreet =
-          let
-            user = config.users.users.greeter;
-          in
-          lib.optional config.services.greetd.enable {
-            directory = "/var/cache/tuigreet";
-            user = user.name;
-            group = user.group;
+  preservation =
+    let
+      mkIf' = cond: content: lib.mkIf cond [ content ];
+    in
+    {
+      enable = true;
+      preserveAt = {
+        "/persist/once" = {
+          commonMountOptions = [ "x-gvfs-hide" ];
+
+          files = [
+            {
+              file = "/etc/machine-id";
+              inInitrd = true;
+              how = "symlink"; # is a symlink because we need it to be dangling at first boot
+            }
+            "/etc/adjtime"
+          ];
+
+          directories = lib.mkMerge [
+            [
+              "/home"
+              "/var/lib/nixos"
+              "/var/lib/systemd"
+              {
+                directory = "/nix";
+                inInitrd = true;
+              }
+              {
+                directory = "/var/log/journal";
+                inInitrd = true;
+                group = "systemd-journal";
+                mode = "2755";
+              }
+            ]
+            (
+              let
+                inherit (config.users.users) greeter;
+              in
+              mkIf' config.services.greetd.enable {
+                directory = "/var/cache/tuigreet";
+                user = greeter.name;
+                group = greeter.group;
+              }
+            )
+          ];
+        };
+
+        "/persist/every" = {
+          commonMountOptions = [ "x-gvfs-hide" ];
+
+          directories = lib.mkMerge [
+            [ "/var/lib/libvirt" ]
+            (mkIf' config.networking.wireless.iwd.enable {
+              directory = "/var/lib/iwd";
+              mode = "0700";
+            })
+            (mkIf' config.services.upower.enable "/var/lib/upower")
+          ];
+
+          users.syncthing = lib.mkIf config.services.syncthing.enable {
+            directories = lib.singleton {
+              directory = ".config/syncthing";
+              mode = "0700";
+              configureParent = true;
+              parent.mode = "0700";
+            };
           };
-        syncthing =
-          let
-            cfg = config.services.syncthing;
-          in
-          lib.optional cfg.enable {
-            directory = cfg.dataDir;
-            inherit (cfg) user group;
-          };
-        upower = lib.optional config.services.upower.enable "/var/lib/upower";
-      in
-      lib.concatLists [
-        [
-          "/var/lib/nixos"
-          "/var/lib/systemd"
-        ]
-        iwd
-        tuigreet
-        syncthing
-        upower
-      ];
-    files = [
-      "/etc/adjtime"
-      "/etc/machine-id"
-    ];
-  };
+        };
+      };
+    };
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
