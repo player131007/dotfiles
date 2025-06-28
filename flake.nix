@@ -11,6 +11,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nix-index-database = {
+      url = "github:nix-community/nix-index-database";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     preservation.url = "github:nix-community/preservation";
     home-manager = {
       url = "github:nix-community/home-manager";

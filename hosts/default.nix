@@ -23,6 +23,7 @@ in
   flake.nixosConfigurations = lib.mapAttrs mkHost {
     unora = {
       modules = [
+        inputs.nix-index-database.nixosModules.nix-index
         inputs.lix-module.nixosModules.default
         inputs.preservation.nixosModules.default
         inputs.home-manager.nixosModules.default
