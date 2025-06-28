@@ -81,6 +81,11 @@
       fsType = "vfat";
       options = [ "umask=0077" ];
     };
+    "/persist" = {
+      label = "nixos";
+      fsType = "ext4";
+      options = [ "relatime" "lazytime" ];
+    };
   };
 
   boot.tmp.cleanOnBoot = true;
