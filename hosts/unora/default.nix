@@ -8,7 +8,6 @@
   imports = [
     ./hardware-configuration.nix
     ./apps.nix
-    ./virtualization
   ];
 
   users.mutableUsers = false;
@@ -63,6 +62,17 @@
       };
   };
 
+  virtualisation.libvirtd = {
+    enable = true;
+    onShutdown = "shutdown";
+    shutdownTimeout = 30;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = false;
+      vhostUserPackages = [ pkgs.virtiofsd ];
+    };
+  };
+
   security = {
     sudo = {
       enable = true;
@@ -104,6 +114,7 @@
     logind.lidSwitch = "ignore";
     dbus.implementation = "broker";
     ratbagd.enable = true;
+    userborn.enable = true;
   };
 
   zramSwap.enable = true;
@@ -153,51 +164,86 @@
     base07
   ];
 
-  # https://nixos.org/manual/nixos/stable/#ch-system-state
-  environment.persistence."/persist" = {
-    hideMounts = true;
-    directories =
-      let
-        iwd = lib.optional config.networking.wireless.iwd.enable "/var/lib/iwd";
-        tuigreet =
-          let
-            user = config.users.users.greeter;
-          in
-          lib.optional config.services.greetd.enable {
-            directory = "/var/cache/tuigreet";
-            user = user.name;
-            group = user.group;
+  preservation =
+    let
+      mkIf' = cond: content: lib.mkIf cond [ content ];
+    in
+    {
+      enable = true;
+      preserveAt = {
+        "/persist/once" = {
+          commonMountOptions = [ "x-gvfs-hide" ];
+
+          files = [
+            {
+              file = "/etc/machine-id";
+              inInitrd = true;
+              how = "symlink"; # is a symlink because we need it to be dangling at first boot
+            }
+            "/etc/adjtime"
+          ];
+
+          directories = lib.mkMerge [
+            [
+              "/home"
+              "/var/lib/nixos"
+              "/var/lib/systemd"
+              {
+                directory = "/nix";
+                inInitrd = true;
+              }
+              {
+                directory = "/var/log/journal";
+                inInitrd = true;
+                group = "systemd-journal";
+                mode = "2755";
+              }
+            ]
+            (
+              let
+                inherit (config.users.users) greeter;
+              in
+              mkIf' config.services.greetd.enable {
+                directory = "/var/cache/tuigreet";
+                user = greeter.name;
+                group = greeter.group;
+              }
+            )
+          ];
+        };
+
+        "/persist/every" = {
+          commonMountOptions = [ "x-gvfs-hide" ];
+
+          directories = lib.mkMerge [
+            [ "/var/lib/libvirt" ]
+            (mkIf' config.networking.wireless.iwd.enable {
+              directory = "/var/lib/iwd";
+              mode = "0700";
+            })
+            (mkIf' config.services.upower.enable "/var/lib/upower")
+          ];
+
+          users.syncthing = lib.mkIf config.services.syncthing.enable {
+            directories = lib.singleton {
+              directory = ".config/syncthing";
+              mode = "0700";
+              configureParent = true;
+              parent.mode = "0700";
+            };
           };
-        syncthing =
-          let
-            cfg = config.services.syncthing;
-          in
-          lib.optional cfg.enable {
-            directory = cfg.dataDir;
-            inherit (cfg) user group;
-          };
-        upower = lib.optional config.services.upower.enable "/var/lib/upower";
-      in
-      lib.concatLists [
-        [
-          "/var/lib/nixos"
-          "/var/lib/systemd"
-        ]
-        iwd
-        tuigreet
-        syncthing
-        upower
-      ];
-    files = [
-      "/etc/adjtime"
-      "/etc/machine-id"
-    ];
+        };
+      };
+    };
+
+  systemd.services.systemd-machine-id-commit = {
+    unitConfig.ConditionPathIsMountPoint = "/etc/machine-id";
+    serviceConfig.ExecStart = "systemd-machine-id-setup --commit --root /persist/once";
   };
 
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
-  # FIXME: when this gets merged
-  # https://lore.kernel.org/linux-pci/20250313142333.5792-1-ilpo.jarvinen@linux.intel.com
+  # FIXME: fixed in 6.16 and 6.15.4
   boot.kernelPatches = [
     {
       name = "fix-gpu-passthrough";

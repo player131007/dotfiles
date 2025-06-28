@@ -1,6 +1,6 @@
 {
   modulesPath,
-  config,
+  lib,
   ...
 }:
 {
@@ -34,6 +34,13 @@
     graphics.enable = true;
   };
 
+  # blacklist nvidia for GPU passthrough
+  boot.blacklistedKernelModules = [
+    "nvidia"
+    "nvidia_drm"
+    "nvidia_uvm"
+    "nvidia_modeset"
+  ];
   services.xserver.videoDrivers = [ "nvidia" ];
   hardware.nvidia = {
     modesetting.enable = true;
@@ -53,61 +60,20 @@
     };
   };
 
+  boot.initrd.luks.devices.cryptroot = {
+    device = throw "specify your root device bruh";
+    fallbackToPassword = true;
+    allowDiscards = true;
+    bypassWorkqueues = true;
+  };
+
   fileSystems = {
     "/" = {
       device = "tmpfs";
       fsType = "tmpfs";
       options = [
-        "defaults"
         "size=2G"
         "mode=755"
-      ];
-    };
-    "/persist" = {
-      label = "nixos";
-      fsType = "btrfs";
-      options = [
-        "compress=zstd"
-        "noatime"
-        "subvol=persist"
-      ];
-      neededForBoot = true;
-    };
-    "/nix" = {
-      label = "nixos";
-      fsType = "btrfs";
-      options = [
-        "compress=zstd"
-        "noatime"
-        "subvol=nix"
-      ];
-    };
-    "/var/log" = {
-      label = "nixos";
-      fsType = "btrfs";
-      options = [
-        "compress=zstd"
-        "noatime"
-        "subvol=log"
-      ];
-      neededForBoot = true;
-    };
-    "/home" = {
-      label = "nixos";
-      fsType = "btrfs";
-      options = [
-        "compress=zstd"
-        "noatime"
-        "subvol=home"
-      ];
-    };
-    "/tmp" = {
-      label = "nixos";
-      fsType = "btrfs";
-      options = [
-        "compress=zstd"
-        "noatime"
-        "subvol=tmp"
       ];
     };
     "/boot" = {
@@ -115,15 +81,21 @@
       fsType = "vfat";
       options = [ "umask=0077" ];
     };
-    "/d" = {
-      device = "/dev/disk/by-uuid/584B-F342";
-      fsType = "exfat";
-      options = [
-        "uid=${config.users.users.player131007.name}"
-        "gid=${config.services.syncthing.group}"
-        "umask=002"
-      ];
+    "/persist" = {
+      label = "nixos";
+      fsType = "ext4";
+      options = [ "relatime" "lazytime" ];
     };
+  };
+
+  systemd.mounts = lib.singleton {
+    what = "/dev/disk/by-label/d";
+    where = "/d";
+    type = "ext4";
+    options = lib.concatStringsSep "," [ "relatime" "lazytime" ];
+  };
+  systemd.automounts = lib.singleton {
+    where = "/d";
   };
 
   boot.tmp.cleanOnBoot = true;

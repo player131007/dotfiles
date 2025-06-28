@@ -111,21 +111,6 @@
         "type": "github"
       }
     },
-    "impermanence": {
-      "locked": {
-        "lastModified": 1737831083,
-        "narHash": "sha256-LJggUHbpyeDvNagTUrdhe/pRVp4pnS6wVKALS782gRI=",
-        "owner": "nix-community",
-        "repo": "impermanence",
-        "rev": "4b3e914cdf97a5b536a889e939fb2fd2b043a170",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "impermanence",
-        "type": "github"
-      }
-    },
     "lix": {
       "flake": false,
       "locked": {
@@ -198,24 +183,18 @@
         "type": "github"
       }
     },
-    "nixvirt": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
+    "preservation": {
       "locked": {
-        "lastModified": 1748140003,
-        "narHash": "sha256-DNBZmuk1YRM2PmwbHzVdXumRjCUzQkMarg4iI/37rOQ=",
-        "owner": "AshleyYakeley",
-        "repo": "NixVirt",
-        "rev": "5dfe108fd859b122f9a96981cb6bc12297653d6c",
+        "lastModified": 1738541138,
+        "narHash": "sha256-isT+jR8P8UFh5PJDzGHYXqVEHEZa0D5WvT5kfMf14AM=",
+        "owner": "nix-community",
+        "repo": "preservation",
+        "rev": "2f16754f9f6b766c1429375ab7417dc81cc90a63",
         "type": "github"
       },
       "original": {
-        "owner": "AshleyYakeley",
-        "ref": "v0.6.0",
-        "repo": "NixVirt",
+        "owner": "nix-community",
+        "repo": "preservation",
         "type": "github"
       }
     },
@@ -224,11 +203,10 @@
         "fenix": "fenix",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
-        "impermanence": "impermanence",
         "lix-module": "lix-module",
         "nix-colors": "nix-colors",
         "nixpkgs": "nixpkgs",
-        "nixvirt": "nixvirt",
+        "preservation": "preservation",
         "treefmt-nix": "treefmt-nix"
       }
     },
