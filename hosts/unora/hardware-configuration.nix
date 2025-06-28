@@ -1,6 +1,6 @@
 {
   modulesPath,
-  config,
+  lib,
   ...
 }:
 {
@@ -86,6 +86,16 @@
       fsType = "ext4";
       options = [ "relatime" "lazytime" ];
     };
+  };
+
+  systemd.mounts = lib.singleton {
+    what = "/dev/disk/by-label/d";
+    where = "/d";
+    type = "ext4";
+    options = lib.concatStringsSep "," [ "relatime" "lazytime" ];
+  };
+  systemd.automounts = lib.singleton {
+    where = "/d";
   };
 
   boot.tmp.cleanOnBoot = true;
