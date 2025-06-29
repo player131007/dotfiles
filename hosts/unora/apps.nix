@@ -248,12 +248,6 @@
     ls = "eza --icons -F";
     ll = "eza --icons -F -lhb";
     l = "eza --icons -F -lhba";
-    vm = ''
-      sudo rm /windows/win10.qcow2;
-      sudo qemu-img create -b /windows/base.qcow2 -F qcow2 -f qcow2 -o compression_type=zstd,nocow=on /windows/win10.qcow2 && \
-      virsh --connect qemu:///system start win10 \
-    '';
-    vm2 = "looking-glass-client input:rawMouse=true spice:captureOnStart=true -F -m KEY_INSERT";
     gs = "git status --short";
     ga = "git add";
     gaa = "git add -A";
