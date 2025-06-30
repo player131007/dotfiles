@@ -226,11 +226,6 @@
       };
     };
 
-  systemd.services.systemd-machine-id-commit = {
-    unitConfig.ConditionPathIsMountPoint = "/etc/machine-id";
-    serviceConfig.ExecStart = "systemd-machine-id-setup --commit --root /persist/once";
-  };
-
   boot.kernelPackages = pkgs.linuxPackages_zen;
 
   # FIXME: fixed in 6.16 and 6.15.4
