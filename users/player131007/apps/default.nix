@@ -11,6 +11,12 @@
     ./river
   ];
 
+  services.syncthing = {
+    enable = true;
+    overrideDevices = false;
+    overrideFolders = false;
+  };
+
   programs = {
     bash.enable = true;
     nh.enable = true;

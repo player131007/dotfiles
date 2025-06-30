@@ -37,6 +37,11 @@
       "8.8.8.8#dns.google"
       "2001:4860:4860::8888#dns.google"
     ];
+
+    firewall = {
+      allowedTCPPorts = [ 22000 ]; # syncthing
+      allowedUDPPorts = [ 21027 22000 ]; # syncthing
+    };
   };
 
   services.resolved = {
@@ -103,12 +108,6 @@
     };
     upower = {
       enable = true;
-    };
-    syncthing = {
-      enable = true;
-      openDefaultPorts = true;
-      overrideDevices = false;
-      overrideFolders = false;
     };
     fwupd.enable = true;
     logind.lidSwitch = "ignore";
@@ -223,15 +222,6 @@
             })
             (mkIf' config.services.upower.enable "/var/lib/upower")
           ];
-
-          users.syncthing = lib.mkIf config.services.syncthing.enable {
-            directories = lib.singleton {
-              directory = ".config/syncthing";
-              mode = "0700";
-              configureParent = true;
-              parent.mode = "0700";
-            };
-          };
         };
       };
     };
