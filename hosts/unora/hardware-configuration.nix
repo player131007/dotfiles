@@ -17,6 +17,7 @@
     "usbhid"
     "sd_mod"
     "sdhci_pci"
+    "hid_generic"
   ];
   boot.initrd.kernelModules = [ "amdgpu" ];
 
@@ -61,6 +62,7 @@
   };
 
   boot.initrd.luks.devices.cryptroot = {
+    device = "/dev/disk/by-partuuid/4d580e45-fb81-4bde-bd5c-44adfff3393a";
     allowDiscards = true;
     bypassWorkqueues = true;
   };
@@ -83,6 +85,7 @@
       label = "nixos";
       fsType = "ext4";
       options = [ "relatime" "lazytime" ];
+      neededForBoot = true;
     };
   };
 
