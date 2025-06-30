@@ -92,11 +92,13 @@
         OPERATION="$2"
         SUB_OPERATION="$3"
 
-        if [ "$GUEST_NAME" = "win11" -a "$OPERATION" = "prepare" -a "$SUB_OPERATION" = "begin" ]; then
-          qemu-img create -f qcow2 -b ./base.qcow2 -F qcow2 $DRIVE
-          chown qemu-libvirtd $DRIVE
-        elif [ "$GUEST_NAME" = "win11" -a "$OPERATION" = "release" -a "$SUB_OPERATION" = "end" ]; then
-          mv $DRIVE $DRIVE.bak
+        if [ ! -e /windows/a ]; then
+          if [ "$GUEST_NAME" = "win11" -a "$OPERATION" = "prepare" -a "$SUB_OPERATION" = "begin" ]; then
+            qemu-img create -f qcow2 -b ./base.qcow2 -F qcow2 $DRIVE
+            chown qemu-libvirtd $DRIVE
+          elif [ "$GUEST_NAME" = "win11" -a "$OPERATION" = "release" -a "$SUB_OPERATION" = "end" ]; then
+            mv $DRIVE $DRIVE.bak
+          fi
         fi
       '';
     };
