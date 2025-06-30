@@ -97,6 +97,7 @@
   };
   systemd.automounts = lib.singleton {
     where = "/d";
+    wantedBy = [ "local-fs.target" ];
   };
 
   boot.tmp.cleanOnBoot = true;
