@@ -84,21 +84,31 @@
     "/persist" = {
       label = "nixos";
       fsType = "ext4";
-      options = [ "relatime" "lazytime" ];
+      options = [
+        "relatime"
+        "lazytime"
+      ];
       neededForBoot = true;
     };
   };
 
-  systemd.mounts = lib.singleton {
-    what = "/dev/disk/by-label/d";
-    where = "/d";
-    type = "ext4";
-    options = lib.concatStringsSep "," [ "relatime" "lazytime" ];
-  };
-  systemd.automounts = lib.singleton {
-    where = "/d";
-    wantedBy = [ "local-fs.target" ];
-  };
+  systemd.mounts = [
+    {
+      what = "/dev/disk/by-label/d";
+      where = "/d";
+      type = "ext4";
+      options = lib.concatStringsSep "," [
+        "relatime"
+        "lazytime"
+      ];
+    }
+  ];
+  systemd.automounts = [
+    {
+      where = "/d";
+      wantedBy = [ "local-fs.target" ];
+    }
+  ];
 
   boot.tmp.cleanOnBoot = true;
 }

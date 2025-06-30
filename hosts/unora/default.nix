@@ -40,7 +40,10 @@
 
     firewall = {
       allowedTCPPorts = [ 22000 ]; # syncthing
-      allowedUDPPorts = [ 21027 22000 ]; # syncthing
+      allowedUDPPorts = [
+        21027
+        22000
+      ]; # syncthing
     };
   };
 
