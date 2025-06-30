@@ -102,10 +102,23 @@
         "lazytime"
       ];
     }
+    {
+      what = "/dev/disk/by-label/windows";
+      where = "/windows";
+      type = "ext4";
+      options = lib.concatStringsSep "," [
+        "relatime"
+        "lazytime"
+      ];
+    }
   ];
   systemd.automounts = [
     {
       where = "/d";
+      wantedBy = [ "local-fs.target" ];
+    }
+    {
+      where = "/windows";
       wantedBy = [ "local-fs.target" ];
     }
   ];
