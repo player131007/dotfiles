@@ -29,7 +29,10 @@
     ];
   };
 
-  environment.systemPackages = [ pkgs.cryptsetup ];
+  environment.systemPackages = [
+    pkgs.cryptsetup
+    pkgs.git
+  ];
 
   services = {
     lvm.enable = true;
