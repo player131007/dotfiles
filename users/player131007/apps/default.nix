@@ -1,4 +1,4 @@
-{ pkgs, otherpkgs, ... }:
+{ pkgs, ... }:
 {
   imports = [
     ./btop
