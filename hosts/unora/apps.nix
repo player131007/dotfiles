@@ -6,7 +6,6 @@
 }:
 {
   programs = {
-    command-not-found.enable = false;
     nix-index.enable = true;
     fish.enable = true;
     ssh.startAgent = true;
