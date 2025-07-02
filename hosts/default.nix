@@ -30,23 +30,9 @@ in
         self.modules.generic.npins
         self.modules.generic.otherpkgs
         self.nixosModules.oh-my-posh
-        (
-          { otherpkgs, ... }:
-          {
-            nixpkgs.overlays = [ self.overlays.default ];
-            home-manager = {
-              useGlobalPkgs = true;
-              useUserPackages = true;
-              extraSpecialArgs = { inherit otherpkgs; };
-              users.player131007 = {
-                imports = [
-                  (self + "/users/player131007")
-                  self.modules.generic.npins
-                ];
-              };
-            };
-          }
-        )
+        {
+          nixpkgs.overlays = [ self.overlays.default ];
+        }
       ];
     };
 
