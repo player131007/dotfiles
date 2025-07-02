@@ -3,7 +3,6 @@
   inputs,
   self,
   moduleWithSystem,
-  lib,
   ...
 }:
 {
@@ -16,12 +15,6 @@
     };
 
     generic = {
-      base24 = {
-        imports = [
-          "${inputs.nix-colors}/module/colorscheme.nix"
-          (lib.modules.importApply ./generic/theme.nix inputs.nix-colors)
-        ];
-      };
       npins =
         { pkgs, ... }:
         {

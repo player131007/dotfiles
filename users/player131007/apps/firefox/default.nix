@@ -10,17 +10,6 @@
     enable = true;
     profiles.profile = {
       isDefault = true;
-      userChrome =
-        let
-          css-vars = config.colorscheme {
-            template = "${npins.base24-css-etc}/templates/css-variables.mustache";
-            extension = "css";
-          };
-        in
-        ''
-          @import "${css-vars}";
-          @import "${./userChrome.css}";
-        '';
     };
 
     package = pkgs.wrapFirefox pkgs.firefox-esr-unwrapped {
@@ -114,19 +103,6 @@
             installation_mode = "normal_installed";
             install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
           };
-          "addon@darkreader.org" =
-            let
-              inherit (config.colorscheme) palette variant;
-              darkreader = otherpkgs.darkreader.override {
-                background = palette.base00;
-                text = palette.base05;
-                darkMode = variant == "dark";
-              };
-            in
-            {
-              installation_mode = "normal_installed";
-              install_url = "file://${darkreader}/release/darkreader-firefox.xpi";
-            };
         };
       };
     };

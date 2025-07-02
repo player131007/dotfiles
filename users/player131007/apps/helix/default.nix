@@ -5,23 +5,11 @@
   npins,
   ...
 }:
-let
-  theme = config.colorscheme {
-    template = "${npins.tinted-helix}/templates/base24.mustache";
-    extension = "toml";
-  };
-in
 {
-  xdg.configFile."helix/themes/${theme.name}" = {
-    inherit (config.programs.helix) enable;
-    source = theme;
-  };
-
   programs.helix = {
     enable = true;
     defaultEditor = true;
     settings = {
-      theme = theme.name-no-ext;
       editor = {
         line-number = "relative";
         mouse = false;

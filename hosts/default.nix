@@ -28,7 +28,6 @@ in
         inputs.preservation.nixosModules.default
         inputs.home-manager.nixosModules.default
         self.modules.generic.npins
-        self.modules.generic.base24
         self.modules.generic.otherpkgs
         self.nixosModules.oh-my-posh
         (
@@ -42,7 +41,6 @@ in
               users.player131007 = {
                 imports = [
                   (self + "/users/player131007")
-                  self.modules.generic.base24
                   self.modules.generic.npins
                 ];
               };

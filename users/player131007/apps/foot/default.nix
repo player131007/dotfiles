@@ -9,12 +9,6 @@
     enable = true;
     settings = {
       main = {
-        include = toString (
-          config.colorscheme {
-            template = "${npins.tinted-terminal}/templates/foot-base24.mustache";
-            extension = "ini";
-          }
-        );
         font = "IosevkaTerm NF:size=12";
         shell = "fish";
         pad = "5x5 center";
