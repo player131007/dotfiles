@@ -32,8 +32,11 @@
 
   outputs =
     inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [ (inputs.import-tree ./modules) ];
-      _module.args.rootPath = ./.;
-    };
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
+      { lib, ... }:
+      {
+        imports = [ (inputs.import-tree ./modules) ];
+        _module.args.fromRoot = lib.path.append ./.;
+      }
+    );
 }
