@@ -1,13 +1,14 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    import-tree.url = "github:vic/import-tree";
 
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
       inputs.nixpkgs-lib.follows = "nixpkgs";
     };
-    treefmt-nix = {
-      url = "github:numtide/treefmt-nix";
+    git-hooks-nix = {
+      url = "github:cachix/git-hooks.nix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -30,74 +31,9 @@
   };
 
   outputs =
-    { flake-parts, ... }@inputs:
-    let
-      npins = import ./npins;
-      npins-nixpkgs = import ./npins/fetch-with-nixpkgs.nix;
-
-      module =
-        {
-          inputs,
-          lib,
-          self,
-          ...
-        }:
-        {
-          debug = true;
-          systems = [ "x86_64-linux" ];
-
-          _module.args = { inherit npins npins-nixpkgs; };
-          flake = {
-            inherit npins npins-nixpkgs;
-
-            overlays = {
-              default = lib.pipe ./overlays [
-                builtins.readDir
-                builtins.attrNames
-                (map (x: import ./overlays/${x} { inherit self; }))
-                lib.composeManyExtensions
-              ];
-            };
-          };
-
-          imports = [
-            inputs.treefmt-nix.flakeModule
-            ./modules
-            ./hosts
-          ];
-
-          perSystem =
-            { pkgs, inputs', ... }:
-            {
-              legacyPackages =
-                let
-                  rust-toolchain = inputs'.fenix.packages.minimal.toolchain;
-
-                  scope-with-overrides = pkgs.lib.makeScope pkgs.newScope (self: {
-                    rustPlatform_nightly = pkgs.makeRustPlatform {
-                      rustc = rust-toolchain;
-                      cargo = rust-toolchain;
-                    };
-                  });
-                in
-                pkgs.lib.packagesFromDirectoryRecursive {
-                  inherit (scope-with-overrides) callPackage newScope;
-                  directory = ./pkgs;
-                };
-
-              devShells.default = pkgs.mkShellNoCC {
-                packages = [ pkgs.nixd ];
-              };
-              treefmt = {
-                projectRootFile = "flake.nix";
-                settings.global.excludes = [
-                  "npins/default.nix"
-                  "npins/sources.json"
-                ];
-                programs.nixfmt.enable = true;
-              };
-            };
-        };
-    in
-    flake-parts.lib.mkFlake { inherit inputs; } module;
+    inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      imports = [ (inputs.import-tree ./modules) ];
+      _module.args.rootPath = ./.;
+    };
 }
