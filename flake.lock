@@ -204,6 +204,21 @@
         "type": "github"
       }
     },
+    "nix-maid": {
+      "locked": {
+        "lastModified": 1751546878,
+        "narHash": "sha256-4SWI8Wn8FaXxsmVHF8Sx+aTxI2h4juieylWSklD83Ts=",
+        "owner": "viperML",
+        "repo": "nix-maid",
+        "rev": "dfb47763ee7daaf2d7935844f21f9733f5b7ec9b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "viperML",
+        "repo": "nix-maid",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1751011381,
@@ -243,6 +258,7 @@
         "import-tree": "import-tree",
         "lix-module": "lix-module",
         "nix-index-database": "nix-index-database",
+        "nix-maid": "nix-maid",
         "nixpkgs": "nixpkgs",
         "preservation": "preservation"
       }

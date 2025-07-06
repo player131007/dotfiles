@@ -11,7 +11,7 @@
       inherit (lib.modules) mkIf;
       inherit (lib.types) lines;
 
-      gitIni = pkgs.formats.gitIni { };
+      gitIni = pkgs.formats.gitIni { listsAsDuplicateKeys = true; };
       cfg = config.programs.git;
     in
     {

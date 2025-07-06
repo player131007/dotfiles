@@ -18,6 +18,7 @@
     };
 
     preservation.url = "github:nix-community/preservation";
+    nix-maid.url = "github:viperML/nix-maid";
 
     lix-module = {
       url = "https://git.lix.systems/lix-project/nixos-module/archive/2.93.2-1.tar.gz";
