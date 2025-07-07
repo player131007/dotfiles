@@ -3,4 +3,6 @@ nixpkgs = { expr = "import (builtins.getFlake (toString ./.)).inputs.nixpkgs {}"
 
 [language-server.nixd.config.nixd.options]
 nixos = { expr = "{}" }
+unora = { expr = "(builtins.getFlake (toString ./.)).nixosConfigurations.unora.options" }
+tahari = { expr = "(builtins.getFlake (toString ./.)).nixosConfigurations.tahari.options" }
 flake-parts = { expr = "(builtins.getFlake (toString ./.)).debug.options" }
