@@ -9,5 +9,6 @@
     { pkgs, ... }:
     {
       packages = [ pkgs.looking-glass-client ];
+      programs.obs-studio.plugins = [ pkgs.obs-studio-plugins.looking-glass-obs ];
     };
 }

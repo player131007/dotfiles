@@ -12,4 +12,10 @@
       };
     };
   };
+
+  flake.modules.maid.pc =
+    { pkgs, ... }:
+    {
+      programs.obs-studio.plugins = [ pkgs.obs-studio-plugins.obs-pipewire-audio-capture ];
+    };
 }
