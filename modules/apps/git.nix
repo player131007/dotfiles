@@ -1,7 +1,6 @@
 {
   flake.modules.nixos.pc = {
-    # ideally this should only be user specific
-    # but im too lazy to make a bash/fish module
+    # FIXME: make this user-specific
     environment.shellAliases = {
       gs = "git status --short";
       ga = "git add";
