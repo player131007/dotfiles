@@ -13,20 +13,20 @@
 }:
 rustPlatform_nightly.buildRustPackage (finalAttrs: {
   pname = "ringboard-server";
-  version = "0.10.0";
+  version = "0.12.0";
 
   src = fetchFromGitHub {
     owner = "SUPERCILEX";
     repo = "clipboard-history";
     tag = finalAttrs.version;
-    hash = "sha256-e5cZQ0j4gvXlbLCHc6dUVStWzih9HbDAtnSW7v+PKCk=";
+    hash = "sha256-8HmUxKybkZ8ZTqm0cErTyvjaebHcxDJ21HLt4jayH0s=";
   };
 
   buildAndTestSubdir = "server";
   cargoDeps = rustPlatform_nightly.fetchCargoVendor {
     inherit (finalAttrs) src;
     name = "ringboard-${finalAttrs.version}";
-    hash = "sha256-+E6BzfgUvpBZzkzvPvFfEt/IoVR/wU4uHECs4Dn5pIE=";
+    hash = "sha256-g+83aLnHM9cskZAhwFYiwTGB3eZs1NJzF3m4sMTcQDI=";
   };
 
   strictDeps = true;
