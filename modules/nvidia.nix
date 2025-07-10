@@ -3,5 +3,10 @@
     specialisation.nvidia.configuration = {
       services.xserver.videoDrivers = [ "nvidia" ];
     };
+
+    boot.blacklistedKernelModules = [
+      "nouveau"
+      "nvidiafb"
+    ];
   };
 }
