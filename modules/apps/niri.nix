@@ -1,7 +1,10 @@
 {
-  flake.modules.nixos.pc = {
-    programs.niri.enable = true;
-    services.gnome.gnome-keyring.enable = false;
-  };
+  flake.modules.nixos.pc =
+    { pkgs, ... }:
+    {
+      programs.niri.enable = true;
+      services.gnome.gnome-keyring.enable = false;
+      environment.systemPackages = [ pkgs.nautilus ]; # for xdg-desktop-portal-gnome
+    };
   # TODO: fill up config
 }
