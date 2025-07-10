@@ -13,7 +13,7 @@
         main = {
           shell = "fish";
           pad = "5x5 center";
-          font = "IosevkaTerm NF";
+          font = "IosevkaTerm NF:size=11";
         };
         cursor.blink = "yes";
         colors.alpha = 0.9;
