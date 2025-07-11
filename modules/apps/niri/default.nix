@@ -6,5 +6,8 @@
       services.gnome.gnome-keyring.enable = false;
       environment.systemPackages = [ pkgs.nautilus ]; # for xdg-desktop-portal-gnome
     };
-  # TODO: fill up config
+
+  flake.modules.maid.pc = {
+    file.xdg_config."niri/config.kdl".source = ./config.kdl;
+  };
 }
