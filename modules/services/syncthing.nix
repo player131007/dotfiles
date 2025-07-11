@@ -14,7 +14,7 @@
     {
       systemd.services.syncthing = {
         after = [ "network.target" ];
-        wantedBy = [ "multi-user.target" ];
+        wantedBy = [ "default.target" ];
         description = "Syncthing - Open Source Continuous File Synchronization";
         documentation = [ "man:syncthing(1)" ];
         startLimitBurst = 4;
