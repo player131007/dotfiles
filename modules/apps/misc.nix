@@ -11,6 +11,7 @@
           xdg-utils
           _7zz
           diff-so-fancy
+          keepassxc
           ;
       };
     };
