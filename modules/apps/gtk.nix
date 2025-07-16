@@ -2,7 +2,9 @@
   flake.modules.maid.pc =
     { pkgs, ... }:
     {
-      # set theme manually
       packages = [ pkgs.adw-gtk3 ];
+      gsettings.settings = {
+        org.gnome.desktop.interface.gtk-theme = "adw-gtk3";
+      };
     };
 }
