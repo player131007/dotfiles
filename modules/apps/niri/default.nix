@@ -1,13 +1,16 @@
 {
-  flake.modules.nixos.pc =
+  flake.modules.nixos.pc = {
+    programs.niri.enable = true;
+    services.gnome.gnome-keyring.enable = false;
+  };
+
+  flake.modules.maid.pc =
     { pkgs, ... }:
     {
-      programs.niri.enable = true;
-      services.gnome.gnome-keyring.enable = false;
-      environment.systemPackages = [ pkgs.nautilus ]; # for xdg-desktop-portal-gnome
+      packages = [
+        pkgs.nautilus
+        pkgs.bibata-cursors
+      ];
+      file.xdg_config."niri/config.kdl".source = ./config.kdl;
     };
-
-  flake.modules.maid.pc = {
-    file.xdg_config."niri/config.kdl".source = ./config.kdl;
-  };
 }
