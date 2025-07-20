@@ -17,10 +17,7 @@
   flake.modules.maid.pc =
     { pkgs, ... }:
     {
-      packages = [
-        pkgs.nemo
-        pkgs.bibata-cursors
-      ];
+      packages = [ pkgs.bibata-cursors ];
       file.xdg_config."niri/config.kdl".source = ./config.kdl;
     };
 }
