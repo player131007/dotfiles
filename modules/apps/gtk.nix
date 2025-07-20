@@ -3,7 +3,10 @@
   flake.modules.maid.pc =
     { pkgs, ... }:
     {
-      packages = [ pkgs.adw-gtk3 ];
+      packages = [
+        pkgs.adw-gtk3
+        pkgs.colloid-icon-theme
+      ];
       gsettings.package =
         let
           gsettings-declarative = import "${inputs.nix-maid}/gsettings-declarative" { inherit pkgs; };
@@ -17,7 +20,10 @@
           ];
         });
       gsettings.settings = {
-        org.gnome.desktop.interface.gtk-theme = "adw-gtk3";
+        org.gnome.desktop.interface = {
+          gtk-theme = "adw-gtk3";
+          icon-theme = "Colloid-Dark";
+        };
       };
     };
 }
