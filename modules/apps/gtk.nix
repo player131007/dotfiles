@@ -1,5 +1,9 @@
 { inputs, ... }:
 {
+  flake.modules.nixos.pc = {
+    xdg.icons.enable = true;
+  };
+
   flake.modules.maid.pc =
     { pkgs, ... }:
     {
