@@ -5,6 +5,7 @@
       packages = [
         pkgs.wlr-randr
         pkgs.wl-clipboard
+        pkgs.swaylock
       ];
     };
 }
