@@ -18,6 +18,6 @@
     { pkgs, ... }:
     {
       packages = [ pkgs.bibata-cursors ];
-      file.xdg_config."niri/config.kdl".source = ./config.kdl;
+      file.xdg_config."niri/config.kdl".source = "{{home}}/dots/modules/apps/niri/config.kdl";
     };
 }
