@@ -10,11 +10,16 @@
   };
 
   flake.modules.maid.pc =
-    { lib, pkgs, ... }:
+    {
+      lib,
+      pkgs,
+      config,
+      ...
+    }:
     {
       systemd.services.syncthing = {
         after = [ "network.target" ];
-        wantedBy = [ "default.target" ];
+        wantedBy = [ config.maid.systemdTarget ];
         description = "Syncthing - Open Source Continuous File Synchronization";
         documentation = [ "man:syncthing(1)" ];
         startLimitBurst = 4;
