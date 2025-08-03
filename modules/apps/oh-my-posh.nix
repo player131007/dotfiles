@@ -66,8 +66,8 @@
 
                   branch_icon = "<lightBlue></>";
                   branch_identical_icon = "";
-                  branch_ahead_icon = "<16> </>";
-                  branch_behind_icon = "<16> </>";
+                  branch_ahead_icon = "<lightMagenta> </>";
+                  branch_behind_icon = "<lightMagenta> </>";
                   branch_gone_icon = "";
 
                   commit_icon = "<lightBlue> </>";
@@ -103,7 +103,7 @@
               {
                 type = "executiontime";
                 style = "plain";
-                foreground = "16";
+                foreground = "lightYellow";
                 template = "  {{ .FormattedMs }}";
                 properties = {
                   threshold = 2000;
