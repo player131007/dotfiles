@@ -41,7 +41,7 @@
             diff = {
               meta = "white";
               frag = "magenta bold";
-              whitespace = "17 reverse";
+              whitespace = "brightyellow reverse";
               commit = "yellow";
               old = "red bold";
               new = "green bold";
