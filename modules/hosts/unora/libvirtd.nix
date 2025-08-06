@@ -1,6 +1,6 @@
 {
   flake.modules.nixos."nixosConfigurations/unora" =
-    { pkgs, ... }:
+    { pkgs, config, ... }:
     {
       users.users.player131007.extraGroups = [ "libvirtd" ];
 
@@ -35,5 +35,7 @@
           '';
         };
       };
+
+      preservation.preserveAt.${config.stuff.persistDir}.directories = [ "/var/lib/libvirt" ];
     };
 }
