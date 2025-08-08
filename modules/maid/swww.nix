@@ -26,7 +26,11 @@
             partOf = [ graphical ];
             documentation = [ "man:swww-daemon(1)" ];
             unitConfig.ConditionEnvironment = "WAYLAND_DISPLAY";
-            serviceConfig.ExecStart = lib.getExe' cfg.package "swww-daemon";
+            serviceConfig = {
+              Type = "notify";
+              NotifyAccess = "main";
+              ExecStart = lib.getExe' cfg.package "swww-daemon";
+            };
           };
           swww-restore = {
             wantedBy = [ graphical ];
