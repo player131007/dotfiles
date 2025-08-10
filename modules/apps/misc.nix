@@ -9,7 +9,7 @@
           brightnessctl
           ripgrep
           xdg-utils
-          _7zz
+          _7zz-rar
           diff-so-fancy
           keepassxc
           ;
