@@ -10,6 +10,8 @@
       cfg = config.programs.wallust;
       tomlFormat = pkgs.formats.toml { };
       wallust-script = pkgs.writeShellScriptBin "e" ''
+        set -uo pipefail
+
         ${lib.getExe cfg.package} run "$@"
 
         ${cfg.extraCommands}

@@ -1,6 +1,6 @@
 {
   flake.modules.maid.pc =
-    { pkgs, ... }:
+    { pkgs, lib, ... }:
     {
       packages = [ pkgs.qutebrowser ];
       systemd.tmpfiles.rules = [
@@ -12,7 +12,7 @@
       };
       programs.wallust.extraCommands = # bash
         ''
-          pkill -HUP -f .qutebrowser-wrapped
+          pkill -HUP -u $USER -fx "^${lib.getExe pkgs.python3} ${lib.getExe' pkgs.qutebrowser ".qutebrowser-wrapped"}.*"
         '';
     };
 
