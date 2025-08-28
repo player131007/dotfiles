@@ -17,6 +17,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nvim-flake = {
+      url = "github:player131007/nvim-flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     preservation.url = "github:nix-community/preservation";
     nix-maid.url = "github:viperML/nix-maid";
 

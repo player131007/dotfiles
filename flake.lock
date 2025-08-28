@@ -186,6 +186,21 @@
         "url": "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz"
       }
     },
+    "mnw": {
+      "locked": {
+        "lastModified": 1755772633,
+        "narHash": "sha256-vkJs9O2SsIo+rneIpvvy4DV34sHz8j5zJ/aXYgDF31I=",
+        "owner": "Gerg-L",
+        "repo": "mnw",
+        "rev": "a9a570df291b26c9785557ca7fd640a3794b84f7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Gerg-L",
+        "repo": "mnw",
+        "type": "github"
+      }
+    },
     "nix-index-database": {
       "inputs": {
         "nixpkgs": [
@@ -237,6 +252,28 @@
         "type": "github"
       }
     },
+    "nvim-flake": {
+      "inputs": {
+        "mnw": "mnw",
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "systems": "systems_2"
+      },
+      "locked": {
+        "lastModified": 1756390302,
+        "narHash": "sha256-vHr5vBeIGvQ/zS/WSUai5vCHTj3BP0i0C48IFf8zLhw=",
+        "owner": "player131007",
+        "repo": "nvim-flake",
+        "rev": "277c4621557d629007c12217749d3a66d359b225",
+        "type": "github"
+      },
+      "original": {
+        "owner": "player131007",
+        "repo": "nvim-flake",
+        "type": "github"
+      }
+    },
     "preservation": {
       "locked": {
         "lastModified": 1751384068,
@@ -263,6 +300,7 @@
         "nix-index-database": "nix-index-database",
         "nix-maid": "nix-maid",
         "nixpkgs": "nixpkgs",
+        "nvim-flake": "nvim-flake",
         "preservation": "preservation"
       }
     },
@@ -284,6 +322,21 @@
       }
     },
     "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_2": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
