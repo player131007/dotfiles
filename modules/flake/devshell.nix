@@ -2,7 +2,7 @@
   perSystem =
     { config, pkgs, ... }:
     {
-      devShells.default = pkgs.mkShell {
+      devShells.default = pkgs.mkShellNoCC {
         nativeBuildInputs = config.pre-commit.settings.enabledPackages ++ [
           config.pre-commit.settings.package
           pkgs.nixd
