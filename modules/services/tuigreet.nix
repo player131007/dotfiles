@@ -9,7 +9,8 @@
     {
       services.greetd = {
         enable = true;
-        settings.default_session.command = "${lib.getExe pkgs.greetd.tuigreet} -t -d -r --remember-user-session --asterisks --user-menu";
+        settings.default_session.command = "${lib.getExe pkgs.tuigreet} -t -d -r --remember-user-session --asterisks --user-menu";
+        useTextGreeter = true;
       };
 
       preservation.preserveAt.${config.stuff.persistOnceDir}.directories =
