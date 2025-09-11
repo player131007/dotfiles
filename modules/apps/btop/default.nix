@@ -22,7 +22,7 @@
       };
       programs.wallust.extraCommands = # bash
         ''
-          pkill -USR2 -u $USER -fx "^${lib.getExe config.programs.btop.package}.*"
+          pkill -USR2 -u $USER -fx "^${lib.getExe config.programs.btop.package}.*" || true
         '';
     };
 }

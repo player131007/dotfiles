@@ -12,7 +12,7 @@
       };
       programs.wallust.extraCommands = # bash
         ''
-          pkill -HUP -u $USER -fx "^${lib.getExe pkgs.python3} ${lib.getExe' pkgs.qutebrowser ".qutebrowser-wrapped"}.*"
+          pkill -HUP -u $USER -fx "^${lib.getExe pkgs.python3} ${lib.getExe' pkgs.qutebrowser ".qutebrowser-wrapped"}.*" || true
         '';
     };
 

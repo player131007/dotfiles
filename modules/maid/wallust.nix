@@ -12,7 +12,7 @@
       wallust-script = pkgs.writeShellScriptBin "e" ''
         set -uo pipefail
 
-        ${lib.getExe cfg.package} run "$@"
+        ${lib.getExe cfg.package} run "$@" || exit 1
 
         ${cfg.extraCommands}
       '';
