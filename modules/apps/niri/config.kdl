@@ -21,7 +21,7 @@ cursor {
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Input
 input {
     disable-power-key-handling
-    
+
     keyboard {
         repeat-delay 300
         repeat-rate 30
