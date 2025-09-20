@@ -17,16 +17,10 @@
               edit = true;
             };
             files = ".*\\.nix";
-            excludes = [
-              "npins\\/default\\.nix"
-            ];
           };
           nixfmt-rfc-style = {
             enable = true;
             files = ".*\\.nix";
-            excludes = [
-              "npins\\/default\\.nix"
-            ];
           };
         };
       };
