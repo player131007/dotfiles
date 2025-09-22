@@ -76,7 +76,7 @@ hi('TabLineFill', { link = "StatusLineNC" })
 hi('TabLineSel', { fg = "{{ foreground }}", bg = "{{ color4 }}", ctermfg = 15, ctermbg = 4, bold = true })
 
 hi('Title', { fg = "{{ color4 }}", ctermfg = 4, bold = true })
-hi('Visual', { bg = "{{ background | lighten(0.15) }}", ctermbg = 8 })
+hi('Visual', { bg = "{{ background | lighten(0.1) }}", ctermbg = 8 })
 hi('VisualNOS', { link = "Visual" })
 
 hi('WarningMsg', { fg = "{{ color11 }}", ctermfg = 11 })
