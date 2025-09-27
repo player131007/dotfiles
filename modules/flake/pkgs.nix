@@ -21,7 +21,7 @@
         in
         lib.packagesFromDirectoryRecursive {
           inherit (scope-with-overrides) callPackage newScope;
-          directory = fromRoot "pkgs";
+          directory = fromRoot "pkgs/by-name";
         };
     };
 

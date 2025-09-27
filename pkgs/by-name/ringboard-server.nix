@@ -34,7 +34,8 @@ rustPlatform_nightly.buildRustPackage (finalAttrs: {
   buildNoDefaultFeatures = true;
   buildFeatures = [
     "human-logs"
-  ] ++ (lib.optional systemdSupport "systemd");
+  ]
+  ++ (lib.optional systemdSupport "systemd");
 
   passthru = {
     inherit
