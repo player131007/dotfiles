@@ -1,4 +1,9 @@
-{ fromRoot, moduleWithSystem, ... }:
+{
+  fromRoot,
+  moduleWithSystem,
+  inputs,
+  ...
+}:
 {
   perSystem =
     {
@@ -22,6 +27,12 @@
         lib.packagesFromDirectoryRecursive {
           inherit (scope-with-overrides) callPackage newScope;
           directory = fromRoot "pkgs/by-name";
+        }
+        // {
+          neovim = inputs.mnw.lib.wrap {
+            inherit pkgs;
+            inherit (inputs) mnw;
+          } (fromRoot "pkgs/nvim");
         };
     };
 

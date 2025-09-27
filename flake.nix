@@ -2,6 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     import-tree.url = "github:vic/import-tree";
+    mnw.url = "github:Gerg-L/mnw";
 
     flake-parts = {
       url = "github:hercules-ci/flake-parts";
@@ -14,11 +15,6 @@
 
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nvim-flake = {
-      url = "github:player131007/nvim-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
