@@ -12,14 +12,11 @@
         let
           rust-toolchain = inputs'.fenix.packages.minimal.toolchain;
 
-          scope-with-overrides = lib.makeScope pkgs.newScope (self: {
-            rustPlatform_nightly = self.callPackage (
-              { makeRustPlatform }:
-              makeRustPlatform {
-                rustc = rust-toolchain;
-                cargo = rust-toolchain;
-              }
-            ) { };
+          scope-with-overrides = lib.makeScope pkgs.newScope (_: {
+            rustPlatform_nightly = pkgs.makeRustPlatform {
+              rustc = rust-toolchain;
+              cargo = rust-toolchain;
+            };
           });
         in
         lib.packagesFromDirectoryRecursive {
