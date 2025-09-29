@@ -9,6 +9,6 @@
       "sdhci_pci"
       "hid_generic"
     ];
-    boot.initrd.kernelModules = [ "amdgpu" ];
+    hardware.amdgpu.initrd.enable = true;
   };
 }
