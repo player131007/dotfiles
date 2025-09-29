@@ -10,6 +10,13 @@ vim.api.nvim_create_autocmd("FileType", {
   end,
 })
 
+vim.api.nvim_create_autocmd("BufReadPost", {
+  group = augroup,
+  desc = "Make files in /nix/store unmodifiable",
+  pattern = "/nix/store/*",
+  callback = function(args) vim.bo[args.buf].modifiable = false end,
+})
+
 vim.api.nvim_create_autocmd("TextYankPost", {
   group = augroup,
   desc = "Highlight when yanking (copying) text",
