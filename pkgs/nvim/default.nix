@@ -36,6 +36,7 @@
         fileset = lib.fileset.unions [
           ./plugin
           ./lsp
+          ./lua
         ];
       };
       impure = "~/dots/pkgs/nvim";
