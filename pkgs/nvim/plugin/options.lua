@@ -47,7 +47,7 @@ vim.o.shiftwidth = vim.o.softtabstop
 
 vim.o.virtualedit = "block"
 
-vim.o.completeopt = "menuone,noselect,fuzzy"
+vim.o.completeopt = "menuone,popup,noselect,fuzzy"
 vim.o.wildoptions = "pum,fuzzy"
 
 vim.o.pumheight = 15
