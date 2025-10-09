@@ -30,6 +30,7 @@ vim.o.splitbelow = true
 vim.o.list = true
 vim.opt.listchars = {
   trail = "·",
+  tab = "␉·",
   nbsp = "␣",
   extends = "⟩",
   precedes = "⟨",
@@ -38,8 +39,6 @@ vim.opt.listchars = {
 vim.o.scrolloff = 10
 
 vim.o.confirm = true
-
-vim.o.tabstop = 4
 
 vim.o.expandtab = true
 vim.o.softtabstop = 2
