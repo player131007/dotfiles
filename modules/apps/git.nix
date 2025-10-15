@@ -67,6 +67,8 @@
             "git@github.com:".pushInsteadOf = [ "https://github.com/" ];
           };
 
+          uploadpack.allowFilter = true;
+
           interactive = {
             diffFilter = "${lib.getExe pkgs.diff-so-fancy} --patch";
             singlekey = true;
