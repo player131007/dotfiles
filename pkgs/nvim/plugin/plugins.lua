@@ -147,7 +147,10 @@ require("conform").setup {
   default_format_opts = {
     async = true,
   },
-  format_after_save = {},
+  format_after_save = function(bufnr)
+    if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then return end
+    return {}
+  end,
 }
 
 require("mini.indentscope").setup {
