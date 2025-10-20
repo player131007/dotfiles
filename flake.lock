@@ -22,26 +22,6 @@
         "type": "github"
       }
     },
-    "flake-parts": {
-      "inputs": {
-        "nixpkgs-lib": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1756770412,
-        "narHash": "sha256-+uWLQZccFHwqpGqr2Yt5VsW/PbeJVTn9Dk6SHWhNRPw=",
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "rev": "4524271976b625a4a605beefd893f270620fd751",
-        "type": "github"
-      },
-      "original": {
-        "owner": "hercules-ci",
-        "repo": "flake-parts",
-        "type": "github"
-      }
-    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
@@ -72,21 +52,6 @@
       "original": {
         "owner": "lf-",
         "repo": "flakey-profile",
-        "type": "github"
-      }
-    },
-    "import-tree": {
-      "locked": {
-        "lastModified": 1752730890,
-        "narHash": "sha256-GES8fapSLGz36MMPRVNkSUWXUTtqvGQNXHjRmRLfJUY=",
-        "owner": "vic",
-        "repo": "import-tree",
-        "rev": "6ebb8cb87987b20264c09296166543fd3761d274",
-        "type": "github"
-      },
-      "original": {
-        "owner": "vic",
-        "repo": "import-tree",
         "type": "github"
       }
     },
@@ -211,8 +176,6 @@
     "root": {
       "inputs": {
         "fenix": "fenix",
-        "flake-parts": "flake-parts",
-        "import-tree": "import-tree",
         "lix": "lix",
         "lix-module": "lix-module",
         "mnw": "mnw",

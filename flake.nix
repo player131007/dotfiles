@@ -1,21 +1,14 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    import-tree.url = "github:vic/import-tree";
     mnw.url = "github:Gerg-L/mnw";
-
-    flake-parts = {
-      url = "github:hercules-ci/flake-parts";
-      inputs.nixpkgs-lib.follows = "nixpkgs";
-    };
+    preservation.url = "github:nix-community/preservation";
+    nix-maid.url = "github:viperML/nix-maid";
 
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    preservation.url = "github:nix-community/preservation";
-    nix-maid.url = "github:viperML/nix-maid";
 
     lix = {
       url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
@@ -34,12 +27,57 @@
   };
 
   outputs =
-    inputs:
-    inputs.flake-parts.lib.mkFlake { inherit inputs; } (
-      { lib, ... }:
-      {
-        imports = [ (inputs.import-tree ./modules) ];
-        _module.args.fromRoot = lib.path.append ./.;
-      }
-    );
+    { nixpkgs, self, ... }@inputs:
+    let
+      inherit (nixpkgs) lib;
+
+      systems = [
+        "x86_64-linux"
+        "aarch64-linux"
+        "x86_64-darwin"
+        "aarch64-darwin"
+      ];
+      forEachSystem = lib.genAttrs systems;
+    in
+    {
+      legacyPackages = forEachSystem (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+
+          rust-toolchain = inputs.fenix.packages.${system}.minimal.toolchain;
+          scope = lib.makeScope pkgs.newScope (_: {
+            rustPlatform_nightly = pkgs.makeRustPlatform {
+              rustc = rust-toolchain;
+              cargo = rust-toolchain;
+            };
+          });
+        in
+        lib.packagesFromDirectoryRecursive {
+          inherit (scope) callPackage newScope;
+          directory = ./pkgs/by-name;
+        }
+        // {
+          neovim = inputs.mnw.lib.wrap {
+            inherit pkgs;
+            inherit (inputs) mnw;
+          } ./pkgs/nvim;
+        }
+      );
+
+      devShells = forEachSystem (
+        system:
+        let
+          pkgs = nixpkgs.legacyPackages.${system};
+        in
+        {
+          nvim = pkgs.mkShellNoCC {
+            packages = [
+              self.legacyPackages.${system}.neovim.devMode
+              pkgs.npins
+            ];
+          };
+        }
+      );
+    };
 }
