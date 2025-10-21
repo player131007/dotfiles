@@ -9,8 +9,6 @@ require("mini.surround").setup {
   },
 
   n_lines = 50,
-
-  search_method = "cover_or_next",
 }
 
 -- mini.pairs
