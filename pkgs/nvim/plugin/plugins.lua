@@ -1,7 +1,5 @@
--- guess-indent.nvim
 require("guess-indent").setup {}
 
--- mini.surround
 require("mini.surround").setup {
   mappings = {
     suffix_next = "n",
@@ -11,13 +9,10 @@ require("mini.surround").setup {
   n_lines = 50,
 }
 
--- mini.pairs
 require("mini.pairs").setup {}
 
--- mini.icons
 require("mini.icons").setup {}
 
--- mini.statusline
 require("mini.statusline").setup {
   content = {
     active = function()
@@ -42,7 +37,6 @@ require("mini.statusline").setup {
   },
 }
 
--- mini.clue
 local miniclue = require("mini.clue")
 local function insert_cursor_object_clues()
   local describe = function(prefix)
