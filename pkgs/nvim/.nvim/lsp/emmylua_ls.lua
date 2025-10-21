@@ -5,9 +5,6 @@ return {
       runtime = {
         version = "LuaJIT",
       },
-      diagnostics = {
-        globals = { "MiniStatusline" },
-      },
       workspace = {
         library = {
           vim.env.VIMRUNTIME,
