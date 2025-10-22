@@ -10,16 +10,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    lix = {
-      url = "https://git.lix.systems/lix-project/lix/archive/main.tar.gz";
-      flake = false;
-    };
-    lix-module = {
-      url = "https://git.lix.systems/lix-project/nixos-module/archive/main.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.lix.follows = "lix";
-    };
-
     fenix = {
       url = "github:nix-community/fenix/monthly";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,6 +21,8 @@
     let
       inherit (nixpkgs) lib;
 
+      myLib = import ./lib { inherit lib; };
+
       systems = [
         "x86_64-linux"
         "aarch64-linux"
@@ -40,6 +32,49 @@
       forEachSystem = lib.genAttrs systems;
     in
     {
+      nixosConfigurations =
+        let
+          mkHost =
+            hostname: args:
+            lib.nixosSystem (
+              args
+              // {
+                modules =
+                  args.modules or [ ]
+                  ++ myLib.recursivelyImport [
+                    ./modules/system/base
+                    ./modules/programs/base
+
+                    ./modules/hosts/${hostname}
+                    (
+                      { lib, pkgs, ... }:
+                      {
+                        networking.hostName = lib.mkDefault hostname;
+
+                        _module.args = {
+                          my = {
+                            lib = myLib;
+                            pkgs = self.legacyPackages.${pkgs.stdenv.hostPlatform.system};
+                          };
+                        };
+                      }
+                    )
+                  ];
+
+                specialArgs = args.specialArgs or { } // {
+                  inherit inputs;
+                };
+              }
+            );
+        in
+        lib.mapAttrs mkHost {
+          tahari = {
+            modules = myLib.recursivelyImport [
+              ./modules/system/iso
+            ];
+          };
+        };
+
       legacyPackages = forEachSystem (
         system:
         let

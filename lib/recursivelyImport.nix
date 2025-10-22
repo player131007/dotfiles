@@ -6,7 +6,7 @@ let
   expandFolders =
     something:
     if !isPath something || readFileType something != "directory" then
-      something
+      [ something ]
     else
       lib.filesystem.listFilesRecursive something;
 in
