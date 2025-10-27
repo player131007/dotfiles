@@ -8,26 +8,25 @@
   appName = "nvim";
   desktopEntry = false;
 
-  initLua = # lua
-    ''
-      vim.loader.enable() -- enable this asap
+  initLua = /* lua */ ''
+    vim.loader.enable() -- enable this asap
 
-      vim.o.exrc = true -- has to be set early
+    vim.o.exrc = true -- has to be set early
 
-      vim.cmd("colorscheme wallust") -- trust me bro
+    vim.cmd("colorscheme wallust") -- trust me bro
 
-      vim.lsp.config("emmylua_ls", {
-        cmd = { "${lib.getExe pkgs.emmylua-ls}" },
-      })
-      vim.lsp.config("nixd", {
-        cmd = { "${lib.getExe pkgs.nixd}" },
-      })
+    vim.lsp.config("emmylua_ls", {
+      cmd = { "${lib.getExe pkgs.emmylua-ls}" },
+    })
+    vim.lsp.config("nixd", {
+      cmd = { "${lib.getExe pkgs.nixd}" },
+    })
 
-      require("conform").formatters = {
-        stylua = { command = "${lib.getExe pkgs.stylua}" },
-        nixfmt = { command = "${lib.getExe pkgs.nixfmt}" },
-      }
-    '';
+    require("conform").formatters = {
+      stylua = { command = "${lib.getExe pkgs.stylua}" },
+      nixfmt = { command = "${lib.getExe pkgs.nixfmt}" },
+    }
+  '';
 
   plugins = {
     dev.config = {
