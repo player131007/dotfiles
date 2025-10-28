@@ -2,8 +2,11 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     mnw.url = "github:Gerg-L/mnw";
-    preservation.url = "github:nix-community/preservation";
-    nix-maid.url = "github:viperML/nix-maid";
+
+    hjem = {
+      url = "github:feel-co/hjem";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nix-index-database = {
       url = "github:nix-community/nix-index-database";
@@ -46,23 +49,12 @@
                     ./modules/programs/base
 
                     ./modules/hosts/${hostname}
-                    (
-                      { lib, pkgs, ... }:
-                      {
-                        networking.hostName = lib.mkDefault hostname;
-
-                        _module.args = {
-                          my = {
-                            lib = myLib;
-                            pkgs = self.legacyPackages.${pkgs.stdenv.hostPlatform.system};
-                          };
-                        };
-                      }
-                    )
+                    { networking.hostName = lib.mkDefault hostname; }
                   ];
 
                 specialArgs = args.specialArgs or { } // {
                   inherit inputs;
+                  my.lib = myLib;
                 };
               }
             );
@@ -71,6 +63,14 @@
           tahari = {
             modules = myLib.recursivelyImport [
               ./modules/system/iso
+            ];
+          };
+
+          unora = {
+            modules = myLib.recursivelyImport [
+              ./modules/programs
+              ./modules/system/pc
+              { system.stateVersion = "23.05"; }
             ];
           };
         };

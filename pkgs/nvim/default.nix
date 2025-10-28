@@ -13,8 +13,6 @@
 
     vim.o.exrc = true -- has to be set early
 
-    vim.cmd("colorscheme wallust") -- trust me bro
-
     vim.lsp.config("emmylua_ls", {
       cmd = { "${lib.getExe pkgs.emmylua-ls}" },
     })
