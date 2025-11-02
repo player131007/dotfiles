@@ -20,7 +20,7 @@
     fcitx5 = {
       waylandFrontend = true;
       addons = [
-        pkgs.fcitx5-unikey
+        pkgs.qt6Packages.fcitx5-unikey
       ];
     };
   };
