@@ -155,8 +155,8 @@ let
             let
               value = {
                 d = mapAttrs (_: mkDefault) {
-                  user = if prefix == "/" then "root" else target.owner;
-                  group = if prefix == "/" then "root" else target.group;
+                  user = if target.prefix == "/" then "root" else target.owner;
+                  group = if target.prefix == "/" then "root" else target.group;
                   mode = "-";
                 };
               };
