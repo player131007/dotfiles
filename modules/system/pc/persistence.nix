@@ -2,10 +2,43 @@
   my,
   lib,
   config,
+  pkgs,
   ...
 }:
+let
+  inherit (builtins) concatStringsSep;
+in
 {
   imports = [ (my.lib.fromRoot "modules/nixos/persistence") ];
+
+  systemd.services.remount-persist-nix-store =
+    let
+      persistStore = "/persist/once/nix/store";
+    in
+    {
+      wantedBy = [ "sysinit.target" ];
+      before = [ "sysinit.target" ];
+
+      stopIfChanged = false;
+      restartIfChanged = false;
+
+      unitConfig = {
+        DefaultDependencies = false;
+        RequiresMountsFor = persistStore;
+      };
+
+      serviceConfig = {
+        Type = "oneshot";
+        ExecStart =
+          let
+            options = lib.pipe (config.boot.nixStoreMountOpts ++ [ "bind" ]) [
+              (concatStringsSep ",")
+              lib.escapeShellArg
+            ];
+          in
+          "${lib.getExe' pkgs.util-linux "mount"} -o ${options} ${persistStore} ${persistStore}";
+      };
+    };
 
   persist = lib.mkMerge [
     (
