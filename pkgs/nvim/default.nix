@@ -28,14 +28,18 @@
 
   plugins = {
     dev.config = {
-      pure = lib.fileset.toSource {
-        root = ./.;
-        fileset = lib.fileset.unions [
-          ./plugin
-          ./lsp
-          ./lua
-        ];
-      };
+      pure =
+        (lib.fileset.toSource {
+          root = ./.;
+          fileset = lib.fileset.unions [
+            ./plugin
+            ./lsp
+            ./lua
+          ];
+        })
+        // {
+          name = "+config"; # to load the config first
+        };
       impure = "~/dots/pkgs/nvim";
     };
 
