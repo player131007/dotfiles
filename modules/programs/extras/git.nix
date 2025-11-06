@@ -1,16 +1,5 @@
 { lib, pkgs, ... }:
 {
-  # FIXME: make this user-specific
-  environment.shellAliases = {
-    gs = "git status --short";
-    ga = "git add";
-    gaa = "git add -A";
-    gc = "git commit";
-    gd = "git diff";
-    gp = "git push";
-    gl = "git log --all --graph --pretty=format:'%C(brightcyan)%h  %C(white)%an  %C(yellow)%ad %C(auto)%D%n%s%n'";
-  };
-
   my.hjem = {
     packages = [ pkgs.git ];
     xdg.config.files."git/config" = {
@@ -25,6 +14,9 @@
           autocrlf = "input";
           compression = 9;
         };
+
+        alias.l = "log --all --graph --pretty=graph";
+        pretty.graph = "format:%C(brightcyan)%h  %C(white)%an  %C(yellow)%ad  %C(auto)%D%n%s%n";
 
         diff = {
           renames = "copies";
