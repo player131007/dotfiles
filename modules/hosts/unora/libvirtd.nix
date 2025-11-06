@@ -1,6 +1,6 @@
-{ pkgs, ... }:
+{ pkgs, my, ... }:
 {
-  users.users.player131007.extraGroups = [ "libvirtd" ];
+  users.users.${my.name}.extraGroups = [ "libvirtd" ];
 
   programs.virt-manager.enable = true;
   virtualisation.libvirtd = {

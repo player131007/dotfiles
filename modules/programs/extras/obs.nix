@@ -1,6 +1,6 @@
 { lib, pkgs, ... }:
 {
-  hjem.extraModules = lib.singleton (
+  my.hjem = (
     { config, ... }:
     let
       inherit (lib.types) listOf package;

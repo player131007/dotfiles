@@ -1,4 +1,4 @@
-{ pkgs, lib, ... }:
+{ pkgs, ... }:
 {
   programs.niri.enable = true;
   environment.systemPackages = [ pkgs.xwayland-satellite ];
@@ -17,7 +17,7 @@
   };
 
   xdg.icons.enable = true;
-  hjem.extraModules = lib.singleton (
+  my.hjem = (
     { config, ... }:
     {
       packages = [ pkgs.bibata-cursors ];

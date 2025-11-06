@@ -21,5 +21,5 @@ in
     );
   };
 
-  config.hjem.extraModules = lib.singleton { packages = [ pkgs.nh ]; };
+  config.my.hjem.packages = [ pkgs.nh ];
 }

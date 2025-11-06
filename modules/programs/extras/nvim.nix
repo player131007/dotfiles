@@ -1,11 +1,10 @@
 {
   inputs,
   pkgs,
-  lib,
   ...
 }:
 {
-  hjem.extraModules = lib.singleton {
+  my.hjem = {
     environment.sessionVariables = {
       EDITOR = "nvim";
       VISUAL = "nvim";

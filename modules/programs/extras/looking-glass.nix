@@ -1,7 +1,6 @@
 {
   config,
   pkgs,
-  lib,
   ...
 }:
 {
@@ -26,7 +25,7 @@
     ]
   '';
 
-  hjem.extraModules = lib.singleton {
+  my.hjem = {
     packages = [ pkgs.looking-glass-client ];
     stuff.obs.plugins = [ pkgs.obs-studio-plugins.looking-glass-obs ];
   };

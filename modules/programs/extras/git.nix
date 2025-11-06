@@ -11,7 +11,7 @@
     gl = "git log --all --graph --pretty=format:'%C(brightcyan)%h  %C(white)%an  %C(yellow)%ad %C(auto)%D%n%s%n'";
   };
 
-  hjem.extraModules = lib.singleton {
+  my.hjem = {
     packages = [ pkgs.git ];
     xdg.config.files."git/config" = {
       generator = lib.generators.toGitINI;

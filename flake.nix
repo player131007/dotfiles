@@ -54,7 +54,10 @@
 
                 specialArgs = args.specialArgs or { } // {
                   inherit inputs;
-                  my.lib = myLib;
+                  my = {
+                    lib = myLib;
+                    name = "player131007";
+                  };
                 };
               }
             );

@@ -1,25 +1,32 @@
-{ pkgs, lib, ... }:
+{
+  pkgs,
+  config,
+  my,
+  ...
+}:
+let
+  extra-config = "${config.hjem.users.${my.name}.xdg.config.directory}/qutebrowser/extra.py";
+in
 {
   fonts.packages = [
     pkgs.inter
     pkgs.iosevka
   ];
 
-  hjem.extraModules = lib.singleton (
-    { config, ... }:
-    {
-      packages = [ pkgs.qutebrowser ];
-      xdg.config.files."qutebrowser/config.py".text = /* python */ ''
-        config.load_autoconfig() # can't do this in any other file
+  my.tmpfiles.rules = [ "f ${extra-config} - - -" ];
 
-        c.fonts.tabs.selected = "500 12pt Inter Display"
-        c.fonts.tabs.unselected = "500 12pt Inter Display"
-        c.fonts.statusbar = "400 10.5pt Iosevka"
-        c.fonts.completion.category = "bold 11pt Iosevka"
-        c.fonts.completion.entry = "400 10.5pt Iosevka"
+  my.hjem = {
+    packages = [ pkgs.qutebrowser ];
+    xdg.config.files."qutebrowser/config.py".text = /* python */ ''
+      config.load_autoconfig() # can't do this in any other file
 
-        config.source("${config.xdg.config.directory}/qutebrowser/extra.py")
-      '';
-    }
-  );
+      c.fonts.tabs.selected = "500 12pt Inter Display"
+      c.fonts.tabs.unselected = "500 12pt Inter Display"
+      c.fonts.statusbar = "400 10.5pt Iosevka"
+      c.fonts.completion.category = "bold 11pt Iosevka"
+      c.fonts.completion.entry = "400 10.5pt Iosevka"
+
+      config.source("${extra-config}")
+    '';
+  };
 }

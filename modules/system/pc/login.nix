@@ -13,7 +13,7 @@
     useTextGreeter = true;
   };
 
-  hjem.extraModules = lib.singleton (
+  my.hjem = (
     { config, ... }:
     {
       # greetd will source ~/.profile when logging in
