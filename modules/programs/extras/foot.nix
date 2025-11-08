@@ -14,8 +14,7 @@ in
   services.xserver.xkb.options = "";
 
   fonts.packages = [
-    pkgs.nerd-fonts.symbols-only
-    pkgs.iosevka
+    pkgs.nerd-fonts.iosevka-term
   ];
 
   my.tmpfiles.rules = [ "f ${extra-config} - - -" ];
@@ -44,8 +43,7 @@ in
             shell = "fish";
             pad = "5x5 center";
             font = lib.concatStringsSep "," [
-              "Iosevka:style=Regular:size=9"
-              "Symbols Nerd Font Mono:size=9"
+              "IosevkaTerm Nerd Font:size=9"
             ];
             dpi-aware = "yes";
           };
