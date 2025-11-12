@@ -1,4 +1,9 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  my,
+  ...
+}:
 {
   networking.firewall = {
     allowedTCPPorts = [ 22000 ];
@@ -27,6 +32,8 @@
       STLOGFORMATLEVELSYSLOG = "true";
       STGUIADDRESS = "https://127.0.0.1:8384";
     };
+
+    unitConfig.ConditionUser = my.name;
 
     serviceConfig = {
       ExecStart = "${lib.getExe pkgs.syncthing} serve";
