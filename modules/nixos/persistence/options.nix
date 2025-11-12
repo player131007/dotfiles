@@ -1,15 +1,10 @@
 {
   lib,
   config,
-  my,
   ...
 }:
 let
-  inherit (builtins) genList concatStringsSep length;
-  inherit (my.lib) deconstructPath;
-  inherit (lib.lists) take dropEnd;
   inherit (lib.options) mkOption;
-  inherit (lib.modules) mkAliasOptionModule;
   inherit (lib.types)
     bool
     lazyAttrsOf
@@ -23,13 +18,10 @@ let
     ;
   submodule = modules: lib.types.submoduleWith { modules = lib.toList modules; };
 
-  outerConfig = config;
-
   targetOpts =
     {
       commonMountOptions,
       defaultOwner,
-      config,
       ...
     }:
     {
@@ -73,7 +65,7 @@ let
                   };
                 };
 
-                config.mountOptions = commonMountOptions;
+                config.mountOptions = lib.mkBefore commonMountOptions;
               };
             };
           };
@@ -83,13 +75,6 @@ let
           };
         };
 
-        intermediatePaths = mkOption {
-          internal = true;
-          visible = false;
-          readOnly = true;
-          type = listOf str;
-        };
-
         prefix = mkOption {
           internal = true;
           visible = false;
@@ -97,124 +82,87 @@ let
           type = path;
         };
       };
-
-      config = {
-        intermediatePaths =
-          let
-            components = dropEnd 1 (deconstructPath config.target).components;
-          in
-          genList (i: concatStringsSep "/" (take (i + 1) components)) (length components);
-      };
     };
 
-  targetType =
+  target =
     {
-      pathType,
-      targetAlias,
-      extraModules ? [ ],
       prefix ? "/",
+      relativePath ? false,
+      defaultOwner,
+      commonMountOptions,
+      targetType,
     }:
-    coercedTo pathType (target: { inherit target; }) (
-      submodule (
-        [
-          targetOpts
-          (mkAliasOptionModule targetAlias [ "target" ])
-          {
-            options.target = mkOption { type = pathType; };
-            config = { inherit prefix; };
-          }
-        ]
-        ++ extraModules
-      )
-    );
+    let
+      pathType = pathWith { absolute = !relativePath; };
+    in
+    coercedTo pathType (target: { ${targetType} = target; }) (submodule [
+      targetOpts
+      {
+        options.${targetType} = mkOption { type = pathType; };
+        config = {
+          inherit prefix;
+          _module.args = { inherit commonMountOptions defaultOwner; };
+        };
+      }
+    ]);
+
+  mkTargetOptions = targetArgs: {
+    files = mkOption {
+      type = listOf (target (targetArgs // { targetType = "file"; }));
+      default = [ ];
+    };
+
+    directories = mkOption {
+      type = listOf (target (targetArgs // { targetType = "directory"; }));
+      default = [ ];
+    };
+  };
 
   atType = submodule (
-    { name, config, ... }:
+    { name, ... }@inner:
     let
-      moduleArgs = defaultOwner: {
-        _module.args = {
-          inherit (config) commonMountOptions;
-          inherit defaultOwner;
-        };
-      };
-
-      inherit (outerConfig.users.users) root;
-
       userType = submodule (
         { name, ... }:
         let
-          user = outerConfig.users.users.${name};
+          user = config.users.users.${name};
         in
         {
-          options = {
-            files = mkOption {
-              type = listOf (targetType {
-                pathType = pathWith { absolute = false; };
-                targetAlias = [ "file" ];
-                extraModules = [ (moduleArgs user) ];
-                prefix = user.home;
-              });
-
-              default = [ ];
-            };
-
-            directories = mkOption {
-              type = listOf (targetType {
-                pathType = pathWith { absolute = false; };
-                targetAlias = [ "directory" ];
-                extraModules = [ (moduleArgs user) ];
-                prefix = user.home;
-              });
-
-              default = [ ];
-            };
+          options = mkTargetOptions {
+            defaultOwner = user;
+            prefix = user.home;
+            relativePath = true;
+            inherit (inner.config) commonMountOptions;
           };
         }
       );
-
     in
     {
-      options = {
-        enable = mkOption {
-          type = bool;
-          default = true;
+      options =
+        mkTargetOptions {
+          defaultOwner = config.users.users.root;
+          inherit (inner.config) commonMountOptions;
+        }
+        // {
+          enable = mkOption {
+            type = bool;
+            default = true;
+          };
+
+          storagePath = mkOption {
+            type = path;
+            default = name;
+          };
+
+          commonMountOptions = mkOption {
+            type = listOf str;
+            default = [ "X-fstrim.notrim" ];
+          };
+
+          users = mkOption {
+            type = lazyAttrsOf userType;
+            default = { };
+          };
         };
-
-        storagePath = mkOption {
-          type = path;
-          default = name;
-        };
-
-        commonMountOptions = mkOption {
-          type = listOf str;
-          default = [ "X-fstrim.notrim" ];
-        };
-
-        files = mkOption {
-          type = listOf (targetType {
-            pathType = path;
-            targetAlias = [ "file" ];
-            extraModules = [ (moduleArgs root) ];
-          });
-
-          default = [ ];
-        };
-
-        directories = mkOption {
-          type = listOf (targetType {
-            pathType = path;
-            targetAlias = [ "directory" ];
-            extraModules = [ (moduleArgs root) ];
-          });
-
-          default = [ ];
-        };
-
-        users = mkOption {
-          type = lazyAttrsOf userType;
-          default = { };
-        };
-      };
     }
   );
 in

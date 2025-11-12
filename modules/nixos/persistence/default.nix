@@ -7,14 +7,23 @@
 let
   inherit (builtins)
     filter
+    getAttr
+    partition
     mapAttrs
     attrValues
     concatMap
-    replaceStrings
     concatStringsSep
+    genList
+    length
     ;
-  inherit (my.lib) concatPaths;
-  inherit (lib.lists) concatLists singleton optional;
+  inherit (lib.lists)
+    optional
+    singleton
+    take
+    dropEnd
+    ;
+  inherit (my.lib) concatPaths deconstructPath;
+  inherit (lib.strings) optionalString;
   inherit (lib.trivial) pipe;
   inherit (lib.modules) mkMerge mkIf mkDefault;
 
@@ -22,152 +31,140 @@ let
   isSymlink = target: target.method ? symlink;
   isBindMount = target: target.method ? bindmount;
 
-  getTargets =
-    { inInitrd, cfg }:
-    let
-      inherit (cfg) files directories;
-    in
-    filter (t: t.inInitrd == inInitrd) (files ++ directories);
+  getPath = target: target.file or target.directory;
 
-  getAllTargets =
-    { inInitrd, cfg }:
+  mkTargetPaths =
+    forInitrd: target:
     let
-      normalTargets = getTargets { inherit inInitrd cfg; };
-      userTargets = map (cfg: (getTargets { inherit inInitrd cfg; })) (builtins.attrValues cfg.users);
-    in
-    normalTargets ++ concatLists userTargets;
-
-  mkPersist =
-    { inInitrd }:
-    let
-      prefix = if inInitrd then "/sysroot" else "/";
-
-      mkStuff =
-        handleTarget:
-        pipe config.persist.at [
-          attrValues
-          (concatMap (
-            cfg:
-            map (handleTarget cfg.storagePath) (getAllTargets {
-              inherit inInitrd cfg;
-            })
-          ))
-          mkMerge
+      mkPath =
+        extra: isStoragePath:
+        concatPaths [
+          (optionalString forInitrd "/sysroot")
+          (optionalString isStoragePath target.storagePath)
+          target.prefix
+          extra
         ];
 
-      mkTargetPaths =
-        storagePath: target:
-        let
-          mkPath =
-            extra: isStoragePath:
-            concatPaths (concatLists [
-              [ prefix ]
-              (optional isStoragePath storagePath)
-              [
-                target.prefix
-                extra
-              ]
-            ]);
+      mkPaths = extra: {
+        source = mkPath extra true;
+        dest = mkPath extra false;
+      };
 
-          sth = {
-            source = true;
-            dest = false;
+      components = pipe target [
+        getPath
+        (p: (deconstructPath p).components)
+        (dropEnd 1)
+      ];
+      intermediatePaths = genList (i: concatStringsSep "/" (take (i + 1) components)) (length components);
+    in
+    {
+      real = mkPaths (getPath target);
+      intermediate = map mkPaths intermediatePaths;
+    };
+
+  mkMount =
+    forInitrd: target:
+    assert isBindMount target;
+    let
+      path = (mkTargetPaths forInitrd target).real;
+    in
+    lib.mkMerge [
+      {
+        what = path.source;
+        where = path.dest;
+        options = concatStringsSep "," (target.method.bindmount.mountOptions ++ [ "bind" ]);
+
+        unitConfig.DefaultDependencies = false;
+        conflicts = [ "umount.target" ];
+        requiredBy = [ "persistence.target" ];
+        before = [
+          "persistence.target"
+          "umount.target"
+        ];
+      }
+      {
+        # directories can be created when mounting so we put it before tmpfiles
+        # i heard this avoids dependency hell
+        # source file needs to exist for systemd to mount, so put files after tmpfiles
+        ${if isDirectory target then "before" else "after"} =
+          if forInitrd then
+            [ "systemd-tmpfiles-setup-sysroot.service" ]
+          else
+            [ "systemd-tmpfiles-setup.service" ];
+      }
+      target.method.bindmount.extraConfig
+    ];
+
+  mkSymlink =
+    forInitrd: target:
+    assert isSymlink target;
+    let
+      inherit ((mkTargetPaths forInitrd target).real) dest;
+      inherit ((mkTargetPaths false target).real) source;
+    in
+    {
+      # because the symlink is for stage 2 and not initrd
+      # we symlink it to the real source
+      ${dest}.L.argument = source;
+    };
+
+  mkTmpfilesRules =
+    forInitrd: target:
+    let
+      tmpfiles-type = if isDirectory target then "d" else "f";
+      paths = mkTargetPaths forInitrd target;
+    in
+    mkMerge (
+      map (
+        path:
+        let
+          value.d = mapAttrs (_: mkDefault) {
+            user = if target.prefix == "/" then "root" else target.owner;
+            group = if target.prefix == "/" then "root" else target.group;
           };
         in
         {
-          real = mapAttrs (_: mkPath target.target) sth;
-          intermediate = map (path: mapAttrs (_: mkPath path) sth) target.intermediatePaths;
+          ${path.dest} = value;
+          ${path.source} = value;
+        }
+      ) paths.intermediate
+      ++ optional (target.method.symlink.createLinkTarget or true) {
+        ${paths.real.source}.${tmpfiles-type} = {
+          user = target.owner;
+          inherit (target) group mode;
         };
+      }
+    );
+
+  getTargetsInPath =
+    cfg:
+    concatMap (c: map (t: t // { inherit (cfg) storagePath; }) (c.files ++ c.directories)) (
+      attrValues cfg.users ++ [ cfg ]
+    );
+
+  allTargets = pipe config.persist.at [
+    attrValues
+    (concatMap getTargetsInPath)
+    (partition (t: t.inInitrd))
+  ];
+
+  mkPersist =
+    forInitrd:
+    let
+      targets = getAttr (if forInitrd then "right" else "wrong") allTargets;
     in
     {
-      mounts = mkStuff (
-        storagePath: target:
-        let
-          path = (mkTargetPaths storagePath target).real;
-          targetUnit = if inInitrd then "persistence-initrd.target" else "persistence.target";
-        in
-        optional (isBindMount target) (mkMerge [
-          {
-            what = path.source;
-            where = path.dest;
-            options = pipe target.method.bindmount.mountOptions [
-              (
-                opts:
-                concatLists [
-                  [ "bind" ]
-                  (optional inInitrd "x-initrd.mount")
-                  opts
-                ]
-              )
-              (map (replaceStrings [ "%" ] [ "%%" ]))
-              (concatStringsSep ",")
-            ];
+      mounts = pipe targets [
+        (filter isBindMount)
+        (map (mkMount forInitrd))
+      ];
 
-            unitConfig.DefaultDependencies = false;
-            conflicts = [ "umount.target" ];
-            wantedBy = [ targetUnit ];
-            before = [
-              targetUnit
-              "umount.target"
-            ];
-          }
-          {
-            # i heard putting directory mounts after tmpfiles creates dependency hell
-            # since systemd mounts can create directories for you, just put directories before tmpfiles
-            # and it can change directory permissions later
-            # source file needs to exist for systemd to mount, so put files after tmpfiles
-            ${if (isDirectory target) then "before" else "after"} =
-              if inInitrd then
-                [ "systemd-tmpfiles-setup-sysroot.service" ]
-              else
-                [ "systemd-tmpfiles-setup.service" ];
-          }
-          target.method.bindmount.extraConfig
-        ])
-      );
-      tmpfiles.settings.persistence = mkStuff (
-        storagePath: target:
-        let
-          tmpfiles-type = if isDirectory target then "d" else "f";
-
-          paths = mkTargetPaths storagePath target;
-        in
-        mkMerge (
-          [
-            # destination perms will be the same as source
-            (mkIf (target.method.symlink.createLinkTarget or true) {
-              ${paths.real.source}.${tmpfiles-type} = {
-                user = target.owner;
-                inherit (target) group mode;
-              };
-            })
-
-            (mkIf (isSymlink target) {
-              ${paths.real.dest}.L.argument = concatPaths [
-                storagePath
-                target.prefix
-                target.target
-              ];
-            })
-          ]
-          ++ map (
-            path:
-            let
-              value = {
-                d = mapAttrs (_: mkDefault) {
-                  user = if target.prefix == "/" then "root" else target.owner;
-                  group = if target.prefix == "/" then "root" else target.group;
-                  mode = "-";
-                };
-              };
-            in
-            {
-              ${path.dest} = value;
-              ${path.source} = value;
-            }
-          ) paths.intermediate
-
-        )
+      tmpfiles.settings.persistence = mkMerge (
+        map (mkTmpfilesRules forInitrd) targets
+        ++ pipe targets [
+          (filter isSymlink)
+          (map (mkSymlink forInitrd))
+        ]
       );
     };
 in
@@ -181,17 +178,17 @@ in
     };
 
     boot.initrd.systemd = mkMerge [
-      (mkPersist { inInitrd = true; })
       {
-        targets.persistence-initrd = {
+        targets.persistence = {
           description = "Initrd Persistence Mounts";
           wantedBy = [ "initrd.target" ];
           before = [ "initrd.target" ];
         };
       }
+      (mkPersist true)
     ];
+
     systemd = mkMerge [
-      (mkPersist { inInitrd = false; })
       {
         targets.persistence = {
           description = "Persistence Mounts";
@@ -199,6 +196,7 @@ in
           before = [ "sysinit.target" ];
         };
       }
+      (mkPersist false)
     ];
   };
 }
