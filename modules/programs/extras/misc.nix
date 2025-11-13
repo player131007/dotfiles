@@ -1,6 +1,7 @@
 { pkgs, ... }:
 {
   my.hjem.packages = with pkgs; [
+    npins
     jq
     calc
     brightnessctl
