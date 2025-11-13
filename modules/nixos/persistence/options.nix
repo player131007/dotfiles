@@ -44,6 +44,11 @@ let
           default = "-";
         };
 
+        extraTmpfiles = mkOption {
+          type = lazyAttrsOf anything;
+          default = { };
+        };
+
         method = mkOption {
           type = attrTag {
             symlink = mkOption {

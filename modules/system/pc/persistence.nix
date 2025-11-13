@@ -57,8 +57,9 @@ in
             {
               file = "/etc/machine-id";
               inInitrd = true;
-              # needs to be dangling at first boot
-              method.symlink.createLinkTarget = false;
+              mode = "0444";
+              extraTmpfiles.argument = "uninitialized";
+              method.symlink.createLinkTarget = true;
             }
             "/etc/adjtime"
           ];

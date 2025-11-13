@@ -129,10 +129,13 @@ let
         }
       ) paths.intermediate
       ++ optional (target.method.symlink.createLinkTarget or true) {
-        ${paths.real.source}.${tmpfiles-type} = {
-          user = target.owner;
-          inherit (target) group mode;
-        };
+        ${paths.real.source}.${tmpfiles-type} = mkMerge [
+          {
+            user = target.owner;
+            inherit (target) group mode;
+          }
+          target.extraTmpfiles
+        ];
       }
     );
 
