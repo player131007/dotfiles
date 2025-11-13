@@ -77,20 +77,5 @@
             ];
           };
         };
-
-      devShells = forEachSystem (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-        in
-        {
-          nvim = pkgs.mkShellNoCC {
-            packages = [
-              self.legacyPackages.${system}.neovim.devMode
-              pkgs.npins
-            ];
-          };
-        }
-      );
     };
 }
