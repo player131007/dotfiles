@@ -78,31 +78,6 @@
           };
         };
 
-      legacyPackages = forEachSystem (
-        system:
-        let
-          pkgs = nixpkgs.legacyPackages.${system};
-
-          rust-toolchain = inputs.fenix.packages.${system}.minimal.toolchain;
-          scope = lib.makeScope pkgs.newScope (_: {
-            rustPlatform_nightly = pkgs.makeRustPlatform {
-              rustc = rust-toolchain;
-              cargo = rust-toolchain;
-            };
-          });
-        in
-        lib.packagesFromDirectoryRecursive {
-          inherit (scope) callPackage newScope;
-          directory = ./pkgs/by-name;
-        }
-        // {
-          neovim = inputs.mnw.lib.wrap {
-            inherit pkgs;
-            inherit (inputs) mnw;
-          } ./pkgs/nvim;
-        }
-      );
-
       devShells = forEachSystem (
         system:
         let

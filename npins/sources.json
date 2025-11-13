@@ -1,0 +1,70 @@
+{
+  "pins": {
+    "fenix": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "fenix"
+      },
+      "branch": "monthly",
+      "submodules": false,
+      "revision": "3107255abfe4f2d1c3eee7a3e2f5a5eb6f2200fe",
+      "url": "https://github.com/nix-community/fenix/archive/3107255abfe4f2d1c3eee7a3e2f5a5eb6f2200fe.tar.gz",
+      "hash": "1rp8pfrb8k8652897pyfxrar5ws2avq072ny3i9kgpp46jz8rjla"
+    },
+    "hjem": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "feel-co",
+        "repo": "hjem"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "6e144632e3d8cfa7d7cfcc9504e10a032837f22a",
+      "url": "https://github.com/feel-co/hjem/archive/6e144632e3d8cfa7d7cfcc9504e10a032837f22a.tar.gz",
+      "hash": "19n3fjmvm3qgzgzbmpmi0fnwbiar8xf19lg6qby7ydl2x4r1kfhw"
+    },
+    "mnw": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "Gerg-L",
+        "repo": "mnw"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "cfbc7d1cc832e318d0863a5fc91d940a96034001",
+      "url": "https://github.com/Gerg-L/mnw/archive/cfbc7d1cc832e318d0863a5fc91d940a96034001.tar.gz",
+      "hash": "0s369nzhlxnzj82l64nxi711a8kaibzikmlxrbcsigbwh5ijzck3"
+    },
+    "nix-index-database": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nix-community",
+        "repo": "nix-index-database"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "359ff6333a7b0b60819d4c20ed05a3a1f726771f",
+      "url": "https://github.com/nix-community/nix-index-database/archive/359ff6333a7b0b60819d4c20ed05a3a1f726771f.tar.gz",
+      "hash": "0yl02jg51i0vs6mxli1jwv4zkxwbpyyism9ci7cir1a5d7g6zv9y"
+    },
+    "nixpkgs": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "NixOS",
+        "repo": "nixpkgs"
+      },
+      "branch": "nixos-unstable",
+      "submodules": false,
+      "revision": "2fb006b87f04c4d3bdf08cfdbc7fab9c13d94a15",
+      "url": "https://github.com/NixOS/nixpkgs/archive/2fb006b87f04c4d3bdf08cfdbc7fab9c13d94a15.tar.gz",
+      "hash": "1v7xb8aamka3ajv6na7m41fq65xig7h1pacwj2dyjg12kchjb7wh"
+    }
+  },
+  "version": 5
+}
