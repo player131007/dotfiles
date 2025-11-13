@@ -1,12 +1,10 @@
 {
   lib,
   pkgs,
-  config,
-  my,
   ...
 }:
 let
-  extra-config = "${config.hjem.users.${my.name}.xdg.config.directory}/foot/extra.ini";
+  inherit (lib.generators) toINI mkKeyValueDefault mkValueStringDefault;
 in
 {
   # without this, ctrl/alt + backspace on the combo fish + foot doesn't work
@@ -17,43 +15,41 @@ in
     pkgs.nerd-fonts.iosevka-term
   ];
 
-  my.tmpfiles.rules = [ "f ${extra-config} - - -" ];
-
   my.hjem = {
     packages = [ pkgs.foot ];
     xdg.config.files."foot/foot.ini" = {
-      generator =
-        let
-          inherit (lib.generators) toINI mkKeyValueDefault mkValueStringDefault;
-        in
-        (
-          v:
-          lib.pipe v.config [
-            (map (toINI {
-              mkKeyValue = mkKeyValueDefault {
-                mkValueString = v: if v == "" then "\"\"" else (mkValueStringDefault { } v);
-              } "=";
-            }))
-            lib.strings.concatLines
-          ]
-        );
-      value.config = [
-        {
-          main = {
-            shell = "fish";
-            pad = "5x5 center";
-            font = lib.concatStringsSep "," [
-              "IosevkaTerm Nerd Font:size=9"
-            ];
-            dpi-aware = "yes";
-          };
-          cursor.blink = "yes";
-          colors.alpha = 0.9;
-        }
-        {
-          main.include = extra-config;
-        }
-      ];
+      type = "copy";
+      clobber = true;
+
+      generator = toINI {
+        listsAsDuplicateKeys = true;
+        mkKeyValue = mkKeyValueDefault {
+          mkValueString =
+            v:
+            mkValueStringDefault { } (
+              if v == true then
+                "yes"
+              else if v == false then
+                "no"
+              else if v == null then
+                "none"
+              else
+                v
+            );
+        } "=";
+      };
+      value = {
+        main = {
+          shell = "fish";
+          pad = "5x5 center";
+          font = lib.concatStringsSep "," [
+            "IosevkaTerm Nerd Font:size=9"
+          ];
+          dpi-aware = "yes";
+        };
+        cursor.blink = "yes";
+        colors.alpha = 0.9;
+      };
     };
   };
 }
