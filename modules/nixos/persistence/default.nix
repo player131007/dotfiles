@@ -148,7 +148,7 @@ let
   allTargets = pipe config.persist.at [
     attrValues
     (concatMap getTargetsInPath)
-    (partition (t: t.inInitrd))
+    (partition (t: t.early))
   ];
 
   mkPersist =

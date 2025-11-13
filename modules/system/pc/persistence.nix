@@ -56,7 +56,7 @@ in
           files = [
             {
               file = "/etc/machine-id";
-              inInitrd = true;
+              early = true;
               mode = "0444";
               extraTmpfiles.argument = "uninitialized";
               method.symlink.createLinkTarget = true;
@@ -75,7 +75,7 @@ in
             }
             {
               directory = "/nix";
-              inInitrd = true;
+              early = true;
             }
           ];
         };

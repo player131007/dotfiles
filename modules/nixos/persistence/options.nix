@@ -26,7 +26,7 @@ let
     }:
     {
       options = {
-        inInitrd = mkOption {
+        early = mkOption {
           type = bool;
           default = false;
         };
