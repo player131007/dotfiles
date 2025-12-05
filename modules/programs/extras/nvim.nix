@@ -1,8 +1,4 @@
-{
-  inputs,
-  pkgs,
-  ...
-}:
+{ myPkgs, ... }:
 {
   my.hjem = {
     environment.sessionVariables = {
@@ -10,6 +6,6 @@
       VISUAL = "nvim";
     };
 
-    packages = [ inputs.self.legacyPackages.${pkgs.stdenv.hostPlatform.system}.neovim ];
+    packages = [ myPkgs.neovim ];
   };
 }

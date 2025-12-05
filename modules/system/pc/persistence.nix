@@ -1,5 +1,5 @@
 {
-  my,
+  myLib,
   lib,
   config,
   pkgs,
@@ -9,7 +9,7 @@ let
   inherit (builtins) concatStringsSep;
 in
 {
-  imports = [ (my.lib.fromRoot "modules/nixos/persistence") ];
+  imports = [ (myLib.fromRoot "modules/nixos/persistence") ];
 
   systemd.services.remount-persist-nix-store =
     let

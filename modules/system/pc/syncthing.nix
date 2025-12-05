@@ -1,7 +1,7 @@
 {
   lib,
   pkgs,
-  my,
+  username,
   ...
 }:
 {
@@ -33,7 +33,7 @@
       STGUIADDRESS = "https://127.0.0.1:8384";
     };
 
-    unitConfig.ConditionUser = my.name;
+    unitConfig.ConditionUser = username;
 
     serviceConfig = {
       ExecStart = "${lib.getExe pkgs.syncthing} serve";

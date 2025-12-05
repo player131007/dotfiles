@@ -1,6 +1,6 @@
-{ pkgs, my, ... }:
+{ pkgs, username, ... }:
 {
-  users.users.${my.name}.extraGroups = [ "libvirtd" ];
+  users.users.${username}.extraGroups = [ "libvirtd" ];
 
   programs.virt-manager.enable = true;
   virtualisation.libvirtd = {

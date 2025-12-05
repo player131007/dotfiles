@@ -1,28 +1,31 @@
 {
   config,
   lib,
-  inputs,
+  sources,
   pkgs,
-  my,
+  username,
   ...
 }:
+let
+  hjem = import sources.hjem { inherit pkgs; };
+in
 {
   imports = [
-    inputs.hjem.nixosModules.default
-    (lib.mkAliasOptionModule [ "my" "hjem" ] [ "hjem" "users" my.name ])
-    (lib.mkAliasOptionModule [ "my" "tmpfiles" ] [ "systemd" "user" "tmpfiles" "users" my.name ])
+    hjem.nixosModules.hjem
+    (lib.mkAliasOptionModule [ "my" "hjem" ] [ "hjem" "users" username ])
+    (lib.mkAliasOptionModule [ "my" "tmpfiles" ] [ "systemd" "user" "tmpfiles" "users" username ])
   ];
 
   users.mutableUsers = false;
-  users.users.${my.name} = {
+  users.users.${username} = {
     isNormalUser = true;
     homeMode = "0700";
-    hashedPasswordFile = "/persist/password/${my.name}";
+    hashedPasswordFile = "/persist/password/${username}";
     extraGroups = [ "wheel" ];
   };
   persist.at.oncedir.directories =
     let
-      user = config.users.users.${my.name};
+      user = config.users.users.${username};
     in
     lib.singleton {
       directory = user.home;
@@ -32,8 +35,8 @@
     };
 
   hjem = {
-    linker = inputs.hjem.packages.${pkgs.stdenv.hostPlatform.system}.smfh;
-    users.${my.name}.enable = true;
+    linker = hjem.packages.smfh;
+    users.${username}.enable = true;
   };
 
   services.userborn.enable = true;

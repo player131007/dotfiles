@@ -1,7 +1,7 @@
 {
   config,
   lib,
-  my,
+  myLib,
   ...
 }:
 let
@@ -22,7 +22,7 @@ let
     take
     dropEnd
     ;
-  inherit (my.lib) concatPaths deconstructPath;
+  inherit (myLib) concatPaths deconstructPath;
   inherit (lib.strings) optionalString;
   inherit (lib.trivial) pipe;
   inherit (lib.modules) mkMerge mkIf mkDefault;
