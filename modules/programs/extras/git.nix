@@ -29,7 +29,7 @@
         };
 
         url = {
-          "git@github.com:player131007/".insteadOf = [ "me:" ];
+          "https://github.com/player131007/".insteadOf = [ "me:" ];
           "https://github.com/".insteadOf = [
             "gh:"
             "github:"
