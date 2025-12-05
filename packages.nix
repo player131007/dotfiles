@@ -1,5 +1,7 @@
+let
+  sources = import ./npins;
+in
 {
-  sources ? import ./npins,
   pkgs ? import sources.nixpkgs { },
 }:
 let
@@ -7,8 +9,7 @@ let
 
   fenix = import sources.fenix {
     inherit (pkgs.stdenv.hostPlatform) system;
-    pkgs = pkgs;
-    lib = lib;
+    inherit pkgs lib;
   };
   mnw = import sources.mnw;
 
