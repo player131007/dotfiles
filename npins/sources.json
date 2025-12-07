@@ -39,18 +39,18 @@
       "url": "https://github.com/Gerg-L/mnw/archive/68a22f62ca7623fcb700d4ebf225bd91125c773e.tar.gz",
       "hash": "0lcsrd8x3585xsl94mnz3k6s2vhsbwb4fynwawlh6ajp2qh3j3l9"
     },
-    "nix-index-database": {
+    "nix-index-cache": {
       "type": "Git",
       "repository": {
         "type": "GitHub",
-        "owner": "nix-community",
-        "repo": "nix-index-database"
+        "owner": "player131007",
+        "repo": "nix-index-cache"
       },
       "branch": "main",
       "submodules": false,
-      "revision": "359ff6333a7b0b60819d4c20ed05a3a1f726771f",
-      "url": "https://github.com/nix-community/nix-index-database/archive/359ff6333a7b0b60819d4c20ed05a3a1f726771f.tar.gz",
-      "hash": "0yl02jg51i0vs6mxli1jwv4zkxwbpyyism9ci7cir1a5d7g6zv9y"
+      "revision": "61ba80b4c053fb84b8a8a367ada29b09976a393e",
+      "url": "https://github.com/player131007/nix-index-cache/archive/61ba80b4c053fb84b8a8a367ada29b09976a393e.tar.gz",
+      "hash": "17330qxx54w14q4bsk1aiz7xnd5mbyv82fvbjg4m07mv3nd582cq"
     },
     "nixpkgs": {
       "type": "Git",
