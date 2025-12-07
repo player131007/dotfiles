@@ -30,11 +30,15 @@
 
         url = {
           "https://github.com/player131007/".insteadOf = [ "me:" ];
-          "https://github.com/".insteadOf = [
+          "https://github.com/".insteadOf = [ "gh:" ];
+          "git@github.com:".pushInsteadOf = [
+            "https://github.com/"
             "gh:"
-            "github:"
           ];
-          "git@github.com:".pushInsteadOf = [ "https://github.com/" ];
+          "git@github.com:player131007/".pushInsteadOf = [
+            "https://github.com/player131007/"
+            "me:"
+          ];
         };
 
         uploadpack.allowFilter = true;
