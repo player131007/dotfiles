@@ -18,6 +18,7 @@ in
   my.hjem = {
     packages = [ pkgs.foot ];
     xdg.config.files."foot/foot.ini" = {
+      enable = true;
       type = "copy";
       clobber = true;
 
@@ -40,7 +41,6 @@ in
       };
       value = {
         main = {
-          shell = "fish";
           pad = "5x5 center";
           font = lib.concatStringsSep "," [
             "IosevkaTerm Nerd Font:size=9"
