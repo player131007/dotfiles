@@ -8,22 +8,18 @@
   appName = "nvim";
   desktopEntry = false;
 
+  extraBinPath = with pkgs; [
+    emmylua-ls
+    nixd
+
+    stylua
+    nixfmt
+  ];
+
   initLua = /* lua */ ''
     vim.loader.enable() -- enable this asap
 
     vim.o.exrc = true -- has to be set early
-
-    vim.lsp.config("emmylua_ls", {
-      cmd = { "${lib.getExe pkgs.emmylua-ls}" },
-    })
-    vim.lsp.config("nixd", {
-      cmd = { "${lib.getExe pkgs.nixd}" },
-    })
-
-    require("conform").formatters = {
-      stylua = { command = "${lib.getExe pkgs.stylua}" },
-      nixfmt = { command = "${lib.getExe pkgs.nixfmt}" },
-    }
   '';
 
   plugins = {
