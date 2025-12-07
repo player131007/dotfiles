@@ -33,7 +33,6 @@
           root = ./.;
           fileset = lib.fileset.unions [
             ./plugin
-            ./lsp
             ./lua
           ];
         })
