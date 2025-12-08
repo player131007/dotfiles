@@ -2,7 +2,6 @@
   myLib,
   lib,
   config,
-  pkgs,
   ...
 }:
 let
@@ -11,33 +10,20 @@ in
 {
   imports = [ (myLib.fromRoot "modules/nixos/persistence") ];
 
-  systemd.services.remount-persist-nix-store =
+  boot.initrd.systemd.mounts =
     let
-      persistStore = "/persist/once/nix/store";
+      nixStore = toString (/sysroot + config.persist.at.oncedir.storagePath + "/nix/store");
     in
-    {
-      wantedBy = [ "sysinit.target" ];
-      before = [ "sysinit.target" ];
+    lib.singleton {
+      wantedBy = [ "initrd.target" ];
+      before = [
+        "initrd.target"
+        config.boot.initrd.systemd.targets.persistence.name
+      ];
 
-      stopIfChanged = false;
-      restartIfChanged = false;
-
-      unitConfig = {
-        DefaultDependencies = false;
-        RequiresMountsFor = persistStore;
-      };
-
-      serviceConfig = {
-        Type = "oneshot";
-        ExecStart =
-          let
-            options = lib.pipe (config.boot.nixStoreMountOpts ++ [ "bind" ]) [
-              (concatStringsSep ",")
-              lib.escapeShellArg
-            ];
-          in
-          "${lib.getExe' pkgs.util-linux "mount"} -o ${options} ${persistStore} ${persistStore}";
-      };
+      what = nixStore;
+      where = nixStore;
+      options = concatStringsSep "," ([ "bind" ] ++ config.boot.nixStoreMountOpts);
     };
 
   persist = lib.mkMerge [
@@ -76,6 +62,9 @@ in
             {
               directory = "/nix";
               early = true;
+              method.bindmount.extraConfig = {
+                options = "private";
+              };
             }
           ];
         };
