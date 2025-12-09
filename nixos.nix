@@ -27,10 +27,22 @@ let
                 networking.hostName = lib.mkDefault hostname;
                 _module.args.myPkgs = import ./packages.nix { inherit pkgs; };
 
-                nixpkgs.flake.source = sources.nixpkgs.outPath;
+                nix = {
+                  registry.nixpkgs.to = {
+                    type = "path";
+                    path = sources.nixpkgs.outPath;
+                  };
+                  nixPath = [
+                    "nixpkgs=${sources.nixpkgs.outPath}"
+                  ];
+                };
                 system.nixos = {
-                  versionSuffix = ".${builtins.substring 0 8 config.system.nixos.revision}";
-                  inherit (sources.nixpkgs) revision;
+                  versionSuffix =
+                    let
+                      inherit (config.system.nixos) revision;
+                    in
+                    if revision == "dirty" then ".dirty" else ".${builtins.substring 0 8 revision}";
+                  revision = sources.nixpkgs.revision or "dirty";
                 };
               }
             )
