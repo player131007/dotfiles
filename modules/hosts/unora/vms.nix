@@ -23,11 +23,19 @@
   boot.extraModulePackages = [ config.boot.kernelPackages.kvmfr ];
   boot.kernelModules = [ "kvmfr" ];
   boot.extraModprobeConfig = "options kvmfr static_size_mb=32";
-  services.udev.packages = lib.singleton (
-    pkgs.writeTextDir "etc/udev/rules.d/70-kvmfr.rules" /* udev */ ''
-      SUBSYSTEM=="kvmfr", GROUP="kvm", MODE="0660", TAG+="uaccess"
-    ''
-  );
+  services.udev.packages =
+    let
+      owner = if config.virtualisation.libvirtd.qemu.runAsRoot then "root" else "qemu-libvirtd";
+    in
+    lib.singleton (
+      pkgs.writeTextDir "etc/udev/rules.d/70-kvmfr.rules" /* udev */ ''
+        SUBSYSTEM=="kvmfr", OWNER="${owner}", GROUP="kvm", MODE="0660", TAG+="uaccess"
+      ''
+    );
+
+  networking.firewall.extraInputRules = lib.mkIf (config.networking.firewall.backend == "nftables") ''
+    ether saddr "52:54:00:ff:47:16" accept comment "virtual machine"
+  '';
 
   virtualisation.libvirtd.qemu.verbatimConfig =
     let
