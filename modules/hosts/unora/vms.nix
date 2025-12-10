@@ -1,9 +1,24 @@
 {
   config,
   pkgs,
+  username,
   ...
 }:
 {
+  users.users.${username}.extraGroups = [ "libvirtd" ];
+
+  persist.at.persistdir.directories = [ "/var/lib/libvirt" ];
+  virtualisation.libvirtd = {
+    enable = true;
+    onShutdown = "shutdown";
+    onBoot = "ignore";
+    shutdownTimeout = 30;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      runAsRoot = false;
+    };
+  };
+
   boot.extraModulePackages = [ config.boot.kernelPackages.kvmfr ];
   boot.kernelModules = [ "kvmfr" ];
   boot.extraModprobeConfig = "options kvmfr static_size_mb=32";
