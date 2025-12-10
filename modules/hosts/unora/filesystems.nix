@@ -31,34 +31,23 @@
     };
   };
 
-  systemd.mounts = [
-    {
-      what = "/dev/disk/by-label/d";
-      where = "/d";
-      type = "ext4";
-      options = lib.concatStringsSep "," [
-        "relatime"
-        "lazytime"
+  # using `fileSystems` blows up boot if mounting fails (i think)
+  systemd.mounts =
+    map
+      (label: {
+        wantedBy = [ "local-fs.target" ];
+        before = [ "local-fs.target" ];
+
+        what = "/dev/disk/by-label/${label}";
+        where = "/${label}";
+
+        options = lib.concatStringsSep "," [
+          "relatime"
+          "lazytime"
+        ];
+      })
+      [
+        "d"
+        "windows"
       ];
-    }
-    {
-      what = "/dev/disk/by-label/windows";
-      where = "/windows";
-      type = "ext4";
-      options = lib.concatStringsSep "," [
-        "relatime"
-        "lazytime"
-      ];
-    }
-  ];
-  systemd.automounts = [
-    {
-      where = "/d";
-      wantedBy = [ "local-fs.target" ];
-    }
-    {
-      where = "/windows";
-      wantedBy = [ "local-fs.target" ];
-    }
-  ];
 }
