@@ -3,6 +3,9 @@
 // Check the wiki for a full description of the configuration:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Introduction
 
+// Done here because autostart doesn't have XCURSOR_* env vars
+spawn-at-startup "keepassxc"
+
 clipboard {
     disable-primary
 }
