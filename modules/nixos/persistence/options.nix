@@ -98,7 +98,10 @@ let
       targetType,
     }:
     let
-      pathType = pathWith { absolute = !relativePath; };
+      pathType = pathWith {
+        absolute = !relativePath;
+        inStore = false;
+      };
     in
     coercedTo pathType (target: { ${targetType} = target; }) (submodule [
       targetOpts
