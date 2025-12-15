@@ -17,12 +17,8 @@
   };
 
   xdg.icons.enable = true;
-  my.hjem = (
-    { config, ... }:
-    {
-      packages = [ pkgs.bibata-cursors ];
-      xdg.config.files."niri/config.kdl".source =
-        "${config.directory}/dots/modules/programs/extras/niri/config.kdl";
-    }
-  );
+  my.hjem = {
+    packages = [ pkgs.bibata-cursors ];
+    xdg.config.files."niri/config.kdl".source = toString ./config.kdl;
+  };
 }
