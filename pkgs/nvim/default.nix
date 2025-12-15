@@ -23,19 +23,15 @@
   '';
 
   plugins = {
-    dev.config = {
-      pure =
-        (lib.fileset.toSource {
-          root = ./.;
-          fileset = lib.fileset.unions [
-            ./plugin
-            ./lua
-          ];
-        })
-        // {
-          name = "+config"; # to load the config first
-        };
-      impure = "~/dots/pkgs/nvim";
+    dev."+config" = {
+      pure = lib.fileset.toSource {
+        root = ./.;
+        fileset = lib.fileset.unions [
+          ./plugin
+          ./lua
+        ];
+      };
+      impure = toString ./.;
     };
 
     start = mnw.lib.npinsToPlugins pkgs ./start.json;
