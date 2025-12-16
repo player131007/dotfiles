@@ -21,7 +21,7 @@ vim.keymap.set("i", "<Tab>", function()
 
   local text = vim.api.nvim_buf_get_text(0, row, 0, row, col, {})[1] --- @as string
   if text:match("%S") then
-    local node = require("idk.util").get_parent_node(
+    local node = require("idk.treesitter").get_parent_node(
       0,
       { row, col, row, col },
       function(n)
