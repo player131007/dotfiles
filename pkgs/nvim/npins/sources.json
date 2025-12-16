@@ -117,7 +117,7 @@
       "url": "https://github.com/nvim-mini/mini.surround/archive/88c52297ed3e69ecf9f8652837888ecc727a28ee.tar.gz",
       "hash": "0w7f6g2gkb6c36kinml1qqvgrv72yyd1p8qk29zb6dlnahi3cgwq"
     },
-    "neovim": {
+    "rose-pine": {
       "type": "Git",
       "repository": {
         "type": "GitHub",

@@ -1,9 +1,11 @@
 {
-  mnw,
   lib,
   pkgs,
   ...
 }:
+let
+  sources = import ./npins/pkgs-fetcher.nix pkgs;
+in
 {
   appName = "nvim";
   desktopEntry = false;
@@ -27,14 +29,32 @@
       pure = lib.fileset.toSource {
         root = ./.;
         fileset = lib.fileset.unions [
-          ./plugin
           ./lua
+          ./plugin
+          ./queries
         ];
       };
       impure = toString ./.;
     };
 
-    start = mnw.lib.npinsToPlugins pkgs ./start.json;
+    startAttrs = {
+      inherit (sources)
+        "conform.nvim"
+        "fidget.nvim"
+        "guess-indent.nvim"
+        "mini.clue"
+        "mini.icons"
+        "mini.indentscope"
+        "mini.pairs"
+        "mini.statusline"
+        "mini.surround"
+        nvim-lspconfig
+        nvim-treesitter
+        rose-pine
+        ;
+      # the source will be copied to the store anyway so it's fine
+      "+queries" = "${sources.nvim-treesitter}/runtime";
+    };
 
     opt = builtins.attrValues pkgs.vimPlugins.nvim-treesitter.grammarPlugins;
   };
