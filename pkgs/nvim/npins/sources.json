@@ -9,9 +9,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "ffe26e8df8115c9665d24231f8a49fadb2d611ce",
-      "url": "https://github.com/stevearc/conform.nvim/archive/ffe26e8df8115c9665d24231f8a49fadb2d611ce.tar.gz",
-      "hash": "14blx1nnw2gpwcgcn6fk4jvhmfhv8xqyx37qmz5idcfzvlrfna58"
+      "revision": "9b8fa5e0b78168f68bee9bf886dc20f287c61e02",
+      "url": "https://github.com/stevearc/conform.nvim/archive/9b8fa5e0b78168f68bee9bf886dc20f287c61e02.tar.gz",
+      "hash": "0q46mz6qybdj2zp8539apxzs6qd9mpnw7xzc0frki34j2jqhqwg2"
     },
     "fidget.nvim": {
       "type": "Git",
@@ -48,9 +48,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "c465495a962d8bcca1718666ec33769b6f6969ad",
-      "url": "https://github.com/nvim-mini/mini.clue/archive/c465495a962d8bcca1718666ec33769b6f6969ad.tar.gz",
-      "hash": "0zplpsyirzlgzpxsz0s0v5989zg93zia42jh0dv2vpafwjiq9673"
+      "revision": "d96fef9db8fcb38c058f2edb2eeb69cb8b2d462a",
+      "url": "https://github.com/nvim-mini/mini.clue/archive/d96fef9db8fcb38c058f2edb2eeb69cb8b2d462a.tar.gz",
+      "hash": "0yl0p4i599cwp8i2h466qyvqjv4vg8vdcpy0g87r8wkp46344460"
     },
     "mini.icons": {
       "type": "Git",
@@ -87,9 +87,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "472ec50092a3314ec285d2db2baa48602d71fe93",
-      "url": "https://github.com/nvim-mini/mini.pairs/archive/472ec50092a3314ec285d2db2baa48602d71fe93.tar.gz",
-      "hash": "0nlk9l8akfmnk39q14shcqjr5ylslllk3jyj8kh1wim4l0czh029"
+      "revision": "d5a29b6254dad07757832db505ea5aeab9aad43a",
+      "url": "https://github.com/nvim-mini/mini.pairs/archive/d5a29b6254dad07757832db505ea5aeab9aad43a.tar.gz",
+      "hash": "1jas75bavf76c7y92pqi5dgvxskpwkqs51jcskfhrpj52d36ih7g"
     },
     "mini.statusline": {
       "type": "Git",
@@ -117,6 +117,32 @@
       "url": "https://github.com/nvim-mini/mini.surround/archive/88c52297ed3e69ecf9f8652837888ecc727a28ee.tar.gz",
       "hash": "0w7f6g2gkb6c36kinml1qqvgrv72yyd1p8qk29zb6dlnahi3cgwq"
     },
+    "nvim-lspconfig": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "neovim",
+        "repo": "nvim-lspconfig"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "ad95655ec5d13ff7c728d731eb9fd39f34395a03",
+      "url": "https://github.com/neovim/nvim-lspconfig/archive/ad95655ec5d13ff7c728d731eb9fd39f34395a03.tar.gz",
+      "hash": "09n10hpy7fyni1brpaffwpi8s3kvkjfpdwbywcd0b5jnby32kn1a"
+    },
+    "nvim-treesitter": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "nvim-treesitter",
+        "repo": "nvim-treesitter"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "d3218d988f72ed34414959c9ccd802d393432d6e",
+      "url": "https://github.com/nvim-treesitter/nvim-treesitter/archive/d3218d988f72ed34414959c9ccd802d393432d6e.tar.gz",
+      "hash": "11x6lpjk4cgiaxbqm8l4n0pp99r5y8s0gg6grv5m92mjrxkvvids"
+    },
     "rose-pine": {
       "type": "Git",
       "repository": {
@@ -129,32 +155,6 @@
       "revision": "cf2a288696b03d0934da713d66c6d71557b5c997",
       "url": "https://github.com/rose-pine/neovim/archive/cf2a288696b03d0934da713d66c6d71557b5c997.tar.gz",
       "hash": "0vy4g5y0ii433lgmab9nswy8mp4gfw5k5hyy3jph2pvnpccaq05g"
-    },
-    "nvim-lspconfig": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "neovim",
-        "repo": "nvim-lspconfig"
-      },
-      "branch": "master",
-      "submodules": false,
-      "revision": "9c923997123ff9071198ea3b594d4c1931fab169",
-      "url": "https://github.com/neovim/nvim-lspconfig/archive/9c923997123ff9071198ea3b594d4c1931fab169.tar.gz",
-      "hash": "0zqpv90isjmmzj66lszflz24y94ia4dkvyqfl6rz7qzvqjjwz5jc"
-    },
-    "nvim-treesitter": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "nvim-treesitter",
-        "repo": "nvim-treesitter"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "20db421f5fba0c23f6a7629af96ba6d4fc531677",
-      "url": "https://github.com/nvim-treesitter/nvim-treesitter/archive/20db421f5fba0c23f6a7629af96ba6d4fc531677.tar.gz",
-      "hash": "03q39a1px4hl5yaj7nlvvmzxnry5i1h7pcbrphyjnjlfdan8xsnr"
     }
   },
   "version": 5
