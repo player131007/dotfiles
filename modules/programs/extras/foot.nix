@@ -20,6 +20,7 @@ in
     xdg.config.files."foot/foot.ini" = {
       enable = true;
       type = "copy";
+      permissions = "600";
       clobber = true;
 
       generator = toINI {

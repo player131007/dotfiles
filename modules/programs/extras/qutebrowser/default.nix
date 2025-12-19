@@ -9,6 +9,7 @@
     packages = [ pkgs.qutebrowser ];
     xdg.config.files."qutebrowser/config.py" = {
       type = "copy";
+      permissions = "600";
       clobber = true;
       text = /* python */ ''
         config.load_autoconfig()
