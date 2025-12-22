@@ -83,3 +83,57 @@ vim.keymap.set("i", "<S-Tab>", function()
     )
   end
 end)
+
+local function jump(cursor)
+  if not cursor then return end
+  vim.api.nvim_win_set_cursor(0, cursor)
+end
+
+local function jump_operator(cursor)
+  if not cursor then return "<Esc>" end
+
+  return ("v<Cmd>lua vim.api.nvim_win_set_cursor(0, %s)<CR>"):format(
+    vim.inspect(cursor)
+  )
+end
+
+---@class LastJumpState
+---@field char string
+---@field till boolean
+local last_jump = {}
+for _, key in pairs { "f", "F", "t", "T" } do
+  local function get_cursor()
+    local ok, char = pcall(vim.fn.getcharstr)
+    if not ok or char == "\27" then return end
+
+    local till = key:lower() == "t"
+    last_jump = {
+      char = char,
+      till = till,
+    }
+    return require("idk.jump").find(char, key:lower() == key, till)
+  end
+
+  vim.keymap.set({ "n", "x" }, key, function() jump(get_cursor()) end)
+  vim.keymap.set(
+    "o",
+    key,
+    function() return jump_operator(get_cursor()) end,
+    { expr = true }
+  )
+end
+
+for _, key in pairs { ";", "," } do
+  local function get_cursor()
+    if not last_jump.char then return end
+    return require("idk.jump").find(last_jump.char, key == ";", last_jump.till)
+  end
+
+  vim.keymap.set({ "n", "x" }, key, function() jump(get_cursor()) end)
+  vim.keymap.set(
+    "o",
+    key,
+    function() return jump_operator(get_cursor()) end,
+    { expr = true }
+  )
+end
