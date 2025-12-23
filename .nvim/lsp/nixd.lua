@@ -1,7 +1,13 @@
-local nixpkgs =
-  '(builtins.getFlake "git+file://${toString ./.}").inputs.nixpkgs.legacyPackages.${builtins.currentSystem}'
+local nixpkgs = "import (import ./npins).nixpkgs {}"
+local nixos = [[
+let
+  pkgs = %s;
+  modules = pkgs.lib.evalModules {
+    modules = import "${pkgs.path}/nixos/modules/module-list.nix" ++ [{ nixpkgs.hostPlatform = builtins.currentSystem; }];
+  };
+in modules.options
+]]
 
----@type vim.lsp.ClientConfig
 return {
   settings = {
     nixd = {
@@ -10,17 +16,7 @@ return {
       },
       options = {
         nixos = {
-          expr = string.format(
-            [[
-            let
-              pkgs = "%s";
-              modules = pkgs.lib.evalModules {
-                modules = import "${pkgs.path}/nixos/modules/module-list.nix" ++ [{ nixpkgs.hostPlatform = builtins.currentSystem; }];
-              };
-            in modules.options
-            ]],
-            nixpkgs
-          ),
+          expr = string.format(nixos, nixpkgs),
         },
       },
     },
