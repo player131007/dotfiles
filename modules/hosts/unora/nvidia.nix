@@ -11,6 +11,7 @@
   boot.blacklistedKernelModules = [
     "nouveau"
     "nvidiafb"
+    "nova_core"
   ];
 
   hardware.nvidia = {
