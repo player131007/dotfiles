@@ -22,9 +22,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "85bdffaf424c027ac7f098d67854c10d384a63df",
-      "url": "https://github.com/feel-co/hjem/archive/85bdffaf424c027ac7f098d67854c10d384a63df.tar.gz",
-      "hash": "0hfczrdap3j0vm3snfsc0s5hvvvhi91p5fknx2fqrmldjdv8a57x"
+      "revision": "86ef7f76dc60f8ce7cbd092c2066ee17a86f04a5",
+      "url": "https://github.com/feel-co/hjem/archive/86ef7f76dc60f8ce7cbd092c2066ee17a86f04a5.tar.gz",
+      "hash": "047w8s9gdrywbdv0p8ifkvcci2hnrm4v1if56hrv2jilp25vmflw"
     },
     "mnw": {
       "type": "Git",
@@ -35,9 +35,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "8dd8c937e6a67fb9c1e35e1e2aa004408417c733",
-      "url": "https://github.com/Gerg-L/mnw/archive/8dd8c937e6a67fb9c1e35e1e2aa004408417c733.tar.gz",
-      "hash": "04mr4nqcsrfvs01labjvn87c6z6wv1brj9ncf4sq3bl6h505x7vd"
+      "revision": "195457be955922b1d0497ddc62422cc6fc2943ab",
+      "url": "https://github.com/Gerg-L/mnw/archive/195457be955922b1d0497ddc62422cc6fc2943ab.tar.gz",
+      "hash": "1ahllprzjmdj0p5pdpfj91m3lm7rncr1ijacrzws9ncp489s2dvz"
     },
     "nix-index-cache": {
       "type": "Git",
@@ -48,9 +48,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "812b14a5ab141143356998418cd88143a02e2e61",
-      "url": "https://github.com/player131007/nix-index-cache/archive/812b14a5ab141143356998418cd88143a02e2e61.tar.gz",
-      "hash": "0akqhf3m6z27vz1gq6mgslgv4n38k4zk6dc107yzfkxdgp0hl55z"
+      "revision": "c8675296a45526cc98ad88ac3c5cf1b5e82e2e83",
+      "url": "https://github.com/player131007/nix-index-cache/archive/c8675296a45526cc98ad88ac3c5cf1b5e82e2e83.tar.gz",
+      "hash": "0nlddk77a0ycp6hpgpyxkhpjj7p6mr6fallbrw2v8xq6ilv9qymz"
     },
     "nixpkgs": {
       "type": "Git",
@@ -61,9 +61,9 @@
       },
       "branch": "nixos-unstable",
       "submodules": false,
-      "revision": "1306659b587dc277866c7b69eb97e5f07864d8c4",
-      "url": "https://github.com/NixOS/nixpkgs/archive/1306659b587dc277866c7b69eb97e5f07864d8c4.tar.gz",
-      "hash": "1zlyra609xq3950j010dv0fzz2yjggfciprn1vmb8jjby1mv1798"
+      "revision": "3e2499d5539c16d0d173ba53552a4ff8547f4539",
+      "url": "https://github.com/NixOS/nixpkgs/archive/3e2499d5539c16d0d173ba53552a4ff8547f4539.tar.gz",
+      "hash": "1x9xnf6wpmxh6xvi2nv59gn950pll298bplzlj9qmj70wp8n8j20"
     }
   },
   "version": 5
