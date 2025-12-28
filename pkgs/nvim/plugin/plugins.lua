@@ -162,3 +162,9 @@ vim.api.nvim_create_autocmd("FileType", {
   pattern = { "help" },
   callback = function(args) vim.b[args.buf].miniindentscope_disable = true end,
 })
+
+vim.fn["dirvish#add_icon_fn"](function(p)
+  local icon, hl =
+    require("mini.icons").get(p:sub(-1) == "/" and "directory" or "file", p)
+  return { icon = icon .. " ", hl = hl }
+end)

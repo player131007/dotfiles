@@ -155,6 +155,19 @@
       "revision": "cf2a288696b03d0934da713d66c6d71557b5c997",
       "url": "https://github.com/rose-pine/neovim/archive/cf2a288696b03d0934da713d66c6d71557b5c997.tar.gz",
       "hash": "sha256-rwCsGLt2XwGvHN7DMgt3j9yKPNc2LVUfHYPECHx5xG8="
+    },
+    "vim-dirvish": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "player131007",
+        "repo": "vim-dirvish"
+      },
+      "branch": "master",
+      "submodules": false,
+      "revision": "9a20774f1a3d25eb3c29b1fd0599effec65435fb",
+      "url": "https://github.com/player131007/vim-dirvish/archive/9a20774f1a3d25eb3c29b1fd0599effec65435fb.tar.gz",
+      "hash": "sha256-dt34XmZoUaH8YoOwYmyeh3u98pnzzbQm3k0gQ2aYYN0="
     }
   },
   "version": 7

@@ -35,6 +35,7 @@ in
     vim.loader.enable() -- enable this asap
 
     vim.o.exrc = true -- has to be set early
+    vim.g.loaded_netrw = true
   '';
 
   plugins = {
@@ -64,6 +65,7 @@ in
         nvim-lspconfig
         nvim-treesitter
         rose-pine
+        vim-dirvish
         ;
       # the source will be copied to the store anyway so it's fine
       "+queries" = "${sources.nvim-treesitter}/runtime";
