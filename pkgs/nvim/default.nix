@@ -4,7 +4,20 @@
   ...
 }:
 let
-  sources = import ./npins/pkgs-fetcher.nix pkgs;
+  sources = lib.pipe ./npins [
+    import
+    (builtins.mapAttrs (_: source: source { inherit pkgs; }))
+    (builtins.mapAttrs (
+      name: spec:
+      spec
+      // lib.optionalAttrs (lib.isDerivation spec.outPath) {
+        outPath = spec.outPath.overrideAttrs {
+          pname = name;
+          version = if spec ? revision then "0-unstable-${lib.sources.shortRev spec.revision}" else "0";
+        };
+      }
+    ))
+  ];
 in
 {
   appName = "nvim";
