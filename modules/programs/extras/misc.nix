@@ -4,7 +4,6 @@
     npins
     jq
     calc
-    brightnessctl
     ripgrep
     xdg-utils
     _7zz-rar
