@@ -11,4 +11,8 @@
       ll = "${eza} -lhb";
       l = "${eza} -lhba";
     };
+
+  programs.fish.interactiveShellInit = /* fish */ ''
+    complete --erase --command ls
+  '';
 }
