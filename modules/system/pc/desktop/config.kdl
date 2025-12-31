@@ -418,5 +418,9 @@ binds {
     Mod+Shift+P { power-off-monitors; }
 }
 
+recent-windows {
+    off
+}
+
 include "dms/wpblur.kdl"
 include "dms/colors.kdl"
