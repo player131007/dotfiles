@@ -27,12 +27,16 @@ in
     let
       user = config.users.users.${username};
     in
-    lib.singleton {
-      directory = user.home;
-      mode = user.homeMode;
-      owner = user.name;
-      group = user.group;
-    };
+    [
+      {
+        directory = user.home;
+        mode = user.homeMode;
+        owner = user.name;
+        group = user.group;
+      }
+
+      (lib.mkIf config.services.accounts-daemon.enable "/var/lib/AccountsService")
+    ];
 
   hjem = {
     linker = hjem.packages.smfh;
@@ -40,4 +44,5 @@ in
   };
 
   services.userborn.enable = true;
+  services.accounts-daemon.enable = true;
 }
