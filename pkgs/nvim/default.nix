@@ -4,20 +4,9 @@
   ...
 }:
 let
-  sources = lib.pipe ./npins [
-    import
-    (builtins.mapAttrs (_: source: source { inherit pkgs; }))
-    (builtins.mapAttrs (
-      name: spec:
-      spec
-      // lib.optionalAttrs (lib.isDerivation spec.outPath) {
-        outPath = spec.outPath.overrideAttrs {
-          pname = name;
-          version = if spec ? revision then "0-unstable-${lib.sources.shortRev spec.revision}" else "0";
-        };
-      }
-    ))
-  ];
+  sources = (import ./lib.nix lib).sources pkgs;
+
+  inherit (pkgs.vimPlugins) nvim-treesitter;
 in
 {
   appName = "nvim";
@@ -36,6 +25,7 @@ in
 
     vim.o.exrc = true -- has to be set early
     vim.g.loaded_netrw = true
+    vim.g.loaded_nvim_treesitter = true
   '';
 
   plugins = {
@@ -51,26 +41,26 @@ in
       impure = toString ./.;
     };
 
-    startAttrs = {
-      inherit (sources)
-        "conform.nvim"
-        "fidget.nvim"
-        "guess-indent.nvim"
-        "mini.clue"
-        "mini.icons"
-        "mini.indentscope"
-        "mini.pairs"
-        "mini.statusline"
-        "mini.surround"
-        nvim-lspconfig
-        nvim-treesitter
-        rose-pine
-        vim-dirvish
-        ;
-      # the source will be copied to the store anyway so it's fine
-      "+queries" = "${sources.nvim-treesitter}/runtime";
-    };
+    startAttrs =
+      lib.mapAttrs
+        (
+          name: spec:
+          if lib.isDerivation spec.outPath then
+            spec.outPath.overrideAttrs {
+              pname = lib.strings.sanitizeDerivationName name;
+              version = if spec ? revision then "0.0.0+rev=${lib.sources.shortRev spec.revision}" else "0";
+            }
+          else
+            spec.outPath
+        )
+        (sources {
+          input = ./npins/plugins.json;
+        })
+      // {
+        "+queries" = "${nvim-treesitter}/runtime";
+        inherit nvim-treesitter;
+      };
 
-    opt = builtins.attrValues pkgs.vimPlugins.nvim-treesitter.grammarPlugins;
+    opt = builtins.attrValues nvim-treesitter.grammarPlugins;
   };
 }

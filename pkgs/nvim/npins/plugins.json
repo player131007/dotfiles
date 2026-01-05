@@ -130,19 +130,6 @@
       "url": "https://github.com/neovim/nvim-lspconfig/archive/92ee7d42320edfbb81f3cad851314ab197fa324a.tar.gz",
       "hash": "sha256-AOn+afoh9yJUEcF8kJR3Nm1D6cT6fDCQ+wTFwPXwFRA="
     },
-    "nvim-treesitter": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "nvim-treesitter",
-        "repo": "nvim-treesitter"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "36fcb4a4238928f0b627e1ab84ade0acc1facc2c",
-      "url": "https://github.com/nvim-treesitter/nvim-treesitter/archive/36fcb4a4238928f0b627e1ab84ade0acc1facc2c.tar.gz",
-      "hash": "sha256-E3nJCBGKBUQWYAL9h9ygdtCCndi0+rwkq0hhAAq1W94="
-    },
     "rose-pine": {
       "type": "Git",
       "repository": {

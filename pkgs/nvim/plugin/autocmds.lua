@@ -3,11 +3,7 @@ local augroup = vim.api.nvim_create_augroup("UserAugroup", { clear = true })
 vim.api.nvim_create_autocmd("FileType", {
   group = augroup,
   desc = "Automatically enable treesitter if available",
-  callback = function(args)
-    if pcall(vim.treesitter.start, args.buf) then
-      vim.bo[args.buf].indentexpr = "v:lua.require('nvim-treesitter').indentexpr()"
-    end
-  end,
+  callback = function(args) pcall(vim.treesitter.start, args.buf) end,
 })
 
 vim.api.nvim_create_autocmd("BufReadPost", {

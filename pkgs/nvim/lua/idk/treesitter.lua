@@ -1,32 +1,26 @@
 local M = {}
 
---- @param bufnr integer
---- @param range Range4
---- @param should_skip? fun(node: TSNode): boolean
---- @return TSNode?
-function M.get_parent_node(bufnr, range, should_skip)
-  bufnr = bufnr ~= 0 and bufnr or vim.api.nvim_win_get_buf(0)
-  local root_ltree = assert(vim.treesitter.get_parser(bufnr))
-  root_ltree:parse()
+---@param bufnr integer
+---@param range Range4
+---@param should_skip? fun(TSNode): boolean
+---@return TSNode?
+function M.get_node(bufnr, range, should_skip)
+  should_skip = should_skip or function(_) return false end
 
-  --- @param ltree vim.treesitter.LanguageTree
-  --- @return TSNode?
-  local function search(ltree)
-    if not ltree:contains(range) then return nil end
+  local root = assert(vim.treesitter.get_parser(bufnr, nil, { error = false }))
 
-    for _, child in pairs(ltree:children()) do
-      local node = search(child)
-      if node then return node end
+  local lt = root:language_for_range(range)
+  while lt do
+    local root = assert(lt:tree_for_range(range)):root()
+    local node = root:descendant_for_range(unpack(range))
+
+    while node and should_skip(node) do
+      node = root:child_with_descendant(node)
     end
+    if node then return node end
 
-    local node = ltree:named_node_for_range(range)
-    while node and should_skip and should_skip(node) do
-      node = node:parent()
-    end
-    return node
+    lt = lt:parent() ---@as vim.treesitter.LanguageTree
   end
-
-  return search(root_ltree)
 end
 
 return M
