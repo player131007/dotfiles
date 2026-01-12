@@ -36,6 +36,7 @@ in
           ./lua
           ./plugin
           ./queries
+          ./ftplugin
         ];
       };
       impure = toString ./.;
