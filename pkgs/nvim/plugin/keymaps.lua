@@ -1,3 +1,10 @@
+vim.keymap.set(
+  "n",
+  "grd",
+  function() vim.lsp.buf.definition() end,
+  { desc = "vim.lsp.buf.definition()" }
+)
+
 vim.keymap.set({ "n", "x", "o" }, "n", "'Nn'[v:searchforward]", { expr = true })
 vim.keymap.set({ "n", "x", "o" }, "N", "'nN'[v:searchforward]", { expr = true })
 
