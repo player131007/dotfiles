@@ -13,10 +13,22 @@ function M.get_node(bufnr, range, should_skip)
   while lt do
     local root = assert(lt:tree_for_range(range)):root()
     local node = root:descendant_for_range(unpack(range))
+    ---@cast node -nil
 
-    while node and should_skip(node) do
-      node = root:child_with_descendant(node)
+    ---@param root TSNode
+    ---@return TSNode?
+    local function find(root)
+      local child = root:child_with_descendant(node)
+      if child then
+        local node = find(child)
+        if node then return node end
+      end
+
+      ---@diagnostic disable-next-line: unnecessary-if
+      if not should_skip(root) then return root end
     end
+
+    local node = find(root)
     if node then return node end
 
     lt = lt:parent() ---@as vim.treesitter.LanguageTree
