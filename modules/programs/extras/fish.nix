@@ -1,4 +1,3 @@
-{ lib, ... }:
 {
   programs.fish = {
     enable = true;
@@ -23,12 +22,5 @@
         bind ctrl-delete kill-token
       end
     '';
-  };
-
-  my.hjem = {
-    xdg.config.files."foot/foot.ini" = {
-      enable = lib.mkDefault false;
-      value.main.shell = "fish";
-    };
   };
 }

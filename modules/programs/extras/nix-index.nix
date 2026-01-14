@@ -1,4 +1,5 @@
 {
+  config,
   pkgs,
   lib,
   sources,
@@ -30,6 +31,10 @@ let
         makeWrapper ${nix-index}/bin/nix-locate $out/bin/nix-locate --inherit-argv0 --set NIX_INDEX_DATABASE ${nix-index-db}
         makeWrapper ${nix-index}/bin/command-not-found $out/bin/command-not-found --inherit-argv0 --set NIX_INDEX_DATABASE ${nix-index-db-bin-only}
       '';
+
+  command-not-found-nu = pkgs.writeTextDir "share/nushell/vendor/autoload/command-not-found.nu" /* nu */ ''
+    $env.config.hooks.command_not_found = [{ |cmd| command-not-found $cmd | print }]
+  '';
 in
 {
   programs.command-not-found.enable = false;
@@ -38,6 +43,8 @@ in
     nix-index-wrapped
     nix-index
   ];
+
+  stuff.nushell.vendors = [ command-not-found-nu ];
 
   programs.bash.interactiveShellInit = /* bash */ ''
     command_not_found_handle() {
