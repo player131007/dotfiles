@@ -5,7 +5,6 @@
 
 // Done here because autostart doesn't have XCURSOR_* env vars
 spawn-at-startup "keepassxc"
-spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
 
 clipboard {
     disable-primary

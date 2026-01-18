@@ -35,8 +35,8 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "75bb637454b0fbbb5ed652375a4bf7ffd28bcf6f",
-      "url": "https://github.com/Gerg-L/mnw/archive/75bb637454b0fbbb5ed652375a4bf7ffd28bcf6f.tar.gz",
+      "revision": "20d63a8a1ae400557c770052a46a9840e768926b",
+      "url": "https://github.com/Gerg-L/mnw/archive/20d63a8a1ae400557c770052a46a9840e768926b.tar.gz",
       "hash": "sha256-kSvWF3Xt2HW9hmV5V7i8PqeWJIBUKmuKoHhOgj3Znzs="
     },
     "nix-index-cache": {
@@ -48,9 +48,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "ae51e285f8e0a152b36d4ddecece65d48800d5bb",
-      "url": "https://github.com/player131007/nix-index-cache/archive/ae51e285f8e0a152b36d4ddecece65d48800d5bb.tar.gz",
-      "hash": "sha256-ZanJuUShjssmdTfnAXdHeMOUKxzjZdeNiWEQxymcSjQ="
+      "revision": "463eb58361c48afefcac12930c8c501bd8a9b236",
+      "url": "https://github.com/player131007/nix-index-cache/archive/463eb58361c48afefcac12930c8c501bd8a9b236.tar.gz",
+      "hash": "sha256-Iubc6RyaVsTCABEb1n96ghxWc7qbbHJYUZEfHynFwdQ="
     },
     "nixpkgs": {
       "type": "Git",
@@ -61,9 +61,9 @@
       },
       "branch": "nixos-unstable",
       "submodules": false,
-      "revision": "3497aa5c9457a9d88d71fa93a4a8368816fbeeba",
-      "url": "https://github.com/NixOS/nixpkgs/archive/3497aa5c9457a9d88d71fa93a4a8368816fbeeba.tar.gz",
-      "hash": "sha256-dhhvQY67aboBk8b0/u0XB6vwHdgbROZT3fJAjyNh5Ww="
+      "revision": "e4bae1bd10c9c57b2cf517953ab70060a828ee6f",
+      "url": "https://github.com/NixOS/nixpkgs/archive/e4bae1bd10c9c57b2cf517953ab70060a828ee6f.tar.gz",
+      "hash": "sha256-Kell/SpJYVkHWMvnhqJz/8DqQg2b6PguxVWOuadbHCc="
     }
   },
   "version": 7

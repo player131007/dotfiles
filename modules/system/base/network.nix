@@ -18,8 +18,10 @@
 
   services.resolved = {
     enable = true;
-    domains = [ "~." ];
-    dnsovertls = "true";
+    settings.Resolve = {
+      Domains = [ "~." ];
+      DNSOverTLS = true;
+    };
   };
 
   networking.nameservers = [
