@@ -1,4 +1,4 @@
-{ config, ... }:
+{ config, lib, ... }:
 {
   networking = {
     wireless = {
@@ -8,11 +8,12 @@
 
     useNetworkd = true;
     dhcpcd.enable = !config.networking.useNetworkd;
+    networkmanager.enable = lib.mkForce (!config.networking.useNetworkd);
     nftables.enable = true;
   };
 
   systemd.network = {
-    enable = true;
+    enable = config.networking.useNetworkd;
     wait-online.enable = false;
   };
 
