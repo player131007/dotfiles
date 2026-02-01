@@ -44,7 +44,7 @@ in
               file = "/etc/machine-id";
               early = true;
               mode = "0444";
-              extraTmpfiles.argument = "uninitialized";
+              extraTmpfiles.config.argument = "uninitialized";
               method.symlink.createLinkTarget = true;
             }
             "/etc/adjtime"
@@ -62,7 +62,7 @@ in
             {
               directory = "/nix";
               early = true;
-              method.bindmount.extraConfig = {
+              method.bindmount.extraConfig.config = {
                 options = "private";
               };
             }

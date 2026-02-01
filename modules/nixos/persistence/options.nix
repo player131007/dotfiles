@@ -14,7 +14,7 @@ let
     str
     attrTag
     coercedTo
-    anything
+    deferredModule
     ;
   submodule = modules: lib.types.submoduleWith { modules = lib.toList modules; };
 
@@ -45,7 +45,7 @@ let
         };
 
         extraTmpfiles = mkOption {
-          type = lazyAttrsOf anything;
+          type = deferredModule;
           default = { };
         };
 
@@ -65,7 +65,7 @@ let
                 options = {
                   mountOptions = mkOption { type = listOf str; };
                   extraConfig = mkOption {
-                    type = lazyAttrsOf anything;
+                    type = deferredModule;
                     default = { };
                   };
                 };

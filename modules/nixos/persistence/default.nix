@@ -92,7 +92,13 @@ let
           else
             [ "systemd-tmpfiles-setup.service" ];
       }
-      target.method.bindmount.extraConfig
+      # is a function to circumvent shorthandOnlyDefinesConfig limitation
+      (
+        { ... }:
+        {
+          imports = [ target.method.bindmount.extraConfig ];
+        }
+      )
     ];
 
   mkSymlink =
@@ -134,7 +140,13 @@ let
             user = target.owner;
             inherit (target) group mode;
           }
-          target.extraTmpfiles
+          # is a function to circumvent shorthandOnlyDefinesConfig limitation
+          (
+            { ... }:
+            {
+              imports = [ target.extraTmpfiles ];
+            }
+          )
         ];
       }
     );
