@@ -11,11 +11,6 @@ hotkey-overlay {
     skip-at-startup
 }
 
-cursor {
-    xcursor-theme "Bibata-Modern-Classic"
-    xcursor-size 24
-}
-
 // Input device configuration.
 // Find the full list of options on the wiki:
 // https://github.com/YaLTeR/niri/wiki/Configuration:-Input
@@ -421,3 +416,4 @@ recent-windows {
 
 include "dms/wpblur.kdl"
 include "dms/colors.kdl"
+include "dms/cursor.kdl"
