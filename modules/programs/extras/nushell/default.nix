@@ -2,36 +2,68 @@
   config,
   lib,
   pkgs,
+  myPkgs,
   ...
 }:
 let
   cfg = config.stuff.nushell;
+
+  inherit (lib.types) listOf package;
 in
 {
   options.stuff.nushell = {
     vendors = lib.mkOption {
-      type = lib.types.listOf lib.types.package;
+      type = listOf package;
       default = [ ];
     };
+
+    plugins = lib.mkOption {
+      type = listOf package;
+      default = [ ];
+    };
+
+    package = lib.mkPackageOption pkgs "nushell" { };
   };
 
   config = {
-    environment = {
-      systemPackages = [ pkgs.nushell ];
+    # prevent plugins from getting garbage collected
+    system.extraDependencies = cfg.plugins;
 
-      sessionVariables.XDG_DATA_DIRS = lib.singleton (
-        pkgs.symlinkJoin {
-          name = "nushell-vendor-autoload";
+    environment.systemPackages =
+      let
+        vendor = pkgs.symlinkJoin {
+          name = "nushell-vendor";
           paths = cfg.vendors;
           stripPrefix = "/share/nushell/vendor/autoload";
+        };
+
+        plugin-config =
+          pkgs.runCommandLocal "nushell-plugin.msgpackz"
+            {
+              __structuredAttrs = true;
+              plugins = map lib.getExe cfg.plugins;
+            }
+            ''
+              ${lib.getExe cfg.package} \
+                --plugin-config $out \
+                -c "open --raw \$env.NIX_ATTRS_JSON_FILE | from json | get plugins | each {|p| plugin add \$p }; exit"
+            '';
+      in
+      lib.singleton (
+        pkgs.symlinkJoin {
+          name = "nushell";
+          paths = [ cfg.package ];
+
+          nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
           postBuild = ''
-            files=($out/*)
-            mkdir -p $out/share/nushell/vendor/autoload
-            mv "''${files[@]}" $out/share/nushell/vendor/autoload
+            wrapProgram $out/bin/nu \
+              --set NU_VENDOR_AUTOLOAD_DIR ${vendor} \
+              --add-flag --plugin-config=${plugin-config}
           '';
         }
       );
-    };
+
+    stuff.nushell.plugins = [ myPkgs.nushellPlugins.bexpand ];
 
     my.hjem = {
       xdg.config.files = {
