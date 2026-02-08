@@ -8,5 +8,7 @@
     xdg-utils
     _7zz-rar
     keepassxc
+
+    mpv
   ];
 }
