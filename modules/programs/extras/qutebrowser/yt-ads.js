@@ -28,7 +28,6 @@
       style.id = "noads"
       style.textContent =
 `
-#player-ads,
 #panels > ytd-engagement-panel-section-list-renderer[target-id="engagement-panel-ads"],
 #masthead-ad,
 .yt-mealbar-promo-renderer,
