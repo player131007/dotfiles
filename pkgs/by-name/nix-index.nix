@@ -18,8 +18,8 @@ rustPlatform.buildRustPackage rec {
   src = fetchFromGitHub {
     owner = "player131007";
     repo = "nix-index";
-    rev = "82794d152fbeb37b308b69a8ce3520e30c5a55f7";
-    hash = "sha256-2QOJbGN6vcPVjszz0vQ2bERWLmWR8owAXjfdCKzibQI=";
+    rev = "d402549f7302cbd0a067016c843876bc7ccb1a74";
+    hash = "sha256-hzzmnTRFE1CmIJwM+mIbaM8aCqSXxtonkvwmyZQ5tFw=";
   };
 
   cargoHash = "sha256-QO7Hq96IrFEhXhyVhti4GnicwEz+aoLAwtDOOOO2ctg=";
