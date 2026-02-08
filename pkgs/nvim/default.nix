@@ -5,8 +5,6 @@
 }:
 let
   sources = (import ./lib.nix lib).sources pkgs;
-
-  inherit (pkgs.vimPlugins) nvim-treesitter;
 in
 {
   appName = "nvim";
@@ -42,6 +40,8 @@ in
       impure = toString ./.;
     };
 
+    start = [ pkgs.vimPlugins.nvim-treesitter.withAllGrammars ];
+
     startAttrs =
       lib.mapAttrs
         (
@@ -56,12 +56,6 @@ in
         )
         (sources {
           input = ./npins/plugins.json;
-        })
-      // {
-        "+queries" = "${nvim-treesitter}/runtime";
-        inherit nvim-treesitter;
-      };
-
-    opt = builtins.attrValues nvim-treesitter.grammarPlugins;
+        });
   };
 }
