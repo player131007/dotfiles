@@ -8,7 +8,7 @@
 let
   cfg = config.stuff.nushell;
 
-  inherit (lib.types) listOf package;
+  inherit (lib.types) listOf package pathInStore;
 in
 {
   options.stuff.nushell = {
@@ -19,6 +19,11 @@ in
 
     plugins = lib.mkOption {
       type = listOf package;
+      default = [ ];
+    };
+
+    lib_dirs = lib.mkOption {
+      type = listOf pathInStore;
       default = [ ];
     };
 
@@ -38,7 +43,7 @@ in
       systemPackages = [ cfg.package ];
     };
     stuff.nushell.vendors = lib.singleton (
-      pkgs.writeTextDir "share/nushell/vendor/autoload/plugins_dir.nu" /* nu */ ''
+      pkgs.writeTextDir "share/nushell/vendor/autoload/search_paths.nu" /* nu */ ''
         const NU_PLUGIN_DIRS = [
           ${lib.pipe cfg.plugins [
             (map (p: "${p}/bin"))
@@ -46,10 +51,16 @@ in
           ]}
           ...$NU_PLUGIN_DIRS
         ]
+
+        const NU_LIB_DIRS = [
+          ${lib.concatLines cfg.lib_dirs}
+          ...$NU_LIB_DIRS
+        ]
       ''
     );
 
     stuff.nushell.plugins = [ myPkgs.nushellPlugins.bexpand ];
+    stuff.nushell.lib_dirs = [ "${./nushell-lib}" ];
 
     my.hjem = {
       xdg.config.files = {
