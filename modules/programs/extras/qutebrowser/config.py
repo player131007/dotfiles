@@ -19,6 +19,7 @@ config.bind('K', 'tab-next')
 config.bind('gJ', 'tab-move -')
 config.bind('gK', 'tab-move +')
 config.bind(',t', 'open -t')
+config.bind(',d', 'config-cycle colors.webpage.darkmode.enabled -t -p -u {url:host}')
 
 c.window.transparent = True
 
