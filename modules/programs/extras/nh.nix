@@ -1,4 +1,10 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  pkgs,
+  myLib,
+  config,
+  ...
+}:
 let
   inherit (lib.types) attrsOf submodule submoduleWith;
 in
@@ -21,5 +27,11 @@ in
     );
   };
 
-  config.my.hjem.packages = [ pkgs.nh ];
+  config.my.hjem = {
+    packages = [ pkgs.nh ];
+    environment.sessionVariables = {
+      NH_FILE = toString (myLib.fromRoot "nixos.nix");
+      NH_ATTRP = config.networking.hostName;
+    };
+  };
 }
