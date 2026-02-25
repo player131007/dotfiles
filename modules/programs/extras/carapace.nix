@@ -50,6 +50,13 @@ in
         enable: true
         max_results: 50
         completer: {|spans|
+          if ($spans.0 == "nix"
+              and $spans.1 in [ "shell" "develop" ]
+              and ("-c" in $spans or "--command" in $spans)
+             ) {
+            $spans | skip until {|arg| $arg in ["-c" "--command"]} | skip
+          } else $spans | let $spans
+
           match $spans.0 {
             git | nix => $fish_completer
             _ => $carapace_completer
