@@ -22,9 +22,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "9d0c8d4b44f661910595b07e6480557644c1431c",
-      "url": "https://github.com/feel-co/hjem/archive/9d0c8d4b44f661910595b07e6480557644c1431c.tar.gz",
-      "hash": "sha256-cKETEBrseo7Iz+bOzflwy1xTpDuUj3QaLA+P49yJw8k="
+      "revision": "7f2880d705edf541955d98f56cb78f9507384423",
+      "url": "https://github.com/feel-co/hjem/archive/7f2880d705edf541955d98f56cb78f9507384423.tar.gz",
+      "hash": "sha256-1RfmXbDIxgwP2/SrYSYd9zdArUaJEm6C3FXpdRlmeso="
     },
     "mnw": {
       "type": "Git",
@@ -35,9 +35,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "2aaffa8030d0b262176146adbb6b0e6374ce2957",
-      "url": "https://github.com/Gerg-L/mnw/archive/2aaffa8030d0b262176146adbb6b0e6374ce2957.tar.gz",
-      "hash": "sha256-b1XqsH7AtVf2dXmq2iyRr2NC1yG7skY7Z6N2MpWHlK4="
+      "revision": "6bd6ab9968c2432c78db4a91c9b1e84dd84fe6b3",
+      "url": "https://github.com/Gerg-L/mnw/archive/6bd6ab9968c2432c78db4a91c9b1e84dd84fe6b3.tar.gz",
+      "hash": "sha256-mR8GDvGPu1QcI5Ft5lV2CIIh5Og7zRylts+XY3fa/K4="
     },
     "nix-index-cache": {
       "type": "Git",
@@ -48,9 +48,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "a675dbf99766e1f9d11539e751783c525de11c79",
-      "url": "https://github.com/player131007/nix-index-cache/archive/a675dbf99766e1f9d11539e751783c525de11c79.tar.gz",
-      "hash": "sha256-D4jaNjYfVh+At3N036HXVjp9jwTB3UhzcH675xHnhwY="
+      "revision": "b8fd05ef57e0eef57dd6d9a48dedde9bfe7f90b2",
+      "url": "https://github.com/player131007/nix-index-cache/archive/b8fd05ef57e0eef57dd6d9a48dedde9bfe7f90b2.tar.gz",
+      "hash": "sha256-op6sAHWYJtfQ5QIPw/Lb5cTK6/6JlSxziAy2Wqc9fDU="
     },
     "nixpkgs": {
       "type": "Git",
@@ -61,9 +61,9 @@
       },
       "branch": "nixos-unstable",
       "submodules": false,
-      "revision": "00c21e4c93d963c50d4c0c89bfa84ed6e0694df2",
-      "url": "https://github.com/NixOS/nixpkgs/archive/00c21e4c93d963c50d4c0c89bfa84ed6e0694df2.tar.gz",
-      "hash": "sha256-AYqlWrX09+HvGs8zM6ebZ1pwUqjkfpnv8mewYwAo+iM="
+      "revision": "dd9b079222d43e1943b6ebd802f04fd959dc8e61",
+      "url": "https://github.com/NixOS/nixpkgs/archive/dd9b079222d43e1943b6ebd802f04fd959dc8e61.tar.gz",
+      "hash": "sha256-I45esRSssFtJ8p/gLHUZ1OUaaTaVLluNkABkk6arQwE="
     }
   },
   "version": 7
