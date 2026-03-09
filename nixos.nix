@@ -1,6 +1,6 @@
 let
   sources = import ./npins;
-  myLib = import ./lib {
+  myLib = import ./lib.nix {
     lib = import "${sources.nixpkgs}/lib";
   };
 
@@ -11,7 +11,7 @@ let
       // {
         modules =
           args.modules or [ ]
-          ++ myLib.recursivelyImport [
+          ++ myLib.listModulesRecursive [
             ./modules/system/base
             ./modules/programs/base
 
@@ -35,13 +35,13 @@ let
 in
 builtins.mapAttrs mkHost {
   tahari = {
-    modules = myLib.recursivelyImport [
+    modules = myLib.listModulesRecursive [
       ./modules/system/iso
     ];
   };
 
   unora = {
-    modules = myLib.recursivelyImport [
+    modules = myLib.listModulesRecursive [
       ./modules/programs/extras
       ./modules/system/pc
       { system.stateVersion = "23.05"; }
