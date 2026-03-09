@@ -1,7 +1,6 @@
 {
   config,
   lib,
-  myLib,
   ...
 }:
 let
@@ -15,6 +14,7 @@ let
     concatStringsSep
     genList
     length
+    foldl'
     ;
   inherit (lib.lists)
     optional
@@ -22,10 +22,25 @@ let
     take
     dropEnd
     ;
-  inherit (myLib) concatPaths deconstructPath;
   inherit (lib.strings) optionalString;
   inherit (lib.trivial) pipe;
   inherit (lib.modules) mkMerge mkIf mkDefault;
+
+  concatPaths = components: toString (foldl' (acc: comp: acc + "/${comp}") /. components);
+  deconstructPath =
+    let
+      recurse =
+        components: base:
+        # If the parent of a path is the path itself, then it's a filesystem root
+        if base == dirOf base then
+          {
+            root = base;
+            inherit components;
+          }
+        else
+          recurse ([ (baseNameOf base) ] ++ components) (dirOf base);
+    in
+    recurse [ ];
 
   isDirectory = target: target ? directory;
   isSymlink = target: target.method ? symlink;
