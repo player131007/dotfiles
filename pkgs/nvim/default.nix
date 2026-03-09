@@ -4,7 +4,24 @@
   ...
 }:
 let
-  sources = (import ./lib.nix lib).sources pkgs;
+  fetchPlugins =
+    let
+      fetch = _: spec: spec { inherit pkgs; };
+      addInfo =
+        name: spec:
+        if lib.isDerivation spec.outPath then
+          spec.outPath.overrideAttrs {
+            pname = lib.strings.sanitizeDerivationName name;
+            version = if spec ? revision then "0.0.0+rev=${lib.sources.shortRev spec.revision}" else "0";
+          }
+        else
+          "${spec.outPath}"; # copy paths to the store
+    in
+    args:
+    lib.pipe (import ./npins args) [
+      (lib.mapAttrs fetch)
+      (lib.mapAttrs addInfo)
+    ];
 in
 {
   appName = "nvim";
@@ -42,20 +59,8 @@ in
 
     start = [ pkgs.vimPlugins.nvim-treesitter.withAllGrammars ];
 
-    startAttrs =
-      lib.mapAttrs
-        (
-          name: spec:
-          if lib.isDerivation spec.outPath then
-            spec.outPath.overrideAttrs {
-              pname = lib.strings.sanitizeDerivationName name;
-              version = if spec ? revision then "0.0.0+rev=${lib.sources.shortRev spec.revision}" else "0";
-            }
-          else
-            spec.outPath
-        )
-        (sources {
-          input = ./npins/plugins.json;
-        });
+    startAttrs = fetchPlugins {
+      input = ./npins/plugins.json;
+    };
   };
 }
