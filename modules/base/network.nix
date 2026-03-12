@@ -15,6 +15,24 @@
   systemd.network = {
     enable = config.networking.useNetworkd;
     wait-online.enable = false;
+
+    networks."50-school" = lib.mkMerge [
+      {
+        matchConfig = {
+          WLANInterfaceType = "station";
+          SSID = [ "Hust_*_Giangduong" ];
+        };
+        networkConfig = {
+          DNSOverTLS = "opportunistic";
+          Domains = [ "~hust.edu.vn." ];
+        };
+
+        dhcpV4Config.UseDNS = true;
+      }
+      (lib.mkOverride (
+        lib.modules.defaultOverridePriority + 1
+      ) config.systemd.network.networks."99-wireless-client-dhcp")
+    ];
   };
 
   services.resolved = {

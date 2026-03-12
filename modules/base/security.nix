@@ -1,6 +1,6 @@
 {
   security = {
-    sudo.enable = false;
+    sudo.enable = false; # replaced by run0
     polkit = {
       enable = true;
       debug = true;

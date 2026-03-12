@@ -15,8 +15,8 @@ let
     attrTag
     coercedTo
     deferredModule
+    submodule
     ;
-  submodule = modules: lib.types.submoduleWith { modules = lib.toList modules; };
 
   targetOpts =
     {
