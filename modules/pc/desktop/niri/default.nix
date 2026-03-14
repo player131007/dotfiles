@@ -13,7 +13,6 @@
       source = toString ./config.kdl;
       type = "copy";
       permissions = "600";
-      clobber = false;
     };
   };
 }

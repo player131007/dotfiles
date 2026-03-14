@@ -17,7 +17,6 @@ in
       enable = true;
       type = "copy";
       permissions = "600";
-      clobber = false;
 
       generator = toINI {
         listsAsDuplicateKeys = true;
