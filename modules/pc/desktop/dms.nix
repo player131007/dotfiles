@@ -1,7 +1,10 @@
 { pkgs, ... }:
 {
   xdg.icons.enable = true;
-  environment.systemPackages = [ pkgs.bibata-cursors ];
+  environment.systemPackages = [
+    pkgs.bibata-cursors
+    pkgs.papirus-icon-theme
+  ];
 
   programs.dms-shell = {
     enable = true;
