@@ -1,6 +1,10 @@
 let
   sources = import ./npins;
 
+  myLib = import ./lib.nix {
+    lib = import "${sources.nixpkgs}/lib";
+  };
+
   mkHost =
     nixpkgs: hostname: args:
     let
@@ -62,5 +66,14 @@ in
 builtins.mapAttrs (mkHost sources.nixpkgs) {
   tahari = {
     modules = [ ./modules/iso-image.nix ];
+  };
+
+  unora = {
+    modules = myLib.listModulesRecursive [
+      ./modules/pc
+      ./modules/libvirtd.nix
+      ./modules/programs
+      { system.stateVersion = "23.05"; }
+    ];
   };
 }

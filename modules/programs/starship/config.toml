@@ -1,0 +1,77 @@
+format = """
+($username(@$hostname) )$directory( $git_branch)( $git_commit)$git_state$git_status$fill($cmd_duration )($status )
+$shlvl$character
+"""
+
+[username]
+format = "[$user]($style)"
+style_user = 'bold purple'
+style_root = 'bold red'
+
+[hostname]
+ssh_symbol = "  "
+format = "[$hostname$ssh_symbol]($style)"
+
+[directory]
+truncate_to_repo = false
+read_only = "  "
+read_only_style = "bold yellow"
+style = "bright-green"
+format = "[$path]($style)[$read_only]($read_only_style)"
+fish_style_pwd_dir_length = 3
+truncation_length = 2
+
+[git_branch]
+symbol = ' '
+format = "[$symbol$branch(:$remote_branch)]($style)"
+only_attached = true
+
+[git_commit]
+commit_hash_length = 7
+tag_disabled = false
+tag_symbol = " "
+style = "bold yellow"
+format = "[($tag )]($style dimmed)[ $hash]($style)"
+
+[git_state]
+style = "cyan"
+format = '[\([$state]($style dimmed)[ $progress_current[/](white)$progress_total]($style bold)\)](white)'
+
+[git_status]
+format = "[(*$conflicted$untracked$modified$staged$renamed$deleted)](bold red)( $stashed)( $ahead_behind)"
+conflicted = "​"
+untracked = "​"
+modified = "​"
+staged = "​"
+renamed = "​"
+deleted = "​"
+stashed = "[≡](bold cyan)$count"
+ahead = "[ ](bold cyan)$count"
+behind = "[ ](bold cyan)$count"
+diverged = "[ ](bold cyan)$ahead_count [ ](bold cyan)$behind_count"
+
+[fill]
+symbol = ' '
+
+[status]
+disabled = false
+symbol = ""
+success_symbol = "0"
+format = "[$common_meaning(SIG$signal_name)$maybe_int]($style)"
+success_style = "green"
+pipestatus = true
+pipestatus_separator = " | "
+pipestatus_format = "$pipestatus"
+pipestatus_segment_format = "[$common_meaning(SIG$signal_name)$maybe_int$symbol]($style)"
+
+[shlvl]
+disabled = false
+format = "[$symbol]($style)"
+symbol = '❯'
+repeat = true
+repeat_offset = 2
+
+[cmd_duration]
+show_milliseconds = true
+style = "bold yellow"
+format = "[ $duration]($style)"
