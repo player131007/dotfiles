@@ -6,22 +6,22 @@
 }:
 rustPlatform.buildRustPackage {
   pname = "nu_plugin_bexpand";
-  version = "1.3.11000";
+  version = "1.3.11100";
 
   src = fetchFromGitea {
     domain = "forge.axfive.net";
     owner = "Taylor";
     repo = "nu-plugin-bexpand";
-    rev = "9e7c615d84d5da8f8cd01887a59266c48434e516";
-    hash = "sha256-1NO4onzK3MIX98CnsecRvWtilTW1LjXv3mi11Aqbrjg=";
+    rev = "5d316cd6620004214c16b41a0912efdc5e6a72db";
+    hash = "sha256-3kCXtXGgUTAVu0qc+TjxbWQFaF2yJo2fKWYadH5+/oQ=";
   };
 
-  cargoHash = "sha256-uOPOSOQJMN3D96ve8iuMPzs89GEAe9cCpu7zFcXTRSw=";
+  cargoHash = "sha256-FkOExHoSrEC3d8CTxEAGBFZ4qyXAn4+9xv/iydVO3Uw=";
 
   meta = {
     description = "Bash style brace expansion for nushell";
     mainProgram = "nu_plugin_bexpand";
 
-    broken = lib.versions.majorMinor nushell.version != "0.110";
+    broken = lib.versions.majorMinor nushell.version != "0.111";
   };
 }

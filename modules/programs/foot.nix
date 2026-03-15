@@ -33,7 +33,8 @@ in
           dpi-aware = "yes";
         };
         cursor.blink = "yes";
-        colors.alpha = 0.9;
+        colors-dark.alpha = 0.9;
+        colors-light.alpha = 0.9;
       };
     };
   };
