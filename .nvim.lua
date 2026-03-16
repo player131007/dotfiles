@@ -1,2 +1,2 @@
-vim.cmd("set path=modules/**,pkgs/**,,")
+vim.cmd("set path=modules/**,pkgs/,pkgs/by-name/**,hosts/**,,")
 vim.cmd("set runtimepath+=./.nvim")
