@@ -20,6 +20,12 @@
         permissions = "600";
         source = toString ./yt-ads.js;
       };
+      "qutebrowser/greasemonkey/yt-volume.js" = {
+        enable = true;
+        type = "copy";
+        permissions = "600";
+        source = ./yt-volume.js;
+      };
     };
   };
 }
