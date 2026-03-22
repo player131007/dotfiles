@@ -12,13 +12,13 @@
         enable = true;
         type = "copy";
         permissions = "600";
-        source = toString ./config.py;
+        source = ./config.py;
       };
       "qutebrowser/greasemonkey/yt-ads.js" = {
         enable = true;
         type = "copy";
         permissions = "600";
-        source = toString ./yt-ads.js;
+        source = ./yt-ads.js;
       };
       "qutebrowser/greasemonkey/yt-volume.js" = {
         enable = true;
