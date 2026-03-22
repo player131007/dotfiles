@@ -9,9 +9,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "4d0d0e4dc99245ffaa0d51acf69e288fb59fb0f1",
-      "url": "https://github.com/feel-co/hjem/archive/4d0d0e4dc99245ffaa0d51acf69e288fb59fb0f1.tar.gz",
-      "hash": "sha256-bPTW00Tkp8c7HJbhNC7wLO3fcngFXBpuX7LZByE/F8c="
+      "revision": "d51b2e524794a61762453be5bf7b4fe259150191",
+      "url": "https://github.com/feel-co/hjem/archive/d51b2e524794a61762453be5bf7b4fe259150191.tar.gz",
+      "hash": "sha256-hOweDMc/uNFeliSVuNXZ4qa6WC8AbmRV8pNSAD/h4S0="
     },
     "mnw": {
       "type": "Git",
@@ -35,9 +35,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "ba3f894b74133478b63094cf3a46ed28afd8b856",
-      "url": "https://github.com/player131007/nix-index-cache/archive/ba3f894b74133478b63094cf3a46ed28afd8b856.tar.gz",
-      "hash": "sha256-VddZALy/Yw7gxZs2luaL5xE2ZLOu7njnNcVVc7D4u6k="
+      "revision": "c74554c0e2947119967891c72168fbb82b7b2e4f",
+      "url": "https://github.com/player131007/nix-index-cache/archive/c74554c0e2947119967891c72168fbb82b7b2e4f.tar.gz",
+      "hash": "sha256-SNQdofIZQvwMNv0La0qkfg76tCbR1YU8PEqVYIfk/6A="
     },
     "nixpkgs": {
       "type": "Git",
@@ -48,9 +48,9 @@
       },
       "branch": "nixos-unstable",
       "submodules": false,
-      "revision": "c06b4ae3d6599a672a6210b7021d699c351eebda",
-      "url": "https://github.com/NixOS/nixpkgs/archive/c06b4ae3d6599a672a6210b7021d699c351eebda.tar.gz",
-      "hash": "sha256-wvfdLLWJ2I9oEpDd9PfMA8osfIZicoQ5MT1jIwNs9Tk="
+      "revision": "b40629efe5d6ec48dd1efba650c797ddbd39ace0",
+      "url": "https://github.com/NixOS/nixpkgs/archive/b40629efe5d6ec48dd1efba650c797ddbd39ace0.tar.gz",
+      "hash": "sha256-TJ3lSQtW0E2JrznGVm8hOQGVpXjJyXY2guAxku2O9A4="
     }
   },
   "version": 7
