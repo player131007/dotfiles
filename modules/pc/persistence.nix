@@ -52,7 +52,10 @@ in
 
           directories = [
             "/var/lib/nixos"
-            "/var/lib/systemd"
+            {
+              directory = "/var/lib/systemd";
+              early = true;
+            }
             {
               directory = "/var/log";
               method.bindmount.extraConfig = {
