@@ -2,7 +2,6 @@
 {
   fonts.packages = [
     pkgs.inter
-    pkgs.iosevka
   ];
 
   my.hjem = {

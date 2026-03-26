@@ -4,9 +4,9 @@ config.load_autoconfig()
 
 c.fonts.tabs.selected = "500 12pt Inter Display"
 c.fonts.tabs.unselected = "500 12pt Inter Display"
-c.fonts.statusbar = "400 10.5pt Iosevka"
-c.fonts.completion.category = "bold 11pt Iosevka"
-c.fonts.completion.entry = "400 10.5pt Iosevka"
+c.fonts.statusbar = "400 10.5pt Iosevka Fixed"
+c.fonts.completion.category = "bold 11pt Iosevka Fixed"
+c.fonts.completion.entry = "400 10.5pt Iosevka Fixed"
 
 c.completion.quick = False
 c.session.lazy_restore = True
