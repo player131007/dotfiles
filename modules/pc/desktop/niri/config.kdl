@@ -92,6 +92,14 @@ layout {
         bottom 6
     }
 
+    border {
+        off
+    }
+
+    focus-ring {
+        width 2
+    }
+
     empty-workspace-above-first
 
     // When to center a column when changing focus, options are:
