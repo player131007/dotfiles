@@ -1,10 +1,13 @@
 {
   lib,
   pkgs,
+  sources,
   ...
 }:
 let
   inherit (lib.generators) toINI mkKeyValueDefault mkValueStringDefault;
+
+  rose-pine = sources.rose-pine-foot { inherit pkgs; };
 in
 {
   fonts.packages = [
@@ -30,6 +33,7 @@ in
           font = lib.concatStringsSep "," [
             "IosevkaTerm Nerd Font:size=9"
           ];
+          include = [ "${rose-pine}/rose-pine" ];
           dpi-aware = "yes";
         };
         cursor.blink = "yes";
