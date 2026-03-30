@@ -17,7 +17,10 @@
 
     freefont_ttf
     gyre-fonts
-    unifont
+
+    noto-fonts
+    noto-fonts-cjk-sans
+    noto-fonts-cjk-serif
     noto-fonts-color-emoji
   ];
 }
