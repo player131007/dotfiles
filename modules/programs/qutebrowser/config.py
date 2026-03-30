@@ -1,5 +1,5 @@
-# main section
-#
+import colors
+
 config.load_autoconfig()
 
 c.fonts.tabs.selected = "500 12pt Inter Display"
@@ -73,3 +73,5 @@ c.colors.webpage.darkmode.algorithm = 'lightness-cielab'
 c.colors.webpage.darkmode.policy.images = 'smart-simple'
 
 c.colors.webpage.preferred_color_scheme = 'dark'
+
+colors.setup(c)

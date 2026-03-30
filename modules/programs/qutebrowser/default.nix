@@ -13,6 +13,12 @@
         permissions = "600";
         source = ./config.py;
       };
+      "qutebrowser/colors.py" = {
+        enable = true;
+        type = "copy";
+        permissions = "600";
+        source = ./colors.py;
+      };
       "qutebrowser/greasemonkey/yt-ads.js" = {
         enable = true;
         type = "copy";
