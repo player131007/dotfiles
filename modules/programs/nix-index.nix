@@ -34,7 +34,7 @@ let
     '';
   };
 
-  command-not-found-nu = pkgs.writeTextDir "share/nushell/vendor/autoload/command-not-found.nu" /* nu */ ''
+  command-not-found-nu = pkgs.writeTextDir "share/nushell/vendor/autoload/command-not-found.nu" ''
     $env.config.hooks.command_not_found = [{ |cmd| command-not-found $cmd | print }]
   '';
 in

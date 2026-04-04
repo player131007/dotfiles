@@ -43,7 +43,7 @@ in
       systemPackages = [ cfg.package ];
     };
     stuff.nushell.vendors = lib.singleton (
-      pkgs.writeTextDir "share/nushell/vendor/autoload/00-search-paths.nu" /* nu */ ''
+      pkgs.writeTextDir "share/nushell/vendor/autoload/00-search-paths.nu" ''
         const NU_PLUGIN_DIRS = [
           ${lib.pipe cfg.plugins [
             (map (p: "${p}/bin"))

@@ -15,7 +15,7 @@ in
   '';
 
   stuff.nushell.vendors = lib.singleton (
-    pkgs.writeTextDir "share/nushell/vendor/autoload/completions.nu" /* nu */ ''
+    pkgs.writeTextDir "share/nushell/vendor/autoload/completions.nu" ''
       let bin = ($env.XDG_CONFIG_HOME? | default ([ $env.HOME ".config" ] | path join)) | path join "carapace/bin"
       $env.PATH = $env.PATH | prepend $bin
 
