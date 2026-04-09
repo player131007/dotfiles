@@ -143,6 +143,22 @@
       "url": "https://github.com/rose-pine/neovim/archive/cf2a288696b03d0934da713d66c6d71557b5c997.tar.gz",
       "hash": "sha256-rwCsGLt2XwGvHN7DMgt3j9yKPNc2LVUfHYPECHx5xG8="
     },
+    "typst-preview.nvim": {
+      "type": "GitRelease",
+      "repository": {
+        "type": "GitHub",
+        "owner": "chomosuke",
+        "repo": "typst-preview.nvim"
+      },
+      "pre_releases": false,
+      "version_upper_bound": "1.5",
+      "release_prefix": null,
+      "submodules": false,
+      "version": "v1.4.2",
+      "revision": "325036ee145ca51d9efb145c09ac16bce3bc8b7d",
+      "url": "https://api.github.com/repos/chomosuke/typst-preview.nvim/tarball/refs/tags/v1.4.2",
+      "hash": "sha256-7jOKLZ7WKBdX1Ljbvuuki4zmuZ86l62jAN8q2kSThDs="
+    },
     "vim-dirvish": {
       "type": "Git",
       "repository": {
