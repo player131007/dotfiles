@@ -9,6 +9,13 @@ c.fonts.completion.category = "bold 11pt Iosevka Fixed"
 c.fonts.completion.entry = "400 10.5pt Iosevka Fixed"
 
 c.completion.quick = False
+c.completion.open_categories = [ "searchengines", "quickmarks", "history", "bookmarks", "filesystem" ]
+c.completion.web_history.exclude = [
+    "www.messenger.com/*",
+    "www.facebook.com/messages/*",
+    "discord.com/channels/*",
+]
+
 c.session.lazy_restore = True
 c.tabs.background = True
 
@@ -22,12 +29,6 @@ config.bind(',t', 'open -t')
 config.bind(',d', 'config-cycle colors.webpage.darkmode.enabled -t -p -u {url:host}')
 
 c.window.transparent = True
-
-c.completion.web_history.exclude = [
-    "www.messenger.com/*/*",
-    "discord.com/channels/*/*",
-    "hustack.soict.ai",
-]
 
 c.tabs.padding = {
     'top': 7,
