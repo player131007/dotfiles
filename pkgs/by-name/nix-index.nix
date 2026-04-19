@@ -4,7 +4,6 @@
   fetchFromGitHub,
   pkg-config,
   openssl,
-  curl,
   sqlite,
 
   util-linux,
@@ -13,16 +12,16 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "nix-index";
-  version = "0-unstable-2026-04-11";
+  version = "0-unstable-2026-04-19";
 
   src = fetchFromGitHub {
     owner = "player131007";
     repo = "nix-index";
-    rev = "68f39e70075fc795ff7f41ab83e44addc7448743";
-    hash = "sha256-zIyuGnpOZpOhWyfcn2cvJjF+Nw1VEWQcnpjTw2ktgIE=";
+    rev = "8c60306353f4050457f49940056c7bbcde969357";
+    hash = "sha256-9NFYGBCQSc16nM6wT3BAKd/dvgTPCbqSItNbxPa2wEA=";
   };
 
-  cargoHash = "sha256-sgbMy+vCH6EG42u2SfIco6l84auL9R6Sz61GJHF4fUY=";
+  cargoHash = "sha256-JqpHpCrGWAdb4YnebeR1FFrlTArayh+MnJdHkrgo6Gw=";
 
   nativeBuildInputs = [
     pkg-config
@@ -30,7 +29,6 @@ rustPlatform.buildRustPackage rec {
   ];
   buildInputs = [
     openssl
-    curl
     sqlite
   ];
 
