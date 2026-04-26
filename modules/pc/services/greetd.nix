@@ -1,9 +1,14 @@
 {
+  config,
   lib,
   pkgs,
   ...
 }:
 {
+  systemd.services = lib.mkIf config.services.kmscon.enable {
+    "kmsconvt@tty1".enable = false;
+  };
+
   services.greetd = {
     enable = true;
     settings = {
