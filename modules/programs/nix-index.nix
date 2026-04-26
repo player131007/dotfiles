@@ -23,15 +23,20 @@ let
     }).overrideAttrs
       { name = "nix-index-db-bin-only"; };
 
-  nix-index-wrapped = pkgs.symlinkJoin {
-    inherit (nix-index) pname version;
-    paths = [ nix-index ];
-
-    nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
-    postBuild = ''
-      makeWrapper ${nix-index}/bin/nix-locate $out/bin/nix-locate --inherit-argv0 --set NIX_INDEX_DATABASE ${nix-index-db}
-      makeWrapper ${nix-index}/bin/command-not-found $out/bin/command-not-found --inherit-argv0 --set NIX_INDEX_DATABASE ${nix-index-db-bin-only}
-    '';
+  nix-index-wrapped = nix-index.override {
+    wrap_flags = {
+      nix-locate = [
+        "--inherit-argv0"
+        "--set-default"
+        "NIX_INDEX_DATABASE"
+        "${nix-index-db}"
+      ];
+      command-not-found = [
+        "--set-default"
+        "NIX_INDEX_DATABASE"
+        "${nix-index-db-bin-only}"
+      ];
+    };
   };
 
   command-not-found-nu = pkgs.writeTextDir "share/nushell/vendor/autoload/command-not-found.nu" ''
