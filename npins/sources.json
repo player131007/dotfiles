@@ -9,9 +9,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "d51b2e524794a61762453be5bf7b4fe259150191",
-      "url": "https://github.com/feel-co/hjem/archive/d51b2e524794a61762453be5bf7b4fe259150191.tar.gz",
-      "hash": "sha256-hOweDMc/uNFeliSVuNXZ4qa6WC8AbmRV8pNSAD/h4S0="
+      "revision": "35c2158ba101d7b42b05debfcb169ba32dad3bbc",
+      "url": "https://github.com/feel-co/hjem/archive/35c2158ba101d7b42b05debfcb169ba32dad3bbc.tar.gz",
+      "hash": "sha256-a0O56qWfPEKe0mBKgvcQL5UDpWmon70AKJspHNkEJV8="
     },
     "mnw": {
       "type": "Git",
@@ -22,9 +22,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "6bd6ab9968c2432c78db4a91c9b1e84dd84fe6b3",
-      "url": "https://github.com/Gerg-L/mnw/archive/6bd6ab9968c2432c78db4a91c9b1e84dd84fe6b3.tar.gz",
-      "hash": "sha256-mR8GDvGPu1QcI5Ft5lV2CIIh5Og7zRylts+XY3fa/K4="
+      "revision": "54f7ad6e34f4e44e0260a5140af7726a4792dece",
+      "url": "https://github.com/Gerg-L/mnw/archive/54f7ad6e34f4e44e0260a5140af7726a4792dece.tar.gz",
+      "hash": "sha256-AHM3wNuC5zzGaygnovHqFUI0YJR1Jj7ZgK9D9m7cgMQ="
     },
     "nix-index-cache": {
       "type": "Git",
@@ -35,9 +35,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "d7c4301e823de23cb2fd4af0566dbb969a3255f1",
-      "url": "https://github.com/player131007/nix-index-cache/archive/d7c4301e823de23cb2fd4af0566dbb969a3255f1.tar.gz",
-      "hash": "sha256-vhAJ7dtZmdx2Sk1JbnRC/pTLLSxyvU9PsecyPIMexxo="
+      "revision": "f99e4e52f5e22854562c47154f8187b90836b396",
+      "url": "https://github.com/player131007/nix-index-cache/archive/f99e4e52f5e22854562c47154f8187b90836b396.tar.gz",
+      "hash": "sha256-xaY/T+3FQL2Zwmwltt6oZY/8fzoJIh6klP9vDgBfWoU="
     },
     "nixpkgs": {
       "type": "Git",
@@ -48,9 +48,9 @@
       },
       "branch": "nixos-unstable",
       "submodules": false,
-      "revision": "6201e203d09599479a3b3450ed24fa81537ebc4e",
-      "url": "https://github.com/NixOS/nixpkgs/archive/6201e203d09599479a3b3450ed24fa81537ebc4e.tar.gz",
-      "hash": "sha256-ZojAnPuCdy657PbTq5V0Y+AHKhZAIwSIT2cb8UgAz/U="
+      "revision": "0726a0ecb6d4e08f6adced58726b95db924cef57",
+      "url": "https://github.com/NixOS/nixpkgs/archive/0726a0ecb6d4e08f6adced58726b95db924cef57.tar.gz",
+      "hash": "sha256-EHq1/OX139R1RvBzOJ0aMRT3xnWyqtHBRUBuO1gFzjI="
     },
     "rose-pine-foot": {
       "type": "Git",
