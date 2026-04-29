@@ -21,7 +21,7 @@
       };
 
       config = {
-        stuff.obs.plugins = [ pkgs.obs-studio-plugins.obs-vaapi ];
+        stuff.obs.plugins = [ pkgs.obs-studio-plugins.obs-pipewire-audio-capture ];
         packages = lib.optionals (finalPackage != null) [ finalPackage ];
       };
     }
