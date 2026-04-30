@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ lib, pkgs, ... }:
 {
   persist.at.persistdir.directories = [ "/var/lib/libvirt" ];
   virtualisation.libvirtd = {
@@ -11,6 +11,8 @@
       runAsRoot = false;
     };
   };
+
+  systemd.services.libvirtd.wantedBy = lib.mkForce [ ];
 
   networking.firewall.extraInputRules = ''
     iifname "virbr0" accept comment "whatever i guess"
