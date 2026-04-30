@@ -14,7 +14,7 @@
         xdg-utils
         _7zz-rar
         keepassxc
-        mpv
+        mpv-unwrapped
         ;
 
       inherit (myPkgs) neovim;
