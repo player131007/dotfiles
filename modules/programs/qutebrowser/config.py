@@ -12,7 +12,7 @@ c.completion.quick = False
 c.completion.open_categories = [ "searchengines", "quickmarks", "history", "bookmarks", "filesystem" ]
 c.completion.web_history.exclude = [
     "www.messenger.com/*",
-    "www.facebook.com/messages/*",
+    "*.facebook.com/messages/*",
     "discord.com/channels/*",
 ]
 
