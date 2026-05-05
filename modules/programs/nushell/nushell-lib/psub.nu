@@ -1,15 +1,9 @@
 def tmp_pipe [] {
-  let pipe = (mktemp -t -d | path join "pipe")
-  mkfifo $pipe
-  $pipe
+    let pipe = (mktemp -t -d | path join "pipe")
+    mkfifo $pipe
+    $pipe
 }
-
-def cleanup_job [
-  pipe: path
-  task_span: record
-  timeout?: duration
-] {
-  job spawn -t psub_cleanup {
+def cleanup_job [pipe: path, task_span: record, timeout?: duration] { job spawn -t psub_cleanup {
     let id = job recv
     try {
       if $timeout != null {
@@ -28,16 +22,13 @@ def cleanup_job [
     }
 
     rm -rf ($pipe | path dirname)
-  }
-}
-
+  } }
 def main_job [
-  pipe: path
-  read: bool
-  task: closure
-  cleanup_job: int
-] {
-  job spawn -t psub {
+    pipe: path
+    read: bool
+    task: closure
+    cleanup_job: int
+] { job spawn -t psub {
     job id | job send $cleanup_job
 
     if $read {
@@ -54,9 +45,7 @@ def main_job [
     }
 
     job send $cleanup_job
-  }
-}
-
+  } }
 # Execute a background task, returning a FIFO containing the output of said task.
 #
 # If `--read` is passed, the task will read from the pipe instead of writing to it.
@@ -66,9 +55,9 @@ export def main [
   --read(-r) # Have the task read from the pipe
   --timeout(-t): duration # Abort the spawned task after a given amount of time
 ]: nothing -> path {
-  let span = (metadata $task).span
-  do {|pipe|
-    main_job $pipe $read $task (cleanup_job $pipe $span $timeout)
-    $pipe
-  } (tmp_pipe)
+    let span = (metadata $task).span
+    do {|pipe|
+        main_job $pipe $read $task (cleanup_job $pipe $span $timeout)
+        $pipe
+    } (tmp_pipe)
 }
