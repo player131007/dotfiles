@@ -4,7 +4,6 @@ let
 in
 {
   environment.sessionVariables = {
-    CARAPACE_BRIDGES = "fish,bash";
     CARAPACE_ENV = "0";
     CARAPACE_LENIENT = "1";
     CARAPACE_EXCLUDES = "nix,git";
