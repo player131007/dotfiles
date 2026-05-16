@@ -40,17 +40,10 @@
       "hash": "sha256-xaY/T+3FQL2Zwmwltt6oZY/8fzoJIh6klP9vDgBfWoU="
     },
     "nixpkgs": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "NixOS",
-        "repo": "nixpkgs"
-      },
-      "branch": "nixos-unstable",
-      "submodules": false,
-      "revision": "0726a0ecb6d4e08f6adced58726b95db924cef57",
-      "url": "https://github.com/NixOS/nixpkgs/archive/0726a0ecb6d4e08f6adced58726b95db924cef57.tar.gz",
-      "hash": "sha256-EHq1/OX139R1RvBzOJ0aMRT3xnWyqtHBRUBuO1gFzjI="
+      "type": "Channel",
+      "name": "nixos-unstable",
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-26.05pre985613.0726a0ecb6d4/nixexprs.tar.xz",
+      "hash": "sha256-wMN1gM00sUQ2KC9CNr/XEOGdfOrl67PabIRv9AYayTo="
     },
     "rose-pine-foot": {
       "type": "Git",

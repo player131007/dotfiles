@@ -13,34 +13,10 @@ let
       };
 
       defaultModule =
-        {
-          lib,
-          pkgs,
-          config,
-          ...
-        }:
+        { lib, pkgs, ... }:
         {
           networking.hostName = lib.mkDefault hostname;
           _module.args.myPkgs = import ./packages.nix { inherit pkgs; };
-
-          nix = {
-            registry.nixpkgs.to = {
-              type = "path";
-              path = "${nixpkgs}";
-            };
-            nixPath = [ "nixpkgs=${nixpkgs}" ];
-          };
-
-          system.nixos = {
-            versionSuffix =
-              let
-                inherit (config.system.nixos) revision;
-              in
-              if revision == null then ".dirty" else ".${lib.sources.shortRev revision}";
-
-            # if it's a real path, it's overriden
-            revision = lib.mkIf (!builtins.isPath nixpkgs.outPath) nixpkgs.revision;
-          };
         };
     in
     import "${nixpkgs}/nixos/lib/eval-config.nix" (
