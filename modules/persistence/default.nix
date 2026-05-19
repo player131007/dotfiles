@@ -14,7 +14,6 @@ let
     concatStringsSep
     genList
     length
-    foldl'
     ;
   inherit (lib.lists)
     optional
@@ -26,7 +25,7 @@ let
   inherit (lib.trivial) pipe;
   inherit (lib.modules) mkMerge mkIf mkDefault;
 
-  concatPaths = components: toString (foldl' (acc: comp: acc + "/${comp}") /. components);
+  concatPaths = components: toString (/. + concatStringsSep "/" components);
   deconstructPath =
     let
       recurse =
@@ -83,11 +82,26 @@ let
     let
       path = (mkTargetPaths forInitrd target).real;
     in
-    lib.mkMerge [
-      {
+    # is a function to circumvent shorthandOnlyDefinesConfig limitation
+    { ... }:
+    {
+      imports = [
+        target.method.bindmount.extraConfig
+        {
+          # directories can be created when mounting so we put it before tmpfiles
+          # i heard this avoids dependency hell
+          # source file needs to exist for systemd to mount, so put files after tmpfiles
+          ${if isDirectory target then "before" else "after"} =
+            if forInitrd then
+              [ "systemd-tmpfiles-setup-sysroot.service" ]
+            else
+              [ "systemd-tmpfiles-setup.service" ];
+        }
+      ];
+      config = {
         what = path.source;
         where = path.dest;
-        options = concatStringsSep "," (target.method.bindmount.mountOptions ++ [ "bind" ]);
+        options = "bind";
 
         unitConfig.DefaultDependencies = false;
         conflicts = [ "umount.target" ];
@@ -96,25 +110,8 @@ let
           "persistence.target"
           "umount.target"
         ];
-      }
-      {
-        # directories can be created when mounting so we put it before tmpfiles
-        # i heard this avoids dependency hell
-        # source file needs to exist for systemd to mount, so put files after tmpfiles
-        ${if isDirectory target then "before" else "after"} =
-          if forInitrd then
-            [ "systemd-tmpfiles-setup-sysroot.service" ]
-          else
-            [ "systemd-tmpfiles-setup.service" ];
-      }
-      # is a function to circumvent shorthandOnlyDefinesConfig limitation
-      (
-        { ... }:
-        {
-          imports = [ target.method.bindmount.extraConfig ];
-        }
-      )
-    ];
+      };
+    };
 
   mkSymlink =
     forInitrd: target:
@@ -132,7 +129,6 @@ let
   mkTmpfilesRules =
     forInitrd: target:
     let
-      tmpfiles-type = if isDirectory target then "d" else "f";
       paths = mkTargetPaths forInitrd target;
     in
     mkMerge (
@@ -149,20 +145,8 @@ let
           ${path.source} = value;
         }
       ) paths.intermediate
-      ++ optional (target.method.symlink.createLinkTarget or true) {
-        ${paths.real.source}.${tmpfiles-type} = mkMerge [
-          {
-            user = target.owner;
-            inherit (target) group mode;
-          }
-          # is a function to circumvent shorthandOnlyDefinesConfig limitation
-          (
-            { ... }:
-            {
-              imports = [ target.extraTmpfiles ];
-            }
-          )
-        ];
+      ++ optional (target.tmpfilesSettings != { }) {
+        ${paths.real.source} = target.tmpfilesSettings;
       }
     );
 
@@ -210,7 +194,7 @@ in
     boot.initrd.systemd = mkMerge [
       {
         targets.persistence = {
-          description = "Initrd Persistence Mounts";
+          description = "Early Persistence Mounts";
           wantedBy = [ "initrd.target" ];
           before = [ "initrd.target" ];
         };

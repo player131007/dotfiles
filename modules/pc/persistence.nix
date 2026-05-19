@@ -4,27 +4,8 @@
   myLib,
   ...
 }:
-let
-  inherit (builtins) concatStringsSep;
-in
 {
   imports = [ (myLib.fromRoot "modules/persistence") ];
-
-  boot.initrd.systemd.mounts =
-    let
-      nixStore = toString (/sysroot + config.persist.at.oncedir.storagePath + "/nix/store");
-    in
-    lib.singleton {
-      wantedBy = [ "initrd.target" ];
-      before = [
-        "initrd.target"
-        config.boot.initrd.systemd.targets.persistence.name
-      ];
-
-      what = nixStore;
-      where = nixStore;
-      options = concatStringsSep "," ([ "bind" ] ++ config.boot.nixStoreMountOpts);
-    };
 
   persist = lib.mkMerge [
     (
@@ -44,7 +25,7 @@ in
               file = "/etc/machine-id";
               early = true;
               mode = "0444";
-              extraTmpfiles.config.argument = "uninitialized";
+              tmpfilesSettings.f.argument = "uninitialized";
               method.symlink.createLinkTarget = true;
             }
             "/etc/adjtime"
@@ -65,9 +46,7 @@ in
             {
               directory = "/nix";
               early = true;
-              method.bindmount.extraConfig.config = {
-                options = "private";
-              };
+              method.bindmount.mountOptions = [ "slave" ];
             }
           ];
         };

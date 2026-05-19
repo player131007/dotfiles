@@ -4,11 +4,13 @@
   ...
 }:
 let
+  inherit (lib.attrsets) optionalAttrs;
   inherit (lib.options) mkOption;
+  inherit (lib.modules) mkMerge;
   inherit (lib.types)
     bool
     lazyAttrsOf
-    path
+    externalPath
     pathWith
     listOf
     str
@@ -22,6 +24,7 @@ let
     {
       commonMountOptions,
       defaultOwner,
+      config,
       ...
     }:
     {
@@ -44,9 +47,15 @@ let
           default = "-";
         };
 
-        extraTmpfiles = mkOption {
-          type = deferredModule;
-          default = { };
+        tmpfilesSettings = mkOption {
+          type = lazyAttrsOf deferredModule;
+          apply = builtins.mapAttrs (
+            _: cfg:
+            { ... }:
+            {
+              imports = [ cfg ];
+            }
+          );
         };
 
         method = mkOption {
@@ -61,17 +70,20 @@ let
             };
 
             bindmount = mkOption {
-              type = submodule {
-                options = {
-                  mountOptions = mkOption { type = listOf str; };
-                  extraConfig = mkOption {
-                    type = deferredModule;
-                    default = { };
+              type = submodule (
+                { config, ... }:
+                {
+                  options = {
+                    mountOptions = mkOption { type = listOf str; };
+                    extraConfig = mkOption { type = deferredModule; };
                   };
-                };
 
-                config.mountOptions = lib.mkBefore commonMountOptions;
-              };
+                  config = {
+                    extraConfig.config.options = mkMerge config.mountOptions;
+                    mountOptions = lib.mkBefore commonMountOptions;
+                  };
+                }
+              );
             };
           };
 
@@ -84,7 +96,14 @@ let
           internal = true;
           visible = false;
           readOnly = true;
-          type = path;
+          type = externalPath;
+        };
+      };
+
+      config.tmpfilesSettings = optionalAttrs (config.method.symlink.createLinkTarget or true) {
+        ${if config ? file then "f" else "d"} = {
+          user = config.owner;
+          inherit (config) group mode;
         };
       };
     };
@@ -157,7 +176,7 @@ let
           };
 
           storagePath = mkOption {
-            type = path;
+            type = externalPath;
             default = name;
           };
 
