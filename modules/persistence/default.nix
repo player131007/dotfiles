@@ -209,6 +209,11 @@ in
           wantedBy = [ "sysinit.target" ];
           before = [ "sysinit.target" ];
         };
+
+        mounts = pipe allTargets.right [
+          (filter isBindMount)
+          (map (mkMount false))
+        ];
       }
       (mkPersist false)
     ];
