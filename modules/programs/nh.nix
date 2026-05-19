@@ -1,7 +1,5 @@
 {
-  config,
   lib,
-  myLib,
   pkgs,
   ...
 }:
@@ -25,9 +23,5 @@ in
 
   config.my.hjem = {
     packages = [ pkgs.nh ];
-    environment.sessionVariables = {
-      NH_FILE = toString (myLib.fromRoot "nixos.nix");
-      NH_ATTRP = config.networking.hostName;
-    };
   };
 }

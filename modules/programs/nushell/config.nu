@@ -8,6 +8,7 @@ let path_like_vars = [
     QML2_IMPORT_PATH
     INFOPATH
     GTK_PATH
+    PATH
 ]
 $env.ENV_CONVERSIONS = $env.ENV_CONVERSIONS | merge ($path_like_vars | each { append (env-conversions).path } | into record) | merge {
   NIX_PATH: {
