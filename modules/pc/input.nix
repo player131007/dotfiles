@@ -1,6 +1,5 @@
 { pkgs, ... }:
 {
-  console.useXkbConfig = true;
   services.xserver.xkb.options = "";
 
   services.keyd = {
