@@ -40,13 +40,20 @@
             {
               directory = "/var/log";
               method.bindmount.extraConfig = {
-                mountConfig.LazyUnmount = true;
+                conflicts = lib.mkForce [ ];
+                before = lib.mkForce [ "persistence.target" ];
               };
             }
             {
               directory = "/nix";
               early = true;
-              method.bindmount.mountOptions = [ "slave" ];
+              method.bindmount = {
+                mountOptions = [ "slave" ];
+                extraConfig = {
+                  conflicts = lib.mkForce [ ];
+                  before = lib.mkForce [ "persistence.target" ];
+                };
+              };
             }
           ];
         };
