@@ -12,7 +12,7 @@
     ];
   };
 
-  systemd.user.services.syncthing = {
+  my.hjem.systemd.services.syncthing = {
     description = "Syncthing - Open Source Continuous File Synchronization";
     documentation = [
       "man:syncthing(1)"
