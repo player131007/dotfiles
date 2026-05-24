@@ -3,6 +3,7 @@
   services.kmscon = {
     enable = true;
     useXkbConfig = true;
+    # FIXME: remove when https://github.com/NixOS/nixpkgs/pull/520693 gets merged
     term =
       lib.warnIf (lib.versionOlder "9.3.5" config.services.kmscon.package.version)
         "kmscon >9.3.5 has TERM set properly by default, no need to approximate"
