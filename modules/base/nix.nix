@@ -1,5 +1,18 @@
-{ pkgs, ... }:
 {
+  config,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  nixpkgs.overlays = lib.singleton (
+    final: prev: {
+      nix-prefetch-docker = prev.nix-prefetch-docker.override {
+        nix = config.nix.package;
+      };
+    }
+  );
+
   nix = {
     package = pkgs.lixPackageSets.latest.lix;
 
