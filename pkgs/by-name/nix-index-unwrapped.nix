@@ -9,16 +9,16 @@
 
 rustPlatform.buildRustPackage rec {
   pname = "nix-index-unwrapped";
-  version = "0-unstable-2026-04-19";
+  version = "0-unstable-2026-05-24";
 
   src = fetchFromGitHub {
     owner = "player131007";
     repo = "nix-index";
-    rev = "8c60306353f4050457f49940056c7bbcde969357";
-    hash = "sha256-9NFYGBCQSc16nM6wT3BAKd/dvgTPCbqSItNbxPa2wEA=";
+    rev = "79602430c8d2f0a6cfe8e6cba6180a57bdb34cc2";
+    hash = "sha256-5fnCFCibKlpIXWvej02x0qsxHckhD1XbNhdhq2zTQGQ=";
   };
 
-  cargoHash = "sha256-JqpHpCrGWAdb4YnebeR1FFrlTArayh+MnJdHkrgo6Gw=";
+  cargoHash = "sha256-kDHVdCKUdjdxyT5CvoOyZSD25JvB9EnF2rypvbvBTQg=";
 
   nativeBuildInputs = [
     pkg-config
