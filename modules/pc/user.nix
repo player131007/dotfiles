@@ -41,6 +41,7 @@ in
 
   hjem = {
     linker = hjem.packages.smfh;
+    clobberByDefault = true;
     users.${username}.enable = true;
   };
 }
