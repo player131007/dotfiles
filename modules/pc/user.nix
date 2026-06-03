@@ -16,6 +16,8 @@ in
     (lib.mkAliasOptionModule [ "my" "hjem" ] [ "hjem" "users" username ])
   ];
 
+  services.userborn.enable = true;
+
   users.mutableUsers = false;
   users.users.${username} = {
     isNormalUser = true;
