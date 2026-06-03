@@ -32,5 +32,4 @@ $env.ENV_CONVERSIONS = $env.ENV_CONVERSIONS | merge ($path_like_vars | each { ap
 $env.config.show_banner = false
 $env.config.history.file_format = "sqlite"
 $env.config.use_kitty_protocol = true
-$env.config.completions.algorithm = "substring"
 $env.config.history.isolation = true
