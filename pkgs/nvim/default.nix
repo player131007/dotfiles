@@ -10,12 +10,10 @@ let
       addInfo =
         name: spec:
         if lib.isDerivation spec.outPath then
-          spec.outPath.overrideAttrs {
-            pname = lib.strings.sanitizeDerivationName name;
-            version = if spec ? revision then "0.0.0+rev=${lib.sources.shortRev spec.revision}" else "0";
-          }
+          spec.outPath.overrideAttrs { name = lib.strings.sanitizeDerivationName name; }
         else
-          "${spec.outPath}"; # copy paths to the store
+          # `startAttrs` expects store paths
+          "${spec.outPath}";
     in
     args:
     lib.pipe (import ./npins args) [
