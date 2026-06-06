@@ -52,3 +52,5 @@ vim.o.wildoptions = "pum,fuzzy"
 vim.o.pumheight = 15
 
 vim.o.shortmess = "FOCaco"
+
+if vim.fn.executable("rg") == 1 then vim.o.grepprg = "rg --vimgrep" end
