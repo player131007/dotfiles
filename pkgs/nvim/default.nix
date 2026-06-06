@@ -37,7 +37,6 @@ in
 
     vim.o.exrc = true -- has to be set early
     vim.g.loaded_netrw = true
-    vim.g.loaded_nvim_treesitter = true
   '';
 
   plugins = {
@@ -54,7 +53,9 @@ in
       impure = toString ./.;
     };
 
-    start = [ pkgs.vimPlugins.nvim-treesitter.withAllGrammars ];
+    start = builtins.concatMap (
+      grammar: [ grammar ] ++ lib.optional (grammar ? associatedQuery) grammar.associatedQuery
+    ) (builtins.attrValues pkgs.vimPlugins.nvim-treesitter.grammarPlugins);
 
     startAttrs = fetchPlugins {
       input = ./npins/plugins.json;
