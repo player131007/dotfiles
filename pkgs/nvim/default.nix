@@ -25,7 +25,6 @@ let
 in
 {
   appName = "nvim";
-  desktopEntry = false;
 
   extraBinPath = with pkgs; [
     emmylua-ls
