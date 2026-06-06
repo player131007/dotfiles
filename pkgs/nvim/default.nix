@@ -5,21 +5,18 @@
 }:
 let
   fetchPlugins =
-    let
-      fetch = _: spec: spec { inherit pkgs; };
-      addInfo =
-        name: spec:
-        if lib.isDerivation spec.outPath then
-          spec.outPath.overrideAttrs { name = lib.strings.sanitizeDerivationName name; }
-        else
-          # `startAttrs` expects store paths
-          "${spec.outPath}";
-    in
     args:
-    lib.pipe (import ./npins args) [
-      (lib.mapAttrs fetch)
-      (lib.mapAttrs addInfo)
-    ];
+    builtins.mapAttrs (
+      name: spec:
+      let
+        plugin = (spec { inherit pkgs; }).outPath;
+      in
+      if plugin ? overrideAttrs then
+        plugin.overrideAttrs { name = lib.strings.sanitizeDerivationName name; }
+      else
+        # `startAttrs` expects store paths
+        "${plugin}"
+    ) (import ./npins args);
 in
 {
   appName = "nvim";
