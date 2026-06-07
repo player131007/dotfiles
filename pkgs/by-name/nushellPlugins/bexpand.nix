@@ -4,24 +4,32 @@
   fetchFromGitea,
   nushell,
 }:
-rustPlatform.buildRustPackage {
+rustPlatform.buildRustPackage (finalAttrs: {
   pname = "nu_plugin_bexpand";
-  version = "1.3.11211+nu-0.112.1";
+  version = "1.3.11300+nu-0.113.0";
 
   src = fetchFromGitea {
     domain = "forge.axfive.net";
     owner = "Taylor";
     repo = "nu-plugin-bexpand";
-    rev = "aab59283343e2d06d119311abf5e8c028c7579e8";
-    hash = "sha256-aO3SL7DO6932nW0kVRtYoWCtzR8fzGAZ5mBdF++GinY=";
+    tag = "v${finalAttrs.version}";
+    hash = "sha256-mN+54dn/to7JOXL3uCFd0/LmKEz21R3heVG6tGgiapw=";
   };
 
-  cargoHash = "sha256-cgkgNb2Rb+6568TiREBakuEAdAEUgZUvWIi6N3SVPrM=";
+  cargoHash = "sha256-AxU+aX6DjGsPvcFDonmCE06JrBTeXnybZ8i7Ew79wuU=";
 
   meta = {
     description = "Bash style brace expansion for nushell";
     mainProgram = "nu_plugin_bexpand";
 
-    broken = lib.versions.majorMinor nushell.version != "0.112";
+    broken =
+      let
+        inherit (lib.versions) majorMinor;
+
+        m = builtins.match "[0-9]+\\.[0-9]+\\.[0-9]+\\+nu-([0-9]+\\.[0-9]+\\.[0-9]+)" finalAttrs.version;
+        version = builtins.head m;
+      in
+      assert m != null;
+      majorMinor version != majorMinor nushell.version;
   };
-}
+})
