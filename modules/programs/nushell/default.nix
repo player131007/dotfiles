@@ -31,33 +31,54 @@ in
   };
 
   config = {
-    environment = {
-      sessionVariables = {
-        NU_VENDOR_AUTOLOAD_DIR = pkgs.symlinkJoin {
-          name = "nushell-vendor";
-          paths = cfg.vendors;
-          stripPrefix = "/share/nushell/vendor/autoload";
+    environment.systemPackages =
+      let
+        vendor_flags =
+          let
+            vendor = pkgs.symlinkJoin {
+              name = "nushell-vendor";
+              paths = cfg.vendors;
+              stripPrefix = "/share/nushell/vendor/autoload";
+            };
+          in
+          lib.optionals (cfg.vendors != [ ]) [
+            "--set-default"
+            "NU_VENDOR_AUTOLOAD_DIR"
+            "${vendor}"
+          ];
+
+        include_path_flags = lib.optionals (cfg.lib_dirs != [ ]) [
+          "--append-flag"
+          "--include-path"
+          "--append-flag"
+          (builtins.concatStringsSep "" cfg.lib_dirs)
+        ];
+
+        plugins_flags = lib.optionals (cfg.plugins != [ ]) (
+          [
+            "--append-flag"
+            "--plugins"
+          ]
+          ++ builtins.concatMap (plugin: [
+            "--append-flag"
+            (lib.getExe plugin)
+          ]) cfg.plugins
+        );
+
+        finalPackage = pkgs.symlinkJoin {
+          inherit (cfg.package) pname version;
+          paths = [ cfg.package ];
+
+          nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
+          postBuild = ''
+            rm $out/bin/nu
+            makeWrapper ${lib.getExe cfg.package} $out/bin/nu \
+              --inherit-argv0 \
+              ${lib.escapeShellArgs (vendor_flags ++ include_path_flags ++ plugins_flags)}
+          '';
         };
-      };
-
-      systemPackages = [ cfg.package ];
-    };
-    stuff.nushell.vendors = lib.singleton (
-      pkgs.writeTextDir "share/nushell/vendor/autoload/00-search-paths.nu" ''
-        const NU_PLUGIN_DIRS = [
-          ${lib.pipe cfg.plugins [
-            (map (p: "${p}/bin"))
-            lib.concatLines
-          ]}
-          ...$NU_PLUGIN_DIRS
-        ]
-
-        const NU_LIB_DIRS = [
-          ${lib.concatLines cfg.lib_dirs}
-          ...$NU_LIB_DIRS
-        ]
-      ''
-    );
+      in
+      [ finalPackage ];
 
     stuff.nushell.plugins = [ myPkgs.nushellPlugins.bexpand ];
     stuff.nushell.lib_dirs = [ "${./nushell-lib}" ];
