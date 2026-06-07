@@ -3,7 +3,7 @@ def tmp_pipe [] {
     mkfifo $pipe
     $pipe
 }
-def cleanup_job [pipe: path, task_span: record, timeout?: duration] { job spawn -t psub_cleanup {
+def cleanup_job [pipe: path, task_span: record, timeout?: duration] { job spawn --description psub_cleanup {
     let id = job recv
     try {
       if $timeout != null {
@@ -28,7 +28,7 @@ def main_job [
     read: bool
     task: closure
     cleanup_job: int
-] { job spawn -t psub {
+] { job spawn --description psub {
     job id | job send $cleanup_job
 
     if $read {
