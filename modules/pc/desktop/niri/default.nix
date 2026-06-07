@@ -6,7 +6,10 @@
   };
 
   services.gnome.gnome-keyring.enable = false;
-  environment.systemPackages = [ pkgs.xwayland-satellite ];
+  environment.systemPackages = [
+    pkgs.xwayland-satellite
+    pkgs.wl-clipboard
+  ];
 
   my.hjem = {
     xdg.config.files."niri/config.kdl" = {
