@@ -16,5 +16,6 @@
   services.kmscon = {
     enable = true;
     useXkbConfig = true;
+    config.libseat = false;
   };
 }
