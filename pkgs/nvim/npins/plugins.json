@@ -9,9 +9,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "18aeab3d63d350dcf44d64c462cc489a3412af40",
-      "url": "https://github.com/stevearc/conform.nvim/archive/18aeab3d63d350dcf44d64c462cc489a3412af40.tar.gz",
-      "hash": "sha256-+NzRZItrF344sp+xt07vKcu+EbHO1wtSGolYtIz0CP4="
+      "revision": "619363c30309d29ffa631e67c8183f2a72caa373",
+      "url": "https://github.com/stevearc/conform.nvim/archive/619363c30309d29ffa631e67c8183f2a72caa373.tar.gz",
+      "hash": "sha256-pMWvC7sqOFjsMUhxTzMcoSifn7E5CVindvQVl9dEfB8="
     },
     "fidget.nvim": {
       "type": "Git",
@@ -48,9 +48,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "0e37cddd6307eb40248e4226be65304e85df1d18",
-      "url": "https://github.com/nvim-mini/mini.clue/archive/0e37cddd6307eb40248e4226be65304e85df1d18.tar.gz",
-      "hash": "sha256-96h7E3O3Akakd1BxlACWn0O5ALQzyP8nJXSqZ4c5f0Y="
+      "revision": "4b3db71003fa06200680afb9f1d05506b79eb953",
+      "url": "https://github.com/nvim-mini/mini.clue/archive/4b3db71003fa06200680afb9f1d05506b79eb953.tar.gz",
+      "hash": "sha256-6ttyphQgT3yjWOOzmLKzSqQUtyah2FvZz3jDprqKjno="
     },
     "mini.icons": {
       "type": "Git",
@@ -113,9 +113,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "1e37ade260e2b655c3a9b8407ba7e6b0fb995b28",
-      "url": "https://github.com/nvim-mini/mini.surround/archive/1e37ade260e2b655c3a9b8407ba7e6b0fb995b28.tar.gz",
-      "hash": "sha256-ruFYkITEmjRC3Luat1X3fW2vXBUBe785c9DRn6fWjIE="
+      "revision": "9fd5ebef2b34cc4ac3c0f1811a6726ea6d92fa91",
+      "url": "https://github.com/nvim-mini/mini.surround/archive/9fd5ebef2b34cc4ac3c0f1811a6726ea6d92fa91.tar.gz",
+      "hash": "sha256-5dJ8GI9NtYbiAUvYdRjtxrTIUVS41VRkWvLtrBNqbhs="
     },
     "nvim-lspconfig": {
       "type": "Git",
@@ -126,9 +126,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "a4ed4e761c400849e8c9f8bda33e5083f890268c",
-      "url": "https://github.com/neovim/nvim-lspconfig/archive/a4ed4e761c400849e8c9f8bda33e5083f890268c.tar.gz",
-      "hash": "sha256-8FuXV6e+/luVWrS+xmh6LyLHcBCIgoSR4z5BInPGi6A="
+      "revision": "229b79051b380377664edc4cbd534930154921a1",
+      "url": "https://github.com/neovim/nvim-lspconfig/archive/229b79051b380377664edc4cbd534930154921a1.tar.gz",
+      "hash": "sha256-RDhwY+C2ZHZPPRe1yvgJqonLcez77dVYvTIttVnFPis="
     },
     "rose-pine": {
       "type": "Git",
@@ -168,9 +168,9 @@
       },
       "branch": "master",
       "submodules": false,
-      "revision": "56635449411128c7f5be1b24c454ad38949f34e0",
-      "url": "https://github.com/player131007/vim-dirvish/archive/56635449411128c7f5be1b24c454ad38949f34e0.tar.gz",
-      "hash": "sha256-gv8k6iN5QZqQ+jm76FONOlXdpZnFkbx10ct9vPdfk14="
+      "revision": "303da41e84beaa453996a7989743568d41936c06",
+      "url": "https://github.com/player131007/vim-dirvish/archive/303da41e84beaa453996a7989743568d41936c06.tar.gz",
+      "hash": "sha256-wBVZ8wwn5YFQpwD9oVqtz/3no2eA/mFFvlxSAmDjgMI="
     }
   },
   "version": 7
