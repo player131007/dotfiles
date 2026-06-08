@@ -33,3 +33,51 @@ $env.config.show_banner = false
 $env.config.history.file_format = "sqlite"
 $env.config.use_kitty_protocol = true
 $env.config.history.isolation = true
+
+$env.config.keybindings ++= [
+  {
+    modifier: control
+    keycode: left
+    mode: emacs
+    event: {
+      edit: movebigwordleft
+      select: false
+    }
+  }
+  {
+    modifier: control_shift
+    keycode: left
+    mode: emacs
+    event: {
+      edit: movebigwordleft
+      select: true
+    }
+  }
+  {
+    modifier: control
+    keycode: right
+    mode: emacs
+    event: {
+      edit: movebigwordrightend
+      select: false
+    }
+  }
+  {
+    modifier: control_shift
+    keycode: right
+    mode: emacs
+    event: {
+      edit: movebigwordrightend
+      select: true
+    }
+  }
+  {
+    modifier: control
+    keycode: backspace
+    mode: emacs
+    event: {
+      edit: cutbigwordleft
+    }
+  }
+]
+
