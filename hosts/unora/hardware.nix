@@ -55,6 +55,7 @@
         "size=2G"
         "mode=755"
       ];
+      neededForBoot = true;
     };
     "/boot" = {
       label = "ESP";
