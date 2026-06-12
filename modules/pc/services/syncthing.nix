@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  utils,
   ...
 }:
 {
@@ -25,7 +26,7 @@
     startLimitIntervalSec = 60;
 
     serviceConfig = {
-      ExecStart = lib.escapeShellArgs [
+      ExecStart = utils.escapeSystemdExecArgs [
         (lib.getExe pkgs.syncthing)
         "serve"
         "--gui-address=https://127.0.0.1:8384"
