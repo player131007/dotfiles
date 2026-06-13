@@ -1,221 +1,131 @@
-{
-  config,
-  lib,
-  ...
-}:
+{ config, lib, ... }:
 let
-  inherit (builtins)
-    filter
-    getAttr
-    partition
-    mapAttrs
-    attrValues
-    concatMap
-    concatStringsSep
-    genList
-    length
-    ;
-  inherit (lib.lists)
-    optional
-    singleton
-    take
-    dropEnd
-    ;
-  inherit (lib.strings) optionalString;
+  inherit (builtins) attrValues concatMap;
+  inherit (lib.modules) mkIf mkMerge;
   inherit (lib.trivial) pipe;
-  inherit (lib.modules) mkMerge mkIf mkDefault;
 
-  concatPaths = components: toString (/. + concatStringsSep "/" components);
-  deconstructPath =
-    let
-      recurse =
-        components: base:
-        # If the parent of a path is the path itself, then it's a filesystem root
-        if base == dirOf base then
-          {
-            root = base;
-            inherit components;
-          }
-        else
-          recurse ([ (baseNameOf base) ] ++ components) (dirOf base);
-    in
-    recurse [ ];
+  pLib = import ./lib.nix lib;
 
-  isDirectory = target: target ? directory;
-  isSymlink = target: target.method ? symlink;
-  isBindMount = target: target.method ? bindmount;
-
-  getPath = target: target.file or target.directory;
-
-  mkTargetPaths =
-    forInitrd: target:
-    let
-      mkPath =
-        extra: isStoragePath:
-        concatPaths [
-          (optionalString forInitrd "/sysroot")
-          (optionalString isStoragePath target.storagePath)
-          target.prefix
-          extra
-        ];
-
-      mkPaths = extra: {
-        source = mkPath extra true;
-        dest = mkPath extra false;
-      };
-
-      components = pipe target [
-        getPath
-        (p: (deconstructPath p).components)
-        (dropEnd 1)
-      ];
-      intermediatePaths = genList (i: concatStringsSep "/" (take (i + 1) components)) (length components);
-    in
-    {
-      real = mkPaths (getPath target);
-      intermediate = map mkPaths intermediatePaths;
-    };
-
-  mkMount =
-    forInitrd: target:
-    assert isBindMount target;
-    let
-      path = (mkTargetPaths forInitrd target).real;
-    in
-    # is a function to circumvent shorthandOnlyDefinesConfig limitation
-    { ... }:
-    {
-      imports = [
-        target.method.bindmount.extraConfig
-        {
-          # directories can be created when mounting so we put it before tmpfiles
-          # i heard this avoids dependency hell
-          # source file needs to exist for systemd to mount, so put files after tmpfiles
-          ${if isDirectory target then "before" else "after"} =
-            if forInitrd then
-              [ "systemd-tmpfiles-setup-sysroot.service" ]
-            else
-              [ "systemd-tmpfiles-setup.service" ];
-        }
-      ];
-      config = {
-        what = path.source;
-        where = path.dest;
-        options = "bind";
-
-        unitConfig.DefaultDependencies = false;
-        conflicts = [ "umount.target" ];
-        requiredBy = [ "persistence.target" ];
-        before = [
-          "persistence.target"
-          "umount.target"
-        ];
-      };
-    };
-
-  mkSymlink =
-    forInitrd: target:
-    assert isSymlink target;
-    let
-      inherit ((mkTargetPaths forInitrd target).real) dest;
-      inherit ((mkTargetPaths false target).real) source;
-    in
-    {
-      # because the symlink is for stage 2 and not initrd
-      # we symlink it to the real source
-      ${dest}.L.argument = source;
-    };
-
-  mkTmpfilesRules =
-    forInitrd: target:
-    let
-      paths = mkTargetPaths forInitrd target;
-    in
-    mkMerge (
-      map (
-        path:
-        let
-          value.d = mapAttrs (_: mkDefault) {
-            user = if target.prefix == "/" then "root" else target.owner;
-            group = if target.prefix == "/" then "root" else target.group;
-          };
-        in
-        {
-          ${path.dest} = value;
-          ${path.source} = value;
-        }
-      ) paths.intermediate
-      ++ optional (target.tmpfilesSettings != { }) {
-        ${paths.real.source} = target.tmpfilesSettings;
-      }
-    );
-
-  getTargetsInPath =
-    cfg:
-    concatMap (c: map (t: t // { inherit (cfg) storagePath; }) (c.files ++ c.directories)) (
-      attrValues cfg.users ++ [ cfg ]
-    );
-
-  allTargets = pipe config.persist.at [
+  lateCfg = pipe config.persist.at [
     attrValues
-    (concatMap getTargetsInPath)
-    (partition (t: t.early))
+    (map (pLib.filterTargets (t: !t.early)))
   ];
 
-  mkPersist =
-    forInitrd:
-    let
-      targets = getAttr (if forInitrd then "right" else "wrong") allTargets;
-    in
-    {
-      mounts = pipe targets [
-        (filter isBindMount)
-        (map (mkMount forInitrd))
-      ];
+  earlyCfg = pipe config.persist.at [
+    attrValues
+    (map (pLib.filterTargets (t: t.early)))
+  ];
 
-      tmpfiles.settings.persistence = mkMerge (
-        map (mkTmpfilesRules forInitrd) targets
-        ++ pipe targets [
-          (filter isSymlink)
-          (map (mkSymlink forInitrd))
-        ]
-      );
-    };
+  mapCfgToList =
+    let
+      wrap =
+        f: storagePath: user: target:
+        f storagePath (
+          target
+          // {
+            ${if target ? file then "file" else "directory"} = pLib.concatPaths [
+              config.users.users.${user}.home
+              (pLib.getPath target)
+            ];
+          }
+        );
+    in
+    f: pLib.mapCfgToList f (wrap f);
+
+  handleMounts =
+    cfg:
+    pipe cfg [
+      (pLib.filterTargets (t: t.method ? bindmount))
+      (mapCfgToList pLib.mkBindMount)
+    ];
+
+  handleTmpfiles =
+    cfg:
+    let
+      intermediateRules =
+        pLib.mapCfgToList
+          (
+            storagePath: target:
+            pLib.mkIntermediateDirRules {
+              defaultOwner = config.users.users.root;
+              prefix = "/";
+              inherit storagePath target;
+            }
+          )
+          (
+            storagePath: user: target:
+            pLib.mkIntermediateDirRules {
+              defaultOwner = config.users.users.${user};
+              prefix = config.users.users.${user}.home;
+              inherit storagePath target;
+            }
+          );
+
+      tmpfilesRules = mapCfgToList pLib.mkTmpfilesRules;
+
+      symlinks =
+        cfg:
+        pipe cfg [
+          (pLib.filterTargets (t: t.method ? symlink))
+          (mapCfgToList pLib.mkSymlink)
+        ];
+    in
+    mkMerge (
+      concatMap (f: f cfg) [
+        intermediateRules
+        symlinks
+        tmpfilesRules
+      ]
+    );
 in
 {
   imports = [ ./options.nix ];
 
   config = mkIf config.persist.enable {
-    assertions = singleton {
+    assertions = lib.lists.singleton {
       assertion = config.boot.initrd.systemd.enable;
       message = "persistence module only works with systemd-based initrd";
     };
 
-    boot.initrd.systemd = mkMerge [
-      {
-        targets.persistence = {
-          description = "Early Persistence Mounts";
-          wantedBy = [ "initrd.target" ];
-          before = [ "initrd.target" ];
-        };
-      }
-      (mkPersist true)
-    ];
+    boot.initrd.systemd = {
+      targets.persistence = {
+        description = "Early Persistence Mounts";
+        requires = [ "systemd-tmpfiles-setup-sysroot.service" ];
+        wantedBy = [ "initrd.target" ];
+        before = [ "initrd.target" ];
+      };
 
-    systemd = mkMerge [
-      {
-        targets.persistence = {
-          description = "Persistence Mounts";
-          wantedBy = [ "sysinit.target" ];
-          before = [ "sysinit.target" ];
-        };
+      tmpfiles.settings.persistence = mkMerge (map handleTmpfiles earlyCfg);
 
-        mounts = pipe allTargets.right [
-          (filter isBindMount)
-          (map (mkMount false))
-        ];
-      }
-      (mkPersist false)
-    ];
+      mounts = concatMap handleMounts earlyCfg;
+    };
+
+    systemd = {
+      targets.persistence = {
+        description = "Persistence Mounts";
+        requires = [ "systemd-tmpfiles-setup.service" ];
+        wantedBy = [ "sysinit.target" ];
+        before = [ "sysinit.target" ];
+      };
+
+      tmpfiles.settings.persistence = mkMerge (map handleTmpfiles lateCfg);
+
+      mounts =
+        let
+          handleLateOverrides =
+            cfg:
+            pipe cfg [
+              (pLib.filterTargets (t: t.method ? bindmount))
+              (mapCfgToList (
+                storagePath: target:
+                mkMerge [
+                  (pLib.mkBindMount storagePath (target // { early = false; }))
+                  { overrideStrategy = "asDropin"; }
+                ]
+              ))
+            ];
+        in
+        concatMap handleMounts lateCfg ++ concatMap handleLateOverrides earlyCfg;
+    };
   };
 }

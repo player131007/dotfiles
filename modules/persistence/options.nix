@@ -1,208 +1,184 @@
-{
-  lib,
-  config,
-  ...
-}:
+{ config, lib, ... }:
 let
+  inherit (lib) types;
   inherit (lib.attrsets) optionalAttrs;
+  inherit (lib.lists) singleton;
+  inherit (lib.modules) mkBefore mkMerge;
   inherit (lib.options) mkOption;
-  inherit (lib.modules) mkMerge;
-  inherit (lib.types)
-    bool
-    lazyAttrsOf
-    externalPath
-    pathWith
-    listOf
-    str
-    attrTag
-    coercedTo
-    deferredModule
-    submodule
-    ;
 
-  targetOpts =
+  targetsModule =
     {
+      relative,
       commonMountOptions,
       defaultOwner,
-      config,
-      ...
     }:
-    {
-      options = {
-        early = mkOption {
-          type = bool;
-          default = false;
-        };
+    let
+      pathType = types.pathWith {
+        absolute = !relative;
+        inStore = false;
+      };
 
-        owner = mkOption {
-          type = str;
-          default = defaultOwner.name;
-        };
-        group = mkOption {
-          type = str;
-          default = defaultOwner.group;
-        };
-        mode = mkOption {
-          type = str;
-          default = "-";
-        };
+      targetModule =
+        { config, ... }:
+        {
+          config.tmpfilesSettings = optionalAttrs (config.method.symlink.createLinkTarget or true) {
+            ${if config ? file then "f" else "d"} = {
+              user = config.owner;
+              inherit (config) group mode;
+            };
+          };
 
-        tmpfilesSettings = mkOption {
-          type = lazyAttrsOf deferredModule;
-          apply = builtins.mapAttrs (
-            _: cfg:
-            { ... }:
-            {
-              imports = [ cfg ];
-            }
-          );
-        };
+          options = {
+            early = mkOption {
+              type = types.bool;
+              default = false;
+            };
 
-        method = mkOption {
-          type = attrTag {
-            symlink = mkOption {
-              type = submodule {
-                options.createLinkTarget = mkOption {
-                  type = bool;
-                  default = false;
+            owner = mkOption {
+              type = types.str;
+              default = defaultOwner.name;
+            };
+            group = mkOption {
+              type = types.str;
+              default = defaultOwner.group;
+            };
+            mode = mkOption {
+              type = types.str;
+              default = "-";
+            };
+
+            method = mkOption {
+              default = {
+                bindmount = { };
+              };
+
+              type = types.attrTag {
+                symlink = mkOption {
+                  type = types.submodule {
+                    options.createLinkTarget = mkOption {
+                      type = types.bool;
+                      default = false;
+                    };
+                  };
+                };
+
+                bindmount = mkOption {
+                  type = types.submodule (
+                    { config, ... }:
+                    {
+                      options = {
+                        mountOptions = mkOption { type = types.listOf types.str; };
+                        extraConfig = mkOption { type = types.deferredModule; };
+                      };
+
+                      config = {
+                        mountOptions = mkBefore commonMountOptions;
+                        extraConfig.config.options = mkMerge config.mountOptions;
+                      };
+                    }
+                  );
                 };
               };
             };
 
-            bindmount = mkOption {
-              type = submodule (
-                { config, ... }:
-                {
-                  options = {
-                    mountOptions = mkOption { type = listOf str; };
-                    extraConfig = mkOption { type = deferredModule; };
-                  };
+            tmpfilesSettings = mkOption {
+              type = types.lazyAttrsOf types.deferredModule;
 
-                  config = {
-                    extraConfig.config.options = mkMerge config.mountOptions;
-                    mountOptions = lib.mkBefore commonMountOptions;
-                  };
+              # apply here instead of in `lib.nix` because tmpfiles expects attrsets of submodules
+              apply = builtins.mapAttrs (
+                _: module:
+                { ... }:
+                {
+                  imports = [ module ];
                 }
               );
             };
           };
-
-          default = {
-            bindmount = { };
-          };
         };
 
-        prefix = mkOption {
-          internal = true;
-          visible = false;
-          readOnly = true;
-          type = externalPath;
-        };
-      };
-
-      config.tmpfilesSettings = optionalAttrs (config.method.symlink.createLinkTarget or true) {
-        ${if config ? file then "f" else "d"} = {
-          user = config.owner;
-          inherit (config) group mode;
-        };
-      };
-    };
-
-  target =
-    {
-      prefix ? "/",
-      relativePath ? false,
-      defaultOwner,
-      commonMountOptions,
-      targetType,
-    }:
-    let
-      pathType = pathWith {
-        absolute = !relativePath;
-        inStore = false;
-      };
-    in
-    coercedTo pathType (target: { ${targetType} = target; }) (submodule [
-      targetOpts
-      {
-        options.${targetType} = mkOption { type = pathType; };
-        config = {
-          inherit prefix;
-          _module.args = { inherit commonMountOptions defaultOwner; };
-        };
-      }
-    ]);
-
-  mkTargetOptions = targetArgs: {
-    files = mkOption {
-      type = listOf (target (targetArgs // { targetType = "file"; }));
-      default = [ ];
-    };
-
-    directories = mkOption {
-      type = listOf (target (targetArgs // { targetType = "directory"; }));
-      default = [ ];
-    };
-  };
-
-  atType = submodule (
-    { name, ... }@inner:
-    let
-      userType = submodule (
-        { name, ... }:
-        let
-          user = config.users.users.${name};
-        in
-        {
-          options = mkTargetOptions {
-            defaultOwner = user;
-            prefix = user.home;
-            relativePath = true;
-            inherit (inner.config) commonMountOptions;
-          };
-        }
-      );
+      target =
+        targetType:
+        types.coercedTo pathType (target: { ${targetType} = target; }) (
+          types.submodule [
+            { options.${targetType} = mkOption { type = pathType; }; }
+            targetModule
+          ]
+        );
     in
     {
-      options =
-        mkTargetOptions {
-          defaultOwner = config.users.users.root;
-          inherit (inner.config) commonMountOptions;
-        }
-        // {
-          enable = mkOption {
-            type = bool;
-            default = true;
-          };
-
-          storagePath = mkOption {
-            type = externalPath;
-            default = name;
-          };
-
-          commonMountOptions = mkOption {
-            type = listOf str;
-            default = [ "X-fstrim.notrim" ];
-          };
-
-          users = mkOption {
-            type = lazyAttrsOf userType;
-            default = { };
-          };
+      options = {
+        files = mkOption {
+          type = types.listOf (target "file");
+          default = [ ];
         };
-    }
-  );
+
+        directories = mkOption {
+          type = types.listOf (target "directory");
+          default = [ ];
+        };
+      };
+    };
 in
 {
   options.persist = {
     enable = mkOption {
-      type = bool;
+      type = types.bool;
       default = true;
     };
 
     at = mkOption {
-      type = lazyAttrsOf atType;
-      default = { };
+      type =
+        let
+          inherit (config.users) users;
+        in
+        types.lazyAttrsOf (
+          types.submodule (
+            { config, name, ... }:
+            {
+              imports = singleton (targetsModule {
+                relative = false;
+                inherit (config) commonMountOptions;
+                defaultOwner = users.root;
+              });
+              options = {
+                enable = mkOption {
+                  type = types.bool;
+                  default = true;
+                };
+
+                storagePath = mkOption {
+                  type = types.externalPath;
+                  default = name;
+                };
+
+                commonMountOptions = mkOption {
+                  type = types.listOf types.str;
+                  default = [
+                    "x-gvfs-hide"
+                    "x-gdu.hide"
+                    "X-fstrim.notrim"
+                  ];
+                };
+
+                users = mkOption {
+                  type = types.lazyAttrsOf (
+                    types.submodule (
+                      { name, ... }:
+                      {
+                        imports = singleton (targetsModule {
+                          relative = true;
+                          inherit (config) commonMountOptions;
+                          defaultOwner = users.${name};
+                        });
+                      }
+                    )
+                  );
+                  default = { };
+                };
+              };
+            }
+          )
+        );
     };
   };
 }
