@@ -7,7 +7,7 @@
   sqlite,
 }:
 
-rustPlatform.buildRustPackage rec {
+rustPlatform.buildRustPackage {
   pname = "nix-index-unwrapped";
   version = "0-unstable-2026-06-06";
 
@@ -28,14 +28,8 @@ rustPlatform.buildRustPackage rec {
     sqlite
   ];
 
-  meta = with lib; {
+  meta = {
     description = "Files database for nixpkgs";
-    homepage = "https://github.com/nix-community/nix-index";
-    changelog = "https://github.com/nix-community/nix-index/blob/${src.rev}/CHANGELOG.md";
-    license = with licenses; [ bsd3 ];
-    maintainers = with maintainers; [
-      bennofs
-      ncfavier
-    ];
+    license = [ lib.licenses.bsd3 ];
   };
 }
