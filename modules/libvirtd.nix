@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 {
   persist.at.persistdir.directories = [ "/var/lib/libvirt" ];
   virtualisation.libvirtd = {
@@ -12,7 +12,9 @@
     };
   };
 
-  systemd.services.libvirtd.wantedBy = lib.mkForce [ ];
+  systemd.services.libvirtd = {
+    serviceConfig.BindReadOnlyPaths = "/var/lib/systemd/credential.secret";
+  };
 
   networking.firewall.extraInputRules = ''
     iifname "virbr0" accept comment "whatever i guess"
