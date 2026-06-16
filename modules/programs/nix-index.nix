@@ -21,7 +21,12 @@ let
         "--compression=9"
       ];
     }).overrideAttrs
-      { name = "nix-index-db-bin-only"; };
+      (prev: {
+        name = "nix-index-db-bin-only";
+
+        # hack to stop the databases from building in parallel, which takes a lot of memory
+        nativeBuildInputs = prev.nativeBuildInputs or [ ] ++ [ nix-index-db ];
+      });
 
   nix-index-wrapped = nix-index.override {
     wrap_flags = {
