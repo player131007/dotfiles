@@ -1,15 +1,11 @@
 { myLib, ... }:
 {
   disabledModules = [
-    "services/ttys/kmscon.nix"
     "services/ttys/getty.nix"
-    "config/console.nix"
   ];
 
-  imports = map (f: myLib.fromRoot "modules/delete_me/${f}") [
-    "kmscon.nix"
-    "getty.nix"
-    "console.nix"
+  imports = [
+    (myLib.fromRoot "modules/delete_me/getty.nix")
   ];
 
   console.enable = false;

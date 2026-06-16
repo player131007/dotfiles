@@ -4,21 +4,10 @@
   pkgs,
   ...
 }:
-let
-  inherit (lib)
-    escapeShellArgs
-    literalExpression
-    maintainers
-    mkDefault
-    mkEnableOption
-    mkIf
-    mkOption
-    mkRemovedOptionModule
-    mkRenamedOptionModule
-    optionals
-    types
-    ;
 
+with lib;
+
+let
   cfg = config.services.getty;
 
   baseArgs = [
@@ -67,8 +56,6 @@ in
   options = {
 
     services.getty = {
-
-      enable = mkEnableOption "getty";
 
       autologinUser = mkOption {
         type = types.nullOr types.str;
@@ -146,7 +133,7 @@ in
 
   ###### implementation
 
-  config = mkIf cfg.enable {
+  config = {
     # Note: this is set here rather than up there so that changing
     # nixos.label would not rebuild manual pages
     services.getty.greetingLine = mkDefault ''<<< Welcome to ${config.system.nixos.distroName} ${config.system.nixos.label} (\m) - \l >>>'';
