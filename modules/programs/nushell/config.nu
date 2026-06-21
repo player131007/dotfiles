@@ -58,7 +58,7 @@ $env.config.keybindings ++= [
     keycode: right
     mode: emacs
     event: {
-      edit: movebigwordrightend
+      edit: movebigwordrightstart
       select: false
     }
   }
@@ -67,7 +67,7 @@ $env.config.keybindings ++= [
     keycode: right
     mode: emacs
     event: {
-      edit: movebigwordrightend
+      edit: movebigwordrightstart
       select: true
     }
   }
