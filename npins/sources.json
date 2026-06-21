@@ -9,9 +9,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "ffa433dd86e761de45ef985d4293f31a4d2a775d",
-      "url": "https://github.com/feel-co/hjem/archive/ffa433dd86e761de45ef985d4293f31a4d2a775d.tar.gz",
-      "hash": "sha256-NhtWx0youXYRvcqtL+sjdqoZinMcnjcwRsh6eBJUZLg="
+      "revision": "89d0beea9068903aeb9998f52b741c69d4e32aa1",
+      "url": "https://github.com/feel-co/hjem/archive/89d0beea9068903aeb9998f52b741c69d4e32aa1.tar.gz",
+      "hash": "sha256-5uEX8TEZ5kI+bnil/T2jtRlxiADcyeD9mX8gOwQIEVs="
     },
     "mnw": {
       "type": "Git",
@@ -35,16 +35,16 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "c5d0613db76f159f768c0dd6918567002fbfabec",
-      "url": "https://github.com/player131007/nix-index-cache/archive/c5d0613db76f159f768c0dd6918567002fbfabec.tar.gz",
-      "hash": "sha256-GVeBuqgmluJOWV7buPJOhRZDpPCHIBSlA8kogXdf8Q4="
+      "revision": "818228fee8363059c4f9afc3e88d15f83b28313d",
+      "url": "https://github.com/player131007/nix-index-cache/archive/818228fee8363059c4f9afc3e88d15f83b28313d.tar.gz",
+      "hash": "sha256-9W+DQRzeZasUnOLLp43ul5Y7BhYwLfTxSZeRHhlCAs4="
     },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-unstable",
       "artifact": "nixexprs.tar.xz",
-      "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1008282.331800de5053/nixexprs.tar.xz",
-      "hash": "sha256-2fYATYjjbsF2ri3reTWXgBkrmwK5Hpj23CsTEdLA2fo="
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1017464.567a49d1913c/nixexprs.tar.xz",
+      "hash": "sha256-rcUHdUtJEvMdNEl2Wq+YpHraHKfcer3KsBscpZEF2Yg="
     },
     "rose-pine-foot": {
       "type": "Git",
