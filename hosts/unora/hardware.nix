@@ -1,5 +1,4 @@
 {
-  lib,
   myLib,
   ...
 }:
@@ -59,34 +58,38 @@
       fsType = "vfat";
       options = [ "umask=0077" ];
     };
-    "/persist" = {
+    "/.persist" = {
       label = "nixos";
-      fsType = "ext4";
+      fsType = "btrfs";
       options = [
         "relatime"
         "lazytime"
+        "compress=lzo"
+        "subvol=persist"
       ];
       neededForBoot = true;
     };
-  };
-
-  # here because using `fileSystems` blows up boot if mounting fails
-  systemd.mounts =
-    map
-      (label: {
-        wantedBy = [ "local-fs.target" ];
-        before = [ "local-fs.target" ];
-
-        what = "/dev/disk/by-label/${label}";
-        where = "/${label}";
-
-        options = lib.concatStringsSep "," [
-          "relatime"
-          "lazytime"
-        ];
-      })
-      [
-        "d"
-        "windows"
+    "/d" = {
+      label = "nixos";
+      fsType = "btrfs";
+      options = [
+        "relatime"
+        "lazytime"
+        "compress=lzo"
+        "subvol=d"
+        "nofail"
       ];
+    };
+    "/windows" = {
+      label = "nixos";
+      fsType = "btrfs";
+      options = [
+        "relatime"
+        "lazytime"
+        "compress=lzo"
+        "subvol=windows"
+        "nofail"
+      ];
+    };
+  };
 }

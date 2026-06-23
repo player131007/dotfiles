@@ -17,7 +17,7 @@
     {
       at.oncedir = {
         inherit commonMountOptions;
-        storagePath = "/persist/once";
+        storagePath = "/.persist/once";
         files = [
           {
             file = "/etc/machine-id";
@@ -58,7 +58,7 @@
 
       at.persistdir = {
         inherit commonMountOptions;
-        storagePath = "/persist/every";
+        storagePath = "/.persist/every";
       };
     };
 }

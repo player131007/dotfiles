@@ -22,7 +22,7 @@ in
   users.users.${username} = {
     isNormalUser = true;
     homeMode = "0700";
-    hashedPasswordFile = "/persist/password/${username}";
+    hashedPasswordFile = "/.persist/password/${username}";
     extraGroups = [
       "wheel"
       "libvirtd"
