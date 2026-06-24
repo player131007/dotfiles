@@ -1,5 +1,4 @@
 {
-  config,
   lib,
   myLib,
   ...
@@ -9,9 +8,6 @@
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  boot.blacklistedKernelModules = [ "k10temp" ];
-  boot.extraModulePackages = [ config.boot.kernelPackages.zenpower ];
-  boot.kernelModules = [ "zenpower" ];
   boot.kernelParams = [ "amd_pstate=active" ];
   boot.initrd.availableKernelModules = [
     "nvme"
