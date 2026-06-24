@@ -22,6 +22,7 @@
     "sdhci_pci"
     "hid_generic"
   ];
+  boot.initrd.kernelModules = [ "hid_generic" ];
 
   hardware = {
     enableRedistributableFirmware = true;
