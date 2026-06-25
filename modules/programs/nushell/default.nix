@@ -12,11 +12,6 @@ let
 in
 {
   options.stuff.nushell = {
-    vendors = lib.mkOption {
-      type = listOf package;
-      default = [ ];
-    };
-
     plugins = lib.mkOption {
       type = listOf package;
       default = [ ];
@@ -31,22 +26,9 @@ in
   };
 
   config = {
+    environment.pathsToLink = [ "/share/nushell" ];
     environment.systemPackages =
       let
-        vendor_flags =
-          let
-            vendor = pkgs.symlinkJoin {
-              name = "nushell-vendor";
-              paths = cfg.vendors;
-              stripPrefix = "/share/nushell/vendor/autoload";
-            };
-          in
-          lib.optionals (cfg.vendors != [ ]) [
-            "--set-default"
-            "NU_VENDOR_AUTOLOAD_DIR"
-            "${vendor}"
-          ];
-
         include_path_flags = lib.optionals (cfg.lib_dirs != [ ]) [
           "--append-flag"
           "--include-path"
@@ -74,7 +56,7 @@ in
             rm $out/bin/nu
             makeWrapper ${lib.getExe cfg.package} $out/bin/nu \
               --inherit-argv0 \
-              ${lib.escapeShellArgs (vendor_flags ++ include_path_flags ++ plugins_flags)}
+              ${lib.escapeShellArgs (include_path_flags ++ plugins_flags)}
           '';
         };
       in

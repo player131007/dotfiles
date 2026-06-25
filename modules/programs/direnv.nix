@@ -7,7 +7,7 @@
     nix-direnv.enable = true;
   };
 
-  stuff.nushell.vendors = lib.singleton (
+  environment.systemPackages = lib.singleton (
     pkgs.writeTextDir "share/nushell/vendor/autoload/direnv.nu" ''
       # Initialize the PWD hook as an empty list if it doesn't exist
       $env.config.hooks.env_change.PWD = $env.config.hooks.env_change.PWD? | default []

@@ -51,9 +51,10 @@ in
 {
   programs.command-not-found.enable = false;
 
-  environment.systemPackages = [ nix-index-wrapped ];
-
-  stuff.nushell.vendors = [ command-not-found-nu ];
+  environment.systemPackages = [
+    nix-index-wrapped
+    command-not-found-nu
+  ];
 
   programs.bash.interactiveShellInit = /* bash */ ''
     command_not_found_handle() {

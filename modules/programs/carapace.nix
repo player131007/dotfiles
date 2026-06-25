@@ -13,8 +13,8 @@ in
     source <(${carapace} _carapace bash)
   '';
 
-  stuff.nushell.vendors = lib.singleton (
-    pkgs.writeTextDir "share/nushell/vendor/autoload/completions.nu" ''
+  environment.systemPackages = lib.singleton (
+    pkgs.writeTextDir "share/nushell/vendor/autoload/carapace.nu" ''
       let bin = ($env.XDG_CONFIG_HOME? | default ([ $env.HOME ".config" ] | path join)) | path join "carapace/bin"
       $env.PATH = $env.PATH | prepend $bin
 

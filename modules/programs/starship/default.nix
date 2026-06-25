@@ -8,7 +8,7 @@ let
   config = ./config.toml;
 in
 {
-  stuff.nushell.vendors = lib.singleton (
+  environment.systemPackages = lib.singleton (
     pkgs.runCommandLocal "starship-init-nu" { } ''
       FILE=$out/share/nushell/vendor/autoload/starship.nu
 
