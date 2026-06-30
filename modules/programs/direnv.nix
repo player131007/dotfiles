@@ -2,7 +2,7 @@
 {
   programs.direnv = {
     enable = true;
-    settings.global.log_filter = "^([^e]|e[^x]|ex[^p]|exp[^o]|expo[^r]|expor[^t]).*$";
+    settings.global.hide_env_diff = true;
 
     nix-direnv.enable = true;
   };
