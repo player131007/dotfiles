@@ -3,7 +3,7 @@
     sudo.enable = false; # replaced by run0
     polkit = {
       enable = true;
-      extraArgs = [ "--log-level=notice" ];
+      extraArgs = [ "--log-level=info" ];
     };
   };
 
