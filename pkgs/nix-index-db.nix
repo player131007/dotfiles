@@ -15,6 +15,7 @@ stdenvNoCC.mkDerivation {
     nix-index-cache
   ];
 
+  strictDeps = true;
   __structuredAttrs = true;
   unsafeDiscardReferences.out = true;
 

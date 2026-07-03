@@ -18,6 +18,9 @@ rustPlatform.buildRustPackage (finalAttrs: {
 
   cargoHash = "sha256-AxU+aX6DjGsPvcFDonmCE06JrBTeXnybZ8i7Ew79wuU=";
 
+  strictDeps = true;
+  __structuredAttrs = true;
+
   meta = {
     description = "Bash style brace expansion for nushell";
     mainProgram = "nu_plugin_bexpand";
