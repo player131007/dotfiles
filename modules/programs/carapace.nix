@@ -53,7 +53,7 @@ in
     CARAPACE_EXCLUDES = "nix,git";
   };
   programs.bash.interactiveShellInit = /* bash */ ''
-    eval $(carapace _carapace bash)
+    eval "$(carapace _carapace bash)"
   '';
 
   environment.systemPackages = [
