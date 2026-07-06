@@ -7,6 +7,18 @@
 {
   imports = [ (myLib.fromRoot "modules/persistence") ];
 
+  environment.etc = {
+    machine-id = {
+      mode = "direct-symlink";
+      source = "/persist/once/etc/machine-id";
+    };
+    adjtime.text = ''
+      0.0 0 0
+      0
+      UTC
+    '';
+  };
+
   persist = lib.mkMerge [
     (
       let
@@ -17,20 +29,18 @@
         ];
       in
       {
+        tmpfilesSettings.initrd = {
+          "/sysroot/persist/once/etc/machine-id".f = {
+            mode = "0444";
+            user = "root";
+            group = "root";
+            argument = "uninitialized";
+          };
+        };
+
         at.oncedir = {
           inherit commonMountOptions;
           storagePath = "/persist/once";
-          files = [
-            {
-              file = "/etc/machine-id";
-              early = true;
-              mode = "0444";
-              tmpfilesSettings.f.argument = "uninitialized";
-              method.symlink.createLinkTarget = true;
-            }
-            "/etc/adjtime"
-          ];
-
           directories = [
             "/var/lib/nixos"
             {
