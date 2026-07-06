@@ -11,7 +11,7 @@ let
   inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.lists) dropEnd take;
   inherit (lib.modules) mkDefault mkIf mkMerge;
-  inherit (lib.strings) optionalString;
+  inherit (lib.strings) concatStrings optionalString;
   inherit (lib.trivial) pipe;
 
   concatPaths =
@@ -38,10 +38,30 @@ let
 
   getPath = target: target.file or target.directory;
   maybeSysroot = target: optionalString target.early "/sysroot";
-
 in
 {
   inherit concatPaths getPath;
+
+  makeRuleFileContent =
+    let
+      escapeArgument = lib.strings.escapeC [
+        "\t"
+        "\n"
+        "\r"
+        " "
+        "\\"
+      ];
+
+      settingsEntryToRule = path_: entry: ''
+        '${entry.type}' '${path_}' '${entry.mode}' '${entry.user}' '${entry.group}' '${entry.age}' ${escapeArgument entry.argument}
+      '';
+    in
+    paths:
+    concatStrings (
+      mapAttrsToList (
+        path_: types: concatStrings (mapAttrsToList (_: settingsEntryToRule path_) types)
+      ) paths
+    );
 
   mkBindMount =
     storagePath: target:
@@ -55,11 +75,7 @@ in
           # directories can be created when mounting so we put it before tmpfiles
           # i heard this avoids dependency hell
           # source file needs to exist for systemd to mount, so put files after tmpfiles
-          ${if target ? directory then "before" else "after"} =
-            if target.early then
-              [ "systemd-tmpfiles-setup-sysroot.service" ]
-            else
-              [ "systemd-tmpfiles-setup.service" ];
+          ${if target ? directory then "before" else "after"} = [ "systemd-tmpfiles-setup-persist.service" ];
         }
       ];
 

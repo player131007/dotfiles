@@ -1,4 +1,9 @@
-{ config, lib, ... }:
+{
+  config,
+  lib,
+  options,
+  ...
+}:
 let
   inherit (lib) types;
   inherit (lib.attrsets) optionalAttrs;
@@ -125,6 +130,19 @@ in
       type = types.bool;
       default = true;
     };
+
+    tmpfilesSettings =
+      let
+        option = mkOption {
+          type = options.systemd.tmpfiles.settings.type.nestedTypes.elemType;
+          internal = true;
+          default = { };
+        };
+      in
+      {
+        initrd = option;
+        normal = option;
+      };
 
     at = mkOption {
       type =
