@@ -1,4 +1,4 @@
-{ lib, pkgs, ... }:
+{ pkgs, ... }:
 {
   persist.at.persistdir.directories = [ "/var/lib/libvirt" ];
   virtualisation.libvirtd = {
@@ -11,20 +11,6 @@
       runAsRoot = false;
     };
   };
-
-  systemd.mounts =
-    let
-      _path = "/var/lib/systemd/credential.secret";
-    in
-    lib.singleton {
-      what = _path;
-      where = _path;
-      options = "bind";
-
-      unitConfig.RequiresMountsFor = [ _path ];
-      requiredBy = [ "local-fs.target" ];
-      before = [ "local-fs.target" ];
-    };
 
   networking.firewall.extraInputRules = ''
     iifname "virbr0" accept comment "whatever i guess"
