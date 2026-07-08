@@ -1,10 +1,8 @@
 {
   security = {
-    sudo.enable = false; # replaced by run0
-    polkit = {
-      enable = true;
-      extraArgs = [ "--log-level=info" ];
-    };
+    sudo.enable = false;
+    run0.enable = true;
+    polkit.extraArgs = [ "--log-level=info" ];
   };
 
   environment.etc."polkit-1/polkitd.conf".text = ''

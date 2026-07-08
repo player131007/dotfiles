@@ -7,13 +7,7 @@
     pkgs.e2fsprogs
   ];
 
-  security.polkit.extraConfig = /* javascript */ ''
-    polkit.addRule(function(action, subject) {
-      if (subject.isInGroup("wheel")) {
-        return polkit.Result.YES;
-      }
-    });
-  '';
+  security.run0.wheelNeedsPassword = false;
 
   system.installer.channel.enable = false;
 }
