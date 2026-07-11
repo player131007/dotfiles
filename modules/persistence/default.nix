@@ -6,37 +6,31 @@
 }:
 let
   inherit (builtins)
-    all
     attrValues
     concatMap
     filter
-    length
     ;
+  inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.lists) uniqueStrings;
   inherit (lib.modules) mkIf mkMerge;
+  inherit (lib.strings) concatStrings;
   inherit (lib.trivial) pipe;
 
   pLib = import ./lib.nix lib;
 
-  isEmptyCfg =
-    let
-      check = cfg: length cfg.files + length cfg.directories == 0;
-    in
-    cfg: all check ([ cfg ] ++ attrValues cfg.users);
-
   lateCfg = pipe config.persist.at [
     attrValues
     (map (pLib.filterTargets (t: !t.early)))
-    (filter (cfg: !isEmptyCfg cfg))
+    (filter (cfg: !pLib.isEmpty cfg))
   ];
 
   earlyCfg = pipe config.persist.at [
     attrValues
     (map (pLib.filterTargets (t: t.early)))
-    (filter (cfg: !isEmptyCfg cfg))
+    (filter (cfg: !pLib.isEmpty cfg))
   ];
 
-  mapCfgToList' =
+  cfgToList' =
     let
       wrap =
         f: storagePath: user: target:
@@ -50,25 +44,25 @@ let
           }
         );
     in
-    f: pLib.mapCfgToList f (wrap f);
+    f: pLib.cfgToList f (wrap f);
 
   handleMounts =
     cfg:
     pipe cfg [
       (pLib.filterTargets (t: t.method ? bindmount))
-      (mapCfgToList' pLib.mkBindMount)
+      (cfgToList' pLib.mkBindMount)
     ];
 
   handleTmpfiles =
     cfg:
     let
       intermediateRules =
-        pLib.mapCfgToList
+        pLib.cfgToList
           (
             storagePath: target:
             pLib.mkIntermediateDirRules {
               defaultOwner = config.users.users.root;
-              prefix = "/";
+              root = "/";
               inherit storagePath target;
             }
           )
@@ -76,18 +70,18 @@ let
             storagePath: user: target:
             pLib.mkIntermediateDirRules {
               defaultOwner = config.users.users.${user};
-              prefix = config.users.users.${user}.home;
+              root = config.users.users.${user}.home;
               inherit storagePath target;
             }
           );
 
-      tmpfilesRules = mapCfgToList' pLib.mkTmpfilesRules;
+      tmpfilesRules = cfgToList' pLib.mkTmpfilesRules;
 
       symlinks =
         cfg:
         pipe cfg [
           (pLib.filterTargets (t: t.method ? symlink))
-          (mapCfgToList' pLib.mkSymlink)
+          (cfgToList' pLib.mkSymlink)
         ];
     in
     mkMerge (
@@ -97,6 +91,48 @@ let
         tmpfilesRules
       ]
     );
+
+  makeRuleFileContent =
+    let
+      escapeArgument = lib.strings.escapeC [
+        "\t"
+        "\n"
+        "\r"
+        " "
+        "\\"
+      ];
+
+      settingsEntryToRule = path_: entry: ''
+        '${entry.type}' '${path_}' '${entry.mode}' '${entry.user}' '${entry.group}' '${entry.age}' ${escapeArgument entry.argument}
+      '';
+    in
+    paths:
+    concatStrings (
+      mapAttrsToList (
+        path_: types: concatStrings (mapAttrsToList (_: settingsEntryToRule path_) types)
+      ) paths
+    );
+
+  tmpfilesService = {
+    requiredBy = [ "persistence.target" ];
+    serviceConfig = {
+      Type = "oneshot";
+      RemainAfterExit = true;
+      SuccessExitStatus = [ "DATAERR CANTCREAT" ];
+      ImportCredential = [
+        "tmpfiles.*"
+        "login.motd"
+        "login.issue"
+        "network.hosts"
+        "ssh.authorized_keys.root"
+      ];
+      RestrictSUIDSGID = false;
+    };
+    unitConfig = {
+      DefaultDependencies = false;
+      RefuseManualStop = true;
+    };
+  };
 in
 {
   imports = [ ./options.nix ];
@@ -115,7 +151,7 @@ in
     boot.initrd.systemd =
       let
         ruleFile = pkgs.writeText "persistence.conf" (
-          pLib.makeRuleFileContent config.persist.tmpfilesSettings.initrd
+          makeRuleFileContent config.persist.tmpfilesSettings.initrd
         );
       in
       {
@@ -127,31 +163,17 @@ in
 
         storePaths = [ ruleFile ];
 
-        services.systemd-tmpfiles-setup-persist = {
-          after = [ "initrd-fs.target" ];
-          requiredBy = [ "persistence.target" ];
-          serviceConfig = {
-            Type = "oneshot";
-            RemainAfterExit = true;
-            ExecStart = "systemd-tmpfiles --create --remove --boot ${ruleFile}";
-            SuccessExitStatus = [ "DATAERR CANTCREAT" ];
-            ImportCredential = [
-              "tmpfiles.*"
-              "login.motd"
-              "login.issue"
-              "network.hosts"
-              "ssh.authorized_keys.root"
+        services.systemd-tmpfiles-setup-persist = mkMerge [
+          tmpfilesService
+          {
+            after = [ "initrd-fs.target" ];
+            serviceConfig.ExecStart = "systemd-tmpfiles --create --remove --boot ${ruleFile}";
+            unitConfig.RequiresMountsFor = pipe earlyCfg [
+              (map (cfg: toString (/sysroot + cfg.storagePath)))
+              uniqueStrings
             ];
-            RestrictSUIDSGID = false;
-          };
-          unitConfig = {
-            DefaultDependencies = false;
-            RefuseManualStop = true;
-            RequiresMountsFor = map (p: toString (/sysroot + "/${p}")) (
-              uniqueStrings (map (cfg: cfg.storagePath) earlyCfg)
-            );
-          };
-        };
+          }
+        ];
 
         mounts = concatMap handleMounts earlyCfg;
       };
@@ -163,43 +185,31 @@ in
         before = [ "sysinit.target" ];
       };
 
-      services.systemd-tmpfiles-setup-persist = {
-        after = [ "local-fs.target" ];
-        requiredBy = [ "persistence.target" ];
-        serviceConfig = {
-          Type = "oneshot";
-          RemainAfterExit = true;
-          ExecStart =
-            let
-              ruleFile = pkgs.writeText "persistence.conf" (
-                pLib.makeRuleFileContent config.persist.tmpfilesSettings.normal
-              );
-            in
-            "systemd-tmpfiles --create --remove --boot ${ruleFile}";
-          SuccessExitStatus = [ "DATAERR CANTCREAT" ];
-          ImportCredential = [
-            "tmpfiles.*"
-            "login.motd"
-            "login.issue"
-            "network.hosts"
-            "ssh.authorized_keys.root"
-          ];
-          RestrictSUIDSGID = false;
-        };
-        unitConfig = {
-          DefaultDependencies = false;
-          RefuseManualStop = true;
-          RequiresMountsFor = uniqueStrings (map (cfg: cfg.storagePath) lateCfg);
-        };
-      };
+      services.systemd-tmpfiles-setup-persist =
+        let
+          ruleFile = pkgs.writeText "persistence.conf" (
+            makeRuleFileContent config.persist.tmpfilesSettings.normal
+          );
+        in
+        mkMerge [
+          tmpfilesService
+          {
+            after = [ "local-fs.target" ];
+            serviceConfig.ExecStart = "systemd-tmpfiles --create --remove --boot ${ruleFile}";
+            unitConfig.RequiresMountsFor = pipe lateCfg [
+              (map (cfg: cfg.storagePath))
+              uniqueStrings
+            ];
+          }
+        ];
 
       mounts =
         let
-          handleLateOverrides =
+          addLateDropins =
             cfg:
             pipe cfg [
               (pLib.filterTargets (t: t.method ? bindmount))
-              (mapCfgToList' (
+              (cfgToList' (
                 storagePath: target:
                 mkMerge [
                   (pLib.mkBindMount storagePath (target // { early = false; }))
@@ -208,7 +218,7 @@ in
               ))
             ];
         in
-        concatMap handleMounts lateCfg ++ concatMap handleLateOverrides earlyCfg;
+        concatMap handleMounts lateCfg ++ concatMap addLateDropins earlyCfg;
     };
   };
 }

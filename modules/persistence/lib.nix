@@ -1,6 +1,8 @@
 lib:
 let
   inherit (builtins)
+    all
+    attrValues
     concatLists
     concatStringsSep
     filter
@@ -11,7 +13,7 @@ let
   inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.lists) dropEnd take;
   inherit (lib.modules) mkDefault mkIf mkMerge;
-  inherit (lib.strings) concatStrings optionalString;
+  inherit (lib.strings) optionalString;
   inherit (lib.trivial) pipe;
 
   concatPaths =
@@ -41,27 +43,6 @@ let
 in
 {
   inherit concatPaths getPath;
-
-  makeRuleFileContent =
-    let
-      escapeArgument = lib.strings.escapeC [
-        "\t"
-        "\n"
-        "\r"
-        " "
-        "\\"
-      ];
-
-      settingsEntryToRule = path_: entry: ''
-        '${entry.type}' '${path_}' '${entry.mode}' '${entry.user}' '${entry.group}' '${entry.age}' ${escapeArgument entry.argument}
-      '';
-    in
-    paths:
-    concatStrings (
-      mapAttrsToList (
-        path_: types: concatStrings (mapAttrsToList (_: settingsEntryToRule path_) types)
-      ) paths
-    );
 
   mkBindMount =
     storagePath: target:
@@ -135,7 +116,7 @@ in
   mkIntermediateDirRules =
     {
       defaultOwner,
-      prefix,
+      root,
       storagePath,
       target,
     }:
@@ -161,7 +142,7 @@ in
             [
               (maybeSysroot target)
               storagePath
-              prefix
+              root
             ]
             ++ c
           );
@@ -169,7 +150,7 @@ in
           realPath = concatPaths (
             [
               (maybeSysroot target)
-              prefix
+              root
             ]
             ++ c
           );
@@ -194,7 +175,14 @@ in
     in
     filterCfg cfg // { users = mapAttrs (_: filterCfg) cfg.users; };
 
-  mapCfgToList =
+  isEmpty =
+    cfg:
+    let
+      check = cfg: length cfg.files == 0 && length cfg.directories == 0;
+    in
+    check cfg && all check (attrValues cfg.users);
+
+  cfgToList =
     f_abs: f_user: cfg:
     map (f_abs cfg.storagePath) (cfg.files ++ cfg.directories)
     ++ pipe cfg.users [
