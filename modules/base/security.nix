@@ -2,11 +2,9 @@
   security = {
     sudo.enable = false;
     run0.enable = true;
-    polkit.extraArgs = [ "--log-level=info" ];
+    polkit = {
+      extraArgs = [ "--log-level=info" ];
+      settings.Polkitd.ExpirationSeconds = 120;
+    };
   };
-
-  environment.etc."polkit-1/polkitd.conf".text = ''
-    [Polkitd]
-    ExpirationSeconds=120
-  '';
 }
