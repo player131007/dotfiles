@@ -37,7 +37,7 @@
         ]
         ++ kvmfr_devices;
     in
-    "cgroup_device_acl = ${builtins.toJSON cgroup_device_acl}";
+    "cgroup_device_acl = ${builtins.toJSON cgroup_device_acl}"; # rough approximation of the syntax
 
   my.hjem = {
     packages = [ pkgs.looking-glass-client ];
