@@ -9,17 +9,20 @@
 
   environment.systemPackages = lib.singleton (
     pkgs.writeTextDir "share/nushell/vendor/autoload/direnv.nu" ''
-      # Initialize the PWD hook as an empty list if it doesn't exist
-      $env.config.hooks.env_change.PWD = $env.config.hooks.env_change.PWD? | default []
-
-      $env.config.hooks.env_change.PWD ++= [{||
-        direnv export json | from json | default {} | items {|key, value|
-          {
-            $key: (if $key in $env.ENV_CONVERSIONS {
-              do ($env | get (["ENV_CONVERSIONS", $key, "from_string"] | into cell-path)) $value
-            } else $value)
+      $env.config.hooks.pre_prompt = $env.config.hooks.pre_prompt? | default [] | append {||
+        direnv export json
+        | from json
+        | default {}
+        | transpose key value
+        | update value {|row|
+            if $row.key in $env.ENV_CONVERSIONS {
+              let path = [ ENV_CONVERSIONS $row.key from_string ] | into cell-path
+              do ($env | get $path) $row.value
+            } else $row.value
           }
-        } | into record | load-env
-      }] ''
+        | transpose --as-record --header-row | into record # why
+        | load-env
+      }
+    ''
   );
 }
