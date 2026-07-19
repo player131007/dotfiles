@@ -19,7 +19,7 @@
     networks."50-school" = {
       matchConfig = {
         WLANInterfaceType = "station";
-        SSID = [ "Hust_*_Giangduong" ];
+        SSID = [ "Hust.*" ];
       };
       networkConfig = {
         DNSOverTLS = "opportunistic";
