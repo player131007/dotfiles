@@ -16,25 +16,39 @@
     enable = config.networking.useNetworkd;
     wait-online.enable = false;
 
-    networks."50-school" = {
-      matchConfig = {
-        WLANInterfaceType = "station";
-        SSID = [ "Hust.*" ];
-      };
-      networkConfig = {
-        DNSOverTLS = "opportunistic";
-        Domains = [ "~hust.edu.vn." ];
-        IPv6PrivacyExtensions = "kernel";
+    networks = {
+      "50-school" = {
+        matchConfig = {
+          WLANInterfaceType = "station";
+          SSID = [ "Hust.*" ];
+        };
+        networkConfig = {
+          DNSOverTLS = "opportunistic";
+          Domains = [ "~hust.edu.vn." ];
+          IPv6PrivacyExtensions = "kernel";
+        };
+
+        DHCP = "yes";
+        dhcpV4Config = {
+          UseDNS = true;
+          RouteMetric = 1025;
+        };
+        ipv6AcceptRAConfig = {
+          UseDNS = true;
+          RouteMetric = 1025;
+        };
       };
 
-      DHCP = "yes";
-      dhcpV4Config = {
-        UseDNS = true;
-        RouteMetric = 1025;
+      "99-ethernet-default-dhcp" = {
+        dhcpV4Config.UseDNS = false;
+        dhcpV6Config.UseDNS = false;
+        ipv6AcceptRAConfig.UseDNS = false;
       };
-      ipv6AcceptRAConfig = {
-        UseDNS = true;
-        RouteMetric = 1025;
+
+      "99-wireless-client-dhcp" = {
+        dhcpV4Config.UseDNS = false;
+        dhcpV6Config.UseDNS = false;
+        ipv6AcceptRAConfig.UseDNS = false;
       };
     };
   };
