@@ -24,6 +24,4 @@
       ];
     };
   };
-
-  services.ratbagd.enable = true;
 }
