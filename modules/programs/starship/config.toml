@@ -69,7 +69,7 @@ disabled = false
 format = "[$symbol]($style)"
 symbol = '❯'
 repeat = true
-repeat_offset = 2
+repeat_offset = 1
 
 [cmd_duration]
 show_milliseconds = true
