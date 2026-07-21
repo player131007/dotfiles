@@ -139,7 +139,6 @@ require("conform").setup {
   formatters_by_ft = {
     lua = { "stylua" },
     nix = { "nixfmt" },
-    typst = { lsp_format = "prefer" },
   },
   default_format_opts = {
     async = true,

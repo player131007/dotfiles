@@ -23,13 +23,10 @@ in
 
   extraBinPath = with pkgs; [
     emmylua-ls
-    tinymist
     nixd
 
     stylua
     nixfmt
-
-    websocat
   ];
 
   initLua = /* lua */ ''
