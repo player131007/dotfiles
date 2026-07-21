@@ -2,8 +2,8 @@ import colors
 
 config.load_autoconfig()
 
-c.fonts.tabs.selected = "500 12pt Inter Display"
-c.fonts.tabs.unselected = "500 12pt Inter Display"
+c.fonts.tabs.selected = "500 12pt Inter Medium"
+c.fonts.tabs.unselected = "500 12pt Inter Medium"
 c.fonts.statusbar = "400 10.5pt Iosevka Fixed"
 c.fonts.completion.category = "bold 11pt Iosevka Fixed"
 c.fonts.completion.entry = "400 10.5pt Iosevka Fixed"
