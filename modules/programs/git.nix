@@ -6,7 +6,7 @@
       generator = lib.generators.toGitINI;
       value = {
         user = {
-          name = "Lương Việt Hoàng";
+          name = "avery";
           email = "tcm4095@gmail.com";
         };
 
