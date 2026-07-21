@@ -9,7 +9,7 @@
   environment.etc = {
     machine-id = {
       mode = "direct-symlink";
-      source = "/persist/once/etc/machine-id";
+      source = "/.persist/once/etc/machine-id";
     };
     adjtime.text = ''
       0.0 0 0
@@ -20,7 +20,7 @@
 
   persist = {
     tmpfilesSettings.initrd = {
-      "/sysroot/persist/once/etc/machine-id".f = {
+      "/sysroot/.persist/once/etc/machine-id".f = {
         mode = "0444";
         user = "root";
         group = "root";
@@ -29,7 +29,7 @@
     };
 
     at.oncedir = {
-      storagePath = "/persist/once";
+      storagePath = "/.persist/once";
       directories = [
         "/var/lib/nixos"
         {
@@ -58,7 +58,7 @@
     };
 
     at.persistdir = {
-      storagePath = "/persist/every";
+      storagePath = "/.persist/every";
     };
   };
 }

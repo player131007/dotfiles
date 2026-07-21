@@ -1,5 +1,4 @@
 {
-  lib,
   myLib,
   ...
 }:
@@ -44,49 +43,52 @@
     bypassWorkqueues = true;
   };
 
-  fileSystems = {
-    "/" = {
-      device = "tmpfs";
-      fsType = "tmpfs";
-      options = [
-        "size=2G"
-        "mode=755"
-      ];
-      neededForBoot = true;
-    };
-    "/boot" = {
-      label = "ESP";
-      fsType = "vfat";
-      options = [ "umask=0077" ];
-    };
-    "/persist" = {
-      label = "nixos";
-      fsType = "ext4";
-      options = [
+  fileSystems =
+    let
+      common_opts = [
         "relatime"
         "lazytime"
+        "compress=lzo"
       ];
-      neededForBoot = true;
-    };
-  };
-
-  # here because using `fileSystems` blows up boot if mounting fails
-  systemd.mounts =
-    map
-      (label: {
-        wantedBy = [ "local-fs.target" ];
-        before = [ "local-fs.target" ];
-
-        what = "/dev/disk/by-label/${label}";
-        where = "/${label}";
-
-        options = lib.concatStringsSep "," [
-          "relatime"
-          "lazytime"
+    in
+    {
+      "/" = {
+        device = "tmpfs";
+        fsType = "tmpfs";
+        options = [
+          "size=2G"
+          "mode=755"
         ];
-      })
-      [
-        "d"
-        "windows"
-      ];
+        neededForBoot = true;
+      };
+      "/boot" = {
+        label = "ESP";
+        fsType = "vfat";
+        options = [ "umask=0077" ];
+      };
+      "/.persist" = {
+        label = "nixos";
+        fsType = "btrfs";
+        options = common_opts ++ [
+          "subvol=persist"
+        ];
+        neededForBoot = true;
+      };
+      "/d" = {
+        label = "nixos";
+        fsType = "btrfs";
+        options = common_opts ++ [
+          "subvol=d"
+          "nofail"
+        ];
+      };
+      "/windows" = {
+        label = "nixos";
+        fsType = "btrfs";
+        options = common_opts ++ [
+          "subvol=windows"
+          "nofail"
+        ];
+      };
+    };
 }
