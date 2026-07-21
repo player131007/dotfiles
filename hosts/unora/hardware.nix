@@ -38,7 +38,7 @@
   };
 
   boot.initrd.luks.devices.cryptroot = {
-    device = "/dev/disk/by-partuuid/4d580e45-fb81-4bde-bd5c-44adfff3393a";
+    device = "/dev/disk/by-partuuid/b98a1254-c974-49a7-ad0f-d0a87bdbc967";
     allowDiscards = true;
     bypassWorkqueues = true;
   };
