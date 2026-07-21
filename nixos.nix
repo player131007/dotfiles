@@ -49,7 +49,7 @@ builtins.mapAttrs (mkHost sources.nixpkgs) {
       ./modules/pc
       ./modules/libvirtd.nix
       ./modules/programs
-      { system.stateVersion = "23.05"; }
+      { system.stateVersion = "26.11"; }
     ];
   };
 }
