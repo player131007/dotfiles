@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  username,
   ...
 }:
 let
@@ -21,7 +22,5 @@ in
     );
   };
 
-  config.my.hjem = {
-    packages = [ pkgs.nh ];
-  };
+  config.users.users.${username}.packages = [ pkgs.nh ];
 }
