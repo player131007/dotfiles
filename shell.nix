@@ -6,5 +6,6 @@
 pkgs.mkShellNoCC {
   allowSubstitutes = false; # Prevent a cache.nixos.org call every time
   packages = [
+    wrappers.obs
   ];
 }

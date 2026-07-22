@@ -9,8 +9,7 @@ let
   root.modules = adios.lib.inject [
     adios-wrappers
 
-    # wrappers directory does not exist yet
-    # (adios.lib.importModules { directory = ./wrappers; })
+    (adios.lib.importModules { directory = ./wrappers; })
   ];
 
   tree = adios root {

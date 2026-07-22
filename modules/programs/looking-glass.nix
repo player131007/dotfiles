@@ -41,7 +41,7 @@
 
   my.hjem = {
     packages = [ pkgs.looking-glass-client ];
-    stuff.obs.plugins = [ pkgs.obs-studio-plugins.looking-glass-obs ];
+    # stuff.obs.plugins = [ pkgs.obs-studio-plugins.looking-glass-obs ];
 
     xdg.config.files."looking-glass/client.ini" = {
       generator = lib.generators.toINI { };

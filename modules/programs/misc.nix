@@ -2,6 +2,7 @@
   lib,
   myPkgs,
   pkgs,
+  wrappers,
   ...
 }:
 {
@@ -16,6 +17,8 @@
         keepassxc
         mpv-unwrapped
         ;
+
+      inherit (wrappers) obs;
 
       inherit (myPkgs) neovim;
     };

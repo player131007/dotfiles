@@ -50,6 +50,9 @@ builtins.mapAttrs (mkHost sources.nixpkgs) {
       ./modules/libvirtd.nix
       ./modules/programs
       { system.stateVersion = "26.11"; }
+      ({ pkgs, ... }: {
+        _module.args.wrappers = import ./wrappers.nix { inherit pkgs; };
+      })
     ];
   };
 }
