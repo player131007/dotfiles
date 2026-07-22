@@ -1,7 +1,5 @@
-let
-  sources = import ./npins;
-in
 {
+  sources ? import ./npins,
   pkgs ? import sources.nixpkgs { },
 }:
 let
