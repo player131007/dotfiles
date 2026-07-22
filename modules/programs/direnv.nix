@@ -1,10 +1,16 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  myPkgs,
+  pkgs,
+  ...
+}:
 {
   programs.direnv = {
     enable = true;
     settings.global.hide_env_diff = true;
 
     nix-direnv.enable = true;
+    nix-direnv.package = myPkgs.nix-direnv;
   };
 
   environment.systemPackages = lib.singleton (
