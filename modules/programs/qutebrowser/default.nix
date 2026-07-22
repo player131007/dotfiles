@@ -1,7 +1,7 @@
 # why this instead of wrappers?
 # because qutebrowser puts some state in config for whatever reason
 
-{ pkgs, username, ... }:
+{ pkgs, ... }:
 let
   # FIXME: remove
   oldPkgs = import (fetchTarball {
@@ -14,7 +14,7 @@ in
     pkgs.inter
   ];
 
-  users.users.${username}.packages = [ oldPkgs.qutebrowser ];
+  my.user.packages = [ oldPkgs.qutebrowser ];
   my.tmpfiles =
     let
       copy =

@@ -14,18 +14,17 @@ in
   imports = [
     hjem.nixosModules.hjem
     (lib.mkAliasOptionModule [ "my" "hjem" ] [ "hjem" "users" username ])
+    (lib.mkAliasOptionModule [ "my" "user" ] [ "users" "users" username ])
     (lib.mkAliasOptionModule
       [ "my" "tmpfiles" ]
       [ "systemd" "user" "tmpfiles" "users" username "rules" ]
     )
   ];
 
-  _module.args = { inherit username; };
-
   services.userborn.enable = true;
 
   users.mutableUsers = false;
-  users.users.${username} = {
+  my.user = {
     isNormalUser = true;
     homeMode = "0700";
     hashedPasswordFile = "/.persist/password/${username}";
@@ -36,7 +35,7 @@ in
   };
   persist.at.oncedir.directories =
     let
-      user = config.users.users.${username};
+      user = config.my.user;
     in
     lib.singleton {
       directory = user.home;

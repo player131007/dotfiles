@@ -1,7 +1,6 @@
 {
   lib,
   pkgs,
-  username,
   ...
 }:
 let
@@ -22,5 +21,5 @@ in
     );
   };
 
-  config.users.users.${username}.packages = [ pkgs.nh ];
+  config.my.user.packages = [ pkgs.nh ];
 }
