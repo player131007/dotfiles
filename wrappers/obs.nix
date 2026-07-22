@@ -9,7 +9,10 @@
       type = types.listOf types.derivation;
       default = [ ];
       description = "List of plugins to be injected into the wrapped package.";
-      mutators = [ "/obs" ];
+      mutators = [
+        "/obs"
+        "/looking-glass"
+      ];
       mutatorType = types.listOf types.derivation;
       mergeFunc = lib.merge.lists.concat;
     };

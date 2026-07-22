@@ -2,6 +2,7 @@
   config,
   lib,
   pkgs,
+  wrappers,
   ...
 }:
 {
@@ -39,20 +40,5 @@
     in
     "cgroup_device_acl = ${builtins.toJSON cgroup_device_acl}"; # rough approximation of the syntax
 
-  my.hjem = {
-    packages = [ pkgs.looking-glass-client ];
-    # stuff.obs.plugins = [ pkgs.obs-studio-plugins.looking-glass-obs ];
-
-    xdg.config.files."looking-glass/client.ini" = {
-      generator = lib.generators.toINI { };
-      value = {
-        win.fullScreen = "yes";
-
-        input = {
-          escapeKey = "KEY_INSERT";
-          rawMouse = "yes";
-        };
-      };
-    };
-  };
+  my.user.packages = [ wrappers.looking-glass ];
 }
