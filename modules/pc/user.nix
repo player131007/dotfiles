@@ -14,7 +14,13 @@ in
   imports = [
     hjem.nixosModules.hjem
     (lib.mkAliasOptionModule [ "my" "hjem" ] [ "hjem" "users" username ])
+    (lib.mkAliasOptionModule
+      [ "my" "tmpfiles" ]
+      [ "systemd" "user" "tmpfiles" "users" username "rules" ]
+    )
   ];
+
+  _module.args = { inherit username; };
 
   services.userborn.enable = true;
 
