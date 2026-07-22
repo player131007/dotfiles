@@ -1,13 +1,8 @@
 { lib, pkgs, ... }:
 {
-  nix =
+  nix = lib.mkIf (lib.path.hasStorePathPrefix pkgs.path) (
     let
-      pkgs_path =
-        if lib.path.hasStorePathPrefix pkgs.path then
-          builtins.storePath pkgs.path
-        else
-          # bailing out, you're on your own.
-          toString pkgs.path;
+      pkgs_path = builtins.storePath pkgs.path;
     in
     {
       registry.nixpkgs.to = {
@@ -15,7 +10,8 @@
         path = pkgs_path;
       };
       nixPath = [ "nixpkgs=${pkgs_path}" ];
-    };
+    }
+  );
 
   nixpkgs = {
     config.allowUnfree = true;
