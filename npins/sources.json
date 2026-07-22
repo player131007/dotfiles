@@ -1,5 +1,31 @@
 {
   "pins": {
+    "adios": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "llakala",
+        "repo": "lladios"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "00519f90ee4e635b0403c333952691b990bd32f7",
+      "url": "https://github.com/llakala/lladios/archive/00519f90ee4e635b0403c333952691b990bd32f7.tar.gz",
+      "hash": "sha256-ELbZHJ6YQyORmhJLt871p+FwLbyzi9VP7j9RvJDTMMk="
+    },
+    "adios-wrappers": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "llakala",
+        "repo": "adios-wrappers"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "fcba345b63815f0d3e5481816442d870aed30a72",
+      "url": "https://github.com/llakala/adios-wrappers/archive/fcba345b63815f0d3e5481816442d870aed30a72.tar.gz",
+      "hash": "sha256-f2oh/netC3lKeqdpYVNiODaB90NpIoF2fwL1U6YQlK4="
+    },
     "hjem": {
       "type": "Git",
       "repository": {
