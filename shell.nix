@@ -8,5 +8,6 @@ pkgs.mkShellNoCC {
   packages = [
     wrappers.obs
     wrappers.looking-glass
+    wrappers.less
   ];
 }

@@ -6,6 +6,11 @@
   ...
 }:
 {
+  programs.less.enable = lib.mkForce false;
+  environment.systemPackages = [
+    wrappers.less
+  ];
+
   my.hjem = {
     packages = builtins.attrValues {
       inherit (pkgs)
