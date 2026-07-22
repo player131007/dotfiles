@@ -9,5 +9,7 @@ pkgs.mkShellNoCC {
     wrappers.obs
     wrappers.looking-glass
     wrappers.less
+    wrappers.git
+    wrappers.diff-so-fancy
   ];
 }

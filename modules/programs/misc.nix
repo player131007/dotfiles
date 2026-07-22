@@ -23,7 +23,8 @@
         mpv-unwrapped
         ;
 
-      inherit (wrappers) obs;
+      # diff-so-fancy is here to avoid infrec
+      inherit (wrappers) obs git diff-so-fancy;
 
       inherit (myPkgs) neovim;
     };
