@@ -21,15 +21,10 @@
     };
   };
 
-  my.hjem = {
-    xdg.config.files."gtk-4.0/gtk.css" = {
-      type = "copy";
-      permissions = "600";
-      text = /* css */ ''
-        @import url("${pkgs.rose-pine-gtk-theme}/share/themes/rose-pine/gtk-4.0/gtk.css");
-      '';
-    };
-  };
+  my.tmpfiles = [
+    "r %h/.config/gtk-4.0/gtk.css - - - - -"
+    "C %h/.config/gtk-4.0/gtk.css 0600 - - - ${pkgs.rose-pine-gtk-theme}/share/themes/rose-pine/gtk-4.0/gtk.css"
+  ];
 
   qt.enable = true;
   environment.sessionVariables = {
