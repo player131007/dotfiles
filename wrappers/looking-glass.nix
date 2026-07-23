@@ -46,23 +46,21 @@
     { options, inputs }:
     let
       generator = inputs.nixpkgs.pkgs.formats.ini { };
-
-      configFile =
-        if options ? configFile then
-          options.configFile
-        else if options ? settings then
-          generator.generate "client.ini" options.settings
-        else
-          null;
     in
     assert !(options ? settings && options ? configFile);
-    inputs.mkWrapper {
+    inputs.mkWrapper rec {
       inherit (options) package;
 
       symlinks = {
-        "$out/client.ini" = configFile;
+        "$out/client.ini" =
+          if options ? configFile then
+            options.configFile
+          else if options ? settings then
+            generator.generate "client.ini" options.settings
+          else
+            null;
       };
 
-      flags = if configFile != null then [ "app:configFile=$out/client.ini" ] else [ ];
+      flags = if symlinks."$out/client.ini" != null then [ "app:configFile=$out/client.ini" ] else [ ];
     };
 }

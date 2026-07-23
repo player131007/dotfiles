@@ -23,24 +23,21 @@
     let
       inherit (inputs.nixpkgs.pkgs) formats;
       generator = formats.ini { };
-
-      configFile =
-        if options ? configFile then
-          options.configFile
-        else if options ? settings then
-          generator.generate "foot.ini" options.settings
-        else
-          null;
-
     in
     assert !(options ? settings && options ? configFile);
-    inputs.mkWrapper {
+    inputs.mkWrapper rec {
       inherit (options) package;
 
       symlinks = {
-        "$out/foot.ini" = configFile;
+        "$out/foot.ini" =
+          if options ? configFile then
+            options.configFile
+          else if options ? settings then
+            generator.generate "foot.ini" options.settings
+          else
+            null;
       };
 
-      flags = if configFile != null then [ "--config=$out/foot.ini" ] else [ ];
+      flags = if symlinks."$out/foot.ini" != null then [ "--config=$out/foot.ini" ] else [ ];
     };
 }
