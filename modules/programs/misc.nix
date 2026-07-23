@@ -29,6 +29,7 @@
         obs
         git
         diff-so-fancy # here to avoid infrec
+        starship
         ;
 
       inherit (myPkgs) neovim;

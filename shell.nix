@@ -15,5 +15,6 @@ pkgs.mkShellNoCC {
     wrappers.nix-index
     wrappers.fish
     wrappers.nushell
+    wrappers.starship
   ];
 }
