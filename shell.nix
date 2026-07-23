@@ -16,5 +16,6 @@ pkgs.mkShellNoCC {
     wrappers.fish
     wrappers.nushell
     wrappers.starship
+    wrappers.foot
   ];
 }

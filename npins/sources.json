@@ -71,19 +71,6 @@
       "artifact": "nixexprs.tar.xz",
       "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1031299.0bb7ec54c848/nixexprs.tar.xz",
       "hash": "sha256-nFgG4gPQueCgP8LidXsdI2lYPrSwTcmDl6afcVn7F/U="
-    },
-    "rose-pine-foot": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "rose-pine",
-        "repo": "foot"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "4c897ddad2fef9ebc6ec2e7ebc80ea71337edd07",
-      "url": "https://github.com/rose-pine/foot/archive/4c897ddad2fef9ebc6ec2e7ebc80ea71337edd07.tar.gz",
-      "hash": "sha256-rZm3d7dN4M2cHMx1SrrSWfCKn3JHUVQ+EsH5FvOww4I="
     }
   },
   "version": 8
