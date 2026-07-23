@@ -11,5 +11,6 @@ pkgs.mkShellNoCC {
     wrappers.less
     wrappers.git
     wrappers.diff-so-fancy
+    wrappers.bash
   ];
 }

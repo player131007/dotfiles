@@ -11,6 +11,11 @@
     wrappers.less
   ];
 
+  my.user = {
+    shell = wrappers.bash;
+    packages = [ wrappers.bash ];
+  };
+
   my.hjem = {
     packages = builtins.attrValues {
       inherit (pkgs)
