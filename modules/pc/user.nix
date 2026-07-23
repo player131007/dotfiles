@@ -1,19 +1,13 @@
 {
   config,
   lib,
-  sources,
-  pkgs,
   ...
 }:
 let
-  hjem = import sources.hjem { inherit pkgs; };
-
   username = "avery";
 in
 {
   imports = [
-    hjem.nixosModules.hjem
-    (lib.mkAliasOptionModule [ "my" "hjem" ] [ "hjem" "users" username ])
     (lib.mkAliasOptionModule [ "my" "user" ] [ "users" "users" username ])
     (lib.mkAliasOptionModule
       [ "my" "tmpfiles" ]
@@ -47,9 +41,4 @@ in
       owner = user.name;
       group = user.group;
     };
-
-  hjem = {
-    clobberByDefault = true;
-    users.${username}.enable = true;
-  };
 }
