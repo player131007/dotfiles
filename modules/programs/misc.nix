@@ -30,6 +30,7 @@
         git
         diff-so-fancy # here to avoid infrec
         starship
+        carapace
         ;
 
       inherit (myPkgs) neovim;

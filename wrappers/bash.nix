@@ -10,6 +10,7 @@
       mutators = [
         "/nix-index"
         "/starship"
+        "/carapace"
       ];
       mutatorType = types.string;
       mergeFunc = lib.merge.strings.concatLines;
