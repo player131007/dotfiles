@@ -1,10 +1,10 @@
 _adios: {
   options = {
-    shellInit.mutators = [ "/nix-index" ];
-    sourceFiles.mutators = [
-      "/starship"
+    shellInit.mutators = [
+      "/nix-index"
       "/carapace"
       "/direnv"
     ];
+    sourceFiles.mutators = [ "/starship" ];
   };
 }

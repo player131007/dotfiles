@@ -75,31 +75,28 @@
       end;
     '';
 
-  mutations."/nushell".sourceFiles =
+  mutations."/nushell".shellInit =
     { options, inputs }:
     let
-      inherit (inputs.nixpkgs) pkgs;
       inherit (inputs.nixpkgs.lib) getExe;
       finalWrapper = options { };
-
-      direnv-nu = pkgs.writeText "direnv.nu" ''
-        $env.config.hooks.pre_prompt = $env.config.hooks.pre_prompt? | default [] | append {||
-          ${getExe finalWrapper} export json
-          | from json
-          | default {}
-          | transpose key value
-          | update value {|row|
-              if $row.key in $env.ENV_CONVERSIONS {
-                let path = [ ENV_CONVERSIONS $row.key from_string ] | into cell-path
-                  do ($env | get $path) $row.value
-              } else $row.value
-            }
-          | transpose --as-record --header-row | into record # transpose might return empty list
-          | load-env
-        }
-      '';
     in
-    [ direnv-nu ];
+    /* nu */ ''
+      $env.config.hooks.pre_prompt = $env.config.hooks.pre_prompt? | default [] | append {||
+        ${getExe finalWrapper} export json
+        | from json
+        | default {}
+        | transpose key value
+        | update value {|row|
+            if $row.key in $env.ENV_CONVERSIONS {
+              let path = [ ENV_CONVERSIONS $row.key from_string ] | into cell-path
+                do ($env | get $path) $row.value
+            } else $row.value
+          }
+        | transpose --as-record --header-row | into record # transpose might return empty list
+        | load-env
+      }
+    '';
 
   impl =
     { options, inputs }:
