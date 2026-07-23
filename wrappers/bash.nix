@@ -7,6 +7,7 @@
   options = {
     interactiveShellInit = {
       type = types.string;
+      mutators = [ "/nix-index" ];
       mutatorType = types.string;
       mergeFunc = lib.merge.strings.concatLines;
     };

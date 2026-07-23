@@ -12,5 +12,8 @@ pkgs.mkShellNoCC {
     wrappers.git
     wrappers.diff-so-fancy
     wrappers.bash
+    wrappers.nix-index
+    wrappers.fish
+    wrappers.nushell
   ];
 }

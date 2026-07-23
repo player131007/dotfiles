@@ -1,53 +1,38 @@
 {
-  cacert,
   lib,
-  makeBinaryWrapper,
-  nix-index-unwrapped,
-  util-linux,
-  symlinkJoin,
-
-  wrap_flags ? { },
+  rustPlatform,
+  fetchFromGitHub,
+  pkg-config,
+  openssl,
+  sqlite,
 }:
-let
-  _wrap_flags = wrap_flags;
-in
-let
-  default_wrap_flags = {
-    command-not-found = [
-      "--inherit-argv0"
-      "--prefix"
-      "PATH"
-      ":"
-      "${util-linux.bin}/bin"
-    ];
 
-    nix-index = [
-      "--inherit-argv0"
-      "--set"
-      "SSL_CERT_FILE"
-      "${cacert}/etc/ssl/certs/ca-bundle.crt"
-    ];
+rustPlatform.buildRustPackage {
+  pname = "nix-index";
+  version = "0-unstable-2026-07-03";
+
+  src = fetchFromGitHub {
+    owner = "player131007";
+    repo = "nix-index";
+    rev = "f18f838273a5557d849864292520d6b2bb466b93";
+    hash = "sha256-iUdcd5R07daVnlkaYvpFBmluAC5v/ARHkcdXlZE3O/E=";
   };
 
-  wrap_flags = lib.attrsets.zipAttrsWith (_: builtins.concatLists) [
-    default_wrap_flags
-    _wrap_flags
-  ];
-in
-symlinkJoin {
-  pname = "nix-index";
-  inherit (nix-index-unwrapped) version;
+  cargoHash = "sha256-+80ZiC6n/LrGG0+3LTZ4n4yaDYGcOzp1MxrbdFftVI0=";
 
-  paths = [ nix-index-unwrapped ];
-  nativeBuildInputs = [ makeBinaryWrapper ];
-  postBuild = lib.pipe wrap_flags [
-    builtins.attrNames
-    (map (file: /* bash */ ''
-      rm $out/bin/${file}
-      makeWrapper ${lib.getExe' nix-index-unwrapped file} $out/bin/${file} ${
-        lib.escapeShellArgs wrap_flags.${file}
-      }
-    ''))
-    lib.concatLines
+  strictDeps = true;
+  __structuredAttrs = true;
+
+  nativeBuildInputs = [
+    pkg-config
   ];
+  buildInputs = [
+    openssl
+    sqlite
+  ];
+
+  meta = {
+    description = "Files database for nixpkgs";
+    license = [ lib.licenses.bsd3 ];
+  };
 }

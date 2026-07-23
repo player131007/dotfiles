@@ -13,7 +13,16 @@ let
   ];
 
   tree = adios root {
-    options."/nixpkgs" = { inherit pkgs; };
+    options = {
+      "/nixpkgs" = { inherit pkgs; };
+      "/self" = {
+        pkgs = import ./packages.nix { inherit pkgs; };
+        lib = import ./lib.nix { inherit (pkgs) lib; };
+      };
+      "/nix-index" = {
+        inherit (import sources.nix-index-cache { inherit pkgs; }) nix-index-cache;
+      };
+    };
   };
 in
 builtins.mapAttrs (_name: module: module { }) tree.modules
