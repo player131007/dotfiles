@@ -18,14 +18,4 @@
     owner = "greeter";
     group = "greeter";
   };
-
-  my.hjem = (
-    { config, ... }:
-    {
-      # sourced by greetd when logging in
-      files.".profile".text = /* sh */ ''
-        source ${config.environment.loadEnv}
-      '';
-    }
-  );
 }

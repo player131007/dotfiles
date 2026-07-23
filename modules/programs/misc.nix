@@ -13,10 +13,6 @@
 
   my.user = {
     shell = wrappers.bash;
-    packages = [ wrappers.bash ];
-  };
-
-  my.hjem = {
     packages = builtins.attrValues {
       inherit (pkgs)
         npins
@@ -28,17 +24,34 @@
         mpv-unwrapped
         ;
 
-      # diff-so-fancy is here to avoid infrec
-      inherit (wrappers) obs git diff-so-fancy;
+      inherit (wrappers)
+        bash
+        obs
+        git
+        diff-so-fancy # here to avoid infrec
+        ;
 
       inherit (myPkgs) neovim;
     };
-
-    environment.sessionVariables = {
-      EDITOR = "nvim";
-      VISUAL = "nvim";
-    };
   };
+
+  my.tmpfiles =
+    let
+      escapeArgument = lib.strings.escapeC [
+        "\t"
+        "\n"
+        "\r"
+        " "
+        "\\"
+      ];
+
+      profile = /* bash */ ''
+        export EDITOR=nvim
+      '';
+    in
+    [
+      "f+ %h/.profile 0600 - - - ${escapeArgument profile}"
+    ];
 
   programs.ssh.knownHostsFiles = lib.singleton (
     builtins.toFile "github_keys" ''
