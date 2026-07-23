@@ -1,3 +1,6 @@
+# why this instead of wrappers?
+# i often temporarily edit the niri config, and it also live reloads too
+
 { pkgs, ... }:
 {
   programs.niri = {
@@ -11,12 +14,4 @@
     pkgs.wl-clipboard
   ];
 
-  my.hjem = {
-    xdg.config.files."niri/config.kdl" = {
-      enable = true;
-      text = builtins.readFile ./config.kdl;
-      type = "copy";
-      permissions = "600";
-    };
-  };
 }
