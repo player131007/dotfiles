@@ -23,6 +23,10 @@ in
 
   services.userborn.enable = true;
 
+  systemd.user.services.syncthing = {
+    unitConfig.ConditionUser = username;
+  };
+
   users.mutableUsers = false;
   my.user = {
     isNormalUser = true;
