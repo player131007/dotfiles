@@ -4,6 +4,7 @@ _adios: {
     sourceFiles.mutators = [
       "/starship"
       "/carapace"
+      "/direnv"
     ];
   };
 }

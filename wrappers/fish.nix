@@ -3,6 +3,7 @@ _adios: {
     interactiveShellInit.mutators = [
       "/nix-index"
       "/starship"
+      "/direnv"
     ];
 
     abbreviations.default = "";

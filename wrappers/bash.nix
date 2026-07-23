@@ -11,6 +11,7 @@
         "/nix-index"
         "/starship"
         "/carapace"
+        "/direnv"
       ];
       mutatorType = types.string;
       mergeFunc = lib.merge.strings.concatLines;

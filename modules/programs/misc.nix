@@ -31,6 +31,7 @@
         diff-so-fancy # here to avoid infrec
         starship
         carapace
+        direnv
         ;
 
       inherit (myPkgs) neovim;
