@@ -11,6 +11,11 @@
     wrappers.less
   ];
 
+  programs.fish = {
+    enable = true;
+    useBabelfish = true;
+  };
+
   my.user = {
     shell = wrappers.bash;
     packages = builtins.attrValues {
@@ -26,6 +31,7 @@
 
       inherit (wrappers)
         bash
+        fish
         obs
         git
         diff-so-fancy # here to avoid infrec
