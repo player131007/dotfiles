@@ -1,4 +1,4 @@
-{ types, ... }: {
+{ lib, types, ... }: {
   inputs = {
     mkWrapper.from = { parent }: parent.mkWrapper;
     nixpkgs.from = { parent }: parent.nixpkgs;
@@ -7,14 +7,9 @@
   options = {
     settings = {
       type = types.attrs;
-      default = {
-        win.fullScreen = "yes";
-
-        input = {
-          escapeKey = "KEY_INSERT";
-          rawMouse = "yes";
-        };
-      };
+      mutators = [ "/looking-glass" ];
+      mutatorType = types.attrs;
+      mergeFunc = lib.merge.attrs.recursively;
       description = ''
         Settings to be injected into the wrapped package's config.
 
@@ -35,6 +30,15 @@
       type = types.derivation;
       defaultFunc = { inputs }: inputs.nixpkgs.pkgs.looking-glass-client;
       description = "The looking-glass-client package to be wrapped";
+    };
+  };
+
+  mutations."/looking-glass".settings = { }: {
+    win.fullScreen = "yes";
+
+    input = {
+      escapeKey = "KEY_INSERT";
+      rawMouse = "yes";
     };
   };
 
