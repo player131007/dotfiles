@@ -62,5 +62,15 @@
       };
 
       flags = if symlinks."$out/client.ini" != null then [ "app:configFile=$out/client.ini" ] else [ ];
+
+      postWrap = /* bash */ ''
+        for desktopEntry in $out/share/applications/*.desktop; do
+          if grep -q "${options.package}" "$desktopEntry"; then
+            cp --no-preserve=mode --remove-destination $(readlink -e "$desktopEntry") $desktopEntry
+            substituteInPlace "$desktopEntry" \
+              --replace-quiet "${options.package}" "$out"
+          fi
+        done
+      '';
     };
 }
