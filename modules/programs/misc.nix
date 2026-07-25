@@ -6,6 +6,8 @@
   ...
 }:
 {
+  programs.command-not-found.enable = false;
+
   programs.less.enable = lib.mkForce false;
   environment.systemPackages = [
     wrappers.less
@@ -38,6 +40,7 @@
         starship
         carapace
         direnv
+        nix-index
         ;
 
       inherit (myPkgs) neovim;
