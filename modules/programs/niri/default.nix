@@ -13,5 +13,4 @@
     pkgs.xwayland-satellite
     pkgs.wl-clipboard
   ];
-
 }
