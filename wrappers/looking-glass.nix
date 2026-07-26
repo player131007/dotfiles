@@ -8,7 +8,6 @@
     settings = {
       type = types.attrs;
       mutators = [ "/looking-glass" ];
-      mutatorType = types.attrs;
       mergeFunc = lib.merge.attrs.recursively;
       description = ''
         Settings to be injected into the wrapped package's config.

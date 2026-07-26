@@ -9,6 +9,7 @@
     qemu = {
       package = pkgs.qemu_kvm;
       runAsRoot = false;
+      vhostUserPackages = [ pkgs.virtiofsd ];
     };
   };
 

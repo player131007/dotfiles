@@ -13,7 +13,6 @@
         "/obs"
         "/looking-glass"
       ];
-      mutatorType = types.listOf types.derivation;
       mergeFunc = lib.merge.lists.concat;
     };
 

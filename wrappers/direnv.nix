@@ -1,14 +1,10 @@
-# TODO: remove most of this when i update adios-wrappers
-{ types, ... }: {
+_adios: {
   inputs = {
-    mkWrapper.from = { parent }: parent.mkWrapper;
-    nixpkgs.from = { parent }: parent.nixpkgs;
     self.from = { parent }: parent.self;
   };
 
   options = {
     nix-direnv = {
-      type = types.derivation;
       defaultFunc = { inputs }: inputs.self.pkgs.nix-direnv;
     };
 
@@ -97,39 +93,4 @@
         | load-env
       }
     '';
-
-  impl =
-    { options, inputs }:
-    let
-      inherit (inputs.nixpkgs.pkgs) formats writeText;
-      inherit (options) nix-direnv;
-      generator = formats.toml { };
-    in
-    assert !(options ? settings && options ? configFile);
-    assert !(options ? direnvrc && options ? direnvrcFile);
-    inputs.mkWrapper {
-      inherit (options) package;
-      symlinks = {
-        "$out/direnv/direnv.toml" =
-          if options ? configFile then
-            options.configFile
-          else if options ? settings then
-            generator.generate "direnv.toml" options.settings
-          else
-            null;
-        # nix-direnv integration
-        "$out/direnv/lib/hm-nix-direnv.sh" =
-          if nix-direnv != null then "${nix-direnv}/share/nix-direnv/direnvrc" else null;
-        "$out/direnv/direnvrc" =
-          if options ? direnvrcFile then
-            options.direnvrcFile
-          else if options ? direnvrc then
-            writeText "direnvrc" options.direnvrc
-          else
-            null;
-      };
-      environment = {
-        XDG_CONFIG_HOME = "$out";
-      };
-    };
 }

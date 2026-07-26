@@ -7,7 +7,7 @@ _adios: {
       "/fish"
     ];
 
-    abbreviations.default = "";
+    abbreviations.default = { };
   };
 
   mutations."/fish".interactiveShellInit = { }: /* fish */ ''
