@@ -76,3 +76,12 @@ c.colors.webpage.darkmode.policy.images = 'smart-simple'
 c.colors.webpage.preferred_color_scheme = 'dark'
 
 colors.setup(c)
+
+# FIXME: workaround for https://github.com/qutebrowser/qutebrowser/issues/8908
+c.qt.environ = {"QTWEBENGINE_FORCE_USE_GBM": "0"}
+
+c.qt.args = [
+    "ignore-gpu-blocklist",
+    "disable-gpu-memory-buffer-video-frames=false",
+    "enable-features=VaapiIgnoreDriverChecks,VaapiVideoDecoder,AcceleratedVideoDecoder,AcceleratedVideoDecodeLinuxGL,AcceleratedVideoEncoder,Vulkan,DefaultANGLEVulkan,VulkanFromANGLE,FluentOverlayScrollbar,MiddleClickAutoscroll",
+]

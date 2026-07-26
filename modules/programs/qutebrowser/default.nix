@@ -2,19 +2,12 @@
 # because qutebrowser puts some state in config for whatever reason
 
 { pkgs, ... }:
-let
-  # FIXME: remove
-  oldPkgs = import (fetchTarball {
-    url = "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1017464.567a49d1913c/nixexprs.tar.xz";
-    sha256 = "sha256-rcUHdUtJEvMdNEl2Wq+YpHraHKfcer3KsBscpZEF2Yg=";
-  }) { };
-in
 {
   fonts.packages = [
     pkgs.inter
   ];
 
-  my.user.packages = [ oldPkgs.qutebrowser ];
+  my.user.packages = [ pkgs.qutebrowser ];
   my.tmpfiles =
     let
       copy =
