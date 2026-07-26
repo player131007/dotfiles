@@ -1,7 +1,6 @@
 # same as upstream, but works with fork
 {
   stdenvNoCC,
-  cacert,
 
   nix-index,
   nix-index-cache,
@@ -20,11 +19,6 @@ stdenvNoCC.mkDerivation {
   strictDeps = true;
   __structuredAttrs = true;
   unsafeDiscardReferences.out = true;
-
-  env = {
-    # not used, but nix-index will error if there's no cert
-    SSL_CERT_FILE = "${cacert}/etc/ssl/certs/ca-bundle.crt";
-  };
 
   buildCommand = /* bash */ ''
     cd ${nix-index-cache}
