@@ -9,3 +9,6 @@ lib.packagesFromDirectoryRecursive {
   inherit (pkgs) callPackage newScope;
   directory = ./pkgs/by-name;
 }
+// {
+  glide-browser-bin-unwrapped = pkgs.callPackage "${sources.glide-browser}/package.nix" { };
+}

@@ -26,6 +26,19 @@
       "url": "https://github.com/llakala/adios-wrappers/archive/c6fe2a47f81574dd29b54866366a5eec39b781d0.tar.gz",
       "hash": "sha256-abyP8pWIFhDFQXb6Dm/ef0WV5MDdm2rMlW8gn1iXDwI="
     },
+    "glide-browser": {
+      "type": "Git",
+      "repository": {
+        "type": "GitHub",
+        "owner": "glide-browser",
+        "repo": "glide.nix"
+      },
+      "branch": "main",
+      "submodules": false,
+      "revision": "bba480c72761ded14314811c440c106360da5572",
+      "url": "https://github.com/glide-browser/glide.nix/archive/bba480c72761ded14314811c440c106360da5572.tar.gz",
+      "hash": "sha256-7OxxwIdXZRagnvsnVVp4Ju3Qhmht8hljiS8b7SfGOe4="
+    },
     "nix-index-cache": {
       "type": "Git",
       "repository": {
