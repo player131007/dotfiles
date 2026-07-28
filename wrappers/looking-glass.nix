@@ -51,11 +51,11 @@
       generator = inputs.nixpkgs.pkgs.formats.ini { };
     in
     assert !(options ? settings && options ? configFile);
-    inputs.mkWrapper rec {
+    inputs.mkWrapper {
       inherit (options) package;
 
       symlinks = {
-        "$out/client.ini" =
+        "$out/looking-glass/client.ini" =
           if options ? configFile then
             options.configFile
           else if options ? settings then
@@ -64,7 +64,9 @@
             null;
       };
 
-      flags = if symlinks."$out/client.ini" != null then [ "app:configFile=$out/client.ini" ] else [ ];
+      environment = {
+        XDG_CONFIG_HOME = "$out";
+      };
 
       postWrap = /* bash */ ''
         for desktopEntry in $out/share/applications/*.desktop; do
