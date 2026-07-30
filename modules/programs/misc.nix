@@ -1,6 +1,5 @@
 {
   lib,
-  myPkgs,
   pkgs,
   wrappers,
   ...
@@ -41,9 +40,8 @@
         carapace
         direnv
         nix-index
+        kakoune
         ;
-
-      inherit (myPkgs) neovim;
     };
   };
 
@@ -58,7 +56,7 @@
       ];
 
       profile = /* bash */ ''
-        export EDITOR=nvim
+        export EDITOR=kak
       '';
     in
     [

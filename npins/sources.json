@@ -26,19 +26,6 @@
       "url": "https://github.com/llakala/adios-wrappers/archive/c6fe2a47f81574dd29b54866366a5eec39b781d0.tar.gz",
       "hash": "sha256-abyP8pWIFhDFQXb6Dm/ef0WV5MDdm2rMlW8gn1iXDwI="
     },
-    "mnw": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "Gerg-L",
-        "repo": "mnw"
-      },
-      "branch": "master",
-      "submodules": false,
-      "revision": "0151d9fa87992cbeb67c86616fb9170dcec830b6",
-      "url": "https://github.com/Gerg-L/mnw/archive/0151d9fa87992cbeb67c86616fb9170dcec830b6.tar.gz",
-      "hash": "sha256-HRn4O1X2ShYtbq5Egji72/aemyc2cIQicjRZD9hBqM8="
-    },
     "nix-index-cache": {
       "type": "Git",
       "repository": {

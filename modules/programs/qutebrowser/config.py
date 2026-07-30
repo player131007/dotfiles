@@ -19,7 +19,7 @@ c.completion.web_history.exclude = [
 c.session.lazy_restore = True
 c.tabs.background = True
 
-c.editor.command = [ "foot", "--", "nvim", "{file}", "+call cursor({line}, {column})" ]
+c.editor.command = [ "foot", "--", "kak", "{file}", "+{line}:{column}" ]
 
 config.bind('J', 'tab-prev')
 config.bind('K', 'tab-next')

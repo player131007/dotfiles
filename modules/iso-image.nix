@@ -3,7 +3,7 @@
   imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix" ];
 
   environment.systemPackages = [
-    pkgs.neovim
+    pkgs.kakoune-unwrapped
     pkgs.e2fsprogs
   ];
 
