@@ -1,0 +1,14 @@
+colorscheme catppuccin_mocha
+
+add-highlighter -override global/number-lines number-lines -relative -hlcursor -separator ' '
+add-highlighter -override global/show-matching show-matching
+add-highlighter -override global/show-trailing-whitespaces show-whitespaces -only-trailing -lf '' -indent ''
+add-highlighter -override global/show-whitespaces show-whitespaces -indent '│' -lf '' -spc ' '
+
+set-option global scrolloff 8,5
+set-option -add global autoinfo normal
+set-option -remove global autocomplete insert
+set-option global ui_options terminal_set_title=false terminal_assistant=none
+set-option global startup_info_version 20260521
+
+alias global wqa write-all-quit
