@@ -21,9 +21,5 @@
       isModule =
         arg: !isPath arg || (hasSuffix ".nix" (toString arg) && !(hasPrefix "_" (baseNameOf arg)));
     in
-    list:
-    lib.pipe list [
-      (concatMap expandFolders)
-      (filter isModule)
-    ];
+    list: list |> concatMap expandFolders |> filter isModule;
 }

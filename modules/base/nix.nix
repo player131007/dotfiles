@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ config, pkgs, ... }:
 {
   nix = {
     package = pkgs.lixPackageSets.latest.lix;
@@ -8,6 +8,11 @@
     settings.experimental-features = [
       "nix-command"
       "flakes"
+      {
+        nix = "pipe-operators";
+        lix = "pipe-operator";
+      }
+      .${config.nix.package.pname}
     ];
 
     daemonCPUSchedPolicy = "idle";

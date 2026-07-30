@@ -9,26 +9,25 @@ let
     attrValues
     concatMap
     filter
+    mapAttrs
     ;
-  inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.lists) uniqueStrings;
   inherit (lib.modules) mkIf mkMerge;
   inherit (lib.strings) concatStrings;
-  inherit (lib.trivial) pipe;
 
   pLib = import ./lib.nix lib;
 
-  lateCfg = pipe config.persist.at [
-    attrValues
-    (map (pLib.filterTargets (t: !t.early)))
-    (filter (cfg: !pLib.isEmpty cfg))
-  ];
+  lateCfg =
+    config.persist.at
+    |> attrValues
+    |> map (pLib.filterTargets (t: !t.early))
+    |> filter (cfg: !pLib.isEmpty cfg);
 
-  earlyCfg = pipe config.persist.at [
-    attrValues
-    (map (pLib.filterTargets (t: t.early)))
-    (filter (cfg: !pLib.isEmpty cfg))
-  ];
+  earlyCfg =
+    config.persist.at
+    |> attrValues
+    |> map (pLib.filterTargets (t: t.early))
+    |> filter (cfg: !pLib.isEmpty cfg);
 
   cfgToList' =
     let
@@ -47,11 +46,7 @@ let
     f: pLib.cfgToList f (wrap f);
 
   handleMounts =
-    cfg:
-    pipe cfg [
-      (pLib.filterTargets (t: t.method ? bindmount))
-      (cfgToList' pLib.mkBindMount)
-    ];
+    cfg: cfg |> pLib.filterTargets (t: t.method ? bindmount) |> cfgToList' pLib.mkBindMount;
 
   handleTmpfiles =
     cfg:
@@ -77,12 +72,7 @@ let
 
       tmpfilesRules = cfgToList' pLib.mkTmpfilesRules;
 
-      symlinks =
-        cfg:
-        pipe cfg [
-          (pLib.filterTargets (t: t.method ? symlink))
-          (cfgToList' pLib.mkSymlink)
-        ];
+      symlinks = cfg: cfg |> pLib.filterTargets (t: t.method ? symlink) |> cfgToList' pLib.mkSymlink;
     in
     mkMerge (
       concatMap (f: f cfg) [
@@ -107,11 +97,16 @@ let
       '';
     in
     paths:
-    concatStrings (
-      mapAttrsToList (
-        path_: types: concatStrings (mapAttrsToList (_: settingsEntryToRule path_) types)
-      ) paths
-    );
+    paths
+    |> mapAttrs (
+      path_: attrs:
+      attrs
+      |> mapAttrs (_type: settingsEntryToRule path_)
+      |> attrValues
+      |> concatStrings
+    )
+    |> attrValues
+    |> concatStrings;
 
   tmpfilesService = {
     requiredBy = [ "persistence.target" ];
@@ -168,10 +163,8 @@ in
           {
             after = [ "initrd-fs.target" ];
             serviceConfig.ExecStart = "systemd-tmpfiles --create --remove --boot ${ruleFile}";
-            unitConfig.RequiresMountsFor = pipe earlyCfg [
-              (map (cfg: toString (/sysroot + cfg.storagePath)))
-              uniqueStrings
-            ];
+            unitConfig.RequiresMountsFor =
+              earlyCfg |> map (cfg: toString (/sysroot + cfg.storagePath)) |> uniqueStrings;
           }
         ];
 
@@ -196,10 +189,7 @@ in
           {
             after = [ "local-fs.target" ];
             serviceConfig.ExecStart = "systemd-tmpfiles --create --remove --boot ${ruleFile}";
-            unitConfig.RequiresMountsFor = pipe lateCfg [
-              (map (cfg: cfg.storagePath))
-              uniqueStrings
-            ];
+            unitConfig.RequiresMountsFor = lateCfg |> map (cfg: cfg.storagePath) |> uniqueStrings;
           }
         ];
 
@@ -207,16 +197,15 @@ in
         let
           addLateDropins =
             cfg:
-            pipe cfg [
-              (pLib.filterTargets (t: t.method ? bindmount))
-              (cfgToList' (
-                storagePath: target:
-                mkMerge [
-                  (pLib.mkBindMount storagePath (target // { early = false; }))
-                  { overrideStrategy = "asDropin"; }
-                ]
-              ))
-            ];
+            cfg
+            |> pLib.filterTargets (t: t.method ? bindmount)
+            |> cfgToList' (
+              storagePath: target:
+              mkMerge [
+                (pLib.mkBindMount storagePath (target // { early = false; }))
+                { overrideStrategy = "asDropin"; }
+              ]
+            );
         in
         concatMap handleMounts lateCfg ++ concatMap addLateDropins earlyCfg;
     };

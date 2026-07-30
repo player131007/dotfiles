@@ -49,10 +49,9 @@
         let
           inherit (inputs.nixpkgs) lib;
         in
-        lib.pipe options.plugins [
-          (builtins.concatMap (plugin: plugin.obsWrapperArguments or [ ]))
-          lib.lists.uniqueStrings
-          (builtins.concatStringsSep " ")
-        ];
+        options.plugins
+        |> builtins.concatMap (plugin: plugin.obsWrapperArguments or [ ])
+        |> lib.lists.uniqueStrings
+        |> builtins.concatStringsSep " ";
     };
 }

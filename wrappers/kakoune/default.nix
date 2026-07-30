@@ -62,13 +62,15 @@
           else
             null;
       }
-      // lib.pipe (lib.filesystem.listFilesRecursive ./runtime) [
-        (map (file: {
+      // (
+        ./runtime
+        |> lib.filesystem.listFilesRecursive
+        |> map (file: {
           name = "${KAKOUNE_RUNTIME}/${lib.path.removePrefix ./runtime file}";
           value = toString file; # FIXME: impure stuff of doom and despair
-        }))
-        builtins.listToAttrs
-      ];
+        })
+        |> builtins.listToAttrs
+      );
 
       environment = {
         # location of kak binary is used to find ../share/kak/autoload,

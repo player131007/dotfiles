@@ -19,11 +19,12 @@ pkgs.mkShellNoCC {
     pkgs.nixfmt
     pkgs.nixd
   ]
-  ++ lib.pipe ./wrappers [
-    readDir
-    (mapAttrs (k: v: if v != "directory" then lib.strings.removeSuffix ".nix" k else k))
-    attrValues
-    (filter (name: name != "self"))
-    (map (name: wrappers.${name}))
-  ];
+  ++ (
+    ./wrappers
+    |> readDir
+    |> mapAttrs (name: type: if type != "directory" then lib.strings.removeSuffix ".nix" name else name)
+    |> attrValues
+    |> filter (name: name != "self")
+    |> map (name: wrappers.${name})
+  );
 }

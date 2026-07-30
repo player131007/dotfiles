@@ -37,7 +37,7 @@
             XF86MonBrightnessDown allow-when-locked=true { spawn "dms" "ipc" "call" "brightness" "decrement" "10" ""; }
         }
       '';
-      niri-config = builtins.toFile "niri-config" (
+      niri-config =
         builtins.readFile ./config.kdl
         + /* kdl */ ''
           spawn-at-startup "dms" "run"
@@ -46,7 +46,7 @@
           include optional=true "dms/wpblur.kdl"
           include "${dms-keybinds}"
         ''
-      );
+        |> builtins.toFile "niri-config";
     in
     [
       "r %h/.config/niri/config.kdl - - - - -"

@@ -10,11 +10,9 @@ let
     length
     mapAttrs
     ;
-  inherit (lib.attrsets) mapAttrsToList;
   inherit (lib.lists) dropEnd take;
   inherit (lib.modules) mkDefault mkIf mkMerge;
   inherit (lib.strings) optionalString;
-  inherit (lib.trivial) pipe;
 
   concatPaths =
     components:
@@ -121,46 +119,46 @@ in
       target,
     }:
     let
-      components = pipe target [
-        getPath
-        (p: (deconstructPath p).components)
-        (dropEnd 1)
-      ];
+      components =
+        target
+        |> getPath
+        |> (p: (deconstructPath p).components)
+        |> dropEnd 1;
 
       value.d = mapAttrs (_: mkDefault) {
         user = defaultOwner.name;
         group = defaultOwner.group;
       };
     in
-    mkMerge (
-      genList (
-        i:
-        let
-          c = take (i + 1) components;
+    length components
+    |> genList (
+      i:
+      let
+        c = take (i + 1) components;
 
-          persistPath = concatPaths (
-            [
-              (maybeSysroot target)
-              storagePath
-              root
-            ]
-            ++ c
-          );
+        persistPath = concatPaths (
+          [
+            (maybeSysroot target)
+            storagePath
+            root
+          ]
+          ++ c
+        );
 
-          realPath = concatPaths (
-            [
-              (maybeSysroot target)
-              root
-            ]
-            ++ c
-          );
-        in
-        {
-          ${persistPath} = value;
-          ${realPath} = value;
-        }
-      ) (length components)
-    );
+        realPath = concatPaths (
+          [
+            (maybeSysroot target)
+            root
+          ]
+          ++ c
+        );
+      in
+      {
+        ${persistPath} = value;
+        ${realPath} = value;
+      }
+    )
+    |> mkMerge;
 
   filterTargets =
     pred: cfg:
@@ -185,8 +183,10 @@ in
   cfgToList =
     f_abs: f_user: cfg:
     map (f_abs cfg.storagePath) (cfg.files ++ cfg.directories)
-    ++ pipe cfg.users [
-      (mapAttrsToList (user: cfg': map (f_user cfg.storagePath user) (cfg'.files ++ cfg'.directories)))
-      concatLists
-    ];
+    ++ (
+      cfg.users
+      |> mapAttrs (user: cfg': map (f_user cfg.storagePath user) (cfg'.files ++ cfg'.directories))
+      |> attrValues
+      |> concatLists
+    );
 }

@@ -149,54 +149,55 @@ in
         let
           inherit (config.users) users;
         in
-        types.lazyAttrsOf (
-          types.submodule (
-            { config, name, ... }:
-            {
-              imports = singleton (targetsModule {
-                relative = false;
-                inherit (config) commonMountOptions;
-                defaultOwner = users.root;
-              });
-              options = {
-                enable = mkOption {
-                  type = types.bool;
-                  default = true;
-                };
-
-                storagePath = mkOption {
-                  type = types.externalPath;
-                  default = name;
-                };
-
-                commonMountOptions = mkOption {
-                  type = types.listOf types.str;
-                  default = [
-                    "x-gvfs-hide"
-                    "x-gdu.hide"
-                    "X-fstrim.notrim"
-                  ];
-                };
-
-                users = mkOption {
-                  type = types.lazyAttrsOf (
-                    types.submodule (
-                      { name, ... }:
-                      {
-                        imports = singleton (targetsModule {
-                          relative = true;
-                          inherit (config) commonMountOptions;
-                          defaultOwner = users.${name};
-                        });
-                      }
-                    )
-                  );
-                  default = { };
-                };
+        (
+          { config, name, ... }:
+          {
+            imports = singleton (targetsModule {
+              relative = false;
+              inherit (config) commonMountOptions;
+              defaultOwner = users.root;
+            });
+            options = {
+              enable = mkOption {
+                type = types.bool;
+                default = true;
               };
-            }
-          )
-        );
+
+              storagePath = mkOption {
+                type = types.externalPath;
+                default = name;
+              };
+
+              commonMountOptions = mkOption {
+                type = types.listOf types.str;
+                default = [
+                  "x-gvfs-hide"
+                  "x-gdu.hide"
+                  "X-fstrim.notrim"
+                ];
+              };
+
+              users = mkOption {
+                type =
+                  (
+                    { name, ... }:
+                    {
+                      imports = singleton (targetsModule {
+                        relative = true;
+                        inherit (config) commonMountOptions;
+                        defaultOwner = users.${name};
+                      });
+                    }
+                  )
+                  |> types.submodule
+                  |> types.lazyAttrsOf;
+                default = { };
+              };
+            };
+          }
+        )
+        |> types.submodule
+        |> types.lazyAttrsOf;
     };
   };
 }

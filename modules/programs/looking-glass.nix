@@ -13,11 +13,10 @@
     let
       owner = if config.virtualisation.libvirtd.qemu.runAsRoot then "root" else "qemu-libvirtd";
     in
-    lib.singleton (
-      pkgs.writeTextDir "etc/udev/rules.d/70-kvmfr.rules" ''
-        SUBSYSTEM=="kvmfr", OWNER="${owner}", GROUP="kvm", MODE="0660", TAG+="uaccess"
-      ''
-    );
+    pkgs.writeTextDir "etc/udev/rules.d/70-kvmfr.rules" ''
+      SUBSYSTEM=="kvmfr", OWNER="${owner}", GROUP="kvm", MODE="0660", TAG+="uaccess"
+    ''
+    |> lib.singleton;
 
   virtualisation.libvirtd.qemu.verbatimConfig =
     let
