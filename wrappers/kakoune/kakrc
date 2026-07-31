@@ -15,3 +15,5 @@ alias global wqa write-all-quit
 
 hook global BufOpenFile .* expandtab
 hook global BufNewFile  .* expandtab
+
+map global goto u '<esc>:url-open<ret>' -docstring "URL"
