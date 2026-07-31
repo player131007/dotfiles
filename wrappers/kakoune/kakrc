@@ -12,3 +12,6 @@ set-option global ui_options terminal_set_title=false terminal_assistant=none
 set-option global startup_info_version 20260521
 
 alias global wqa write-all-quit
+
+hook global BufOpenFile .* expandtab
+hook global BufNewFile  .* expandtab
