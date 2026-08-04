@@ -8,7 +8,7 @@
     kakrc.type = types.string;
     kakrcFile = {
       type = types.pathLike;
-      default = toString ./kakrc; # FIXME: impure stuff of doom and despair
+      default = ./kakrc;
     };
 
     neededBinaries = {
@@ -56,16 +56,11 @@
             options.kakrcFile
           else
             null;
-      }
-      // (
-        ./runtime
-        |> lib.filesystem.listFilesRecursive
-        |> map (file: {
-          name = "${KAKOUNE_RUNTIME}/${lib.path.removePrefix ./runtime file}";
-          value = toString file; # FIXME: impure stuff of doom and despair
-        })
-        |> builtins.listToAttrs
-      );
+      };
+
+      preWrap = "
+        ${lib.getExe pkgs.lndir} -silent ${./runtime} ${KAKOUNE_RUNTIME}
+      ";
 
       environment = {
         # location of kak binary is used to find ../share/kak/autoload,
