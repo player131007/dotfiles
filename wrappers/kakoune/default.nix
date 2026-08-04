@@ -46,14 +46,7 @@
       inherit (options) package;
       pname = "kakoune";
 
-      wrapperArgs = "--prefix PATH : ${KAKOUNE_RUNTIME}/bin";
-
-      preWrap = /* bash */ ''
-        mkdir -p ${KAKOUNE_RUNTIME}/bin
-        for i in ${toString (map lib.escapeShellArg options.neededBinaries)}; do
-          ${lib.getExe pkgs.lndir} -silent "$i/bin" ${KAKOUNE_RUNTIME}/bin
-        done
-      '';
+      wrapperArgs = "--prefix PATH : ${lib.makeBinPath options.neededBinaries}";
 
       symlinks = {
         "${KAKOUNE_RUNTIME}/kakrc.local" =
