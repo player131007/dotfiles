@@ -3,11 +3,20 @@
   pkgs ? import sources.nixpkgs { },
   wrappers ? import ./wrappers.nix { inherit sources pkgs; },
 }:
+let
+  inherit (builtins) mapAttrs attrValues;
+in
 pkgs.mkShellNoCC {
   allowSubstitutes = false; # Prevent a cache.nixos.org call every time
 
-  packages = builtins.attrValues (removeAttrs wrappers [ "self" ]) ++ [
-    pkgs.nixfmt
-    pkgs.nixd
-  ];
+  packages =
+    (
+      removeAttrs wrappers [ "self" ]
+      |> mapAttrs (_name: module: module { }) # this is here to make the expr not a single line
+      |> attrValues
+    )
+    ++ [
+      pkgs.nixfmt
+      pkgs.nixd
+    ];
 }

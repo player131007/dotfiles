@@ -25,6 +25,5 @@ let
     };
   };
 in
-wrappers
-|> builtins.mapAttrs (name: _module: tree.modules.${name}) # only include modules in ./wrappers
-|> builtins.mapAttrs (_name: module: module { })
+# only include modules in ./wrappers
+builtins.mapAttrs (name: _module: tree.modules.${name}) wrappers

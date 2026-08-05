@@ -1,4 +1,6 @@
 let
+  inherit (builtins) mapAttrs;
+
   sources = import ./npins;
 
   myLib = import ./lib.nix {
@@ -13,10 +15,17 @@ let
       };
 
       defaultModule =
-        { lib, pkgs, ... }:
+        {
+          lib,
+          pkgs,
+          sources,
+          ...
+        }:
         {
           networking.hostName = lib.mkDefault hostname;
-          _module.args.myPkgs = import ./packages.nix { inherit pkgs; };
+          _module.args.wrappers =
+            import ./wrappers.nix { inherit sources pkgs; }
+            |> mapAttrs (name: module: if name == "self" then module else module { });
         };
     in
     import "${nixpkgs}/nixos/lib/eval-config.nix" (
@@ -39,7 +48,7 @@ let
       }
     );
 in
-builtins.mapAttrs (mkHost sources.nixpkgs) {
+mapAttrs (mkHost sources.nixpkgs) {
   tahari = {
     modules = [ ./modules/iso-image.nix ];
   };
@@ -50,9 +59,6 @@ builtins.mapAttrs (mkHost sources.nixpkgs) {
       ./modules/libvirtd.nix
       ./modules/programs
       { system.stateVersion = "26.11"; }
-      ({ pkgs, ... }: {
-        _module.args.wrappers = import ./wrappers.nix { inherit pkgs; };
-      })
     ];
   };
 }
