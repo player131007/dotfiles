@@ -15,10 +15,19 @@ hook -group lsp-filetype-nix global BufSetOption filetype=nix %{
     set-option buffer lsp_servers %{
         [nixd]
         root_globs = ["flake.nix", "shell.nix", ".git", ".hg"]
-        args = ["--log=error"]
+        args = ["--log=error", "--semantic-tokens"]
     }
 
     # by default lsp completion doesn't kick in if preceding key is whitespace
     # nixd can do that, not sure about other language servers
     set-option buffer lsp_completion_trigger ""
+}
+
+hook global WinSetOption filetype=nix %{
+    hook window -group semantic-tokens BufReload .* lsp-semantic-tokens
+    hook window -group semantic-tokens NormalIdle .* lsp-semantic-tokens
+    hook window -group semantic-tokens InsertIdle .* lsp-semantic-tokens
+    hook -once -always window WinSetOption filetype=.* %{
+        remove-hooks window semantic-tokens
+    }
 }
