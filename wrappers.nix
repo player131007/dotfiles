@@ -4,12 +4,12 @@
 }:
 let
   adios = import sources.adios;
-  adios-wrappers = import sources.adios-wrappers { inherit adios; };
+
+  wrappers = adios.lib.importModules { directory = ./wrappers; };
 
   root.modules = adios.lib.inject [
-    adios-wrappers
-
-    (adios.lib.importModules { directory = ./wrappers; })
+    (import sources.adios-wrappers { inherit adios; })
+    wrappers
   ];
 
   tree = adios root {
@@ -25,4 +25,6 @@ let
     };
   };
 in
-builtins.mapAttrs (_name: module: module { }) tree.modules
+wrappers
+|> builtins.mapAttrs (name: _module: tree.modules.${name}) # only include modules in ./wrappers
+|> builtins.mapAttrs (_name: module: module { })
