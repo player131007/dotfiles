@@ -5,8 +5,14 @@
 }:
 let
   inherit (builtins) mapAttrs attrValues;
+
+  base = [
+    (wrappers.kakoune { })
+    pkgs.nixfmt
+    pkgs.nixd
+  ];
 in
-rec {
+{
   default = pkgs.mkShellNoCC {
     allowSubstitutes = false; # Prevent a cache.nixos.org call every time
 
@@ -16,10 +22,7 @@ rec {
         |> mapAttrs (_name: module: module { }) # this is here to make the expr not a single line
         |> attrValues
       )
-      ++ [
-        pkgs.nixfmt
-        pkgs.nixd
-      ];
+      ++ base;
   };
 
   glide = pkgs.mkShellNoCC {
@@ -28,8 +31,7 @@ rec {
       pkgs.typescript-go
       pkgs.esbuild
       (wrappers.glide-browser { })
-    ];
-
-    inputsFrom = [ default ];
+    ]
+    ++ base;
   };
 }
