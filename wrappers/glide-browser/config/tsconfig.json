@@ -1,0 +1,44 @@
+{
+    "files": [
+        "glide.d.ts",
+        "main.ts"
+    ],
+    "compilerOptions": {
+        "allowUnreachableCode": false,
+        "allowUnusedLabels": false,
+        "alwaysStrict": true,
+        "exactOptionalPropertyTypes": true,
+        "noFallthroughCasesInSwitch": true,
+        "noImplicitAny": true,
+        "noImplicitOverride": true,
+        "noImplicitReturns": true,
+        "noImplicitThis": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noUncheckedIndexedAccess": true,
+        "noUnusedLocals": true,
+        "noUnusedParameters": true,
+        "strict": true,
+        "strictBindCallApply": true,
+        "strictBuiltinIteratorReturn": true,
+        "strictFunctionTypes": true,
+        "strictNullChecks": true,
+        "strictPropertyInitialization": true,
+        "useUnknownInCatchVariables": true,
+
+        "allowImportingTsExtensions": true,
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "noUncheckedSideEffectImports": true,
+        "types": [
+            "./glide.d.ts"
+        ],
+
+        "lib": [
+            "DOM",
+            "DOM.Iterable",
+            "DOM.AsyncIterable",
+            "ESNext"
+        ],
+        "noEmit": true
+    }
+}

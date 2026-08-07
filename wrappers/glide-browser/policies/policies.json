@@ -1,0 +1,58 @@
+{
+    "policies": {
+        "AIControls": {
+            "Default": {
+                "Value": "blocked",
+                "Locked": true
+            },
+            "Translations": {
+                "Value": "available",
+                "Locked": false
+            }
+        },
+        "AutofillAddressEnabled": false,
+        "AutofillCreditCardEnabled": false,
+        "DisableAccounts": true,
+        "DisableAppUpdate": true,
+        "DisableFirefoxAccounts": true,
+        "DisableFirefoxStudies": true,
+        "DisableFormHistory": true,
+        "DisableTelemetry": true,
+        "DNSOverHTTPS": {
+            "Enabled": false,
+            "ProviderURL": "",
+            "Locked": false
+        },
+        "DontCheckDefaultBrowser": true,
+        "EnableTrackingProtection": {
+            "Value": true,
+            "Locked": false,
+            "Cryptomining": true,
+            "Fingerprinting": true,
+            "EmailTracking": true,
+            "SuspectedFingerprinting": true,
+            "Category": "strict",
+            "BaselineExceptions": true,
+            "ConvenienceExceptions": true
+        },
+        "LocalNetworkAccess": {
+            "Enabled": true,
+            "BlockTrackers": true,
+            "EnablePrompting": true
+        },
+        "OfferToSaveLogins": false,
+        "PasswordManagerEnabled": false,
+        "PDFjs": {
+            "Enabled": false
+        },
+        "PromptForDownloadLocation": true,
+        "SearchSuggestEnabled": false,
+        "UserMessaging": {
+            "ExtensionRecommendations": false,
+            "UrlbarInterventions": false,
+            "SkipOnboarding": true,
+            "MoreFromMozilla": false,
+            "FirefoxLabs": false
+        }
+    }
+}

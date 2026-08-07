@@ -1,0 +1,25 @@
+{
+    "policies": {
+        "SearchEngines": {
+            "Remove": [
+                "Google",
+                "Bing",
+                "Wikipedia (en)",
+                "Perplexity"
+            ],
+            "Default": "DuckDuckGo",
+            "Add": [
+                {
+                    "Name": "Nix Packages",
+                    "URLTemplate": "https://search.nixos.org/packages?channel=unstable&query={searchTerms}",
+                    "Alias": "!pkg"
+                },
+                {
+                    "Name": "NixOS Options",
+                    "URLTemplate": "https://search.nixos.org/options?channel=unstable&query={searchTerms}",
+                    "Alias": "!opt"
+                }
+            ]
+        }
+    }
+}

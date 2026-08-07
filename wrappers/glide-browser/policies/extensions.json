@@ -1,0 +1,21 @@
+{
+  "policies": {
+    "3rdparty": {
+        "Extensions": {
+            "uBlock0@raymondhill.net": {
+                "userSettings": [
+                    [ "advancedUserEnabled", "true" ],
+                    [ "dynamicFilteringEnabled", "true" ],
+                    [ "popupPanelSections", "0b11111" ]
+                ]
+            }
+        }
+    },
+    "ExtensionSettings": {
+      "uBlock0@raymondhill.net": {
+        "installation_mode": "force_installed",
+        "install_url": "https://addons.mozilla.org/firefox/downloads/latest/uBlock0@raymondhill.net/latest.xpi"
+      }
+    }
+  }
+}

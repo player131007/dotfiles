@@ -10,6 +10,49 @@
       defaultFunc = { inputs }: inputs.self.pkgs.glide-browser-bin-unwrapped;
     };
 
+    wrapFirefoxArgs = {
+      type = types.attrs;
+      defaultFunc =
+        { options, inputs }:
+        let
+          inherit (inputs.nixpkgs) pkgs;
+        in
+        {
+          inherit (options.package) version;
+
+          extraPrefsFiles = map (file: "${file}") [
+            ./prefs/betterfox.js
+            ./prefs/smooth_scrolling.js
+            ./prefs/prefs.js
+          ];
+          extraPoliciesFiles = map (file: "${file}") [
+            ./policies/policies.json
+            ./policies/search_engines.json
+            ./policies/extensions.json
+          ];
+
+          extraPolicies =
+            let
+              extid = "nixos@darkreader";
+            in
+            {
+              ExtensionSettings.${extid} = {
+                installation_mode = "force_installed";
+                install_url =
+                  let
+                    ext = pkgs.fetchFirefoxAddon {
+                      name = "darkreader";
+                      fixedExtid = extid;
+                      url = "https://github.com/player131007/darkreader/releases/download/v4.9.129/darkreader-firefox.xpi";
+                      hash = "sha256-9DQ9Le95rkFr2UbqbCoQttwccdDAB3kS3QWdXtXPUps=";
+                    };
+                  in
+                  "file://${ext}/${ext.extid}.xpi";
+              };
+            };
+        };
+    };
+
     environment = {
       type = types.attrsOf (types.nullOr types.string);
       default = {
@@ -21,9 +64,27 @@
 
     symlinks = {
       type = types.attrsOf (types.nullOr types.pathLike);
-      default = {
-        "$out/glide/glide.ts" = ./glide.ts;
-      };
+      defaultFunc =
+        { inputs }:
+        let
+          inherit (inputs.nixpkgs) pkgs;
+        in
+        {
+          "$out/glide/glide.ts" =
+            pkgs.runCommandLocal "glide.ts"
+              {
+                src = ./config;
+                nativeBuildInputs = [
+                  pkgs.typescript-go
+                  pkgs.esbuild
+                ];
+              }
+              ''
+                cd $src
+                tsc --noEmit
+                esbuild --bundle main.ts --outfile=$out
+              '';
+        };
     };
   };
 
@@ -35,9 +96,8 @@
     in
     # since there are version checks in pkgs.wrapFirefox
     # use the firefox version that glide is based on here and override later
-    (pkgs.wrapFirefox (options.package // { version = "153.0b5"; }) {
-      inherit (options.package) version;
-    }).overrideAttrs
+    (pkgs.wrapFirefox (options.package // { version = "153.0b5"; }) options.wrapFirefoxArgs)
+    .overrideAttrs
       (prev: {
         makeWrapperArgs =
           prev.makeWrapperArgs or [ ]
