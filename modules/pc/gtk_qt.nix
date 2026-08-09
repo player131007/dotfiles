@@ -1,7 +1,12 @@
-{ lib, pkgs, ... }:
+{
+  lib,
+  myPkgs,
+  pkgs,
+  ...
+}:
 {
   environment.systemPackages = [
-    pkgs.rose-pine-gtk-theme
+    myPkgs.rose-pine-gtk-theme
 
     pkgs.libsForQt5.qt5ct
     pkgs.libsForQt5.qtstyleplugin-kvantum
@@ -23,7 +28,7 @@
 
   my.tmpfiles = [
     "r %h/.config/gtk-4.0/gtk.css - - - - -"
-    "C %h/.config/gtk-4.0/gtk.css 0600 - - - ${pkgs.rose-pine-gtk-theme}/share/themes/rose-pine/gtk-4.0/gtk.css"
+    "C %h/.config/gtk-4.0/gtk.css 0600 - - - ${myPkgs.rose-pine-gtk-theme}/share/themes/rose-pine/gtk-4.0/gtk.css"
   ];
 
   qt.enable = true;
