@@ -1,6 +1,8 @@
 {
     "files": [
         "glide.d.ts",
+        "keymaps.ts",
+        "yt-volume.ts",
         "main.ts"
     ],
     "compilerOptions": {

@@ -37,6 +37,7 @@
             in
             {
               ExtensionSettings.${extid} = {
+                private_browsing = true;
                 installation_mode = "force_installed";
                 install_url =
                   let
