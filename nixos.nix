@@ -19,13 +19,18 @@ let
           lib,
           pkgs,
           sources,
+          wrappers,
           ...
         }:
         {
           networking.hostName = lib.mkDefault hostname;
-          _module.args.wrappers =
-            import ./wrappers.nix { inherit sources pkgs; }
-            |> mapAttrs (name: module: if name == "self" then module else module { });
+          _module.args = {
+            wrappers =
+              import ./wrappers.nix { inherit sources pkgs; }
+              |> mapAttrs (name: module: if name == "self" then module else module { });
+
+            myPkgs = wrappers.self.args.options.pkgs;
+          };
         };
     in
     import "${nixpkgs}/nixos/lib/eval-config.nix" (
