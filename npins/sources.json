@@ -9,9 +9,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "432fe5c7ceffa07727df9488acb8f242800dca14",
-      "url": "https://github.com/llakala/lladios/archive/432fe5c7ceffa07727df9488acb8f242800dca14.tar.gz",
-      "hash": "sha256-5UIEiuYjt+7VHQLOprciWMEX7msr55s+ojyhqSnHQAk="
+      "revision": "f833c80947573515df7c3fa58bf9e18c2a3d83d3",
+      "url": "https://github.com/llakala/lladios/archive/f833c80947573515df7c3fa58bf9e18c2a3d83d3.tar.gz",
+      "hash": "sha256-o6j1bSRT3UL2VyMoJ/LRdlOrLLsj860QKzN0qSYyKxU="
     },
     "adios-wrappers": {
       "type": "Git",
@@ -22,9 +22,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "c6fe2a47f81574dd29b54866366a5eec39b781d0",
-      "url": "https://github.com/llakala/adios-wrappers/archive/c6fe2a47f81574dd29b54866366a5eec39b781d0.tar.gz",
-      "hash": "sha256-abyP8pWIFhDFQXb6Dm/ef0WV5MDdm2rMlW8gn1iXDwI="
+      "revision": "e4a46c58f2f0a341c046cc309244ab76f10bb905",
+      "url": "https://github.com/llakala/adios-wrappers/archive/e4a46c58f2f0a341c046cc309244ab76f10bb905.tar.gz",
+      "hash": "sha256-q6iGbuqfrIZ/2c14EHTJSFtCoa4jugRIm7pprawGm5Q="
     },
     "glide-browser": {
       "type": "Git",
@@ -48,16 +48,16 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "409da624dd8f414e52444ad0b0c011ec49f26bde",
-      "url": "https://github.com/player131007/nix-index-cache/archive/409da624dd8f414e52444ad0b0c011ec49f26bde.tar.gz",
-      "hash": "sha256-WYtXtC1wmjg9xJBalr5nimK466SaMESxpKV6Rs6IMkc="
+      "revision": "b509910c7786d7b88b19fbc13d9dcbbf43b35d27",
+      "url": "https://github.com/player131007/nix-index-cache/archive/b509910c7786d7b88b19fbc13d9dcbbf43b35d27.tar.gz",
+      "hash": "sha256-VkcCEY/Uw9TlBl8S6qWLIsuJis3fN1xsiM+7V8qlzAc="
     },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-unstable",
       "artifact": "nixexprs.tar.xz",
-      "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1040357.e2587caef70c/nixexprs.tar.xz",
-      "hash": "sha256-vwxWgF+Gj276WznzGb1LxGsK/39HaQwgQXiU3EkC844="
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1049422.f13ff45afd1b/nixexprs.tar.xz",
+      "hash": "sha256-CgKDSHL6rqAAQkkvg1xaZDQXb77+4XW73iGcUMJ+2w0="
     }
   },
   "version": 8
