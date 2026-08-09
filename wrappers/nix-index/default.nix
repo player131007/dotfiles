@@ -53,13 +53,17 @@
         inherit (options) nix-index-cache;
       };
 
-      nix-index-db-bin-only = nix-index-db.override {
-        name = "nix-index-db-bin-only";
-        extraArgs = lib.escapeShellArgs [
-          "--filter-prefix=/bin/"
-          "--compression=9"
-        ];
-      };
+      nix-index-db-bin-only =
+        (nix-index-db.override {
+          name = "nix-index-db-bin-only";
+          extraArgs = lib.escapeShellArgs [
+            "--filter-prefix=/bin/"
+            "--compression=9"
+          ];
+        }).overrideAttrs
+          {
+            hack-to-only-build-one-db-at-a-time = nix-index-db;
+          };
     in
     pkgs.symlinkJoin {
       pname = "nix-index-wrapped";
