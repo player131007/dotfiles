@@ -104,7 +104,7 @@ binds {
     Mod+Shift+Slash { show-hotkey-overlay; }
 
     Mod+T repeat=false hotkey-overlay-title="Open a Terminal: foot" { spawn "foot"; }
-    Mod+A repeat=false hotkey-overlay-title="Open a Browser: qutebrowser" { spawn "qutebrowser"; }
+    Mod+A repeat=false hotkey-overlay-title="Open a Browser" { spawn "glide"; }
 
     Mod+O repeat=false { toggle-overview; }
 

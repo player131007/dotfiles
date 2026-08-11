@@ -41,6 +41,7 @@
         direnv
         nix-index
         kakoune
+        glide-browser
         ;
     };
   };
