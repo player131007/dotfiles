@@ -22,7 +22,9 @@
     { options, inputs }:
     let
       inherit (inputs.nixpkgs.pkgs) formats;
-      generator = formats.ini { };
+      generator = formats.ini {
+        listsAsDuplicateKeys = true;
+      };
     in
     assert !(options ? settings && options ? configFile);
     inputs.mkWrapper rec {
