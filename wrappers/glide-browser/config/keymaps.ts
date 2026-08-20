@@ -4,6 +4,18 @@ glide.keymaps.del("normal", "<C-k>");
 glide.keymaps.set(["normal", "insert"], "<A-j>", "tab_prev");
 glide.keymaps.set(["normal", "insert"], "<A-k>", "tab_next");
 
+// override / key so that it's not swallowed by websites
+glide.keymaps.set(
+    "normal",
+    "/",
+    async () => {
+        await glide.findbar.open({
+            mode: "typeahead",
+            query: "",
+        });
+    },
+    { description: "Open quick find bar" },
+);
 glide.keymaps.set(
     "normal",
     "n",
