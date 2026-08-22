@@ -4,10 +4,6 @@ _adios: {
   };
 
   options = {
-    nix-direnv = {
-      defaultFunc = { inputs }: inputs.self.pkgs.nix-direnv;
-    };
-
     settings.default = {
       global.hide_env_diff = true;
     };
