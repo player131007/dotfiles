@@ -12,7 +12,7 @@ _adios: {
   mutations."/nushell".shellInit =
     { }:
     /* nu */ ''
-      use ${./psub.nu}
+      use ${./modules}/psub.nu
     ''
     + builtins.readFile ./config.nu;
 }
