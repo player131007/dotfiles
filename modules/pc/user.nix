@@ -15,7 +15,10 @@ in
     )
   ];
 
-  services.userborn.enable = true;
+  services.userborn = {
+    enable = true;
+    importLegacyState = false;
+  };
 
   systemd.user.services.syncthing = {
     unitConfig.ConditionUser = username;
