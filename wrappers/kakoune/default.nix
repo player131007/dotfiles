@@ -38,8 +38,6 @@
     { options, inputs }:
     let
       inherit (inputs.nixpkgs) pkgs lib;
-
-      KAKOUNE_RUNTIME = "$out/share/kak";
     in
     assert !(options ? kakrc && options ? kakrcFile);
     inputs.mkWrapper {
@@ -49,7 +47,7 @@
       wrapperArgs = "--prefix PATH : ${lib.makeBinPath options.neededBinaries}";
 
       symlinks = {
-        "${KAKOUNE_RUNTIME}/kakrc.local" =
+        "$out/share/kak/kakrc.local" =
           if options ? kakrc then
             pkgs.writeText "kakrc" options.kakrc
           else if options ? kakrcFile then
@@ -58,15 +56,12 @@
             null;
       };
 
-      preWrap = "
-        ${lib.getExe pkgs.lndir} -silent ${./runtime} ${KAKOUNE_RUNTIME}
-      ";
+      preWrap = ''
+        ${lib.getExe pkgs.lndir} -silent ${./runtime} $out/share/kak
+        cp --remove-destination $(readlink -e "$out/bin/kak") $out/bin/kak
+      '';
 
       environment = {
-        # location of kak binary is used to find ../share/kak/autoload,
-        # unless explicitly overriden with KAKOUNE_RUNTIME
-        inherit KAKOUNE_RUNTIME;
-
         KAKOUNE_POSIX_SHELL = lib.getExe pkgs.dash;
       };
     };
