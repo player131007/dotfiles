@@ -19,6 +19,8 @@
           inherit (inputs.nixpkgs) pkgs;
         in
         [
+          pkgs.util-linux
+          pkgs.jq
           pkgs.xdg-utils
           pkgs.coreutils
           pkgs.findutils
