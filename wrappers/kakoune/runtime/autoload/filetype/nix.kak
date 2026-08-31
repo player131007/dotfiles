@@ -6,8 +6,6 @@ define-command -hidden set--nixfmt-formatcmd %{
 
 hook global BufSetOption filetype=nix %{
     set-option buffer path '%/'
-    set-option buffer indentwidth 2
-    set-option buffer tabstop %opt{indentwidth}
 
     set-option buffer comment_block_begin '/*'
     set-option buffer comment_block_end '*/'

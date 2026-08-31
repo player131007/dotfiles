@@ -2,6 +2,7 @@
   inputs = {
     mkWrapper.from = { parent }: parent.mkWrapper;
     nixpkgs.from = { parent }: parent.nixpkgs;
+    self.from = { parent }: parent.self;
   };
 
   options = {
@@ -26,6 +27,7 @@
           pkgs.findutils
           pkgs.gnused
           pkgs.kakoune-lsp
+          inputs.self.pkgs.kak-guess-indent
         ];
     };
 
