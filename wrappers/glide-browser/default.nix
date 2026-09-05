@@ -10,100 +10,84 @@
       defaultFunc = { inputs }: inputs.self.pkgs.glide-browser-bin-unwrapped;
     };
 
-    wrapFirefoxArgs = {
-      type = types.attrs;
-      defaultFunc =
-        { options }:
-        {
-          inherit (options.package) version;
-
-          extraPrefsFiles = map (file: "${file}") [
-            ./prefs/betterfox.js
-            ./prefs/smooth_scrolling.js
-            ./prefs/prefs.js
-          ];
-          extraPoliciesFiles = map (file: "${file}") [
-            ./policies/policies.json
-            ./policies/search_engines.json
-            ./policies/extensions.json
-          ];
-        };
-    };
-
-    environment = {
-      type = types.attrsOf (types.nullOr types.string);
-      default = {
-        # $XDG_CONFIG_HOME is read only, so store profiles in the legacy dir ($HOME/.glide/glide)
-        MOZ_LEGACY_HOME = "1";
-        XDG_CONFIG_HOME = placeholder "out";
-      };
-    };
-
-    symlinks = {
-      type = types.attrsOf (types.nullOr types.pathLike);
+    configFile = {
+      type = types.pathLike;
       defaultFunc =
         { inputs }:
         let
           inherit (inputs.nixpkgs) pkgs;
-        in
-        {
-          "$out/glide/glide.ts" =
-            pkgs.runCommandLocal "glide.ts"
-              {
-                src = ./config;
-                nativeBuildInputs = [
-                  pkgs.typescript-go
-                  pkgs.esbuild
-                ];
-              }
-              ''
+
+          package =
+            {
+              stdenvNoCC,
+              typescript-go,
+              esbuild,
+            }:
+            stdenvNoCC.mkDerivation {
+              name = "glide.ts";
+              src = ./config;
+              nativeBuildInputs = [
+                typescript-go
+                esbuild
+              ];
+
+              buildCommand = ''
                 cd $src
-                tsc --noEmit
+                tsc --noEmit --project ./tsconfig.json
                 esbuild --bundle main.ts --outfile=$out
               '';
-        };
+            };
+        in
+        pkgs.callPackage package { };
+    };
+
+    firefoxVersion = {
+      type = types.string;
+      default = "153.0b5"; # update when glide-browser updates
+    };
+
+    wrapFirefoxArgs = {
+      type = types.attrs;
+      default = {
+        extraPrefsFiles = map (file: "${file}") [
+          ./prefs/betterfox.js
+          ./prefs/smooth_scrolling.js
+          ./prefs/prefs.js
+        ];
+        extraPoliciesFiles = map (file: "${file}") [
+          ./policies/policies.json
+          ./policies/search_engines.json
+          ./policies/extensions.json
+        ];
+      };
     };
   };
 
   impl =
     { options, inputs }:
     let
-      inherit (inputs.nixpkgs) pkgs lib;
-      inherit (builtins) attrNames concatMap concatStringsSep;
+      inherit (inputs.nixpkgs) pkgs;
     in
     # since there are version checks in pkgs.wrapFirefox
     # use the firefox version that glide is based on here and override later
-    (pkgs.wrapFirefox (options.package // { version = "153.0b5"; }) options.wrapFirefoxArgs)
-    .overrideAttrs
+    (pkgs.wrapFirefox (options.package // { version = options.firefoxVersion; }) (
+      options.wrapFirefoxArgs // { inherit (options.package) version; }
+    )).overrideAttrs
       (prev: {
-        makeWrapperArgs =
-          prev.makeWrapperArgs or [ ]
-          ++ concatMap (
-            var:
-            let
-              value = options.environment.${var};
-            in
-            lib.optionals (value != null) [
-              "--set"
-              var
-              value
-            ]
-          ) (attrNames options.environment);
+        makeWrapperArgs = prev.makeWrapperArgs or [ ] ++ [
+          "--run"
+          "export MOZ_APP_DATA=\"\${MOZ_APP_DATA:-\${XDG_CONFIG_HOME:-\${HOME}/.config}/glide/glide}\""
+          "--set"
+          "XDG_CONFIG_HOME"
+          (placeholder "out")
+        ];
 
         buildCommand =
           prev.buildCommand or ""
           + "\n"
-          + concatStringsSep "\n" (
-            concatMap (
-              symlink:
-              let
-                destination = options.symlinks.${symlink};
-              in
-              lib.optionals (destination != null) [
-                "mkdir -p $(dirname ${symlink})"
-                "ln -s ${destination} ${symlink}"
-              ]
-            ) (attrNames options.symlinks)
-          );
+          + ''
+            mkdir -p $out/glide
+            ln -s ${options.configFile} $out/glide/glide.ts
+          '';
       });
 }
