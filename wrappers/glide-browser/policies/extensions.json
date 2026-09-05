@@ -13,9 +13,14 @@
     },
     "ExtensionSettings": {
         "uBlock0@raymondhill.net": {
-            "private_browsing": true,
-            "installation_mode": "force_installed",
-            "install_url": "https://addons.mozilla.org/firefox/downloads/latest/uBlock0@raymondhill.net/latest.xpi"
+          "private_browsing": true,
+          "installation_mode": "force_installed",
+          "install_url": "https://addons.mozilla.org/firefox/downloads/latest/uBlock0@raymondhill.net/latest.xpi"
+        },
+        "addon@darkreader.org": {
+          "private_browsing": true,
+          "installation_mode": "force_installed",
+          "install_url": "https://addons.mozilla.org/firefox/downloads/latest/addon@darkreader.org/latest.xpi"
         }
     }
   }

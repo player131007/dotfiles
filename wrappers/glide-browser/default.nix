@@ -13,10 +13,7 @@
     wrapFirefoxArgs = {
       type = types.attrs;
       defaultFunc =
-        { options, inputs }:
-        let
-          inherit (inputs.nixpkgs) pkgs;
-        in
+        { options }:
         {
           inherit (options.package) version;
 
@@ -30,27 +27,6 @@
             ./policies/search_engines.json
             ./policies/extensions.json
           ];
-
-          extraPolicies =
-            let
-              extid = "nixos@darkreader";
-            in
-            {
-              ExtensionSettings.${extid} = {
-                private_browsing = true;
-                installation_mode = "force_installed";
-                install_url =
-                  let
-                    ext = pkgs.fetchFirefoxAddon {
-                      name = "darkreader";
-                      fixedExtid = extid;
-                      url = "https://github.com/player131007/darkreader/releases/download/v4.9.129/darkreader-firefox.xpi";
-                      hash = "sha256-9DQ9Le95rkFr2UbqbCoQttwccdDAB3kS3QWdXtXPUps=";
-                    };
-                  in
-                  "file://${ext}/${ext.extid}.xpi";
-              };
-            };
         };
     };
 
