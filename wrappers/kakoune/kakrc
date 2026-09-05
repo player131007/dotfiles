@@ -13,8 +13,5 @@ set-option global startup_info_version 20260521
 
 alias global wqa write-all-quit
 
-hook global BufOpenFile .* expandtab
-hook global BufNewFile  .* expandtab
-
 set-option global url_open_cmd 'xdg-open %s &'
 map global goto u '<esc>:url-open<ret>' -docstring "URL"
