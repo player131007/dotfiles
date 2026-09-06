@@ -14,8 +14,6 @@ let
 in
 {
   default = pkgs.mkShellNoCC {
-    allowSubstitutes = false; # Prevent a cache.nixos.org call every time
-
     packages =
       (
         removeAttrs wrappers [ "self" ]
@@ -26,7 +24,6 @@ in
   };
 
   glide = pkgs.mkShellNoCC {
-    allowSubstitutes = false;
     packages = [
       pkgs.typescript-go
       pkgs.esbuild
