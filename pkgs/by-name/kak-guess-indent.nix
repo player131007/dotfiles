@@ -4,16 +4,16 @@
 }:
 rustPlatform.buildRustPackage (finalAttrs: {
   pname = "kak-guess-indent";
-  version = "0.2.1";
+  version = "0.2.2";
 
   src = fetchFromGitHub {
     owner = "player131007";
     repo = "guess-indent.kak";
     tag = "v${finalAttrs.version}";
-    hash = "sha256-qSra1/bPRF+UXH95tINbIU1WVeibaFVq5ybbatTqbwQ=";
+    hash = "sha256-rBZW0kFamGMrWq/KpH+/NCpLf4JkM6KbsjLJIsowULo=";
   };
 
-  cargoHash = "sha256-UYuAU/cikHyH0F8mrA4M6G0eLdcjscEuiMxEZJ1v0E8=";
+  cargoHash = "sha256-DIR0nMFIN/v0/LzuBxWHDG2Ecxx1/L/CKZHBaKe3+So=";
 
   strictDeps = true;
   __structuredAttrs = true;
