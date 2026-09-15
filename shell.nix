@@ -1,6 +1,6 @@
 {
   sources ? import ./npins,
-  pkgs ? import sources.nixpkgs { },
+  pkgs ? import sources.nixpkgs { config.allowUnfree = true; },
   wrappers ? import ./wrappers.nix { inherit sources pkgs; },
 }:
 let
@@ -21,14 +21,5 @@ in
         |> attrValues
       )
       ++ base;
-  };
-
-  glide = pkgs.mkShellNoCC {
-    packages = [
-      pkgs.typescript-go
-      pkgs.esbuild
-      (wrappers.glide-browser { })
-    ]
-    ++ base;
   };
 }
