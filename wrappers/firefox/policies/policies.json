@@ -14,6 +14,7 @@
         "AutofillCreditCardEnabled": false,
         "DisableAccounts": true,
         "DisableAppUpdate": true,
+        "DisableBuiltinPDFViewer": true,
         "DisableFirefoxAccounts": true,
         "DisableFirefoxStudies": true,
         "DisableFormHistory": true,
@@ -42,9 +43,6 @@
         },
         "OfferToSaveLogins": false,
         "PasswordManagerEnabled": false,
-        "PDFjs": {
-            "Enabled": false
-        },
         "PromptForDownloadLocation": true,
         "SearchSuggestEnabled": false,
         "UserMessaging": {
