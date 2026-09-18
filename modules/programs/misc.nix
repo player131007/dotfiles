@@ -28,6 +28,7 @@
         _7zz-rar
         keepassxc
         mpv-unwrapped
+        zathura
         ;
 
       inherit (wrappers)
