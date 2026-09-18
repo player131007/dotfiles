@@ -12,6 +12,3 @@ set-option global ui_options terminal_set_title=false terminal_assistant=none
 set-option global startup_info_version 20260521
 
 alias global wqa write-all-quit
-
-set-option global url_open_cmd 'xdg-open %s &'
-map global goto u '<esc>:url-open<ret>' -docstring "URL"

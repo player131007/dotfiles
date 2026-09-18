@@ -21,11 +21,11 @@
         in
         [
           pkgs.util-linux
-          pkgs.jq
-          pkgs.xdg-utils
           pkgs.coreutils
           pkgs.findutils
           pkgs.gnused
+
+          pkgs.jq
           pkgs.kakoune-lsp
           inputs.self.pkgs.kak-guess-indent
         ];
