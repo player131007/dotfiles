@@ -11,7 +11,6 @@
     systemd.enable = false;
     enableAudioWavelength = false;
     enableCalendarEvents = false;
-    enableClipboardPaste = false;
     enableDynamicTheming = false;
     enableVPN = false;
   };

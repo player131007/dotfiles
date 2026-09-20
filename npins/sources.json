@@ -22,9 +22,9 @@
       },
       "branch": "main",
       "submodules": false,
-      "revision": "f69a8359a79941bd603f40b8770072583d0db039",
-      "url": "https://github.com/llakala/adios-wrappers/archive/f69a8359a79941bd603f40b8770072583d0db039.tar.gz",
-      "hash": "sha256-/HIBR7xhw3cakSDO2z+PF8xO5CP2g072qWkrAPiR1OQ="
+      "revision": "bb2f3db20a330104392f62c8d142ea9489c2f3b7",
+      "url": "https://github.com/llakala/adios-wrappers/archive/bb2f3db20a330104392f62c8d142ea9489c2f3b7.tar.gz",
+      "hash": "sha256-y6RRfKlV7ZsaEkUZ6FsojZUszfwdtBOgWIiHtGVw/v0="
     },
     "nix-index-cache": {
       "type": "GitRelease",
@@ -37,17 +37,17 @@
       "version_upper_bound": null,
       "release_prefix": null,
       "submodules": false,
-      "version": "2026.09.05+231410",
-      "revision": "df66dfa80751c59af53c7f560391afb53d0da778",
-      "url": "https://api.github.com/repos/player131007/nix-index-cache/tarball/refs/tags/2026.09.05+231410",
-      "hash": "sha256-jp8c0vuEZsP/6s/ZTdgvAVimEtLe9Q87Rn11CVC3KRk="
+      "version": "2026.09.19+232852",
+      "revision": "7c81a8fed8c2bed392637bbfb4dcd38985992ffd",
+      "url": "https://api.github.com/repos/player131007/nix-index-cache/tarball/refs/tags/2026.09.19+232852",
+      "hash": "sha256-GdfXQ9UtjP9YhXj3Kcj85AMUswBhyCl76mwKfwhIGmI="
     },
     "nixpkgs": {
       "type": "Channel",
       "name": "nixos-unstable",
       "artifact": "nixexprs.tar.zst",
-      "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1068089.c043004d1c69/nixexprs.tar.zst",
-      "hash": "sha256-PRK1fSEiAcO29DkUoOlsVLGYRK3h1YKVr+qQJB0VcYQ="
+      "url": "https://releases.nixos.org/nixos/unstable/nixos-26.11pre1076192.20b1ddd1aa5a/nixexprs.tar.zst",
+      "hash": "sha256-BMbikTjbh5H7ac/OjwGoJrlooh4dgNqhs51ABM83M7g="
     }
   },
   "version": 8
