@@ -1,5 +1,5 @@
 let
-  inherit (builtins) mapAttrs;
+  inherit (builtins) concatMap mapAttrs;
 
   sources = import ./npins;
 
@@ -38,11 +38,10 @@ let
       // {
         modules =
           args.modules or [ ]
-          ++ myLib.listModulesRecursive [
+          ++ [ defaultModule ]
+          ++ concatMap myLib.listModulesRecursive [
             ./modules/base
             ./hosts/${hostname}
-
-            defaultModule
           ];
 
         specialArgs = args.specialArgs or { } // {
@@ -59,11 +58,13 @@ mapAttrs (mkHost sources.nixpkgs) {
   };
 
   unora = {
-    modules = myLib.listModulesRecursive [
+    modules = [
+      { system.stateVersion = "26.11"; }
+    ]
+    ++ concatMap myLib.listModulesRecursive [
       ./modules/pc
       ./modules/libvirtd.nix
       ./modules/programs
-      { system.stateVersion = "26.11"; }
     ];
   };
 }
