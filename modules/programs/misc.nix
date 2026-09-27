@@ -47,23 +47,18 @@
     };
   };
 
-  my.tmpfiles =
-    let
-      escapeArgument = lib.strings.escapeC [
-        "\t"
-        "\n"
-        "\r"
-        " "
-        "\\"
-      ];
-
-      profile = /* bash */ ''
-        export EDITOR=kak
+  my.hjem = { config, ... }: {
+    environment.sessionVariables = {
+      EDITOR = "kak";
+    };
+    files.".profile" = {
+      type = "copy";
+      permissions = "600";
+      text = ''
+        source ${config.environment.loadEnv}
       '';
-    in
-    [
-      "f+ %h/.profile 0600 - - - ${escapeArgument profile}"
-    ];
+    };
+  };
 
   programs.ssh.knownHostsFiles =
     builtins.toFile "github_keys" ''

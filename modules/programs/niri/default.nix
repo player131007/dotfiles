@@ -13,4 +13,12 @@
     pkgs.xwayland-satellite
     pkgs.wl-clipboard
   ];
+
+  my.hjem = {
+    xdg.config.files."niri/config.kdl" = {
+      text = builtins.readFile ./config.kdl;
+      type = "copy";
+      permissions = "600";
+    };
+  };
 }

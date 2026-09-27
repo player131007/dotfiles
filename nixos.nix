@@ -60,6 +60,7 @@ mapAttrs (mkHost sources.nixpkgs) {
   unora = {
     modules = [
       { system.stateVersion = "26.11"; }
+      (import sources.hjem { }).nixosModules.hjem
     ]
     ++ concatMap myLib.listModulesRecursive [
       ./modules/pc

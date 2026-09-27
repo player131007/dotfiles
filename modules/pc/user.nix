@@ -9,10 +9,7 @@ in
 {
   imports = [
     (lib.mkAliasOptionModule [ "my" "user" ] [ "users" "users" username ])
-    (lib.mkAliasOptionModule
-      [ "my" "tmpfiles" ]
-      [ "systemd" "user" "tmpfiles" "users" username "rules" ]
-    )
+    (lib.mkAliasOptionModule [ "my" "hjem" ] [ "hjem" "users" username ])
   ];
 
   services.userborn = {
@@ -20,9 +17,7 @@ in
     importLegacyState = false;
   };
 
-  systemd.user.services.syncthing = {
-    unitConfig.ConditionUser = username;
-  };
+  hjem.clobberByDefault = true;
 
   users.mutableUsers = false;
   my.user = {
