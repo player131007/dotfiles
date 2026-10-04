@@ -1,4 +1,10 @@
-{ lib, types, ... }: {
+{
+  lib,
+  promise,
+  types,
+  ...
+}:
+{
   inputs = {
     mkWrapper.from = { parent }: parent.mkWrapper;
     nixpkgs.from = { parent }: parent.nixpkgs;
@@ -27,12 +33,12 @@
 
     package = {
       type = types.derivation;
-      defaultFunc = { inputs }: inputs.nixpkgs.pkgs.looking-glass-client;
+      default = promise ({ inputs }: inputs.nixpkgs.pkgs.looking-glass-client);
       description = "The looking-glass-client package to be wrapped";
     };
   };
 
-  mutations."/looking-glass".settings = { }: {
+  mutations."/looking-glass".settings = {
     win.fullScreen = "yes";
 
     input = {
@@ -41,16 +47,24 @@
     };
   };
 
-  mutations."/obs".plugins = { inputs }: [
-    inputs.nixpkgs.pkgs.obs-studio-plugins.looking-glass-obs
+  mutations."/obs".plugins = promise (
+    { inputs }: [
+      inputs.nixpkgs.pkgs.obs-studio-plugins.looking-glass-obs
+    ]
+  );
+
+  assertions = [
+    {
+      verify = { options }: !(options ? settings && options ? configFile);
+      explain = { }: "'options.settings' and 'option.configFile' are mutually exclusive";
+    }
   ];
 
-  impl =
+  result = promise (
     { options, inputs }:
     let
       generator = inputs.nixpkgs.pkgs.formats.ini { };
     in
-    assert !(options ? settings && options ? configFile);
     inputs.mkWrapper {
       inherit (options) package;
 
@@ -77,5 +91,6 @@
           fi
         done
       '';
-    };
+    }
+  );
 }

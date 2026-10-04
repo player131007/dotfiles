@@ -1,4 +1,4 @@
-_adios: {
+{ promise, ... }: {
   inputs = {
     self.from = { parent }: parent.self;
   };
@@ -12,7 +12,7 @@ _adios: {
   # direnv just straight up hard-codes the executable path
   # so i hard-coded the hooks
 
-  mutations."/bash".interactiveShellInit =
+  mutations."/bash".interactiveShellInit = promise (
     { options, inputs }:
     let
       inherit (inputs.nixpkgs.lib) getExe;
@@ -33,9 +33,10 @@ _adios: {
           PROMPT_COMMAND="_direnv_hook''${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
         fi
       fi
-    '';
+    ''
+  );
 
-  mutations."/fish".interactiveShellInit =
+  mutations."/fish".interactiveShellInit = promise (
     { options, inputs }:
     let
       inherit (inputs.nixpkgs.lib) getExe;
@@ -65,9 +66,10 @@ _adios: {
 
           functions --erase __direnv_cd_hook;
       end;
-    '';
+    ''
+  );
 
-  mutations."/nushell".shellInit =
+  mutations."/nushell".shellInit = promise (
     { options, inputs }:
     let
       inherit (inputs.nixpkgs.lib) getExe;
@@ -88,5 +90,6 @@ _adios: {
         | transpose --as-record --header-row | into record # transpose might return empty list
         | load-env
       }
-    '';
+    ''
+  );
 }

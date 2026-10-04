@@ -10,7 +10,7 @@ _adios: {
     abbreviations.default = { };
   };
 
-  mutations."/fish".interactiveShellInit = { }: /* fish */ ''
+  mutations."/fish".interactiveShellInit = /* fish */ ''
     set -g fish_greeting
 
     function last_history_item

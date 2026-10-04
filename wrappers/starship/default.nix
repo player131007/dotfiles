@@ -1,4 +1,4 @@
-_adios: {
+{ promise, ... }: {
   options = {
     configFile.default = ./config.toml;
     wrapperAttrs.mutators = [ "/git" ];
@@ -6,7 +6,7 @@ _adios: {
 
   # starship looks up PATH for the starship executable
 
-  mutations."/bash".interactiveShellInit =
+  mutations."/bash".interactiveShellInit = promise (
     { options, inputs }:
     let
       inherit (inputs.nixpkgs.lib) getExe;
@@ -14,9 +14,10 @@ _adios: {
     in
     /* bash */ ''
       eval "$(PATH=${finalWrapper}/bin ${getExe finalWrapper} init bash --print-full-init)"
-    '';
+    ''
+  );
 
-  mutations."/fish".interactiveShellInit =
+  mutations."/fish".interactiveShellInit = promise (
     { options, inputs }:
     let
       finalWrapper = options { };
@@ -24,9 +25,10 @@ _adios: {
     in
     /* fish */ ''
       PATH=${finalWrapper}/bin ${getExe finalWrapper} init fish --print-full-init | source
-    '';
+    ''
+  );
 
-  mutations."/nushell".sourceFiles =
+  mutations."/nushell".sourceFiles = promise (
     { options, inputs }:
     let
       inherit (inputs.nixpkgs.lib) getExe;
@@ -36,5 +38,6 @@ _adios: {
         PATH=${finalWrapper}/bin ${getExe finalWrapper} init nu > $out
       '';
     in
-    [ starship-nu ];
+    [ starship-nu ]
+  );
 }

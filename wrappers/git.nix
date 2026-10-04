@@ -6,7 +6,7 @@ _adios: {
     ];
   };
 
-  mutations."/git".settings = { }: {
+  mutations."/git".settings = {
     user = {
       name = "avery";
       email = "tcm4095@gmail.com";

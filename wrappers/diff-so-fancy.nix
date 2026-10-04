@@ -1,9 +1,9 @@
-_adios: {
+{ promise, ... }: {
   inputs = {
     less.from = { parent }: parent.less;
   };
 
-  mutations."/git".settings =
+  mutations."/git".settings = promise (
     { inputs }:
     let
       inherit (inputs.nixpkgs) lib;
@@ -16,5 +16,6 @@ _adios: {
       core.pager = "diff-so-fancy | ${lib.getExe less}";
 
       diff-so-fancy.markEmptyLines = false;
-    };
+    }
+  );
 }

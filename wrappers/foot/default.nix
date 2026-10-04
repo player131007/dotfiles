@@ -1,4 +1,4 @@
-{ types, ... }: {
+{ promise, types, ... }: {
   inputs = {
     mkWrapper.from = { parent }: parent.mkWrapper;
     nixpkgs.from = { parent }: parent.nixpkgs;
@@ -8,17 +8,24 @@
   options = {
     settings = {
       type = types.attrs;
-      defaultFunc = import ./settings.nix;
+      default = promise (import ./settings.nix);
     };
     configFile.type = types.pathLike;
 
     package = {
       type = types.derivation;
-      defaultFunc = { inputs }: inputs.nixpkgs.pkgs.foot;
+      default = promise ({ inputs }: inputs.nixpkgs.pkgs.foot);
     };
   };
 
-  impl =
+  assertions = [
+    {
+      verify = { options }: !(options ? settings && options ? configFile);
+      explain = { }: "'options.settings' and 'options.configFile' are mutually exclusive";
+    }
+  ];
+
+  result = promise (
     { options, inputs }:
     let
       inherit (inputs.nixpkgs.pkgs) formats;
@@ -26,7 +33,6 @@
         listsAsDuplicateKeys = true;
       };
     in
-    assert !(options ? settings && options ? configFile);
     inputs.mkWrapper rec {
       inherit (options) package;
 
@@ -41,5 +47,6 @@
       };
 
       flags = if symlinks."$out/foot.ini" != null then [ "--config=$out/foot.ini" ] else [ ];
-    };
+    }
+  );
 }

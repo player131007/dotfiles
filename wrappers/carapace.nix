@@ -1,4 +1,4 @@
-{ types, ... }: {
+{ promise, types, ... }: {
   inputs = {
     mkWrapper.from = { parent }: parent.mkWrapper;
     nixpkgs.from = { parent }: parent.nixpkgs;
@@ -8,11 +8,11 @@
   options = {
     package = {
       type = types.derivation;
-      defaultFunc = { inputs }: inputs.nixpkgs.pkgs.carapace;
+      default = promise ({ inputs }: inputs.nixpkgs.pkgs.carapace);
     };
   };
 
-  mutations."/bash".interactiveShellInit =
+  mutations."/bash".interactiveShellInit = promise (
     { options, inputs }:
     let
       inherit (inputs.nixpkgs.lib) getExe;
@@ -20,9 +20,10 @@
     in
     /* bash */ ''
       eval "$(${getExe finalWrapper} _carapace bash)"
-    '';
+    ''
+  );
 
-  mutations."/nushell".shellInit =
+  mutations."/nushell".shellInit = promise (
     { options, inputs }:
     let
       inherit (inputs.nixpkgs.lib) getExe;
@@ -73,9 +74,10 @@
           } | do $in $spans
         }
       }
-    '';
+    ''
+  );
 
-  impl =
+  result = promise (
     { options, inputs }:
     inputs.mkWrapper {
       inherit (options) package;
@@ -85,5 +87,6 @@
         CARAPACE_LENIENT = "1";
         CARAPACE_EXCLUDES = "nix,git";
       };
-    };
+    }
+  );
 }

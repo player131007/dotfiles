@@ -1,4 +1,4 @@
-{ types, ... }: {
+{ promise, types, ... }: {
   inputs = {
     mkWrapper.from = { parent }: parent.mkWrapper;
     nixpkgs.from = { parent }: parent.nixpkgs;
@@ -14,7 +14,7 @@
 
     neededBinaries = {
       type = types.listOf types.derivation;
-      defaultFunc =
+      default = promise (
         { inputs }:
         let
           inherit (inputs.nixpkgs) pkgs;
@@ -28,21 +28,28 @@
           pkgs.jq
           pkgs.kakoune-lsp
           inputs.self.pkgs.kak-guess-indent
-        ];
+        ]
+      );
     };
 
     package = {
       type = types.derivation;
-      defaultFunc = { inputs }: inputs.nixpkgs.pkgs.kakoune-unwrapped;
+      default = promise ({ inputs }: inputs.nixpkgs.pkgs.kakoune-unwrapped);
     };
   };
 
-  impl =
+  assertions = [
+    {
+      verify = { options }: !(options ? kakrc && options ? kakrcFile);
+      explain = { }: "'options.kakrc' and 'options.kakrcFile' are mutually exclusive";
+    }
+  ];
+
+  result = promise (
     { options, inputs }:
     let
       inherit (inputs.nixpkgs) pkgs lib;
     in
-    assert !(options ? kakrc && options ? kakrcFile);
     inputs.mkWrapper {
       inherit (options) package;
       pname = "kakoune";
@@ -67,5 +74,6 @@
       environment = {
         KAKOUNE_POSIX_SHELL = lib.getExe pkgs.dash;
       };
-    };
+    }
+  );
 }

@@ -10,7 +10,6 @@ _adios: {
   };
 
   mutations."/nushell".shellInit =
-    { }:
     /* nu */ ''
       use ${./modules}/psub.nu
     ''

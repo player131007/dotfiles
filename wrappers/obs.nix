@@ -1,4 +1,10 @@
-{ lib, types, ... }: {
+{
+  lib,
+  promise,
+  types,
+  ...
+}:
+{
   inputs = {
     mkWrapper.from = { parent }: parent.mkWrapper;
     nixpkgs.from = { parent }: parent.nixpkgs;
@@ -18,16 +24,18 @@
 
     package = {
       type = types.derivation;
-      defaultFunc = { inputs }: inputs.nixpkgs.pkgs.obs-studio;
+      default = promise ({ inputs }: inputs.nixpkgs.pkgs.obs-studio);
       description = "The obs-studio package to be wrapped.";
     };
   };
 
-  mutations."/obs".plugins = { inputs }: [
-    inputs.nixpkgs.pkgs.obs-studio-plugins.obs-pipewire-audio-capture
-  ];
+  mutations."/obs".plugins = promise (
+    { inputs }: [
+      inputs.nixpkgs.pkgs.obs-studio-plugins.obs-pipewire-audio-capture
+    ]
+  );
 
-  impl =
+  result = promise (
     { options, inputs }:
     inputs.mkWrapper {
       inherit (options) package;
@@ -53,5 +61,6 @@
         |> builtins.concatMap (plugin: plugin.obsWrapperArguments or [ ])
         |> lib.lists.uniqueStrings
         |> builtins.concatStringsSep " ";
-    };
+    }
+  );
 }

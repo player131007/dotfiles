@@ -1,4 +1,10 @@
-{ lib, types, ... }: {
+{
+  lib,
+  promise,
+  types,
+  ...
+}:
+{
   inputs = {
     mkWrapper.from = { parent }: parent.mkWrapper;
     nixpkgs.from = { parent }: parent.nixpkgs;
@@ -18,11 +24,11 @@
 
     package = {
       type = types.derivation;
-      defaultFunc = { inputs }: inputs.nixpkgs.pkgs.bash;
+      default = promise ({ inputs }: inputs.nixpkgs.pkgs.bash);
     };
   };
 
-  impl =
+  result = promise (
     { options, inputs }:
     let
       inherit (inputs.nixpkgs) pkgs lib;
@@ -43,5 +49,6 @@
         "--rcfile"
         "$out/bashrc"
       ];
-    };
+    }
+  );
 }

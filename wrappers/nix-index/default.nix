@@ -1,4 +1,4 @@
-{ types, ... }: {
+{ promise, types, ... }: {
   inputs = {
     nixpkgs.from = { parent }: parent.nixpkgs;
     self.from = { parent }: parent.self;
@@ -20,7 +20,7 @@
             in
             f command-not-found;
         in
-        result;
+        promise result;
     in
     {
       "/bash".interactiveShellInit = wrap (command-not-found: /* bash */ ''
@@ -42,7 +42,7 @@
       '');
     };
 
-  impl =
+  result = promise (
     { options, inputs }:
     let
       inherit (inputs.nixpkgs) pkgs lib;
@@ -66,8 +66,7 @@
           };
     in
     pkgs.symlinkJoin {
-      pname = "nix-index-wrapped";
-      inherit (nix-index) version;
+      name = "nix-index-wrapped";
 
       paths = [ nix-index ];
       nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
@@ -81,5 +80,6 @@
           --suffix PATH : ${pkgs.util-linux.bin}/bin \
           --set-default NIX_INDEX_DATABASE ${nix-index-db-bin-only}
       '';
-    };
+    }
+  );
 }
