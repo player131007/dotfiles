@@ -8,7 +8,6 @@
 
   programs.dms-shell = {
     enable = true;
-    systemd.enable = false;
     excludePackages = [
       pkgs.matugen
       pkgs.cava
@@ -35,7 +34,6 @@
         '';
       in
       lib.mkAfter ''
-        spawn-at-startup "dms" "run"
         include optional=true "dms/colors.kdl"
         include optional=true "dms/cursor.kdl"
         include optional=true "dms/wpblur.kdl"
