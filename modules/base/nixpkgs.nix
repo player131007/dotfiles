@@ -9,7 +9,7 @@
         type = "path";
         path = pkgs_path;
       };
-      nixPath = [ "nixpkgs=${pkgs_path}" ];
+      settings.nix-path = [ "nixpkgs=${pkgs_path}" ];
     }
   );
 
