@@ -9,10 +9,10 @@
   programs.dms-shell = {
     enable = true;
     systemd.enable = false;
-    enableAudioWavelength = false;
-    enableCalendarEvents = false;
-    enableDynamicTheming = false;
-    enableVPN = false;
+    excludePackages = [
+      pkgs.matugen
+      pkgs.cava
+    ];
   };
 
   services.accounts-daemon.enable = true;
