@@ -17,7 +17,7 @@ in
     packages =
       (
         removeAttrs wrappers [ "self" ]
-        |> mapAttrs (_name: module: module { }) # this is here to make the expr not a single line
+        |> mapAttrs (_name: module: module { }) # the comment is here to make the expr not a single line
         |> attrValues
       )
       ++ base;

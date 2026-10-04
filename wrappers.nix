@@ -25,5 +25,4 @@ let
     };
   };
 in
-# only include modules in ./wrappers
-builtins.mapAttrs (name: _module: tree.modules.${name}) wrappers
+builtins.intersectAttrs wrappers tree.modules
