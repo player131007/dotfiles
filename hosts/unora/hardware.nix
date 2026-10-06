@@ -7,7 +7,10 @@
 
   nixpkgs.hostPlatform = "x86_64-linux";
 
-  boot.kernelParams = [ "amd_pstate=active" ];
+  boot.kernelParams = [
+    "amd_pstate=active"
+    "amdgpu.dcdebugmask=0x40000"
+  ];
   boot.initrd.availableKernelModules = [
     "nvme"
     "xhci_pci"
