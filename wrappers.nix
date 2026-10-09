@@ -5,7 +5,15 @@
 let
   adios = import sources.adios;
 
-  wrappers = adios.lib.importModules { directory = ./wrappers; };
+  wrappers = adios.lib.importModules {
+    directory = ./wrappers;
+    args = adios // {
+      assertions.disjoint = a: b: {
+        verify = { options }: !(options ? ${a} && options ? ${b});
+        explain = { }: "'options.${a}' and 'options.${b}' are disjoint, but both were set";
+      };
+    };
+  };
 
   root.modules = adios.lib.inject [
     (import sources.adios-wrappers { inherit adios; })

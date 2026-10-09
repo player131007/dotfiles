@@ -1,4 +1,5 @@
 {
+  assertions,
   lib,
   promise,
   types,
@@ -54,10 +55,7 @@
   );
 
   assertions = [
-    {
-      verify = { options }: !(options ? settings && options ? configFile);
-      explain = { }: "'options.settings' and 'option.configFile' are mutually exclusive";
-    }
+    (assertions.disjoint "settings" "configFile")
   ];
 
   result = promise (

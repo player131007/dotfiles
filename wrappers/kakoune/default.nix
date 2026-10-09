@@ -1,4 +1,10 @@
-{ promise, types, ... }: {
+{
+  assertions,
+  promise,
+  types,
+  ...
+}:
+{
   inputs = {
     mkWrapper.from = { parent }: parent.mkWrapper;
     nixpkgs.from = { parent }: parent.nixpkgs;
@@ -39,10 +45,7 @@
   };
 
   assertions = [
-    {
-      verify = { options }: !(options ? kakrc && options ? kakrcFile);
-      explain = { }: "'options.kakrc' and 'options.kakrcFile' are mutually exclusive";
-    }
+    (assertions.disjoint "kakrc" "kakrcFile")
   ];
 
   result = promise (

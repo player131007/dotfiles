@@ -1,4 +1,10 @@
-{ promise, types, ... }: {
+{
+  assertions,
+  promise,
+  types,
+  ...
+}:
+{
   inputs = {
     mkWrapper.from = { parent }: parent.mkWrapper;
     nixpkgs.from = { parent }: parent.nixpkgs;
@@ -19,10 +25,7 @@
   };
 
   assertions = [
-    {
-      verify = { options }: !(options ? settings && options ? configFile);
-      explain = { }: "'options.settings' and 'options.configFile' are mutually exclusive";
-    }
+    (assertions.disjoint "settings" "configFile")
   ];
 
   result = promise (
