@@ -1,7 +1,7 @@
 { inputs }:
 let
   inherit (inputs.nixpkgs) lib;
-  nushell = inputs.nushell { };
+  fish = inputs.fish { };
 in
 {
   main = {
@@ -10,7 +10,7 @@ in
       "IosevkaTerm Nerd Font:size=9"
     ];
     dpi-aware = "yes";
-    shell = lib.getExe nushell;
+    shell = lib.getExe fish;
   };
   cursor.blink = "yes";
   colors-dark = {

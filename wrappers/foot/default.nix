@@ -8,7 +8,7 @@
   inputs = {
     mkWrapper.from = { parent }: parent.mkWrapper;
     nixpkgs.from = { parent }: parent.nixpkgs;
-    nushell.from = { parent }: parent.nushell;
+    fish.from = { parent }: parent.fish;
   };
 
   options = {

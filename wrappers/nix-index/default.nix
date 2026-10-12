@@ -34,12 +34,6 @@
           ${command-not-found} $argv[1]
         end
       '');
-
-      "/nushell".shellInit = wrap (command-not-found: /* nu */ ''
-        $env.config.hooks.command_not_found = [
-          {|cmd| ${command-not-found} $cmd | print }
-        ]
-      '');
     };
 
   result = promise (

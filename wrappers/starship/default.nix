@@ -27,17 +27,4 @@
       PATH=${finalWrapper}/bin ${getExe finalWrapper} init fish --print-full-init | source
     ''
   );
-
-  mutations."/nushell".sourceFiles = promise (
-    { options, inputs }:
-    let
-      inherit (inputs.nixpkgs.lib) getExe;
-      finalWrapper = options { };
-
-      starship-nu = inputs.nixpkgs.pkgs.runCommand "starship.nu" { } ''
-        PATH=${finalWrapper}/bin ${getExe finalWrapper} init nu > $out
-      '';
-    in
-    [ starship-nu ]
-  );
 }
