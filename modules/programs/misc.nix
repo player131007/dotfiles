@@ -14,11 +14,12 @@
 
   programs.fish = {
     enable = true;
+    package = wrappers.fish;
     useBabelfish = true;
   };
 
   my.user = {
-    shell = wrappers.bash;
+    shell = lib.getExe wrappers.bash;
     packages = builtins.attrValues {
       inherit (pkgs)
         npins
@@ -33,7 +34,6 @@
 
       inherit (wrappers)
         bash
-        fish
         obs
         git
         diff-so-fancy # here to avoid infrec
