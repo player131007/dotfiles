@@ -14,9 +14,9 @@
         f:
         let
           result =
-            { options, inputs }:
+            { inputs, result }:
             let
-              command-not-found = inputs.nixpkgs.lib.getExe' (options { }) "command-not-found";
+              command-not-found = inputs.nixpkgs.lib.getExe' result "command-not-found";
             in
             f command-not-found;
         in

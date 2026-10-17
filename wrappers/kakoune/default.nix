@@ -48,12 +48,12 @@
     (assertions.disjoint "kakrc" "kakrcFile")
   ];
 
-  result = promise (
+  inputs.mkWrapper.options = promise (
     { options, inputs }:
     let
       inherit (inputs.nixpkgs) pkgs lib;
     in
-    inputs.mkWrapper {
+    {
       inherit (options) package;
       pname = "kakoune";
 
@@ -79,4 +79,6 @@
       };
     }
   );
+
+  result = promise ({ results }: results.mkWrapper);
 }

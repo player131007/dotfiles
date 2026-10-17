@@ -13,16 +13,15 @@
   # so i hard-coded the hooks
 
   mutations."/bash".interactiveShellInit = promise (
-    { options, inputs }:
+    { inputs, result }:
     let
       inherit (inputs.nixpkgs.lib) getExe;
-      finalWrapper = options { };
     in
     /* bash */ ''
       _direnv_hook() {
         local previous_exit_status=$?;
         trap -- ''' SIGINT;
-        eval "$(${getExe finalWrapper} export bash)";
+        eval "$(${getExe result} export bash)";
         trap - SIGINT;
         return $previous_exit_status;
       };
@@ -37,21 +36,20 @@
   );
 
   mutations."/fish".interactiveShellInit = promise (
-    { options, inputs }:
+    { inputs, result }:
     let
       inherit (inputs.nixpkgs.lib) getExe;
-      finalWrapper = options { };
     in
     /* fish */ ''
       function __direnv_export_eval --on-event fish_prompt;
-        ${getExe finalWrapper} export fish | source;
+        ${getExe result} export fish | source;
 
         if test "$direnv_fish_mode" != "disable_arrow";
           function __direnv_cd_hook --on-variable PWD;
             if test "$direnv_fish_mode" = "eval_after_arrow";
               set -g __direnv_export_again 0;
             else;
-              ${getExe finalWrapper} export fish | source;
+              ${getExe result} export fish | source;
             end;
           end;
         end;
@@ -60,7 +58,7 @@
       function __direnv_export_eval_2 --on-event fish_preexec;
           if set -q __direnv_export_again;
               set -e __direnv_export_again;
-              ${getExe finalWrapper} export fish | source;
+              ${getExe result} export fish | source;
               echo;
           end;
 

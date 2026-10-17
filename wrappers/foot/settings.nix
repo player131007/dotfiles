@@ -1,7 +1,6 @@
-{ inputs }:
+{ inputs, results }:
 let
   inherit (inputs.nixpkgs) lib;
-  fish = inputs.fish { };
 in
 {
   main = {
@@ -10,7 +9,7 @@ in
       "IosevkaTerm Nerd Font:size=9"
     ];
     dpi-aware = "yes";
-    shell = lib.getExe fish;
+    shell = lib.getExe results.fish;
   };
   cursor.blink = "yes";
   colors-dark = {

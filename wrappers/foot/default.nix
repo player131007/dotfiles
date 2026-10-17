@@ -28,7 +28,7 @@
     (assertions.disjoint "settings" "configFile")
   ];
 
-  result = promise (
+  inputs.mkWrapper.options = promise (
     { options, inputs }:
     let
       inherit (inputs.nixpkgs.pkgs) formats;
@@ -36,7 +36,7 @@
         listsAsDuplicateKeys = true;
       };
     in
-    inputs.mkWrapper rec {
+    rec {
       inherit (options) package;
 
       symlinks = {
@@ -52,4 +52,6 @@
       flags = if symlinks."$out/foot.ini" != null then [ "--config=$out/foot.ini" ] else [ ];
     }
   );
+
+  result = promise ({ results }: results.mkWrapper);
 }

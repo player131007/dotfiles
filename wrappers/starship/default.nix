@@ -7,24 +7,22 @@
   # starship looks up PATH for the starship executable
 
   mutations."/bash".interactiveShellInit = promise (
-    { options, inputs }:
+    { inputs, result }:
     let
       inherit (inputs.nixpkgs.lib) getExe;
-      finalWrapper = options { };
     in
     /* bash */ ''
-      eval "$(PATH=${finalWrapper}/bin ${getExe finalWrapper} init bash --print-full-init)"
+      eval "$(PATH=${result}/bin ${getExe result} init bash --print-full-init)"
     ''
   );
 
   mutations."/fish".interactiveShellInit = promise (
-    { options, inputs }:
+    { inputs, result }:
     let
-      finalWrapper = options { };
       inherit (inputs.nixpkgs.lib) getExe;
     in
     /* fish */ ''
-      PATH=${finalWrapper}/bin ${getExe finalWrapper} init fish --print-full-init | source
+      PATH=${result}/bin ${getExe result} init fish --print-full-init | source
     ''
   );
 }

@@ -12,19 +12,18 @@
   };
 
   mutations."/bash".interactiveShellInit = promise (
-    { options, inputs }:
+    { inputs, result }:
     let
       inherit (inputs.nixpkgs.lib) getExe;
-      finalWrapper = options { };
     in
     /* bash */ ''
-      eval "$(${getExe finalWrapper} _carapace bash)"
+      eval "$(${getExe result} _carapace bash)"
     ''
   );
 
-  result = promise (
-    { options, inputs }:
-    inputs.mkWrapper {
+  inputs.mkWrapper.options = promise (
+    { options }:
+    {
       inherit (options) package;
 
       environment = {
@@ -34,4 +33,6 @@
       };
     }
   );
+
+  result = promise ({ results }: results.mkWrapper);
 }

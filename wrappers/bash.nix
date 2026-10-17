@@ -28,7 +28,7 @@
     };
   };
 
-  result = promise (
+  inputs.mkWrapper.options = promise (
     { options, inputs }:
     let
       inherit (inputs.nixpkgs) pkgs lib;
@@ -38,7 +38,7 @@
         else
           null;
     in
-    inputs.mkWrapper {
+    {
       inherit (options) package;
 
       symlinks = {
@@ -51,4 +51,6 @@
       ];
     }
   );
+
+  result = promise ({ results }: results.mkWrapper);
 }

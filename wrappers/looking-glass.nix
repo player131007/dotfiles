@@ -58,12 +58,12 @@
     (assertions.disjoint "settings" "configFile")
   ];
 
-  result = promise (
+  inputs.mkWrapper.options = promise (
     { options, inputs }:
     let
       generator = inputs.nixpkgs.pkgs.formats.ini { };
     in
-    inputs.mkWrapper {
+    {
       inherit (options) package;
 
       symlinks = {
@@ -91,4 +91,6 @@
       '';
     }
   );
+
+  result = promise ({ results }: results.mkWrapper);
 }
