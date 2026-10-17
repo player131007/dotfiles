@@ -19,6 +19,8 @@ _adios: {
     abbr -a !! --position anywhere --function last_history_item
 
     function fish_user_key_bindings
+      bind ctrl-c cancel-commandline
+
       bind alt-left backward-word
       bind alt-right forward-word
       bind alt-backspace backward-kill-word
@@ -29,5 +31,7 @@ _adios: {
       bind ctrl-backspace backward-kill-token
       bind ctrl-delete kill-token
     end
+
+    source ${./theme.fish}
   '';
 }
