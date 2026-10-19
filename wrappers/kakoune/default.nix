@@ -18,7 +18,12 @@
       default = ./kakrc;
     };
 
-    neededBinaries = {
+    package = {
+      type = types.derivation;
+      default = promise ({ inputs }: inputs.nixpkgs.pkgs.kakoune-unwrapped);
+    };
+
+    extraBinPaths = {
       type = types.listOf types.derivation;
       default = promise (
         { inputs }:
@@ -26,11 +31,12 @@
           inherit (inputs.nixpkgs) pkgs;
         in
         [
-          pkgs.util-linux
+          # needed for kakoune std runtime
+          pkgs.util-linux # setsid
           pkgs.coreutils
           pkgs.findutils
           pkgs.gnused
-
+          # specific for my runtime
           pkgs.jq
           pkgs.kakoune-lsp
           inputs.self.pkgs.kak-guess-indent
@@ -38,9 +44,12 @@
       );
     };
 
-    package = {
-      type = types.derivation;
-      default = promise ({ inputs }: inputs.nixpkgs.pkgs.kakoune-unwrapped);
+    extraRuntime = {
+      type = types.listOf types.pathLike;
+      default = [
+        # small trick to copy the contents of directory and not the directory itself
+        "${./runtime}/."
+      ];
     };
   };
 
@@ -57,7 +66,7 @@
       inherit (options) package;
       pname = "kakoune";
 
-      wrapperArgs = "--prefix PATH : ${lib.makeBinPath options.neededBinaries}";
+      wrapperArgs = "--prefix PATH : ${lib.makeBinPath options.extraBinPaths}";
 
       symlinks = {
         "$out/share/kak/kakrc.local" =
@@ -69,13 +78,13 @@
             null;
       };
 
-      preWrap = ''
-        ${lib.getExe pkgs.lndir} -silent ${./runtime} $out/share/kak
-        cp --remove-destination $(readlink -e "$out/bin/kak") $out/bin/kak
+      preWrap = lib.optionalString (options.extraRuntime != [ ]) ''
+        cp -rf ${lib.escapeShellArgs options.extraRuntime} $out/share/kak
       '';
 
       environment = {
         KAKOUNE_POSIX_SHELL = lib.getExe pkgs.dash;
+        KAKOUNE_RUNTIME = "$out/share/kak";
       };
     }
   );
