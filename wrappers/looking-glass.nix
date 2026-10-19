@@ -1,6 +1,5 @@
 {
   assertions,
-  lib,
   promise,
   types,
   ...
@@ -14,8 +13,13 @@
   options = {
     settings = {
       type = types.attrs;
-      mutators = [ "/looking-glass" ];
-      mergeFunc = lib.merge.attrs.recursively;
+      default = {
+        win.fullScreen = "yes";
+        input = {
+          escapeKey = "KEY_INSERT";
+          rawMouse = "yes";
+        };
+      };
       description = ''
         Settings to be injected into the wrapped package's config.
 
@@ -36,15 +40,6 @@
       type = types.derivation;
       default = promise ({ inputs }: inputs.nixpkgs.pkgs.looking-glass-client);
       description = "The looking-glass-client package to be wrapped";
-    };
-  };
-
-  mutations."/looking-glass".settings = {
-    win.fullScreen = "yes";
-
-    input = {
-      escapeKey = "KEY_INSERT";
-      rawMouse = "yes";
     };
   };
 
