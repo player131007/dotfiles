@@ -1,4 +1,4 @@
-colorscheme catppuccin_mocha
+colorscheme oxocarbon
 
 add-highlighter -override global/number-lines number-lines -relative -hlcursor -separator ' '
 add-highlighter -override global/show-matching show-matching
