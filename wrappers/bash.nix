@@ -1,5 +1,5 @@
 {
-  lib,
+  merge,
   promise,
   types,
   ...
@@ -19,7 +19,7 @@
         "/carapace"
         "/direnv"
       ];
-      mergeFunc = lib.merge.strings.concatLines;
+      mergeFunc = merge.strings.concatLines;
     };
 
     package = {

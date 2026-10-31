@@ -1,5 +1,5 @@
 {
-  lib,
+  merge,
   promise,
   types,
   ...
@@ -19,7 +19,7 @@
         "/obs"
         "/looking-glass"
       ];
-      mergeFunc = lib.merge.lists.concat;
+      mergeFunc = merge.lists.concat;
     };
 
     package = {
