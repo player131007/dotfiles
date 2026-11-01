@@ -133,11 +133,6 @@ in
   imports = [ ./options.nix ];
 
   config = mkIf config.persist.enable {
-    assertions = lib.lists.singleton {
-      assertion = config.boot.initrd.systemd.enable;
-      message = "persistence module only works with systemd-based initrd";
-    };
-
     persist.tmpfilesSettings = {
       initrd = mkMerge (map handleTmpfiles earlyCfg);
       normal = mkMerge (map handleTmpfiles lateCfg);
