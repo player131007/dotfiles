@@ -27,7 +27,7 @@ in
 
   persist.at.oncedir.directories =
     let
-      user = config.my.user;
+      user = config.users.users.${username};
     in
     lib.singleton {
       directory = user.home;
