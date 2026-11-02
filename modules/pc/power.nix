@@ -5,7 +5,6 @@
   };
   persist.at.persistdir.directories = [ "/var/lib/upower" ];
 
-  services.power-profiles-daemon.enable = false;
   services.tlp = {
     enable = true;
     pd.enable = true;

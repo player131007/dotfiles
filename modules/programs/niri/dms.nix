@@ -9,13 +9,13 @@
   programs.dux-shell = {
     enable = true;
     excludePackages = [
-      pkgs.matugen
       pkgs.cava
     ];
   };
 
-  services.accounts-daemon.enable = true;
   persist.at.oncedir.directories = [ "/var/lib/AccountsService" ];
+  services.power-profiles-daemon.enable = false;
+  hardware.i2c.enable = false; # why is this set in dms-shell?
 
   my.hjem = {
     xdg.config.files."niri/config.kdl".text =
