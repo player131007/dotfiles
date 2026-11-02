@@ -29,7 +29,6 @@
         _7zz-rar
         keepassxc
         mpv-unwrapped
-        zathura
         ;
 
       inherit (wrappers)
@@ -44,6 +43,10 @@
         kakoune
         firefox
         ;
+
+      zathura = pkgs.zathura.override {
+        plugins = [ pkgs.zathuraPkgs.zathura_pdf_mupdf ];
+      };
     };
   };
 
