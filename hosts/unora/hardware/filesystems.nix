@@ -1,45 +1,4 @@
 {
-  myLib,
-  ...
-}:
-{
-  imports = [ (myLib.fromRoot "modules/nvidia.nix") ];
-
-  nixpkgs.hostPlatform = "x86_64-linux";
-
-  boot.kernelParams = [
-    "amd_pstate=active"
-    "amdgpu.dcdebugmask=0x40000"
-  ];
-  boot.initrd.availableKernelModules = [
-    "nvme"
-    "xhci_pci"
-    "ahci"
-    "usbhid"
-    "sd_mod"
-    "sdhci_pci"
-    "hid_generic"
-  ];
-  boot.initrd.kernelModules = [ "hid_generic" ];
-
-  hardware = {
-    enableRedistributableFirmware = true;
-
-    cpu.amd.updateMicrocode = true;
-    amdgpu.initrd.enable = true;
-
-    bluetooth = {
-      enable = true;
-      powerOnBoot = false;
-    };
-
-    graphics.enable = true;
-    nvidia.prime = {
-      amdgpuBusId = "PCI:5@0:0:0";
-      nvidiaBusId = "PCI:1@0:0:0";
-    };
-  };
-
   boot.initrd.luks.devices.cryptroot = {
     device = "/dev/disk/by-partuuid/b98a1254-c974-49a7-ad0f-d0a87bdbc967";
     allowDiscards = true;
@@ -72,9 +31,7 @@
       "/.persist" = {
         label = "nixos";
         fsType = "btrfs";
-        options = common_opts ++ [
-          "subvol=persist"
-        ];
+        options = common_opts ++ [ "subvol=persist" ];
         neededForBoot = true;
       };
       "/d" = {

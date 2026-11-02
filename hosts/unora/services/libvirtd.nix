@@ -1,5 +1,8 @@
 { pkgs, ... }:
 {
+  # windows vm takes the gpu, and unplugging it while the system is running is too bothersome
+  boot.kernelParams = [ "module_blacklist=nvidia,nvidia_modeset,nvidia_uvm,nvidia_drm" ];
+
   persist.at.persistdir.directories = [ "/var/lib/libvirt" ];
   virtualisation.libvirtd = {
     enable = true;

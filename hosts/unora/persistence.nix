@@ -1,11 +1,5 @@
+{ lib, ... }:
 {
-  lib,
-  myLib,
-  ...
-}:
-{
-  imports = [ (myLib.fromRoot "modules/persistence") ];
-
   environment.etc = {
     machine-id = {
       mode = "direct-symlink";

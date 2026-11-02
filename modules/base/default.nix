@@ -1,10 +1,64 @@
 {
-  pkgs,
-  lib,
   config,
+  lib,
+  pkgs,
   ...
 }:
 {
+  imports = [ ./network.nix ];
+
+  _module.args = lib.fix (self: {
+    myPkgs = self.wrappers'.self.args.options.pkgs;
+    wrappers' = import ../../wrappers { inherit pkgs; };
+    wrappers =
+      self.wrappers'
+      |> lib.flip removeAttrs [ "self" ] # don't remove, breaks formatting
+      |> builtins.mapAttrs (_: module: module { });
+  });
+
+  nixpkgs.config.allowUnfree = true;
+  time.timeZone = "Asia/Bangkok";
+  console.enable = false;
+
+  services.kmscon = {
+    enable = true;
+    useXkbConfig = true;
+    config.libseat = false;
+  };
+
+  system.etc.overlay = {
+    enable = true;
+    mutable = true;
+  };
+
+  nix =
+    let
+      pkgs_path = builtins.storePath pkgs.path;
+    in
+    lib.mkMerge [
+      {
+        channel.enable = false;
+        daemonCPUSchedPolicy = "idle";
+        daemonIOSchedClass = "idle";
+        settings.experimental-features = [
+          "nix-command"
+          "flakes"
+          {
+            nix = "pipe-operators";
+            lix = "pipe-operator";
+          }
+          .${config.nix.package.pname}
+        ];
+      }
+      (lib.mkIf (lib.path.hasStorePathPrefix pkgs.path) {
+        registry.nixpkgs.to = {
+          type = "path";
+          path = pkgs_path;
+        };
+        nixPath = [ "nixpkgs=${pkgs_path}" ];
+      })
+    ];
+
   environment = {
     systemPackages = [ pkgs.eza ];
     shellAliases =
@@ -29,12 +83,18 @@
       bind '"\e[1;5C": shell-forward-word'
       bind '"\C-h": shell-backward-kill-word'
       bind '"\e[3;5~": shell-kill-word'
-
       bind '"\e[3;3~": kill-word'
-
       bind '"\ee": edit-and-execute-command'
     '';
-
     nano.enable = false;
+  };
+
+  security = {
+    sudo.enable = false;
+    run0.enable = true;
+    polkit = {
+      extraArgs = [ "--log-level=info" ];
+      settings.Polkitd.ExpirationSeconds = 120;
+    };
   };
 }

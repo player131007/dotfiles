@@ -31,12 +31,12 @@
   inputs.mkWrapper.options = promise (
     { options, inputs }:
     let
-      inherit (inputs.nixpkgs.pkgs) formats;
+      inherit (inputs.nixpkgs.pkgs) formats lib;
       generator = formats.ini {
         listsAsDuplicateKeys = true;
       };
     in
-    rec {
+    lib.fix (self: {
       inherit (options) package;
 
       symlinks = {
@@ -49,8 +49,8 @@
             null;
       };
 
-      flags = if symlinks."$out/foot.ini" != null then [ "--config=$out/foot.ini" ] else [ ];
-    }
+      flags = lib.optionals (self.symlinks."$out/foot.ini" != null) [ "--config=$out/foot.ini" ];
+    })
   );
 
   result = promise ({ results }: results.mkWrapper);

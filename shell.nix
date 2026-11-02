@@ -1,7 +1,9 @@
+let
+  sources = import ./npins;
+in
 {
-  sources ? import ./npins,
   pkgs ? import sources.nixpkgs { config.allowUnfree = true; },
-  wrappers ? import ./wrappers.nix { inherit sources pkgs; },
+  wrappers ? import ./wrappers { inherit pkgs; },
 }:
 let
   inherit (builtins) mapAttrs attrValues;

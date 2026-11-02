@@ -4,6 +4,15 @@
   types,
   ...
 }:
+let
+  minimalBin = pkgs: [
+    # needed for kakoune std runtime
+    pkgs.util-linux # setsid
+    pkgs.coreutils
+    pkgs.findutils
+    pkgs.gnused
+  ];
+in
 {
   inputs = {
     mkWrapper.from = { parent }: parent.mkWrapper;
@@ -30,13 +39,8 @@
         let
           inherit (inputs.nixpkgs) pkgs;
         in
-        [
-          # needed for kakoune std runtime
-          pkgs.util-linux # setsid
-          pkgs.coreutils
-          pkgs.findutils
-          pkgs.gnused
-          # specific for my runtime
+        minimalBin pkgs
+        ++ [
           pkgs.jq
           pkgs.kakoune-lsp
           inputs.self.pkgs.kak-guess-indent
@@ -90,4 +94,35 @@
   );
 
   result = promise ({ results }: results.mkWrapper);
+
+  modules.minimal = {
+    inputs.nixpkgs.from = { root }: root.nixpkgs;
+    inputs.self.from = { root }: root.self;
+    inputs.kakoune = {
+      from = { parent }: parent;
+      options = promise (
+        { inputs }:
+        let
+          inherit (inputs.nixpkgs) pkgs lib;
+          inherit (lib.fileset) unions toSource;
+        in
+        {
+          extraBinPaths = minimalBin pkgs ++ [ inputs.self.pkgs.kak-guess-indent ];
+          extraRuntime =
+            let
+              runtime-minimal = toSource {
+                root = ./runtime;
+                fileset = unions [
+                  ./runtime/autoload/config/guess-indent.kak
+                  ./runtime/autoload/config/smarttab.kak
+                  ./runtime/autoload/filetype
+                ];
+              };
+            in
+            [ "${runtime-minimal}/." ];
+        }
+      );
+    };
+    result = promise ({ results }: results.kakoune);
+  };
 }

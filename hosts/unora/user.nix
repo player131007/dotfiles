@@ -12,14 +12,9 @@ in
     (lib.mkAliasOptionModule [ "my" "hjem" ] [ "hjem" "users" username ])
   ];
 
-  services.userborn = {
-    enable = true;
-    importLegacyState = false;
-  };
-
   hjem.clobberByDefault = true;
-
   users.mutableUsers = false;
+
   my.user = {
     isNormalUser = true;
     homeMode = "0700";
@@ -29,6 +24,7 @@ in
       "libvirtd"
     ];
   };
+
   persist.at.oncedir.directories =
     let
       user = config.my.user;

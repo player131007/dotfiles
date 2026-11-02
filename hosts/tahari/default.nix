@@ -1,9 +1,17 @@
-{ modulesPath, pkgs, ... }:
+{
+  modulesPath,
+  pkgs,
+  wrappers',
+  ...
+}:
 {
   imports = [ "${modulesPath}/installer/cd-dvd/installation-cd-minimal.nix" ];
 
+  nixpkgs.hostPlatform = "x86_64-linux";
+  services.kmscon.config.font-engine = "unifont";
+
   environment.systemPackages = [
-    pkgs.kakoune-unwrapped
+    (wrappers'.kakoune.modules.minimal { })
     pkgs.e2fsprogs
   ];
 
