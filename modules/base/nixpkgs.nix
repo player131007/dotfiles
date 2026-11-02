@@ -9,15 +9,9 @@
         type = "path";
         path = pkgs_path;
       };
-      settings.nix-path = [ "nixpkgs=${pkgs_path}" ];
+      nixPath = [ "nixpkgs=${pkgs_path}" ];
     }
   );
 
-  nixpkgs = {
-    config.allowUnfree = true;
-    flake = {
-      setNixPath = false;
-      setFlakeRegistry = false;
-    };
-  };
+  nixpkgs.config.allowUnfree = true;
 }
