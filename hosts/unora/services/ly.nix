@@ -11,6 +11,7 @@
       xinitrc = null;
       clear_password = true;
       ly_log = "/run/ly.log";
+      session_log = null;
       custom_sessions = "${pkgs.emptyDirectory}";
       setup_cmd =
         pkgs.writeScript "ly-setup" ''
