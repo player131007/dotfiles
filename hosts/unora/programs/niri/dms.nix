@@ -16,6 +16,7 @@
   persist.at.oncedir.directories = [ "/var/lib/AccountsService" ];
   services.power-profiles-daemon.enable = false;
   hardware.i2c.enable = false; # why is this set in dms-shell?
+  environment.variables.QT_QPA_PLATFORMTHEME = lib.mkForce "qt6ct";
 
   stuff.niri-config =
     let
