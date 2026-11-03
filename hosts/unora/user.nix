@@ -9,10 +9,28 @@ in
 {
   imports = [
     (lib.mkAliasOptionModule [ "my" "user" ] [ "users" "users" username ])
-    (lib.mkAliasOptionModule [ "my" "hjem" ] [ "hjem" "users" username ])
+    (lib.mkAliasOptionModule
+      [ "my" "tmpfiles" ]
+      [ "systemd" "user" "tmpfiles" "users" username "rules" ]
+    )
   ];
 
-  hjem.clobberByDefault = true;
+  _module.args = {
+    inherit username;
+    tmpfilesArg =
+      let
+        replacements = {
+          "\t" = "\\x09";
+          "\n" = "\\x0a";
+          "\r" = "\\x0d";
+          " " = "\\x20";
+          "\\" = "\\x5c";
+          "%" = "%%";
+        };
+      in
+      builtins.replaceStrings (builtins.attrNames replacements) (builtins.attrValues replacements);
+
+  };
   users.mutableUsers = false;
 
   my.user = {

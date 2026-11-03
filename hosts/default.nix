@@ -30,7 +30,6 @@ mapAttrs (mkHost sources.nixpkgs) {
     modules = [
       { system.stateVersion = "26.11"; }
       modules.persistence
-      (import sources.hjem { }).nixosModules.hjem
     ];
   };
 }

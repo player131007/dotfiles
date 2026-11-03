@@ -1,6 +1,7 @@
 {
   lib,
   pkgs,
+  tmpfilesArg,
   wrappers,
   ...
 }:
@@ -50,18 +51,13 @@
     };
   };
 
-  my.hjem = { config, ... }: {
-    environment.sessionVariables = {
-      EDITOR = "kak";
-    };
-    files.".profile" = {
-      type = "copy";
-      permissions = "600";
-      text = ''
-        source ${config.environment.loadEnv}
+  my.tmpfiles =
+    let
+      profile = ''
+        export EDITOR=kak
       '';
-    };
-  };
+    in
+    [ "f+ %h/.profile 0600 - - - ${tmpfilesArg profile}" ];
 
   programs.ssh.knownHostsFiles =
     builtins.toFile "github_keys" ''

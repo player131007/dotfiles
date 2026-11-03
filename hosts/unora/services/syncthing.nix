@@ -2,6 +2,8 @@
   lib,
   pkgs,
   utils,
+
+  username,
   ...
 }:
 {
@@ -13,7 +15,7 @@
     ];
   };
 
-  my.hjem.systemd.services.syncthing = {
+  systemd.user.services.syncthing = {
     description = "Syncthing - Open Source Continuous File Synchronization";
     documentation = [
       "man:syncthing(1)"
@@ -24,7 +26,7 @@
 
     startLimitBurst = 4;
     startLimitIntervalSec = 60;
-
+    unitConfig.ConditionUser = username;
     serviceConfig = {
       ExecStart = utils.escapeSystemdExecArgs [
         (lib.getExe pkgs.syncthing)
@@ -45,20 +47,15 @@
       SuccessExitStatus = "3 4";
 
       ProtectSystem = "full";
-
       ProtectKernelTunables = true;
       ProtectKernelModules = true;
       ProtectKernelLogs = true;
       ProtectControlGroups = true;
       ProtectHostname = true;
       ProtectClock = true;
-
       NoNewPrivileges = true;
-
       RestrictSUIDSGID = true;
-
       MemoryDenyWriteExecute = true;
-
       RestrictNamespaces = true;
       RestrictRealtime = true;
       RestrictAddressFamilies = [
@@ -67,15 +64,12 @@
         "AF_NETLINK"
         "AF_UNIX"
       ];
-
       CapabilityBoundingSet = [ ];
       AmbientCapabilities = [ ];
-
       LockPersonality = true;
       SystemCallArchitectures = "native";
       SystemCallFilter = "@system-service";
       SystemCallErrorNumber = "EPERM";
-
       RemoveIPC = true;
       PrivateIPC = true;
       PrivateTmp = "disconnected";

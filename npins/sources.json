@@ -26,19 +26,6 @@
       "url": "https://github.com/llakala/adios-wrappers/archive/d6d6355bc63e8b62074804176f4dbf3ff8a84281.tar.gz",
       "hash": "sha256-cwxOQtY97D60ORldGFO2Ia9qVkXXQ4e0SZNKCOHAVgI="
     },
-    "hjem": {
-      "type": "Git",
-      "repository": {
-        "type": "GitHub",
-        "owner": "feel-co",
-        "repo": "hjem"
-      },
-      "branch": "main",
-      "submodules": false,
-      "revision": "8408642aa3035135fa6d70269dc93e0814e2a4f6",
-      "url": "https://github.com/feel-co/hjem/archive/8408642aa3035135fa6d70269dc93e0814e2a4f6.tar.gz",
-      "hash": "sha256-hmlUXxCk6On7Hrop/TyS3//dgI2BLvaN4TEsOq1ma+Y="
-    },
     "nix-index-cache": {
       "type": "GitRelease",
       "repository": {
