@@ -42,13 +42,5 @@
           "nofail"
         ];
       };
-      "/windows" = {
-        label = "nixos";
-        fsType = "btrfs";
-        options = common_opts ++ [
-          "subvol=windows"
-          "nofail"
-        ];
-      };
     };
 }
