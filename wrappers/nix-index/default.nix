@@ -66,11 +66,9 @@
       nativeBuildInputs = [ pkgs.makeBinaryWrapper ];
       postBuild = ''
         wrapProgram $out/bin/nix-locate \
-          --inherit-argv0 \
           --set-default NIX_INDEX_DATABASE ${nix-index-db}
 
         wrapProgram $out/bin/command-not-found \
-          --inherit-argv0 \
           --suffix PATH : ${pkgs.util-linux.bin}/bin \
           --set-default NIX_INDEX_DATABASE ${nix-index-db-bin-only}
       '';
