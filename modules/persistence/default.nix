@@ -188,21 +188,7 @@ in
           }
         ];
 
-      mounts =
-        let
-          addLateDropins =
-            cfg:
-            cfg
-            |> pLib.filterTargets (t: t.method ? bindmount)
-            |> cfgToList' (
-              storagePath: target:
-              mkMerge [
-                (pLib.mkBindMount storagePath (target // { early = false; }))
-                { overrideStrategy = "asDropin"; }
-              ]
-            );
-        in
-        concatMap handleMounts lateCfg ++ concatMap addLateDropins earlyCfg;
+      mounts = concatMap handleMounts lateCfg;
     };
   };
 }
